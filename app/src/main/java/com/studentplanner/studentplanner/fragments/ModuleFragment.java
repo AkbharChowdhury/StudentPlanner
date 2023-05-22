@@ -17,12 +17,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.adapters.ModuleAdapter;
 import com.studentplanner.studentplanner.addActivities.AddModuleActivity;
-import com.studentplanner.studentplanner.databinding.FragmentHomeBinding;
 import com.studentplanner.studentplanner.databinding.FragmentModuleBinding;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.utils.Helper;
@@ -34,12 +32,10 @@ import java.util.List;
 public class ModuleFragment extends Fragment {
     private Context context;
     private Activity activity;
-
     private RecyclerView recyclerView;
     private ModuleAdapter adapter;
     private List<Module> list;
     private FragmentModuleBinding binding;
-
 
     public ModuleFragment() {
 
@@ -56,9 +52,10 @@ public class ModuleFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        initFragment(inflater, container);
+        initFragment(container);
 
-        binding.fabAddModule.setOnClickListener(v -> Helper.goToActivity(activity, AddModuleActivity.class));
+//        binding.fabAddModule.setOnClickListener(v -> Helper.goToActivity(activity, AddModuleActivity.class));
+
 
         DatabaseHelper db = DatabaseHelper.getInstance(context);
         Helper.getIntentMessage(context, activity.getIntent().getExtras());
@@ -77,7 +74,7 @@ public class ModuleFragment extends Fragment {
         binding = null;
     }
 
-    private void initFragment(LayoutInflater inflater, ViewGroup container) {
+    private void initFragment(ViewGroup container) {
         binding = FragmentModuleBinding.inflate(getLayoutInflater(), container, false);
         context = getContext();
         activity = getActivity();
@@ -148,4 +145,10 @@ public class ModuleFragment extends Fragment {
         }
     }
 
+
+    public void goToAdd(View view) {
+
+        Helper.goToActivity(activity, AddModuleActivity.class);
+    }
 }
+
