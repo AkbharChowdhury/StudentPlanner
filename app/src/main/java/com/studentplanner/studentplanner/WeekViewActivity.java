@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,15 +26,17 @@ import com.studentplanner.studentplanner.utils.Helper;
 
 public class WeekViewActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener {
     private TextView monthYearText;
-    private RecyclerView calendarRecyclerView;
+    private RecyclerView calendarWeekRecyclerView;
     private ListView eventListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_week_view);
+        setTitle("Week view");
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        CalendarUtils.setSelectedDate(LocalDate.now());
 
         initWidgets();
         setWeekView();
@@ -44,7 +45,7 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
 
 
     private void initWidgets() {
-        calendarRecyclerView = findViewById(R.id.calendarRecyclerWeekView);
+        calendarWeekRecyclerView = findViewById(R.id.calendarRecyclerWeekView);
         monthYearText = findViewById(R.id.monthYearTVWeekView);
         eventListView = findViewById(R.id.eventListView);
     }
@@ -52,8 +53,8 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
     private void setWeekView() {
         monthYearText.setText(monthYearFromDate(CalendarUtils.getSelectedDate()));
         ArrayList<LocalDate> days = daysInWeekArray(CalendarUtils.getSelectedDate());
-        calendarRecyclerView.setLayoutManager(new GridLayoutManager(this, 7));
-        calendarRecyclerView.setAdapter(new CalendarAdapter(days, this));
+        calendarWeekRecyclerView.setLayoutManager(new GridLayoutManager(this, 7));
+        calendarWeekRecyclerView.setAdapter(new CalendarAdapter(days, this));
         CalendarUtils.setEventAdapter(eventListView, this);
 
 

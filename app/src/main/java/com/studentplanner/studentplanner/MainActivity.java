@@ -13,11 +13,15 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.navigation.NavigationView;
+import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.Student;
 import com.studentplanner.studentplanner.models.Teacher;
 import com.studentplanner.studentplanner.utils.AccountPreferences;
 import com.studentplanner.studentplanner.utils.Helper;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
@@ -45,6 +49,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         showStudentDetails();
 //        Module.addDefaultModules(this);
 //        Teacher.addDefaultTeachers(this);
+
+//        Coursework coursework = new Coursework(
+//                6,
+//                "Cinema ticket system",
+//                "create java GUI",
+//                "Medium",
+//                LocalDate.now().plusDays(3).toString(),
+//                LocalTime.now().plusHours(1).plusMinutes(33).toString()
+//
+//
+//        );
+//        db.addCoursework(coursework);
 
 
     }
@@ -84,8 +100,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new ModuleFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_module);
+                    new CalendarFragment()).commit();
+            navigationView.setCheckedItem(R.id.nav_calendar);
         }
 
     }

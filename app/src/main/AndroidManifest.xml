@@ -37,7 +37,8 @@
             android:theme="@style/AppTheme.ActionPar" />
         <activity
             android:name=".WeekViewActivity"
-            android:exported="false" />
+            android:theme="@style/AppTheme.ActionPar"
+            android:exported="true" />
         <activity
             android:name=".AddSemesterActivity"
             android:exported="true"

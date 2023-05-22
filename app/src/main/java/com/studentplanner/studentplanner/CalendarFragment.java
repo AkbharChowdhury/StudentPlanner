@@ -67,10 +67,6 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        view = inflater.inflate(R.layout.fragment_calendar, container, false);
-//        context = getContext();
-//        getActivity().setTitle("My Calendar");
-//        setHasOptionsMenu(true);
 
         initFragment(inflater, container);
 
