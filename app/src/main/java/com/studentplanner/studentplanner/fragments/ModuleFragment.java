@@ -12,11 +12,13 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.adapters.ModuleAdapter;
@@ -46,7 +48,6 @@ public class ModuleFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
     }
 
 
@@ -54,7 +55,8 @@ public class ModuleFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         initFragment(container);
 
-        binding.fabAddModule.setOnClickListener(v -> Helper.goToActivity(activity, AddModuleActivity.class));
+        FloatingActionButton floatingActionButton = binding.fabAddModule;
+        floatingActionButton.setOnClickListener(v -> Helper.longToastMessage(getContext(), "Hello"));
         DatabaseHelper db = DatabaseHelper.getInstance(context);
         Helper.getIntentMessage(context, activity.getIntent().getExtras());
 
@@ -64,6 +66,28 @@ public class ModuleFragment extends Fragment {
 
 
         return binding.getRoot();
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        binding.fabAddModule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Helper.longToastMessage(getActivity(), "Hello");
+            }
+        });
+
+
+//        FragmentModuleBinding binding1  = FragmentModuleBinding.inflate(getLayoutInflater());
+//        getActivity().setContentView(binding.getRoot());
+//        binding1.fabAddModule.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Helper.goToActivity(getActivity(), AddModuleActivity.class);
+//            }
+//        });
     }
 
     @Override
@@ -142,13 +166,6 @@ public class ModuleFragment extends Fragment {
             adapter.filterList(filteredList);
         }
     }
-
-
-    public void goToAdd(View view) {
-
-        Helper.goToActivity(activity, AddModuleActivity.class);
-    }
-
 
 
 }

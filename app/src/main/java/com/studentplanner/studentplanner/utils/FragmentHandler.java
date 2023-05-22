@@ -5,6 +5,7 @@ import android.view.MenuItem;
 import androidx.fragment.app.Fragment;
 
 import com.studentplanner.studentplanner.CalendarFragment;
+import com.studentplanner.studentplanner.ViewModuleFragment;
 import com.studentplanner.studentplanner.fragments.CourseworkFragment;
 import com.studentplanner.studentplanner.fragments.ModuleFragment;
 import com.studentplanner.studentplanner.fragments.ModuleTeacherFragment;
