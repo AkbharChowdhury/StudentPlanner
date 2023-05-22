@@ -79,6 +79,8 @@
     <string name="select_type">Select Type</string>
     <string name="my_teachers">My Teachers</string>
     <string name="my_calendar">My Calendar</string>
+    <string name="my_teachers_modules">My Teachers and modules</string>
+
 
 
     <string name="go_back">Back</string>

@@ -52,7 +52,6 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
     private void setWeekView() {
         monthYearText.setText(monthYearFromDate(CalendarUtils.getSelectedDate()));
         ArrayList<LocalDate> days = daysInWeekArray(CalendarUtils.getSelectedDate());
-        Log.d("JJJ",String.valueOf(CalendarUtils.getSelectedDate()));
         calendarRecyclerView.setLayoutManager(new GridLayoutManager(this, 7));
         calendarRecyclerView.setAdapter(new CalendarAdapter(days, this));
         CalendarUtils.setEventAdapter(eventListView, this);
