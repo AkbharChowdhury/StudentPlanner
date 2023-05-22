@@ -12,14 +12,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
-
-
+        <activity
+            android:name=".AddSemesterActivity"
+            android:exported="true"
+            android:label="@string/add_new_semester"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.ActionPar" />
+        <activity
+            android:name=".AddClassesActivity"
+            android:exported="true"
+            android:label="@string/add_classes"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.ActionPar" />
         <activity
             android:name=".AddCourseworkActivity"
-            android:theme="@style/AppTheme.ActionPar"
             android:exported="true"
             android:label="@string/add_coursework"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.ActionPar" />
         <activity
             android:name=".EditModuleTeacherActivity"
             android:exported="false" />
