@@ -1,5 +1,6 @@
 package com.studentplanner.studentplanner.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.adapters.ModuleAdapter;
 import com.studentplanner.studentplanner.addActivities.AddModuleActivity;
+import com.studentplanner.studentplanner.databinding.FragmentHomeBinding;
 import com.studentplanner.studentplanner.databinding.FragmentModuleBinding;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.utils.Helper;
@@ -30,8 +32,8 @@ import java.util.List;
 
 
 public class ModuleFragment extends Fragment {
-    private View view;
     private Context context;
+    private Activity activity;
 
     private RecyclerView recyclerView;
     private ModuleAdapter adapter;
@@ -49,46 +51,36 @@ public class ModuleFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
 
-
     }
-//    @Override
-//    public View onCreateView(LayoutInflater inflater,
-//                              ViewGroup container,
-//                              Bundle savedInstanceState) {
-//        MartianDataBinding binding = DataBindingUtil.inflate(
-//                inflater, R.layout.martian_data, container, false);
-//        View view = binding.getRoot();
-//        //here data must be an instance of the class MarsDataProvider
-//        binding.setMarsdata(data);
-//        return view;
-//    }
-
-
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         initFragment(inflater, container);
 
-
+        binding.fabAddModule.setOnClickListener(v -> Helper.goToActivity(activity, AddModuleActivity.class));
 
         DatabaseHelper db = DatabaseHelper.getInstance(context);
-        Helper.getIntentMessage(context, getActivity().getIntent().getExtras());
+        Helper.getIntentMessage(context, activity.getIntent().getExtras());
 
         list = db.getModules();
-        recyclerView = view.findViewById(R.id.moduleRecyclerView);
+        recyclerView = binding.moduleRecyclerView;
         buildRecyclerView();
 
-//        binding = FragmentModuleBinding.inflate(getLayoutInflater());
-//        getActivity().setContentView(binding.getRoot());
-//        binding.fabAddModule.setOnClickListener(v -> Helper.goToActivity(getActivity(), AddModuleActivity.class));
 
-        return view;
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     private void initFragment(LayoutInflater inflater, ViewGroup container) {
-        view = inflater.inflate(R.layout.fragment_module, container, false);
+        binding = FragmentModuleBinding.inflate(getLayoutInflater(), container, false);
         context = getContext();
+        activity = getActivity();
         getActivity().setTitle(context.getString(R.string.my_modules));
         setHasOptionsMenu(true);
 
@@ -105,8 +97,8 @@ public class ModuleFragment extends Fragment {
             return;
         }
 
-        view.findViewById(R.id.emptyModuleImage).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.emptyModuleText).setVisibility(View.VISIBLE);
+        binding.emptyModuleImage.setVisibility(View.VISIBLE);
+        binding.emptyModuleText.setVisibility(View.VISIBLE);
 
 
     }
@@ -144,7 +136,7 @@ public class ModuleFragment extends Fragment {
 
         for (Module module : list) {
             String name = module.getModuleName().toLowerCase();
-            String code =  module.getModuleName().toLowerCase();
+            String code = module.getModuleName().toLowerCase();
             if (name.contains(text.toLowerCase()) | code.contains(text.toLowerCase())) {
                 filteredList.add(module);
             }
