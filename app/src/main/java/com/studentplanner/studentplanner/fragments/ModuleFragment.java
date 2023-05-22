@@ -54,9 +54,7 @@ public class ModuleFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         initFragment(container);
 
-//        binding.fabAddModule.setOnClickListener(v -> Helper.goToActivity(activity, AddModuleActivity.class));
-
-
+        binding.fabAddModule.setOnClickListener(v -> Helper.goToActivity(activity, AddModuleActivity.class));
         DatabaseHelper db = DatabaseHelper.getInstance(context);
         Helper.getIntentMessage(context, activity.getIntent().getExtras());
 
@@ -150,5 +148,8 @@ public class ModuleFragment extends Fragment {
 
         Helper.goToActivity(activity, AddModuleActivity.class);
     }
+
+
+
 }
 
