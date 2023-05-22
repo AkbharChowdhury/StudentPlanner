@@ -1,3 +1,162 @@
 <resources>
     <string name="app_name">StudentPlanner</string>
+    <string name="back"><![CDATA[<-]]></string>
+    <string name="forward"><![CDATA[->]]></string>
+    <string name="event">Event</string>
+    <string name="sat">SAT</string>
+    <string name="fri">FRI</string>
+    <string name="thur">THUR</string>
+    <string name="wed">WED</string>
+    <string name="tue">TUE</string>
+    <string name="mon">MON</string>
+    <string name="sun">SUN</string>
+    <string name="feb_2021">Feb 2021</string>
+    <string name="weekly">Weekly</string>
+    <string name="today">Today</string>
+    <string name="view_reminder">View Reminder</string>
+    <string name="logout">Logout</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="create_account">Create Account</string>
+    <string name="login_credentials_error">Incorrect email and password combination. Please try again!</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="register_subtitle">Create your account today to start organising your academic life</string>
+    <string name="full_name">Welcome %s %s</string>
+
+    <!-- error messages -->
+    <string name="required_name_error">%s cannot contain numbers or spaces</string>
+    <string name="required_field_error">%s is required</string>
+    <string name="email_exists_error">This email is taken, Please choose a different email</string>
+
+    <string name="invalid_email_error">Please enter a valid email!</string>
+    <string name="password_min_error">%s password must be at least %d characters long</string>
+
+    <string name="create_account_error">there was an error creating you account. please try again later.</string>
+    <string name="account_created">Your account has been created. you can now login and start organising your life</string>
+    <string name="my_coursework">My Coursework</string>
+
+    <string name="strong">Strong</string>
+    <string name="weak">Weak</string>
+    <string name="average">Average</string>
+    <string name="good">Good</string>
+    <string name="excellent">Excellent</string>
+    <string name="manage_modules">Manage Modules</string>
+    <string name="question_mark">\?</string>
+
+    <string name="add_module_title">Add Module</string>
+    <string name="my_modules">My Modules</string>
+
+    <string name="module_code">Module Code</string>
+    <string name="module_name">module Name</string>
+    <string name="close">Close</string>
+    <string name="ok">OK</string>
+
+
+    <string name="search">Search</string>
+    <string name="edit_module">Edit Module</string>
+    <string name="add_semester">Add Semester</string>
+    <string name="my_semesters">My Semesters</string>
+    <string name="_18_apr_2023_16_aug_2023">From 18 Apr 2023 to 16 Aug 2023</string>
+    <string name="my_first_term">My first term</string>
+    <string name="add_coursework">Add Coursework</string>
+    <string name="description">Description</string>
+    <string name="priority">Priority</string>
+    <string name="module">Module</string>
+    <string name="title">Title</string>
+    <string name="select_module">Select Module</string>
+    <string name="select_day">Select Day</string>
+    <string name="select_priority">Select Priority</string>
+    <string name="select_semester">Select Semester</string>
+    <string name="select_type">Select Type</string>
+    <string name="my_teachers">My Teachers</string>
+
+    <string name="go_back">Back</string>
+
+
+    <string name="no_semesters_found">No Semesters found</string>
+    <string name="no_modules_found">No modules found</string>
+    <string name="no_coursework_found">No Coursework found</string>
+    <string name="add_class">Add Class</string>
+    <string name="select_class_type">Select class type</string>
+    <string name="delete_icon">Delete</string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <string name="week_view">Week View</string>
+
+    <string name="time_format_database">%02d:%02d</string>
+    <string name="timeLabel">Select Time</string>
+    <string name="deadline_time">Deadline Time</string>
+    <string name="edit_coursework">Edit Coursework</string>
+    <string name="deadline">Deadline</string>
+    <string name="add_new_semester">Add New Semester</string>
+    <string name="edit_semester">Edit Semester</string>
+    <string name="semester_name">Semester Name</string>
+    <string name="start_date">Start Date</string>
+    <string name="end_date">End date</string>
+    <string name="semester">Semester</string>
+    <string name="day">Day</string>
+    <string name="start">Start</string>
+    <string name="end">End</string>
+    <string name="room">Room</string>
+    <string name="edit_class">Edit Class</string>
+    <string name="add_classes">Add Classes</string>
+    <string name="i_accept_the_terms_and_conditions">I accept the terms and conditions</string>
+    <string name="terms_and_conditions">Terms and conditions</string>
+    <string name="view_terms_and_conditions">View terms and conditions</string>
+    <string name="firstname">Firstname</string>
+    <string name="lastname">Lastname</string>
+    <string name="email">email</string>
+    <string name="phone">Phone</string>
+    <string name="password">Password</string>
+    <string name="long_text">A very very very long line with a lot of texts with ellipsize end</string>
+    <string name="long_text_classes">A very very very long line with a lot of texts with ellipsize end for classes</string>
+    <string name="completed">Completed</string>
+    <string name="more_actions">More Actions</string>
+    <string name="manage_coursework">Manage Coursework</string>
+    <string name="no_teachers_found">No Teachers found</string>
+    <string name="no_teachers_assigned_to_module">There are no teachers assigned to a module</string>
+
+    <string name="add_teacher">Add Teacher</string>
+    <string name="done">Done</string>
+
+    <string-array name="priority_array">
+        <item>Low</item>
+        <item>Medium</item>
+        <item>High</item>
+    </string-array>
+
+    <string-array name="type_array">
+        <item>Lecture</item>
+        <item>Tutorial</item>
+        <item>Other</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="no_cw_reminder">There are no coursework deadlines this month</string>
+    <string name="placeholder_name">Jerry Smith</string>
+    <string name="placeholder_email">Jerry@gmail.com</string>
+    <string name="nav_reminders">Reminders</string>
+    <string name="nav_semester">Semester</string>
+    <string name="nav_teacher">Teacher</string>
+    <string name="nav_module_and_teachers">Module And Teachers</string>
+    <string name="nav_calendar">Calendar</string>
+    <string name="nav_coursework">Coursework</string>
+    <string name="nav_modules">Modules</string>
+    <string name="nav_title_profile">Profile</string>
+    <string name="nav_logout">Logout</string>
+
 </resources>

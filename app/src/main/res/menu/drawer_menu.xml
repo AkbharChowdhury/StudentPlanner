@@ -7,49 +7,45 @@
         <item
             android:id="@+id/nav_reminder"
             android:icon="@drawable/ic_reminder"
-            android:title="Reminders" />
+            android:title="@string/nav_reminders" />
         <item
             android:id="@+id/nav_semester"
             android:icon="@drawable/ic_semester_menu"
-            android:title="Semester" />
+            android:title="@string/nav_semester" />
         <item
             android:id="@+id/nav_teachers"
             android:icon="@drawable/round_person_outline_24"
-            android:title="Teacher" />
+            android:title="@string/nav_teacher" />
         <item
             android:id="@+id/nav_module_teacher"
             android:icon="@drawable/round_person_outline_24"
-            android:title="Module And Teachers" />
-
-
-
-
+            android:title="@string/nav_module_and_teachers" />
 
 
         <item
             android:id="@+id/nav_calendar"
             android:icon="@drawable/baseline_calendar_month_24"
-            android:title="Calendar" />
+            android:title="@string/nav_calendar" />
 
         <item
             android:id="@+id/nav_coursework"
             android:icon="@drawable/baseline_bookmark_added_24"
-            android:title="Coursework" />
+            android:title="@string/nav_coursework" />
 
         <item
             android:id="@+id/nav_module"
             android:icon="@drawable/baseline_view_module_24"
-            android:title="Modules" />
+            android:title="@string/nav_modules" />
 
     </group>
 
-    <item android:title="Profile">
+    <item android:title="@string/nav_title_profile">
         <menu>
 
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_person"
-                android:title="Logout" />
+                android:title="@string/nav_logout" />
         </menu>
     </item>
 
