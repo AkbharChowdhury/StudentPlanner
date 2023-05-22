@@ -12,6 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
+
+
+        <activity
+            android:name=".AddCourseworkActivity"
+            android:theme="@style/AppTheme.ActionPar"
+            android:exported="true"
+            android:label="@string/add_coursework"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".EditModuleTeacherActivity"
             android:exported="false" />
