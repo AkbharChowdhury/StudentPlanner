@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.studentplanner.studentplanner.adapters.ModuleAdapter;
 import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.models.Module;
@@ -49,11 +50,7 @@ public class ModuleFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_module, container, false);
-        context = getContext();
-        getActivity().setTitle("View Module");
-        setHasOptionsMenu(true);
-
+        initFragment(inflater,container);
 
         DatabaseHelper db = DatabaseHelper.getInstance(context);
         Helper.getIntentMessage(context, getActivity().getIntent().getExtras());
@@ -61,9 +58,18 @@ public class ModuleFragment extends Fragment {
         list = db.getModules();
         recyclerView = view.findViewById(R.id.moduleRecyclerView);
         buildRecyclerView();
-        view.findViewById(R.id.fab_add_module).setOnClickListener(v -> Helper.goToActivity(getActivity(), LoginActivity.class));
+        FloatingActionButton button = (FloatingActionButton) view.findViewById(R.id.fab_add_module);
+        button.setOnClickListener(v -> Helper.longToastMessage(context, "Hello"));
 
         return view;
+    }
+
+    private void initFragment(LayoutInflater inflater, ViewGroup container) {
+        view = inflater.inflate(R.layout.fragment_module, container, false);
+        context = getContext();
+        getActivity().setTitle(context.getString(R.string.my_modules));
+        setHasOptionsMenu(true);
+
     }
 
 

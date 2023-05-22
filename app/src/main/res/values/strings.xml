@@ -53,6 +53,7 @@
 
     <string name="add_module_title">Add Module</string>
     <string name="my_modules">My Modules</string>
+    <string name="my_reminders">My Reminders</string>
 
     <string name="module_code">Module Code</string>
     <string name="module_name">module Name</string>
