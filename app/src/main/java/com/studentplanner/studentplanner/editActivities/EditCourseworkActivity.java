@@ -1,4 +1,4 @@
-package com.studentplanner.studentplanner;
+package com.studentplanner.studentplanner.editActivities;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -18,6 +18,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.textfield.TextInputLayout;
+import com.studentplanner.studentplanner.fragments.CourseworkFragment;
+import com.studentplanner.studentplanner.DatabaseHelper;
+import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.tables.CourseworkTable;

@@ -5,11 +5,11 @@ import android.view.MenuItem;
 import androidx.fragment.app.Fragment;
 
 import com.studentplanner.studentplanner.CalendarFragment;
-import com.studentplanner.studentplanner.CourseworkFragment;
+import com.studentplanner.studentplanner.fragments.CourseworkFragment;
 import com.studentplanner.studentplanner.fragments.ModuleFragment;
 import com.studentplanner.studentplanner.fragments.ModuleTeacherFragment;
 import com.studentplanner.studentplanner.R;
-import com.studentplanner.studentplanner.TeacherFragment;
+import com.studentplanner.studentplanner.fragments.TeacherFragment;
 import com.studentplanner.studentplanner.fragments.ReminderFragment;
 import com.studentplanner.studentplanner.fragments.SemesterFragment;
 

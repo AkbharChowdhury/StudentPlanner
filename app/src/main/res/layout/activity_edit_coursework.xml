@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".EditCourseworkActivity">
+    tools:context=".editActivities.EditCourseworkActivity">
 
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -13,7 +13,7 @@
         android:gravity="center"
         android:orientation="vertical"
         android:paddingHorizontal="16dp"
-        tools:context=".EditCourseworkActivity">
+        tools:context=".editActivities.EditCourseworkActivity">
 
         <TextView
             android:layout_width="match_parent"

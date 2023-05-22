@@ -6,13 +6,10 @@
     tools:context=".fragments.ReminderFragment">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragments.ReminderFragment"
-        >
+        tools:context=".fragments.ReminderFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/reminderRecyclerView"
@@ -52,7 +49,6 @@
             app:layout_constraintTop_toBottomOf="@+id/emptyCourseworkReminderImage" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
 </FrameLayout>

@@ -20,6 +20,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.adapters.ModuleAdapter;
+import com.studentplanner.studentplanner.addActivities.AddModuleActivity;
+import com.studentplanner.studentplanner.databinding.FragmentModuleBinding;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.utils.Helper;
 
@@ -34,6 +36,7 @@ public class ModuleFragment extends Fragment {
     private RecyclerView recyclerView;
     private ModuleAdapter adapter;
     private List<Module> list;
+    private FragmentModuleBinding binding;
 
 
     public ModuleFragment() {
@@ -46,12 +49,28 @@ public class ModuleFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
 
+
     }
+//    @Override
+//    public View onCreateView(LayoutInflater inflater,
+//                              ViewGroup container,
+//                              Bundle savedInstanceState) {
+//        MartianDataBinding binding = DataBindingUtil.inflate(
+//                inflater, R.layout.martian_data, container, false);
+//        View view = binding.getRoot();
+//        //here data must be an instance of the class MarsDataProvider
+//        binding.setMarsdata(data);
+//        return view;
+//    }
+
+
+
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        initFragment(inflater,container);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        initFragment(inflater, container);
+
+
 
         DatabaseHelper db = DatabaseHelper.getInstance(context);
         Helper.getIntentMessage(context, getActivity().getIntent().getExtras());
@@ -59,8 +78,10 @@ public class ModuleFragment extends Fragment {
         list = db.getModules();
         recyclerView = view.findViewById(R.id.moduleRecyclerView);
         buildRecyclerView();
-        FloatingActionButton button = (FloatingActionButton) view.findViewById(R.id.fab_add_module);
-        button.setOnClickListener(v -> Helper.longToastMessage(context, "Hello"));
+
+//        binding = FragmentModuleBinding.inflate(getLayoutInflater());
+//        getActivity().setContentView(binding.getRoot());
+//        binding.fabAddModule.setOnClickListener(v -> Helper.goToActivity(getActivity(), AddModuleActivity.class));
 
         return view;
     }

@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.studentplanner.studentplanner.EditModuleActivity;
+import com.studentplanner.studentplanner.editActivities.EditModuleActivity;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.tables.ModuleTable;

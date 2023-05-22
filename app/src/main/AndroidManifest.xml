@@ -15,22 +15,22 @@
 
 
         <activity
-            android:name=".AddModuleTeacherCheckboxActivity"
+            android:name=".addActivities.AddModuleTeacherCheckboxActivity"
             android:exported="true"
             android:label="@string/add_module_title"
-            android:parentActivityName=".AddModuleTeacherActivity"
+            android:parentActivityName=".addActivities.AddModuleTeacherActivity"
             android:theme="@style/AppTheme.ActionPar" />
 
 
         <activity
-            android:name=".AddModuleTeacherActivity"
+            android:name=".addActivities.AddModuleTeacherActivity"
             android:exported="true"
             android:label="@string/add_module_title"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.ActionPar" />
 
         <activity
-            android:name=".AddModuleActivity"
+            android:name=".addActivities.AddModuleActivity"
             android:exported="true"
             android:label="@string/add_module_title"
             android:parentActivityName=".MainActivity"
@@ -40,24 +40,24 @@
             android:theme="@style/AppTheme.ActionPar"
             android:exported="true" />
         <activity
-            android:name=".AddSemesterActivity"
+            android:name=".addActivities.AddSemesterActivity"
             android:exported="true"
             android:label="@string/add_new_semester"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.ActionPar" />
         <activity
-            android:name=".AddClassesActivity"
+            android:name=".addActivities.AddClassesActivity"
             android:exported="true"
             android:label="@string/add_classes"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.ActionPar" />
         <activity
-            android:name=".AddCourseworkActivity"
+            android:name=".addActivities.AddCourseworkActivity"
             android:exported="true"
             android:label="@string/add_coursework"
             android:theme="@style/AppTheme.ActionPar" />
         <activity
-            android:name=".EditModuleTeacherActivity"
+            android:name=".editActivities.EditModuleTeacherActivity"
             android:exported="false" />
         <activity
             android:name=".RegisterActivity"
@@ -66,16 +66,16 @@
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".EditModuleActivity"
+            android:name=".editActivities.EditModuleActivity"
             android:exported="false" />
         <activity
-            android:name=".EditSemesterActivity"
+            android:name=".editActivities.EditSemesterActivity"
             android:exported="false" />
         <activity
-            android:name=".EditClassesActivity"
+            android:name=".editActivities.EditClassesActivity"
             android:exported="false" />
         <activity
-            android:name=".EditCourseworkActivity"
+            android:name=".editActivities.EditCourseworkActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

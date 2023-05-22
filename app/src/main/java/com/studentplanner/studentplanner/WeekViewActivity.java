@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import static com.studentplanner.studentplanner.utils.CalendarUtils.daysInWeekArray;
 import static com.studentplanner.studentplanner.utils.CalendarUtils.monthYearFromDate;
 
+import com.studentplanner.studentplanner.addActivities.AddClassesActivity;
+import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
 import com.studentplanner.studentplanner.utils.CalendarUtils;
 import com.studentplanner.studentplanner.utils.Helper;
 

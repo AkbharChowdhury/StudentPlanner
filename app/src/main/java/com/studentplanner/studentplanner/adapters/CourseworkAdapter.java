@@ -14,7 +14,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.studentplanner.studentplanner.DatabaseHelper;
-import com.studentplanner.studentplanner.EditCourseworkActivity;
+import com.studentplanner.studentplanner.editActivities.EditCourseworkActivity;
 import com.studentplanner.studentplanner.tables.CourseworkTable;
 import com.studentplanner.studentplanner.utils.Helper;
 import com.studentplanner.studentplanner.R;

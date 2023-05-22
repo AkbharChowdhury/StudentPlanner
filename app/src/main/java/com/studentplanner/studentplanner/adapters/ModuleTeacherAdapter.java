@@ -3,7 +3,6 @@ package com.studentplanner.studentplanner.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +13,11 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.studentplanner.studentplanner.DatabaseHelper;
-import com.studentplanner.studentplanner.EditCourseworkActivity;
-import com.studentplanner.studentplanner.EditModuleTeacherActivity;
+import com.studentplanner.studentplanner.editActivities.EditModuleTeacherActivity;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.ModuleTeacher;
-import com.studentplanner.studentplanner.models.Teacher;
 import com.studentplanner.studentplanner.tables.ModuleTable;
-import com.studentplanner.studentplanner.tables.ModuleTeacherTable;
-import com.studentplanner.studentplanner.tables.TeacherTable;
 import com.studentplanner.studentplanner.utils.Helper;
 
 import java.util.List;

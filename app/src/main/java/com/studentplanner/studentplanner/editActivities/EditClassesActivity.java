@@ -1,4 +1,4 @@
-package com.studentplanner.studentplanner;
+package com.studentplanner.studentplanner.editActivities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -15,6 +15,9 @@ import android.widget.AutoCompleteTextView;
 import android.widget.TimePicker;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.studentplanner.studentplanner.DatabaseHelper;
+import com.studentplanner.studentplanner.MainActivity;
+import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.enums.TimePickerType;
 import com.studentplanner.studentplanner.models.Classes;
 import com.studentplanner.studentplanner.models.Module;

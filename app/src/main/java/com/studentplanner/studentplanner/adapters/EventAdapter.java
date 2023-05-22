@@ -16,8 +16,8 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.studentplanner.studentplanner.DatabaseHelper;
-import com.studentplanner.studentplanner.EditClassesActivity;
-import com.studentplanner.studentplanner.EditCourseworkActivity;
+import com.studentplanner.studentplanner.editActivities.EditClassesActivity;
+import com.studentplanner.studentplanner.editActivities.EditCourseworkActivity;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.enums.EventType;
 import com.studentplanner.studentplanner.models.Classes;

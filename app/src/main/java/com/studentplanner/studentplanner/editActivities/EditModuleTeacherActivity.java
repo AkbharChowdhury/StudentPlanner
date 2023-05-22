@@ -1,4 +1,4 @@
-package com.studentplanner.studentplanner;
+package com.studentplanner.studentplanner.editActivities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.studentplanner.studentplanner.DatabaseHelper;
+import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.fragments.ModuleTeacherFragment;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.Teacher;
@@ -19,24 +21,22 @@ import com.studentplanner.studentplanner.utils.Helper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
+
+public class EditModuleTeacherActivity extends AppCompatActivity {
     private DatabaseHelper db;
     private ListView listView;
-    private List<Teacher> teachers;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_module_teacher_checkbox);
+        setContentView(R.layout.activity_edit_module_teacher);
         db = DatabaseHelper.getInstance(this);
-        teachers = db.getTeachers();
         setActivityTitle();
 
         List<String> teacherNames = getTeacher();
         String[] myTeachers = Helper.convertArrayListStringToStringArray(teacherNames);
 
-        listView = findViewById(R.id.listview_data);
+        listView = findViewById(R.id.listview_data_edit);
 
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
@@ -45,7 +45,31 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
                 myTeachers
         );
         listView.setAdapter(adapter);
+        getSelectedTeacherEdited();
 
+
+
+    }
+    private void getSelectedTeacherEdited() {
+
+        List<Teacher> teachers = db.getTeachers();
+        int moduleID = getIntent().getIntExtra(ModuleTable.COLUMN_ID, 0);
+
+        ArrayList<Integer> editedTeacherIDs = db.getModuleTeacherByModuleID(moduleID);
+        ArrayList<Integer> allTeacherIDs = getIdList(teachers);
+        for (int i = 0; i < teachers.size(); i++) {
+            if ((editedTeacherIDs.contains(allTeacherIDs.get(i)))) {
+                listView.setItemChecked(i, true);
+            }
+
+        }
+    }
+    private ArrayList<Integer> getIdList(List<Teacher> teachers) {
+        ArrayList<Integer> idList = new ArrayList<>();
+        for (Teacher t : teachers) {
+            idList.add(t.getUserID());
+        }
+        return idList;
 
     }
 
@@ -63,6 +87,7 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
 
 
     private List<String> getTeacher() {
+        List<Teacher> teachers = db.getTeachers();
         List<String> teacherArray = new ArrayList<>();
         for (Teacher teacher : teachers) {
             teacherArray.add(String.format("%s %s", teacher.getFirstname(), teacher.getLastname()));
@@ -106,9 +131,9 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
                 final String SELECTED_ID = ModuleTable.COLUMN_ID;
                 int moduleID = getIntent().getIntExtra(SELECTED_ID, 0);
 
-                if(db.addModuleTeacher(teacherIDs, moduleID)){
+                if(db.updateModuleTeacher(teacherIDs, moduleID)){
 
-                    Helper.setRedirectMessageFragment(this, ModuleTeacherFragment.class, "teacher successfully assigned to ");
+                    Helper.setRedirectMessageFragment(this, ModuleTeacherFragment.class, "teacher Updated ");
 
 
                 }

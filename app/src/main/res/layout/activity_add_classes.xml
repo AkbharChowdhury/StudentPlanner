@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddClassesActivity">
+    tools:context=".addActivities.AddClassesActivity">
 
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -12,7 +12,7 @@
         android:gravity="center"
         android:orientation="vertical"
         android:paddingHorizontal="16dp"
-        tools:context=".AddClassesActivity">
+        tools:context=".addActivities.AddClassesActivity">
 
         <TextView
             android:layout_width="match_parent"

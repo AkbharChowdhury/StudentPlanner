@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.studentplanner.studentplanner.EditSemesterActivity;
+import com.studentplanner.studentplanner.editActivities.EditSemesterActivity;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.models.Semester;
 import com.studentplanner.studentplanner.tables.SemesterTable;
