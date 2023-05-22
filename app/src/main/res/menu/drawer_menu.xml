@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_reminder"
+            android:icon="@drawable/ic_reminder"
+            android:title="Reminders" />
+        <item
+            android:id="@+id/nav_semester"
+            android:icon="@drawable/ic_semester_menu"
+            android:title="Semester" />
+        <item
+            android:id="@+id/nav_teachers"
+            android:icon="@drawable/round_person_outline_24"
+            android:title="Teacher" />
+        <item
+            android:id="@+id/nav_module_teacher"
+            android:icon="@drawable/round_person_outline_24"
+            android:title="Module And Teachers" />
+
+
+
+
+
+
+        <item
+            android:id="@+id/nav_calendar"
+            android:icon="@drawable/baseline_calendar_month_24"
+            android:title="Calendar" />
+
+        <item
+            android:id="@+id/nav_coursework"
+            android:icon="@drawable/baseline_bookmark_added_24"
+            android:title="Coursework" />
+
+        <item
+            android:id="@+id/nav_module"
+            android:icon="@drawable/baseline_view_module_24"
+            android:title="Modules" />
+
+    </group>
+
+    <item android:title="Profile">
+        <menu>
+
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_person"
+                android:title="Logout" />
+        </menu>
+    </item>
+
+</menu>
