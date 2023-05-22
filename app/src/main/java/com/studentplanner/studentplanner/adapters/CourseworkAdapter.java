@@ -11,10 +11,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.studentplanner.studentplanner.CourseworkFragment;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.EditCourseworkActivity;
 import com.studentplanner.studentplanner.tables.CourseworkTable;
