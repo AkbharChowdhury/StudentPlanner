@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.navigation.NavigationView;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.Student;
+import com.studentplanner.studentplanner.models.Teacher;
 import com.studentplanner.studentplanner.utils.AccountPreferences;
 import com.studentplanner.studentplanner.utils.Helper;
 

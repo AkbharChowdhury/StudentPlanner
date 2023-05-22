@@ -17,9 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.studentplanner.studentplanner.adapters.ModuleAdapter;
 import com.studentplanner.studentplanner.adapters.SemesterAdapter;
-import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.Semester;
 import com.studentplanner.studentplanner.utils.Helper;
 
