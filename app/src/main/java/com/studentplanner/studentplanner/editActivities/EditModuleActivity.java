@@ -10,8 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
+import com.studentplanner.studentplanner.ModuleFragment;
 import com.studentplanner.studentplanner.R;
-import com.studentplanner.studentplanner.fragments.ModuleFragment;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.tables.ModuleTable;
 import com.studentplanner.studentplanner.utils.Helper;
@@ -30,6 +30,8 @@ public class EditModuleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_module);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         db = DatabaseHelper.getInstance(this);
         txtModuleCode = findViewById(R.id.txtModuleCodeEdit);
         txtModuleName = findViewById(R.id.txtModuleNameEdit);
@@ -91,4 +93,5 @@ public class EditModuleActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
