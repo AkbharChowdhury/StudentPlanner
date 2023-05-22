@@ -36,12 +36,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         if (savedInstanceState == null) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-            transaction.add(R.id.fragment_container, new ReminderFragment());
-            transaction.commit();
-//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ReminderFragment()).commit();
-//            navigationView.setCheckedItem(R.id.nav_reminder);
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ReminderFragment()).commit();
+            navigationView.setCheckedItem(R.id.nav_reminder);
         }
     }
 
