@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/semesterLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:elevation="8dp"
+    app:cardCornerRadius="8dp"
+    android:layout_marginTop="12dp"
+
+
+
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        >
+
+        <TextView
+            style="@style/TextAppearance.Material3.TitleLarge"
+            android:id="@+id/tv_semester_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="2"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            android:textSize="18sp" />
+
+        <TextView
+            style="@style/TextAppearance.Material3.TitleLarge"
+            android:id="@+id/tv_semester_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@string/my_first_term"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_date_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_semester_name"
+            android:padding="5dp"
+            android:text="@string/_18_apr_2023_16_aug_2023"
+            android:textColor="@color/black" />
+
+
+
+        <TextView
+            android:id="@+id/tv_coursework_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_semester_name"
+            android:padding="2dp"
+            android:text="12"
+            android:visibility="invisible"
+            android:textColor="@color/black" />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

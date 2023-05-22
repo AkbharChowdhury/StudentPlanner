@@ -1,30 +1,76 @@
 package com.studentplanner.studentplanner;
 
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
-import android.os.Bundle;
-import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.studentplanner.studentplanner.models.Student;
+import com.studentplanner.studentplanner.utils.AccountPreferences;
+import com.studentplanner.studentplanner.utils.Helper;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
+    private DatabaseHelper db;
+    private int studentID;
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            getSupportFragmentManager().popBackStack();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Helper.goToActivity(this, LoginActivity.class);
+        db = DatabaseHelper.getInstance(this);
+        studentID = AccountPreferences.getStudentID(this);
+        isLoggedIn();
+        setupNavDrawer(savedInstanceState);
+        showStudentDetails();
+//        Module.addDefaultModules(this);
+//        Teacher.addDefaultTeachers(this);
 
+
+    }
+
+    private void isLoggedIn() {
+        if (db.getStudentEmail(studentID).isEmpty()) {
+            Helper.goToActivity(this, LoginActivity.class);
+        }
+    }
+
+
+    private void showStudentDetails() {
+        Student student = db.getUserFirstAndLastName(studentID);
+        // show name
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View header = navigationView.getHeaderView(0);
+        TextView user_dashboard = (TextView) header.findViewById(R.id.nav_username_label);
+        user_dashboard.setText(student.getName());
+        // show email
+        String email = db.getStudentEmail(studentID);
+        TextView lblEmail = (TextView) header.findViewById(R.id.nav_email_label);
+        lblEmail.setText(email);
+    }
+
+    private void setupNavDrawer(Bundle savedInstanceState) {
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -36,49 +82,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         if (savedInstanceState == null) {
-
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ReminderFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_reminder);
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    new CalendarFragment()).commit();
+            navigationView.setCheckedItem(R.id.nav_calendar);
         }
+
     }
 
-
-    private void loadFragment(Fragment fragment) {
-        // create a FragmentManager
-        FragmentManager fm = getSupportFragmentManager();
-        // create a FragmentTransaction to begin the transaction and replace the Fragment
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        // replace the FrameLayout with new Fragment
-        fragmentTransaction.replace(R.id.fragment_container, fragment);
-        fragmentTransaction.commit(); // save the changes
+    private void logout() {
+        AccountPreferences.logout(this);
+        Helper.goToActivity(this, LoginActivity.class);
     }
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.nav_message:
-//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-//                        new MessageFragment()).commit();
-//                break;
-//            case R.id.nav_chat:
-//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-//                        new ChatFragment()).commit();
-//                break;
-//            case R.id.nav_profile:
-//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-//                        new ProfileFragment()).commit();
-//                break;
-//            case R.id.nav_share:
-//                Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show();
-//                break;
-//            case R.id.nav_send:
-//                Toast.makeText(this, "Send", Toast.LENGTH_SHORT).show();
-//                break;
-//        }
+        if (item.getItemId() == R.id.nav_logout) logout();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FragmentHandler().getSelectedFragment(item)).commit();
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
     @Override
     public void onBackPressed() {
@@ -88,4 +113,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
+
+
 }

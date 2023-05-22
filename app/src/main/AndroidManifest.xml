@@ -12,7 +12,27 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
-
+        <activity
+            android:name=".EditModuleTeacherActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditModuleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditSemesterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditClassesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditCourseworkActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

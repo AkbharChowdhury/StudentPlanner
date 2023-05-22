@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/courseworkSearchLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:elevation="8dp"
+
+    app:cardCornerRadius="16dp"
+
+    app:cardElevation="12dp"
+
+
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_coursework_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="My title"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_coursework_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_coursework_title"
+            android:padding="5dp"
+            android:text="cw description"
+            android:textColor="@color/black" />
+
+
+
+
+
+        <TextView
+            android:id="@+id/tv_coursework_deadline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_coursework_desc"
+            android:padding="5dp"
+            android:text="Wed 24"
+            android:textColor="@color/black" />
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_coursework_deadline_left"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentEnd="@id/tv_coursework_deadline"-->
+<!--            android:padding="5dp"-->
+<!--            android:text="in 5 days"-->
+<!--            android:textColor="@color/black" />-->
+
+        <TextView
+            android:id="@+id/tv_coursework_priority"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_coursework_deadline"
+            android:padding="5dp"
+            android:text="High"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
+
+
+
+        <TextView
+            android:id="@+id/tv_coursework_module"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_coursework_priority"
+            android:padding="5dp"
+            android:text="COMP152 Test"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tv_coursework_completed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_coursework_module"
+            android:padding="5dp"
+            android:text="Completed"
+            android:textColor="@color/black" />
+
+
+        <TextView
+            android:id="@+id/tv_coursework_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_coursework_module"
+            android:padding="5dp"
+            android:text="ID 2"
+            android:visibility="invisible"
+            android:textColor="@color/black" />
+
+
+        <TextView
+            android:id="@+id/tv_time_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_coursework_desc"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="5dp"
+            android:text="in 5 days"
+            android:textSize="20sp" />
+<!--            android:layout_below="@id/instructions"-->
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
