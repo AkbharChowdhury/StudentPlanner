@@ -10,18 +10,13 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 
 import com.google.android.material.navigation.NavigationView;
-import com.studentplanner.studentplanner.models.Coursework;
-import com.studentplanner.studentplanner.models.Module;
+import com.studentplanner.studentplanner.fragments.ReminderFragment;
 import com.studentplanner.studentplanner.models.Student;
-import com.studentplanner.studentplanner.models.Teacher;
 import com.studentplanner.studentplanner.utils.AccountPreferences;
+import com.studentplanner.studentplanner.utils.FragmentHandler;
 import com.studentplanner.studentplanner.utils.Helper;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
@@ -100,8 +95,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new CalendarFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_calendar);
+                    new ReminderFragment()).commit();
+            navigationView.setCheckedItem(R.id.nav_reminder);
         }
 
     }

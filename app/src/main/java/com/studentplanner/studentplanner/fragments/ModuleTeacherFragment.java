@@ -1,4 +1,4 @@
-package com.studentplanner.studentplanner;
+package com.studentplanner.studentplanner.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -8,7 +8,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
@@ -16,24 +15,27 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.studentplanner.studentplanner.adapters.CourseworkAdapter;
-import com.studentplanner.studentplanner.models.Coursework;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.studentplanner.studentplanner.DatabaseHelper;
+import com.studentplanner.studentplanner.R;
+import com.studentplanner.studentplanner.adapters.ModuleTeacherAdapter;
+import com.studentplanner.studentplanner.models.ModuleTeacher;
 import com.studentplanner.studentplanner.utils.Helper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ReminderFragment extends Fragment {
+public class ModuleTeacherFragment extends Fragment {
     private View view;
     private Context context;
 
     private RecyclerView recyclerView;
-    private CourseworkAdapter adapter;
-    private List<Coursework> list;
+    private ModuleTeacherAdapter adapter;
+    private List<ModuleTeacher> list;
 
 
-    public ReminderFragment() {
+    public ModuleTeacherFragment() {
 
     }
 
@@ -53,17 +55,19 @@ public class ReminderFragment extends Fragment {
         DatabaseHelper db = DatabaseHelper.getInstance(context);
         Helper.getIntentMessage(context, getActivity().getIntent().getExtras());
 
-        list = db.getUpComingCourseworkByMonth();
-        recyclerView = view.findViewById(R.id.reminderRecyclerView);
+        list = db.getModuleTeachers();
+        recyclerView = view.findViewById(R.id.moduleTeacherRecyclerView);
         buildRecyclerView();
+        FloatingActionButton button = (FloatingActionButton) view.findViewById(R.id.fab_add_teacher_module);
+        button.setOnClickListener(v -> Helper.longToastMessage(context, "Hello"));
 
         return view;
     }
 
     private void initFragment(LayoutInflater inflater, ViewGroup container) {
-        view = inflater.inflate(R.layout.fragment_reminder, container, false);
+        view = inflater.inflate(R.layout.fragment_module_teacher, container, false);
         context = getContext();
-        getActivity().setTitle(context.getString(R.string.my_reminders));
+        getActivity().setTitle(context.getString(R.string.my_teachers_modules));
         setHasOptionsMenu(true);
 
     }
@@ -71,7 +75,7 @@ public class ReminderFragment extends Fragment {
 
     private void buildRecyclerView() {
         if (list.size() > 0) {
-            adapter = new CourseworkAdapter(list, context, getActivity());
+            adapter = new ModuleTeacherAdapter(list, context, getActivity());
             LinearLayoutManager manager = new LinearLayoutManager(context);
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(manager);
@@ -79,8 +83,8 @@ public class ReminderFragment extends Fragment {
             return;
         }
 
-        view.findViewById(R.id.emptyCourseworkReminderImage).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.emptyCourseworkReminderText).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.emptyTeacherModuleImage).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.emptyTeacherModuleText).setVisibility(View.VISIBLE);
 
 
     }
@@ -114,19 +118,19 @@ public class ReminderFragment extends Fragment {
 
 
     private void filter(String text) {
-        List<Coursework> filteredList = new ArrayList<>();
-
-        for (Coursework coursework : list) {
-            String name = coursework.getTitle().toLowerCase();
-            if (name.contains(text.toLowerCase())) {
-                filteredList.add(coursework);
-            }
-        }
-        if (filteredList.isEmpty()) {
-            Toast.makeText(context, "No Data Found..", Toast.LENGTH_SHORT).show();
-        } else {
-            adapter.filterList(filteredList);
-        }
+        List<ModuleTeacher> filteredList = new ArrayList<>();//
+//        for (Teacher teacher : list) {
+//            String name = teacher.getFirstname().toLowerCase();
+//            if (name.contains(text.toLowerCase())) {
+//                filteredList.add(teacher);
+//            }
+//        }
+//        if (filteredList.isEmpty()) {
+//            Toast.makeText(context, "No Data Found..", Toast.LENGTH_SHORT).show();
+//        } else {
+//            adapter.filterList(filteredList);
+//        }
+//    }
     }
 
 }

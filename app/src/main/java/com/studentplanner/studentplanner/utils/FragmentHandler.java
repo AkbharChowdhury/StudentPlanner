@@ -1,9 +1,18 @@
-package com.studentplanner.studentplanner;
+package com.studentplanner.studentplanner.utils;
 
-import android.content.Context;
 import android.view.MenuItem;
 
 import androidx.fragment.app.Fragment;
+
+import com.studentplanner.studentplanner.CalendarFragment;
+import com.studentplanner.studentplanner.CourseworkFragment;
+import com.studentplanner.studentplanner.fragments.ModuleFragment;
+import com.studentplanner.studentplanner.fragments.ModuleTeacherFragment;
+import com.studentplanner.studentplanner.R;
+import com.studentplanner.studentplanner.TeacherFragment;
+import com.studentplanner.studentplanner.fragments.ReminderFragment;
+import com.studentplanner.studentplanner.fragments.SemesterFragment;
+
 public final class FragmentHandler {
 
 

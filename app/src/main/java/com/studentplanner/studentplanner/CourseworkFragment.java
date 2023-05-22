@@ -57,8 +57,7 @@ public class CourseworkFragment extends Fragment {
         list = db.getCoursework();
         recyclerView = view.findViewById(R.id.courseworkRecyclerView);
         buildRecyclerView();
-        FloatingActionButton button = (FloatingActionButton) view.findViewById(R.id.fab_add_coursework);
-        button.setOnClickListener(v -> Helper.longToastMessage(context, "Hello"));
+        view.findViewById(R.id.fab_add_coursework).setOnClickListener(v -> Helper.goToActivity(getActivity(), AddCourseworkActivity.class));
 
         return view;
     }

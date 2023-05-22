@@ -11,6 +11,7 @@ import android.widget.*;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.enums.DatePickerType;
+import com.studentplanner.studentplanner.fragments.ReminderFragment;
 import com.studentplanner.studentplanner.models.Semester;
 import com.studentplanner.studentplanner.utils.CalendarUtils;
 import com.studentplanner.studentplanner.utils.DatePickerFragment;

@@ -1,4 +1,4 @@
-package com.studentplanner.studentplanner;
+package com.studentplanner.studentplanner.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -16,25 +16,26 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.studentplanner.studentplanner.adapters.ModuleAdapter;
-import com.studentplanner.studentplanner.models.Module;
+import com.studentplanner.studentplanner.DatabaseHelper;
+import com.studentplanner.studentplanner.R;
+import com.studentplanner.studentplanner.adapters.CourseworkAdapter;
+import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.utils.Helper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ModuleFragment extends Fragment {
+public class ReminderFragment extends Fragment {
     private View view;
     private Context context;
 
     private RecyclerView recyclerView;
-    private ModuleAdapter adapter;
-    private List<Module> list;
+    private CourseworkAdapter adapter;
+    private List<Coursework> list;
 
 
-    public ModuleFragment() {
+    public ReminderFragment() {
 
     }
 
@@ -49,24 +50,22 @@ public class ModuleFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        initFragment(inflater,container);
+        initFragment(inflater, container);
 
         DatabaseHelper db = DatabaseHelper.getInstance(context);
         Helper.getIntentMessage(context, getActivity().getIntent().getExtras());
 
-        list = db.getModules();
-        recyclerView = view.findViewById(R.id.moduleRecyclerView);
+        list = db.getUpComingCourseworkByMonth();
+        recyclerView = view.findViewById(R.id.reminderRecyclerView);
         buildRecyclerView();
-        FloatingActionButton button = (FloatingActionButton) view.findViewById(R.id.fab_add_module);
-        button.setOnClickListener(v -> Helper.longToastMessage(context, "Hello"));
 
         return view;
     }
 
     private void initFragment(LayoutInflater inflater, ViewGroup container) {
-        view = inflater.inflate(R.layout.fragment_module, container, false);
+        view = inflater.inflate(R.layout.fragment_reminder, container, false);
         context = getContext();
-        getActivity().setTitle(context.getString(R.string.my_modules));
+        getActivity().setTitle(context.getString(R.string.my_reminders));
         setHasOptionsMenu(true);
 
     }
@@ -74,7 +73,7 @@ public class ModuleFragment extends Fragment {
 
     private void buildRecyclerView() {
         if (list.size() > 0) {
-            adapter = new ModuleAdapter(list, context, getActivity());
+            adapter = new CourseworkAdapter(list, context, getActivity());
             LinearLayoutManager manager = new LinearLayoutManager(context);
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(manager);
@@ -82,8 +81,8 @@ public class ModuleFragment extends Fragment {
             return;
         }
 
-        view.findViewById(R.id.emptyModuleImage).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.emptyModuleText).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.emptyCourseworkReminderImage).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.emptyCourseworkReminderText).setVisibility(View.VISIBLE);
 
 
     }
@@ -117,13 +116,12 @@ public class ModuleFragment extends Fragment {
 
 
     private void filter(String text) {
-        List<Module> filteredList = new ArrayList<>();
+        List<Coursework> filteredList = new ArrayList<>();
 
-        for (Module module : list) {
-            String name = module.getModuleName().toLowerCase();
-            String code =  module.getModuleName().toLowerCase();
-            if (name.contains(text.toLowerCase()) | code.contains(text.toLowerCase())) {
-                filteredList.add(module);
+        for (Coursework coursework : list) {
+            String name = coursework.getTitle().toLowerCase();
+            if (name.contains(text.toLowerCase())) {
+                filteredList.add(coursework);
             }
         }
         if (filteredList.isEmpty()) {

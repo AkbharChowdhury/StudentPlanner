@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.widget.ArrayAdapter;
@@ -15,6 +14,7 @@ import android.widget.TimePicker;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.enums.TimePickerType;
+import com.studentplanner.studentplanner.fragments.ReminderFragment;
 import com.studentplanner.studentplanner.models.Classes;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.Semester;
@@ -24,8 +24,6 @@ import com.studentplanner.studentplanner.utils.TimePickerFragment;
 import com.studentplanner.studentplanner.utils.Validation;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
