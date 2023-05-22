@@ -35,6 +35,8 @@ import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import org.apache.commons.text.WordUtils;
+
 public final class Helper {
     private static final String INTENT_MESSAGE = "message";
 
@@ -287,6 +289,10 @@ public final class Helper {
         String year = String.valueOf(now.getYear());
         String month = now.getMonth().toString();
         return "Upcoming coursework " + month + " " + year;
+    }
+
+    public static String getReminderTitle(){
+        return WordUtils.capitalizeFully(String.format("Reminders %s %s", LocalDate.now().getMonth().toString(), LocalDate.now().getYear()));
     }
 
 

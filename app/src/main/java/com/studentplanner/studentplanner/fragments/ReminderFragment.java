@@ -22,8 +22,12 @@ import com.studentplanner.studentplanner.adapters.CourseworkAdapter;
 import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.utils.Helper;
 
+import org.apache.commons.text.WordUtils;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 public class ReminderFragment extends Fragment {
@@ -65,7 +69,8 @@ public class ReminderFragment extends Fragment {
     private void initFragment(LayoutInflater inflater, ViewGroup container) {
         view = inflater.inflate(R.layout.fragment_reminder, container, false);
         context = getContext();
-        getActivity().setTitle(context.getString(R.string.my_reminders));
+
+        getActivity().setTitle(Helper.getReminderTitle());
         setHasOptionsMenu(true);
 
     }
