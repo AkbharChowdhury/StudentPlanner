@@ -1,64 +1,131 @@
 package com.studentplanner.studentplanner;
 
+import android.content.Context;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ModuleFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.studentplanner.studentplanner.adapters.ModuleAdapter;
+import com.studentplanner.studentplanner.models.Coursework;
+import com.studentplanner.studentplanner.models.Module;
+import com.studentplanner.studentplanner.utils.Helper;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class ModuleFragment extends Fragment {
+    private View view;
+    private Context context;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private RecyclerView recyclerView;
+    private ModuleAdapter adapter;
+    private List<Module> list;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public ModuleFragment() {
-        // Required empty public constructor
+
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ModuleFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ModuleFragment newInstance(String param1, String param2) {
-        ModuleFragment fragment = new ModuleFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_module, container, false);
+        view = inflater.inflate(R.layout.fragment_module, container, false);
+        context = getContext();
+        getActivity().setTitle("View Module");
+        setHasOptionsMenu(true);
+
+
+        DatabaseHelper db = DatabaseHelper.getInstance(context);
+        Helper.getIntentMessage(context, getActivity().getIntent().getExtras());
+
+        list = db.getModules();
+        recyclerView = view.findViewById(R.id.moduleRecyclerView);
+        buildRecyclerView();
+        view.findViewById(R.id.fab_add_module).setOnClickListener(v -> Helper.goToActivity(getActivity(), LoginActivity.class));
+
+        return view;
     }
+
+
+    private void buildRecyclerView() {
+        if (list.size() > 0) {
+            adapter = new ModuleAdapter(list, context, getActivity());
+            LinearLayoutManager manager = new LinearLayoutManager(context);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(manager);
+            recyclerView.setAdapter(adapter);
+            return;
+        }
+
+        view.findViewById(R.id.emptyModuleImage).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.emptyModuleText).setVisibility(View.VISIBLE);
+
+
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+
+
+        if (list.size() > 0) {
+            getActivity().getMenuInflater().inflate(R.menu.search_menu, menu);
+
+            MenuItem searchItem = menu.findItem(R.id.actionSearch);
+            SearchView searchView = (SearchView) searchItem.getActionView();
+
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    filter(newText);
+                    return false;
+                }
+            });
+
+        }
+    }
+
+
+    private void filter(String text) {
+        List<Module> filteredList = new ArrayList<>();
+
+        for (Module module : list) {
+            String name = module.getModuleName().toLowerCase();
+            String code =  module.getModuleName().toLowerCase();
+            if (name.contains(text.toLowerCase()) | code.contains(text.toLowerCase())) {
+                filteredList.add(module);
+            }
+        }
+        if (filteredList.isEmpty()) {
+            Toast.makeText(context, "No Data Found..", Toast.LENGTH_SHORT).show();
+        } else {
+            adapter.filterList(filteredList);
+        }
+    }
+
 }
