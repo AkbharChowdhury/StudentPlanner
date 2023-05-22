@@ -1,11 +1,13 @@
 package com.studentplanner.studentplanner;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -58,6 +60,8 @@ public class AddClassesActivity extends AppCompatActivity implements TimePickerD
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_classes);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         txtDayError = findViewById(R.id.txtDayError);
         txtSemesterError = findViewById(R.id.txtSemesterErrorClasses);
@@ -187,5 +191,12 @@ public class AddClassesActivity extends AppCompatActivity implements TimePickerD
 
             return false;
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if (item.getItemId() == android.R.id.home) finish();
+        return true;
     }
 }
