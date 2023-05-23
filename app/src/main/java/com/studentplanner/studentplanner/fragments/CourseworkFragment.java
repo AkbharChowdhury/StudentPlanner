@@ -1,5 +1,6 @@
 package com.studentplanner.studentplanner.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,7 +9,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
@@ -20,6 +20,7 @@ import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.adapters.CourseworkAdapter;
 import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
+import com.studentplanner.studentplanner.databinding.FragmentCourseworkBinding;
 import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.utils.Helper;
 
@@ -28,46 +29,44 @@ import java.util.List;
 
 
 public class CourseworkFragment extends Fragment {
-    private View view;
     private Context context;
+    private Activity activity;
 
     private RecyclerView recyclerView;
     private CourseworkAdapter adapter;
     private List<Coursework> list;
+    private FragmentCourseworkBinding binding;
 
 
     public CourseworkFragment() {
 
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        initFragment(inflater, container);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        initFragment();
+        binding = FragmentCourseworkBinding.inflate(inflater, container, false);
+        binding.fabAdd.setOnClickListener((v -> Helper.goToActivity(activity, AddCourseworkActivity.class)));
+
 
         DatabaseHelper db = DatabaseHelper.getInstance(context);
-        Helper.getIntentMessage(context, getActivity().getIntent().getExtras());
+        Helper.getIntentMessage(context, activity.getIntent().getExtras());
 
         list = db.getCoursework();
-        recyclerView = view.findViewById(R.id.courseworkRecyclerView);
+        recyclerView = binding.recyclerView;
         buildRecyclerView();
-        view.findViewById(R.id.fab_add_coursework).setOnClickListener(v -> Helper.goToActivity(getActivity(), AddCourseworkActivity.class));
-
-        return view;
+        return binding.getRoot();
     }
 
-    private void initFragment(LayoutInflater inflater, ViewGroup container) {
-        view = inflater.inflate(R.layout.fragment_coursework, container, false);
+    private void initFragment() {
         context = getContext();
-        getActivity().setTitle(context.getString(R.string.my_coursework));
+        activity = getActivity();
+        activity.setTitle(context.getString(R.string.my_coursework));
         setHasOptionsMenu(true);
 
     }
@@ -75,7 +74,7 @@ public class CourseworkFragment extends Fragment {
 
     private void buildRecyclerView() {
         if (list.size() > 0) {
-            adapter = new CourseworkAdapter(list, context, getActivity());
+            adapter = new CourseworkAdapter(list, context, activity);
             LinearLayoutManager manager = new LinearLayoutManager(context);
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(manager);
@@ -83,8 +82,8 @@ public class CourseworkFragment extends Fragment {
             return;
         }
 
-        view.findViewById(R.id.emptyCourseworkImage).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.emptyCourseworkText).setVisibility(View.VISIBLE);
+        binding.emptyImage.setVisibility(View.VISIBLE);
+        binding.emptyText.setVisibility(View.VISIBLE);
 
 
     }
@@ -95,7 +94,7 @@ public class CourseworkFragment extends Fragment {
 
 
         if (list.size() > 0) {
-            getActivity().getMenuInflater().inflate(R.menu.search_menu, menu);
+            activity.getMenuInflater().inflate(R.menu.search_menu, menu);
 
             MenuItem searchItem = menu.findItem(R.id.actionSearch);
             SearchView searchView = (SearchView) searchItem.getActionView();
@@ -126,11 +125,19 @@ public class CourseworkFragment extends Fragment {
                 filteredList.add(coursework);
             }
         }
+
         if (filteredList.isEmpty()) {
-            Toast.makeText(context, "No Data Found..", Toast.LENGTH_SHORT).show();
+            Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
         } else {
             adapter.filterList(filteredList);
         }
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
 }

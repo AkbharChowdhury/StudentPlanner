@@ -1,5 +1,6 @@
 package com.studentplanner.studentplanner.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,7 +9,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
@@ -16,12 +16,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.adapters.SemesterAdapter;
 import com.studentplanner.studentplanner.addActivities.AddSemesterActivity;
-import com.studentplanner.studentplanner.databinding.FragmentMessageBinding;
 import com.studentplanner.studentplanner.databinding.FragmentSemesterBinding;
 import com.studentplanner.studentplanner.models.Semester;
 import com.studentplanner.studentplanner.utils.Helper;
@@ -31,8 +29,8 @@ import java.util.List;
 
 
 public class SemesterFragment extends Fragment {
-    private View view;
     private Context context;
+    private Activity activity;
 
     private RecyclerView recyclerView;
     private SemesterAdapter adapter;
@@ -44,44 +42,38 @@ public class SemesterFragment extends Fragment {
 
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        initFragment(inflater,container);
-        binding = FragmentSemesterBinding.inflate(inflater,container,false);
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        initFragment();
+        binding = FragmentSemesterBinding.inflate(inflater, container, false);
 
         DatabaseHelper db = DatabaseHelper.getInstance(context);
-        Helper.getIntentMessage(context, getActivity().getIntent().getExtras());
+        Helper.getIntentMessage(context, activity.getIntent().getExtras());
 
         list = db.getSemester();
         recyclerView = binding.recyclerView;
         buildRecyclerView();
-        binding.fabAdd.setOnClickListener((v -> Helper.goToActivity(getActivity(), AddSemesterActivity.class)));
+        binding.fabAdd.setOnClickListener((v -> Helper.goToActivity(activity, AddSemesterActivity.class)));
         return binding.getRoot();
     }
 
-    private void initFragment(LayoutInflater inflater, ViewGroup container) {
-        view = inflater.inflate(R.layout.fragment_semester, container, false);
+    private void initFragment() {
         context = getContext();
-        getActivity().setTitle(context.getString(R.string.my_semesters));
+        activity = getActivity();
+        activity.setTitle(context.getString(R.string.my_semesters));
         setHasOptionsMenu(true);
-
 
     }
 
 
     private void buildRecyclerView() {
         if (list.size() > 0) {
-            adapter = new SemesterAdapter(list, context, getActivity());
+            adapter = new SemesterAdapter(list, context, activity);
             LinearLayoutManager manager = new LinearLayoutManager(context);
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(manager);
@@ -101,7 +93,7 @@ public class SemesterFragment extends Fragment {
 
 
         if (list.size() > 0) {
-            getActivity().getMenuInflater().inflate(R.menu.search_menu, menu);
+            activity.getMenuInflater().inflate(R.menu.search_menu, menu);
 
             MenuItem searchItem = menu.findItem(R.id.actionSearch);
             SearchView searchView = (SearchView) searchItem.getActionView();
@@ -132,13 +124,13 @@ public class SemesterFragment extends Fragment {
                 filteredList.add(semester);
             }
         }
+
         if (filteredList.isEmpty()) {
-            Toast.makeText(context, "No Data Found..", Toast.LENGTH_SHORT).show();
+            Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
         } else {
             adapter.filterList(filteredList);
         }
     }
-
 
 
     @Override
@@ -146,6 +138,5 @@ public class SemesterFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-
 
 }

@@ -16,7 +16,6 @@ import android.widget.DatePicker;
 import android.widget.TimePicker;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.studentplanner.studentplanner.fragments.CourseworkFragment;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.models.Coursework;
@@ -86,7 +85,7 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
             if (form.validateAddCourseworkForm(new Coursework(txtTitle, txtModuleError, errorPriority))) {
                 if (db.addCoursework(getCourseworkDetails())) {
                     Helper.longToastMessage(this, "Coursework Added");
-                    Helper.setRedirectMessageFragment(this, CourseworkFragment.class, "Coursework Added");
+//                    Helper.setRedirectMessageFragment(this, CourseworkFragment.class, "Coursework Added");
                 }
 
             }

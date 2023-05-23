@@ -18,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.textfield.TextInputLayout;
-import com.studentplanner.studentplanner.fragments.CourseworkFragment;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.models.Coursework;
@@ -70,7 +69,7 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
             if (form.validateEditCourseworkForm(txtTitle, txtDeadline, txtDeadlineError)){
                 if (db.updateCoursework(getCourseworkDetails())) {
                     Helper.longToastMessage(this,"Coursework Updated");
-                    Helper.setRedirectMessageFragment(this, CourseworkFragment.class, "Coursework Updated");
+//                    Helper.setRedirectMessageFragment(this, CourseworkFragment.class, "Coursework Updated");
                 }
             }
         });
@@ -194,7 +193,7 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
                     .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
                         int id = getIntent().getIntExtra(CourseworkTable.COLUMN_ID, 0);
                         if (db.deleteRecord(CourseworkTable.TABLE_NAME, CourseworkTable.COLUMN_ID, id)){
-                            Helper.setRedirectMessageFragment(this, CourseworkFragment.class, "coursework deleted");
+//                            Helper.setRedirectMessageFragment(this, CourseworkFragment.class, "coursework deleted");
                         }
 
 

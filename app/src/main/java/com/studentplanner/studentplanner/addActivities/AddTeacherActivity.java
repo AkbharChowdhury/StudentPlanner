@@ -1,7 +1,9 @@
 package com.studentplanner.studentplanner.addActivities;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -23,6 +25,8 @@ public class AddTeacherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_teacher);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         db = DatabaseHelper.getInstance(this);
         form = new Validation(this, db);
         txtFirstName = findViewById(R.id.txtFirstnameTeacher);
@@ -48,5 +52,11 @@ public class AddTeacherActivity extends AppCompatActivity {
     private Teacher getTeacherDetails() {
         return new Teacher(Helper.trimStr(txtFirstName), Helper.trimStr(txtLastName),Helper.trimStr(txtEmail) );
 
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if (item.getItemId() == android.R.id.home) finish();
+        return true;
     }
 }

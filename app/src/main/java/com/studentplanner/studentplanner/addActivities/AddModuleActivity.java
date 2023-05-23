@@ -8,7 +8,6 @@ import android.view.MenuItem;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
-import com.studentplanner.studentplanner.ModuleFragment;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.databinding.ActivityAddModuleBinding;
 import com.studentplanner.studentplanner.models.Module;
@@ -42,7 +41,7 @@ public class AddModuleActivity extends AppCompatActivity {
         findViewById(R.id.btn_add_module).setOnClickListener(v -> {
             if (form.validateAddModuleForm(new Module(txtModuleCode, txtModuleName))) {
                 if (db.addModule(getModuleDetails())) {
-                    Helper.setRedirectMessageFragment(this, ModuleFragment.class,"Module added");
+//                    Helper.setRedirectMessageFragment(this, ModuleFragment.class,"Module added");
                 }
             }
 

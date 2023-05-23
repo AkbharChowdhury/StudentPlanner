@@ -1,5 +1,6 @@
 package com.studentplanner.studentplanner.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,7 +9,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
@@ -16,10 +16,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.adapters.TeacherAdapter;
+import com.studentplanner.studentplanner.addActivities.AddTeacherActivity;
+import com.studentplanner.studentplanner.databinding.FragmentTeacherBinding;
 import com.studentplanner.studentplanner.models.Teacher;
 import com.studentplanner.studentplanner.utils.Helper;
 
@@ -28,47 +29,44 @@ import java.util.List;
 
 
 public class TeacherFragment extends Fragment {
-    private View view;
     private Context context;
+    private Activity activity;
 
     private RecyclerView recyclerView;
     private TeacherAdapter adapter;
     private List<Teacher> list;
+    private FragmentTeacherBinding binding;
 
 
     public TeacherFragment() {
 
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        initFragment(inflater, container);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        initFragment();
+        binding = FragmentTeacherBinding.inflate(inflater, container, false);
+        binding.fabAdd.setOnClickListener((v -> Helper.goToActivity(activity, AddTeacherActivity.class)));
+
 
         DatabaseHelper db = DatabaseHelper.getInstance(context);
-        Helper.getIntentMessage(context, getActivity().getIntent().getExtras());
+        Helper.getIntentMessage(context, activity.getIntent().getExtras());
 
         list = db.getTeachers();
-        recyclerView = view.findViewById(R.id.teacherRecyclerView);
+        recyclerView = binding.recyclerView;
         buildRecyclerView();
-        FloatingActionButton button = (FloatingActionButton) view.findViewById(R.id.fab_add_teacher);
-        button.setOnClickListener(v -> Helper.longToastMessage(context, "Hello"));
-
-        return view;
+        return binding.getRoot();
     }
 
-    private void initFragment(LayoutInflater inflater, ViewGroup container) {
-        view = inflater.inflate(R.layout.fragment_teacher, container, false);
+    private void initFragment() {
         context = getContext();
-        getActivity().setTitle(context.getString(R.string.my_teachers));
+        activity = getActivity();
+        activity.setTitle(context.getString(R.string.my_teachers));
         setHasOptionsMenu(true);
 
     }
@@ -76,7 +74,7 @@ public class TeacherFragment extends Fragment {
 
     private void buildRecyclerView() {
         if (list.size() > 0) {
-            adapter = new TeacherAdapter(list, context, getActivity());
+            adapter = new TeacherAdapter(list, context, activity);
             LinearLayoutManager manager = new LinearLayoutManager(context);
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(manager);
@@ -84,8 +82,8 @@ public class TeacherFragment extends Fragment {
             return;
         }
 
-        view.findViewById(R.id.emptyTeacherImage).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.emptyTeacherText).setVisibility(View.VISIBLE);
+        binding.emptyImage.setVisibility(View.VISIBLE);
+        binding.emptyText.setVisibility(View.VISIBLE);
 
 
     }
@@ -96,7 +94,7 @@ public class TeacherFragment extends Fragment {
 
 
         if (list.size() > 0) {
-            getActivity().getMenuInflater().inflate(R.menu.search_menu, menu);
+            activity.getMenuInflater().inflate(R.menu.search_menu, menu);
 
             MenuItem searchItem = menu.findItem(R.id.actionSearch);
             SearchView searchView = (SearchView) searchItem.getActionView();
@@ -122,16 +120,25 @@ public class TeacherFragment extends Fragment {
         List<Teacher> filteredList = new ArrayList<>();
 
         for (Teacher teacher : list) {
-            String name = teacher.getFirstname().toLowerCase();
-            if (name.contains(text.toLowerCase())) {
+            String name = teacher.getName().toLowerCase().trim();
+            String t = text.toLowerCase().trim();
+            if (name.contains(t)) {
                 filteredList.add(teacher);
             }
         }
+
         if (filteredList.isEmpty()) {
-            Toast.makeText(context, "No Data Found..", Toast.LENGTH_SHORT).show();
+            Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
         } else {
             adapter.filterList(filteredList);
         }
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
 }

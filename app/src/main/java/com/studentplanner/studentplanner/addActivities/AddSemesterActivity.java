@@ -15,6 +15,7 @@ import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.enums.DatePickerType;
 import com.studentplanner.studentplanner.fragments.ReminderFragment;
+import com.studentplanner.studentplanner.fragments.SemesterFragment;
 import com.studentplanner.studentplanner.models.Semester;
 import com.studentplanner.studentplanner.utils.CalendarUtils;
 import com.studentplanner.studentplanner.utils.DatePickerFragment;
@@ -52,7 +53,7 @@ public class AddSemesterActivity extends AppCompatActivity implements DatePicker
 
             if (form.validateSemesterForm(txtSemesterName)){
                 if (db.addSemester(new Semester(name, start, end))){
-                    Helper.setRedirectMessageFragment(this, ReminderFragment.class, "Semester Added");
+                    Helper.setRedirectMessageFragment(this, SemesterFragment.class, "Semester Added");
 
                 }
 

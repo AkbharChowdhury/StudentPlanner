@@ -1,5 +1,6 @@
 package com.studentplanner.studentplanner.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,7 +9,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
@@ -19,58 +19,52 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.adapters.CourseworkAdapter;
+import com.studentplanner.studentplanner.databinding.FragmentReminderBinding;
 import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.utils.Helper;
 
-import org.apache.commons.text.WordUtils;
-
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 
 public class ReminderFragment extends Fragment {
-    private View view;
     private Context context;
+    private Activity activity;
 
     private RecyclerView recyclerView;
     private CourseworkAdapter adapter;
     private List<Coursework> list;
+    private FragmentReminderBinding binding;
 
 
     public ReminderFragment() {
 
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        initFragment(inflater, container);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        initFragment();
+        binding = FragmentReminderBinding.inflate(inflater, container, false);
+
 
         DatabaseHelper db = DatabaseHelper.getInstance(context);
-        Helper.getIntentMessage(context, getActivity().getIntent().getExtras());
+        Helper.getIntentMessage(context, activity.getIntent().getExtras());
 
         list = db.getUpComingCourseworkByMonth();
-        recyclerView = view.findViewById(R.id.reminderRecyclerView);
+        recyclerView = binding.recyclerView;
         buildRecyclerView();
-
-        return view;
+        return binding.getRoot();
     }
 
-    private void initFragment(LayoutInflater inflater, ViewGroup container) {
-        view = inflater.inflate(R.layout.fragment_reminder, container, false);
+    private void initFragment() {
         context = getContext();
-
-        getActivity().setTitle(Helper.getReminderTitle());
+        activity = getActivity();
+        activity.setTitle(Helper.getCurrentMonth());
         setHasOptionsMenu(true);
 
     }
@@ -78,7 +72,7 @@ public class ReminderFragment extends Fragment {
 
     private void buildRecyclerView() {
         if (list.size() > 0) {
-            adapter = new CourseworkAdapter(list, context, getActivity());
+            adapter = new CourseworkAdapter(list, context, activity);
             LinearLayoutManager manager = new LinearLayoutManager(context);
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(manager);
@@ -86,8 +80,8 @@ public class ReminderFragment extends Fragment {
             return;
         }
 
-        view.findViewById(R.id.emptyCourseworkReminderImage).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.emptyCourseworkReminderText).setVisibility(View.VISIBLE);
+        binding.emptyImage.setVisibility(View.VISIBLE);
+        binding.emptyText.setVisibility(View.VISIBLE);
 
 
     }
@@ -98,7 +92,7 @@ public class ReminderFragment extends Fragment {
 
 
         if (list.size() > 0) {
-            getActivity().getMenuInflater().inflate(R.menu.search_menu, menu);
+            activity.getMenuInflater().inflate(R.menu.search_menu, menu);
 
             MenuItem searchItem = menu.findItem(R.id.actionSearch);
             SearchView searchView = (SearchView) searchItem.getActionView();
@@ -129,11 +123,19 @@ public class ReminderFragment extends Fragment {
                 filteredList.add(coursework);
             }
         }
+
         if (filteredList.isEmpty()) {
-            Toast.makeText(context, "No Data Found..", Toast.LENGTH_SHORT).show();
+            Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
         } else {
             adapter.filterList(filteredList);
         }
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
 }

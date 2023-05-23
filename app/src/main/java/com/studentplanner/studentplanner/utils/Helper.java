@@ -59,7 +59,9 @@ public final class Helper {
 
     public static void longToastMessage(Context context, String message) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-
+    }
+    public static void shortToastMessage(Context context, String message) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 
     public static String capitalise(String word) {
@@ -288,7 +290,7 @@ public final class Helper {
         LocalDate now = LocalDate.now();
         String year = String.valueOf(now.getYear());
         String month = now.getMonth().toString();
-        return "Upcoming coursework " + month + " " + year;
+        return WordUtils.capitalizeFully("coursework " + month + " " + year);
     }
 
     public static String getReminderTitle(){

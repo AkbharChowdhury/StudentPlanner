@@ -1,4 +1,5 @@
 <resources>
+    <string name="no_data_found">No Data Found..</string>
     <string name="app_name">StudentPlanner</string>
     <string name="back"><![CDATA[<-]]></string>
     <string name="forward"><![CDATA[->]]></string>

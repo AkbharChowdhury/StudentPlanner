@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
-import com.studentplanner.studentplanner.ModuleFragment;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.tables.ModuleTable;
@@ -41,7 +40,7 @@ public class EditModuleActivity extends AppCompatActivity {
         findViewById(R.id.btn_edit_module).setOnClickListener(v -> {
             if (form.validateEditModuleForm(new Module(txtModuleCode, txtModuleName), excludedModuleCode)) {
                 if (db.updateModule(getModuleDetails())) {
-                    Helper.setRedirectMessageFragment(this, ModuleFragment.class, "Module Updated");
+//                    Helper.setRedirectMessageFragment(this, ModuleFragment.class, "Module Updated");
 
                 }
             }
@@ -83,7 +82,7 @@ public class EditModuleActivity extends AppCompatActivity {
                     .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
                         int id = getIntent().getIntExtra(ModuleTable.COLUMN_ID, 0);
                         if (db.deleteRecord(ModuleTable.TABLE_NAME, ModuleTable.COLUMN_ID, id)){
-                            Helper.setRedirectMessageFragment(this, ModuleFragment.class, "Module deleted");
+//                            Helper.setRedirectMessageFragment(this, ModuleFragment.class, "Module deleted");
                         }
 
 
