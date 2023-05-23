@@ -63,9 +63,9 @@ public class SemesterFragment extends Fragment {
         Helper.getIntentMessage(context, getActivity().getIntent().getExtras());
 
         list = db.getSemester();
-        recyclerView = binding.semesterRecyclerView;
+        recyclerView = binding.recyclerView;
         buildRecyclerView();
-        binding.fabAddSemester.setOnClickListener((v -> Helper.goToActivity(getActivity(), AddSemesterActivity.class)));
+        binding.fabAdd.setOnClickListener((v -> Helper.goToActivity(getActivity(), AddSemesterActivity.class)));
         return binding.getRoot();
     }
 
@@ -89,11 +89,8 @@ public class SemesterFragment extends Fragment {
             return;
         }
 
-//        view.findViewById(R.id.emptySemesterImage).setVisibility(View.VISIBLE);
-//        view.findViewById(R.id.emptySemesterText).setVisibility(View.VISIBLE);
-
-        binding.emptySemesterImage.setVisibility(View.VISIBLE);
-        binding.emptySemesterText.setVisibility(View.VISIBLE);
+        binding.emptyImage.setVisibility(View.VISIBLE);
+        binding.emptyText.setVisibility(View.VISIBLE);
 
 
     }
