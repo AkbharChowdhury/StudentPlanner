@@ -13,9 +13,6 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
-            android:name=".TestActivity"
-            android:exported="true" />
-        <activity
             android:name=".addActivities.AddModuleTeacherCheckboxActivity"
             android:exported="true"
             android:label="@string/add_module_title"
@@ -41,7 +38,6 @@
             android:name=".addActivities.AddSemesterActivity"
             android:exported="true"
             android:label="@string/add_new_semester"
-            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.ActionPar" />
         <activity
             android:name=".addActivities.AddClassesActivity"
@@ -68,7 +64,10 @@
             android:exported="false" />
         <activity
             android:name=".editActivities.EditSemesterActivity"
-            android:exported="false" />
+            android:exported="false"
+
+
+            android:theme="@style/AppTheme.ActionPar" />
         <activity
             android:name=".editActivities.EditClassesActivity"
             android:exported="false" />

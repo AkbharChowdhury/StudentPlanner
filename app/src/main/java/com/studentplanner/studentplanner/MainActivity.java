@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.navigation.NavigationView;
 import com.studentplanner.studentplanner.fragments.ReminderFragment;
+import com.studentplanner.studentplanner.fragments.SemesterFragment;
 import com.studentplanner.studentplanner.models.Student;
 import com.studentplanner.studentplanner.utils.AccountPreferences;
 import com.studentplanner.studentplanner.utils.FragmentHandler;
@@ -96,17 +97,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         if (savedInstanceState == null) {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-//                    new ModuleTestFragment()).commit();
-//            navigationView.setCheckedItem(R.id.nav_module_final);
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    new SemesterFragment()).commit();
+            navigationView.setCheckedItem(R.id.nav_reminder);
 
 
 
 
-            MessageFragment firstFragmentInstance=new MessageFragment();
-            FragmentManager firstFragmentManager=getSupportFragmentManager();
-            FragmentTransaction firstFragmentTransaction=firstFragmentManager.beginTransaction();
-            firstFragmentTransaction.replace(R.id.fragment_container,firstFragmentInstance,"s").addToBackStack(null).commit();
+//            MessageFragment firstFragmentInstance=new MessageFragment();
+//            FragmentManager firstFragmentManager=getSupportFragmentManager();
+//            FragmentTransaction firstFragmentTransaction=firstFragmentManager.beginTransaction();
+//            firstFragmentTransaction.replace(R.id.fragment_container,firstFragmentInstance,"s").addToBackStack(null).commit();
         }
 
     }

@@ -21,6 +21,8 @@ import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.adapters.SemesterAdapter;
 import com.studentplanner.studentplanner.addActivities.AddSemesterActivity;
+import com.studentplanner.studentplanner.databinding.FragmentMessageBinding;
+import com.studentplanner.studentplanner.databinding.FragmentSemesterBinding;
 import com.studentplanner.studentplanner.models.Semester;
 import com.studentplanner.studentplanner.utils.Helper;
 
@@ -35,6 +37,7 @@ public class SemesterFragment extends Fragment {
     private RecyclerView recyclerView;
     private SemesterAdapter adapter;
     private List<Semester> list;
+    private FragmentSemesterBinding binding;
 
 
     public SemesterFragment() {
@@ -53,17 +56,17 @@ public class SemesterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         initFragment(inflater,container);
+        binding = FragmentSemesterBinding.inflate(inflater,container,false);
+
 
         DatabaseHelper db = DatabaseHelper.getInstance(context);
         Helper.getIntentMessage(context, getActivity().getIntent().getExtras());
 
         list = db.getSemester();
-        recyclerView = view.findViewById(R.id.semesterRecyclerView);
+        recyclerView = binding.semesterRecyclerView;
         buildRecyclerView();
-        FloatingActionButton button = (FloatingActionButton) view.findViewById(R.id.fab_add_semester);
-        button.setOnClickListener(v -> Helper.goToActivity(getActivity(), AddSemesterActivity.class));
-
-        return view;
+        binding.fabAddSemester.setOnClickListener((v -> Helper.goToActivity(getActivity(), AddSemesterActivity.class)));
+        return binding.getRoot();
     }
 
     private void initFragment(LayoutInflater inflater, ViewGroup container) {
@@ -71,6 +74,7 @@ public class SemesterFragment extends Fragment {
         context = getContext();
         getActivity().setTitle(context.getString(R.string.my_semesters));
         setHasOptionsMenu(true);
+
 
     }
 
@@ -85,8 +89,11 @@ public class SemesterFragment extends Fragment {
             return;
         }
 
-        view.findViewById(R.id.emptySemesterImage).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.emptySemesterText).setVisibility(View.VISIBLE);
+//        view.findViewById(R.id.emptySemesterImage).setVisibility(View.VISIBLE);
+//        view.findViewById(R.id.emptySemesterText).setVisibility(View.VISIBLE);
+
+        binding.emptySemesterImage.setVisibility(View.VISIBLE);
+        binding.emptySemesterText.setVisibility(View.VISIBLE);
 
 
     }
@@ -134,5 +141,14 @@ public class SemesterFragment extends Fragment {
             adapter.filterList(filteredList);
         }
     }
+
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
 
 }

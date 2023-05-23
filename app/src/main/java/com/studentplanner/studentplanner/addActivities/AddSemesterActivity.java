@@ -1,5 +1,6 @@
 package com.studentplanner.studentplanner.addActivities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -34,6 +35,8 @@ public class AddSemesterActivity extends AppCompatActivity implements DatePicker
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_semester);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         findTextFields();
         setUpDatePickers();
         setDefaultValues();
@@ -134,6 +137,13 @@ public class AddSemesterActivity extends AppCompatActivity implements DatePicker
                 break;
         }
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if (item.getItemId() == android.R.id.home) finish();
+        return true;
     }
 
 

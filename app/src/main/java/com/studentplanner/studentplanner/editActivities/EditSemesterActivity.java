@@ -27,7 +27,7 @@ import com.studentplanner.studentplanner.utils.Validation;
 
 import java.time.LocalDate;
 
-public class EditSemesterActivity extends AppCompatActivity  implements DatePickerDialog.OnDateSetListener{
+public class EditSemesterActivity extends AppCompatActivity  implements DatePickerDialog.OnDateSetListener {
     private DatabaseHelper db;
     private AutoCompleteTextView txtStartDate;
     private AutoCompleteTextView txtEndDate;
@@ -40,6 +40,8 @@ public class EditSemesterActivity extends AppCompatActivity  implements DatePick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         setContentView(R.layout.activity_edit_semester);
         db = DatabaseHelper.getInstance(this);
         form = new Validation(this);
@@ -104,6 +106,7 @@ public class EditSemesterActivity extends AppCompatActivity  implements DatePick
                     .setNegativeButton(getString(R.string.no), (dialog, which) -> dialog.cancel()).create().show();
 
         }
+        if (item.getItemId() == android.R.id.home) finish();
         return super.onOptionsItemSelected(item);
     }
     private void findTextFields() {
@@ -171,6 +174,9 @@ public class EditSemesterActivity extends AppCompatActivity  implements DatePick
         }
 
     }
+
+
+
 
 
 }
