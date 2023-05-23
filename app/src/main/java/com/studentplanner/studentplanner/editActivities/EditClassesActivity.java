@@ -54,6 +54,8 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_classes);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         db = DatabaseHelper.getInstance(this);
 
         findFields();
@@ -192,6 +194,8 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) finish();
+
         if (item.getItemId() == R.id.ic_delete) {
             new AlertDialog.Builder(this)
                     .setMessage("You can't undo this").setCancelable(false)
@@ -224,6 +228,8 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
         }
 
     }
+
+
 
 
 }
