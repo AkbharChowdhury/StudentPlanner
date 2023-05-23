@@ -10,6 +10,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.navigation.NavigationView;
 import com.studentplanner.studentplanner.fragments.ReminderFragment;
@@ -94,9 +96,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new ReminderFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_reminder);
+//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+//                    new ModuleTestFragment()).commit();
+//            navigationView.setCheckedItem(R.id.nav_module_final);
+
+
+
+
+            MessageFragment firstFragmentInstance=new MessageFragment();
+            FragmentManager firstFragmentManager=getSupportFragmentManager();
+            FragmentTransaction firstFragmentTransaction=firstFragmentManager.beginTransaction();
+            firstFragmentTransaction.replace(R.id.fragment_container,firstFragmentInstance,"s").addToBackStack(null).commit();
         }
 
     }

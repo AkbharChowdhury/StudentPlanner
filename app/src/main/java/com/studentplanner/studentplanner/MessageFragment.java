@@ -117,7 +117,7 @@ public class MessageFragment extends Fragment {
 
 //        binding = FragmentMessageBinding.inflate(getLayoutInflater(), container, false);
 //        getActivity().setContentView(binding.getRoot());
-//        binding.fabAddModule.setOnClickListener(v -> Helper.goToActivity(activity, AddModuleActivity.class));
+        binding.fabAddModule.setOnClickListener(v -> Helper.goToActivity(activity, AddModuleActivity.class));
 
     }
 

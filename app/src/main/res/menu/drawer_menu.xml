@@ -42,6 +42,12 @@
             android:id="@+id/nav_messages"
             android:icon="@drawable/baseline_view_module_24"
             android:title="Modules not working" />
+
+
+        <item
+            android:id="@+id/nav_module_final"
+            android:icon="@drawable/baseline_view_module_24"
+            android:title="Final module" />
     </group>
 
     <item android:title="@string/nav_title_profile">

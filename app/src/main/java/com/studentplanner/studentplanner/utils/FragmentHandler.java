@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import com.studentplanner.studentplanner.CalendarFragment;
 import com.studentplanner.studentplanner.MessageFragment;
 import com.studentplanner.studentplanner.ModuleFragment;
+import com.studentplanner.studentplanner.ModuleTestFragment;
 import com.studentplanner.studentplanner.fragments.CourseworkFragment;
 import com.studentplanner.studentplanner.fragments.ModuleTeacherFragment;
 import com.studentplanner.studentplanner.R;
@@ -32,6 +33,7 @@ public final class FragmentHandler {
         if (id == R.id.nav_module_teacher) selectedFragment = new ModuleTeacherFragment();
 
         if (id == R.id.nav_messages) selectedFragment = new MessageFragment();
+        if (id == R.id.nav_module_final) selectedFragment = new ModuleTestFragment();
 
         return selectedFragment;
     }

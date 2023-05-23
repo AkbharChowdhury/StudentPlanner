@@ -20,6 +20,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.adapters.SemesterAdapter;
+import com.studentplanner.studentplanner.addActivities.AddSemesterActivity;
 import com.studentplanner.studentplanner.models.Semester;
 import com.studentplanner.studentplanner.utils.Helper;
 
@@ -60,7 +61,7 @@ public class SemesterFragment extends Fragment {
         recyclerView = view.findViewById(R.id.semesterRecyclerView);
         buildRecyclerView();
         FloatingActionButton button = (FloatingActionButton) view.findViewById(R.id.fab_add_semester);
-        button.setOnClickListener(v -> Helper.longToastMessage(context, "Hello"));
+        button.setOnClickListener(v -> Helper.goToActivity(getActivity(), AddSemesterActivity.class));
 
         return view;
     }
