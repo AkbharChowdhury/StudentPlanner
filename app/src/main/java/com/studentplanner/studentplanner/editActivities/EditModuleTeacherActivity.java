@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
+import com.studentplanner.studentplanner.fragments.ModuleTeacherFragment;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.Teacher;
 import com.studentplanner.studentplanner.tables.ModuleTable;
@@ -29,6 +30,8 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_module_teacher);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         db = DatabaseHelper.getInstance(this);
         setActivityTitle();
 
@@ -120,6 +123,8 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+        if (item.getItemId() == android.R.id.home) finish();
+
         if (id == R.id.item_done) {
 
             List<Integer> teacherIDs = getSelectedTeacherIDList();
@@ -131,8 +136,7 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
                 int moduleID = getIntent().getIntExtra(SELECTED_ID, 0);
 
                 if(db.updateModuleTeacher(teacherIDs, moduleID)){
-
-//                    Helper.setRedirectMessageFragment(this, ModuleTeacherFragment.class, "teacher Updated ");
+                    Helper.setRedirectMessageFragment(this, ModuleTeacherFragment.class, "teacher Updated ");
 
 
                 }

@@ -17,13 +17,14 @@
             android:exported="true"
             android:label="@string/add_module_title"
             android:parentActivityName=".addActivities.AddModuleTeacherActivity"
+
             android:theme="@style/AppTheme.ActionPar" />
         <activity
             android:name=".addActivities.AddModuleTeacherActivity"
             android:exported="true"
             android:label="@string/add_module_title"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.ActionPar" />
+            android:theme="@style/AppTheme.ActionPar"
+            />
         <activity
             android:name=".addActivities.AddModuleActivity"
             android:exported="true"
@@ -59,6 +60,7 @@
             android:theme="@style/AppTheme.ActionPar" />
         <activity
             android:name=".editActivities.EditModuleTeacherActivity"
+            android:theme="@style/AppTheme.ActionPar"
             android:exported="false" />
         <activity
             android:name=".RegisterActivity"

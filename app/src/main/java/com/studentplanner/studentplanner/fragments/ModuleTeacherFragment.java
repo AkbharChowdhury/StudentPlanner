@@ -18,27 +18,27 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
-import com.studentplanner.studentplanner.adapters.ModuleAdapter;
-import com.studentplanner.studentplanner.addActivities.AddModuleActivity;
-import com.studentplanner.studentplanner.databinding.FragmentModuleBinding;
-import com.studentplanner.studentplanner.models.Module;
+import com.studentplanner.studentplanner.adapters.ModuleTeacherAdapter;
+import com.studentplanner.studentplanner.addActivities.AddModuleTeacherActivity;
+import com.studentplanner.studentplanner.databinding.FragmentModuleTeacherBinding;
+import com.studentplanner.studentplanner.models.ModuleTeacher;
 import com.studentplanner.studentplanner.utils.Helper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ModuleFragment extends Fragment {
+public class ModuleTeacherFragment extends Fragment {
     private Context context;
     private Activity activity;
 
     private RecyclerView recyclerView;
-    private ModuleAdapter adapter;
-    private List<Module> list;
-    private FragmentModuleBinding binding;
+    private ModuleTeacherAdapter adapter;
+    private List<ModuleTeacher> list;
+    private FragmentModuleTeacherBinding binding;
 
 
-    public ModuleFragment() {
+    public ModuleTeacherFragment() {
 
     }
 
@@ -50,14 +50,14 @@ public class ModuleFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         initFragment();
-        binding = FragmentModuleBinding.inflate(inflater, container, false);
-        binding.fabAdd.setOnClickListener((v -> Helper.goToActivity(activity, AddModuleActivity.class)));
+        binding = FragmentModuleTeacherBinding.inflate(inflater, container, false);
+        binding.fabAdd.setOnClickListener((v -> Helper.goToActivity(activity, AddModuleTeacherActivity.class)));
 
 
         DatabaseHelper db = DatabaseHelper.getInstance(context);
         Helper.getIntentMessage(context, activity.getIntent().getExtras());
 
-        list = db.getModules();
+        list = db.getModuleTeachers();
         recyclerView = binding.recyclerView;
         buildRecyclerView();
         return binding.getRoot();
@@ -66,7 +66,7 @@ public class ModuleFragment extends Fragment {
     private void initFragment() {
         context = getContext();
         activity = getActivity();
-        activity.setTitle(context.getString(R.string.my_modules));
+        activity.setTitle(context.getString(R.string.my_teachers_modules));
         setHasOptionsMenu(true);
 
     }
@@ -74,7 +74,7 @@ public class ModuleFragment extends Fragment {
 
     private void buildRecyclerView() {
         if (list.size() > 0) {
-            adapter = new ModuleAdapter(list, context, activity);
+            adapter = new ModuleTeacherAdapter(list, context, activity);
             LinearLayoutManager manager = new LinearLayoutManager(context);
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(manager);
@@ -117,21 +117,21 @@ public class ModuleFragment extends Fragment {
 
 
     private void filter(String text) {
-        List<Module> filteredList = new ArrayList<>();
+        List<ModuleTeacher> filteredList = new ArrayList<>();
 
-        for (Module module : list) {
-            String moduleFullName = module.getModuleDetails().toLowerCase().trim();
-            String t = text.toLowerCase().trim();
-            if (moduleFullName.contains(t)) {
-                filteredList.add(module);
-            }
-        }
-
-        if (filteredList.isEmpty()) {
-            Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
-        } else {
-            adapter.filterList(filteredList);
-        }
+//        for (M module : list) {
+//            String moduleFullName = module.getModuleDetails().toLowerCase().trim();
+//            String t = text.toLowerCase().trim();
+//            if (moduleFullName.contains(t)) {
+//                filteredList.add(module);
+//            }
+//        }
+//
+//        if (filteredList.isEmpty()) {
+//            Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
+//        } else {
+//            adapter.filterList(filteredList);
+//        }
     }
 
 

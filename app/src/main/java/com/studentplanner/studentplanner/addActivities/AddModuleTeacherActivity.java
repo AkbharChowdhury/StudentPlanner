@@ -2,10 +2,12 @@ package com.studentplanner.studentplanner.addActivities;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
@@ -32,6 +34,8 @@ public class AddModuleTeacherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_module_teacher);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         db = DatabaseHelper.getInstance(this);
         moduleList = db.getModuleClassesAdd();
         txtModules = findViewById(R.id.txtModuleAddTeacher);
@@ -54,6 +58,13 @@ public class AddModuleTeacherActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AddModuleTeacherCheckboxActivity.class);
         intent.putExtra(ModuleTable.COLUMN_ID, moduleID);
         return intent;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if (item.getItemId() == android.R.id.home) finish();
+        return true;
     }
 
 }
