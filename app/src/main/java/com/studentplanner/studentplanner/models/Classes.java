@@ -56,6 +56,10 @@ public class Classes {
         this.classType = classType;
     }
 
+    public Classes(){
+
+    }
+
     public Classes(int classID, int moduleID, int semesterID, int dow, String startTime, String endTime, String room, String classType) {
         this.classID = classID;
         this.moduleID = moduleID;

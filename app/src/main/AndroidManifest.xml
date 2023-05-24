@@ -52,7 +52,8 @@
             android:exported="true"
             android:label="@string/add_classes"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.ActionPar" />
+            android:theme="@style/AppTheme.ActionPar"
+            />
         <activity
             android:name=".addActivities.AddCourseworkActivity"
             android:exported="true"
@@ -79,6 +80,8 @@
             android:theme="@style/AppTheme.ActionPar" />
         <activity
             android:name=".editActivities.EditClassesActivity"
+            android:theme="@style/AppTheme.ActionPar"
+
             android:exported="false" />
         <activity
             android:name=".editActivities.EditCourseworkActivity"

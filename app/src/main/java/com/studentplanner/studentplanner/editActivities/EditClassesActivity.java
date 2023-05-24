@@ -55,7 +55,7 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_classes);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+//
         db = DatabaseHelper.getInstance(this);
 
         findFields();

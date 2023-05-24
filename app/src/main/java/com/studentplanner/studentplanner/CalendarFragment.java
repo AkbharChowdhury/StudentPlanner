@@ -1,5 +1,6 @@
 package com.studentplanner.studentplanner;
 
+import static androidx.core.app.ActivityCompat.recreate;
 import static com.studentplanner.studentplanner.utils.CalendarUtils.daysInMonthArray;
 import static com.studentplanner.studentplanner.utils.CalendarUtils.monthYearFromDate;
 
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,6 +30,7 @@ import com.studentplanner.studentplanner.adapters.EventAdapter;
 import com.studentplanner.studentplanner.addActivities.AddClassesActivity;
 import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
 import com.studentplanner.studentplanner.databinding.FragmentCalendarBinding;
+import com.studentplanner.studentplanner.enums.EventType;
 import com.studentplanner.studentplanner.models.Classes;
 import com.studentplanner.studentplanner.models.Event;
 import com.studentplanner.studentplanner.models.Semester;
@@ -38,6 +41,7 @@ import com.studentplanner.studentplanner.utils.Validation;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +57,6 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     private FragmentCalendarBinding binding;
 
 
-
     public CalendarFragment() {
     }
 
@@ -63,6 +66,7 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
         super.onCreate(savedInstanceState);
 
     }
+
     private void initFragment() {
         activity = getActivity();
         context = getContext();
@@ -122,42 +126,146 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     }
 
 
+//    private void getClassDetails() {
+//
+//        List<Classes> classList = db.getClasses();
+//        if (classList.size() > 0) {
+//            for (Classes myClass : classList) {
+//                int semesterID = myClass.getSemesterID();
+//                Semester semester = db.getSelectedSemester(semesterID);
+//
+//                LocalDate startDate = semester.getStart();
+//                LocalDate endDate = semester.getEnd();
+//                long numOfDays = ChronoUnit.DAYS.between(startDate, endDate);
+//
+//                for (LocalDate date : CalendarUtils.getRecurringEvents(numOfDays, startDate)) {
+//                    if (date.getDayOfWeek() == DayOfWeek.of(myClass.getDow())) {
+//
+//
+//                        Event classEvent = new Event(
+//                                date,
+//                                LocalTime.parse(myClass.getStartTime()),
+//                                LocalTime.parse(myClass.getEndTime()),
+//                                EventType.CLASSES,
+//                                semester.getStart(),
+//                                semester.getEnd(),
+//                                myClass.getDow()
+//                        );
+////                        Event classEvent = new Event(EventType.CLASSES);
+//
+//                        classEvent.setId(myClass.getClassID());
+//                        classEvent.setClasses(myClass);
+//                        Event.getEventsList().add(classEvent);
+//                    }
+//                }
+//
+//
+//            }
+//        }
+//
+//
+//
+//    }
+
+
+    //    private void getClassDetails() {
+//        StringBuilder sb = new StringBuilder("Dates").append("\n");
+//        List<LocalDate> startDates = new ArrayList();
+//        List<LocalDate> endDates = new ArrayList();
+//        List<Long> longDays = new ArrayList();
+//        List<Classes> c = new ArrayList();
+//
+//
+//        List<Classes> classList = db.getClasses();
+//        if (classList.size() > 0) {
+//            for (Classes myClass : classList) {
+//                int semesterID = myClass.getSemesterID();
+//                Semester semester = db.getSelectedSemester(semesterID);
+//
+//                LocalDate startDate = semester.getStart();
+//                LocalDate endDate = semester.getEnd();
+//                long numOfDays = ChronoUnit.DAYS.between(startDate, endDate);
+//
+//
+//                for (LocalDate date : CalendarUtils.getRecurringEvents(numOfDays, startDate)) {
+//                    if (date.getDayOfWeek() == DayOfWeek.of(myClass.getDow())) {
+//                        sb.append(date).append("\n");
+//
+//                        Event classEvent = new Event(
+//                                date,
+//                                LocalTime.parse(myClass.getStartTime()),
+//                                LocalTime.parse(myClass.getEndTime()),
+//                                EventType.CLASSES,
+//                                semester.getStart(),
+//                                semester.getEnd(),
+//                                myClass.getDow()
+//                        );
+//                        classEvent.setId(myClass.getClassID());
+//                        classEvent.setClasses(myClass);
+//                        Event.getEventsList().add(classEvent);
+//                    }
+//                }
+//
+//
+//            }
+//            Log.d("JAA",sb.toString());
+//        }
+//
+//
+//    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) recreate(getActivity());
+    }
+
     private void getClassDetails() {
-        List<Event> classes = Event.getClassesDetails(db);
-        for (Event myClass : classes) {
-
-            Classes c = myClass.getClasses();
-
-            int semesterID = c.getSemesterID();
-            Semester semester = db.getSelectedSemester(semesterID);
-
-            LocalDate startDate = semester.getStart();
-            LocalDate endDate = semester.getEnd();
+        StringBuilder sb = new StringBuilder("Dates").append("\n");
+        List<LocalDate> startDates = new ArrayList();
+        List<LocalDate> endDates = new ArrayList();
+        List<Long> longDays = new ArrayList();
+        List<Classes> c = new ArrayList();
 
 
-            long numOfDays = ChronoUnit.DAYS.between(startDate, endDate);
-            for (LocalDate date : CalendarUtils.getRecurringEvents(numOfDays, startDate)) {
-                if (date.getDayOfWeek() == DayOfWeek.of(c.getDow())) {
+        List<Classes> classList = db.getClasses();
+        if (classList.size() > 0) {
+            for (Classes myClass : classList) {
+                int semesterID = myClass.getSemesterID();
+                Semester semester = db.getSelectedSemester(semesterID);
 
-                    Event classEvent = new Event(
-                            myClass.getName(),
-                            date,
-                            myClass.getStartTime(),
-                            myClass.getEndTime(),
-                            myClass.getEventType(),
-                            myClass.getSemesterStartDate(),
-                            myClass.getSemesterStartDate(),
-                            myClass.getDow()
-                    );
-                    classEvent.setId(myClass.getId());
-                    classEvent.setClasses(myClass.getClasses());
-                    Event.getEventsList().add(classEvent);
+                LocalDate startDate = semester.getStart();
+                LocalDate endDate = semester.getEnd();
+                long numOfDays = ChronoUnit.DAYS.between(startDate, endDate);
+
+
+                for (LocalDate date : CalendarUtils.getRecurringEvents(numOfDays, startDate)) {
+                    if (date.getDayOfWeek() == DayOfWeek.of(myClass.getDow())) {
+                        sb.append(date).append("\n");
+
+                        Event classEvent = new Event(
+                                date,
+                                LocalTime.parse(myClass.getStartTime()),
+                                LocalTime.parse(myClass.getEndTime()),
+                                EventType.CLASSES,
+                                semester.getStart(),
+                                semester.getEnd(),
+                                myClass.getDow()
+                        );
+                        classEvent.setId(myClass.getClassID());
+                        classEvent.setClasses(myClass);
+                        Event.getEventsList().add(classEvent);
+                    }
                 }
+
+
             }
+            Log.d("JAA", sb.toString());
         }
 
 
     }
+
 
     private void getCourseworkDetails() {
         List<Event> courseworkEvent = Event.getCourseworkDetails(db);
@@ -229,9 +337,6 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
 
             }
     );
-
-
-
 
 
 }
