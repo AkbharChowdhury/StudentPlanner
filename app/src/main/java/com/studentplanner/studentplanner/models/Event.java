@@ -189,33 +189,32 @@ public class Event {
     }
 
 
-public static List<Event> getCourseworkDetails(DatabaseHelper db) {
-    List<Event> courseworkEventList = new ArrayList<>();
-    List<Coursework> courseworkList = db.getCoursework();
-    if (courseworkList.size() > 0){
-        for(Coursework coursework : courseworkList){
-            Event courseworkEvent = new Event(
-                    coursework.getTitle(),
-                    LocalDate.parse(coursework.getDeadline()),
-                    LocalTime.parse(coursework.getDeadlineTime()),
-                    EventType.COURSEWORK);
+    public static List<Event> getCourseworkDetails(DatabaseHelper db) {
+        List<Event> courseworkEventList = new ArrayList<>();
+        List<Coursework> courseworkList = db.getCoursework();
+        if (courseworkList.size() > 0) {
+            for (Coursework coursework : courseworkList) {
+                Event courseworkEvent = new Event(
+                        coursework.getTitle(),
+                        LocalDate.parse(coursework.getDeadline()),
+                        LocalTime.parse(coursework.getDeadlineTime()),
+                        EventType.COURSEWORK);
 
-            courseworkEvent.setId(coursework.getCourseworkID());
-            courseworkEvent.setCoursework(coursework);
-            courseworkEventList.add(courseworkEvent);
+                courseworkEvent.setId(coursework.getCourseworkID());
+                courseworkEvent.setCoursework(coursework);
+                courseworkEventList.add(courseworkEvent);
+            }
         }
+        return courseworkEventList;
     }
-    return courseworkEventList;
-}
-
 
 
     public static List<Event> getClassesDetails(DatabaseHelper db) {
 
         List<Event> classEventList = new ArrayList<>();
         List<Classes> classList = db.getClasses();
-        if (classList.size() > 0){
-            for(Classes myClass : classList){
+        if (classList.size() > 0) {
+            for (Classes myClass : classList) {
                 Module module = db.getSelectedModule(myClass.getModuleID());
                 Semester semester = db.getSelectedSemester(myClass.getSemesterID());
                 Event classEvent = new Event(
@@ -227,7 +226,7 @@ public static List<Event> getCourseworkDetails(DatabaseHelper db) {
                         semester.getEnd(),
                         myClass.getDow()
 
-                        );
+                );
                 classEvent.setId(myClass.getClassID());
                 classEvent.setClasses(myClass);
                 classEventList.add(classEvent);
