@@ -64,7 +64,7 @@ public class ReminderFragment extends Fragment {
     private void initFragment() {
         context = getContext();
         activity = getActivity();
-        activity.setTitle(Helper.getCurrentMonth());
+        activity.setTitle(Helper.getReminderTitle());
         setHasOptionsMenu(true);
 
     }

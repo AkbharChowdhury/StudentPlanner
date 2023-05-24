@@ -290,21 +290,20 @@ public final class Helper {
         }
         return false;
     }
-    public static String getCurrentMonth(){
+    public static String getReminderTitle(){
         LocalDate now = LocalDate.now();
         String year = String.valueOf(now.getYear());
         String month = now.getMonth().toString();
-        return WordUtils.capitalizeFully("coursework " + month + " " + year);
+        return WordUtils.capitalizeFully(String.format(Locale.ENGLISH,"coursework %s %s", month, year));
+
     }
 
-    public static String getReminderTitle(){
-        return WordUtils.capitalizeFully(String.format("Reminders %s %s", LocalDate.now().getMonth().toString(), LocalDate.now().getYear()));
-    }
+
 
     public static String readStream(InputStream in) {
         StringBuilder sb = new StringBuilder();
         try(BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
-            String nextLine = "";
+            String nextLine;
             while ((nextLine = reader.readLine()) != null) {
                 sb.append(nextLine);
             }
