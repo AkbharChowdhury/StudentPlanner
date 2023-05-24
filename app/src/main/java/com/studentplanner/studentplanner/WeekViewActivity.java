@@ -39,13 +39,9 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_week_view);
-        binding = ActivityWeekViewBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
         setTitle(getApplication().getResources().getString(R.string.week_view_calendar));
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        CalendarUtils.setSelectedDate(LocalDate.now());
 
         initWidgets();
         setWeekView();
@@ -54,9 +50,9 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
 
 
     private void initWidgets() {
-        calendarWeekRecyclerView = binding.calendarRecyclerWeekView;
-        monthYearText = binding.monthYearTVWeekView;
-        eventListView = binding.eventListView;
+        calendarWeekRecyclerView = findViewById(R.id.calendarRecyclerWeekView);
+        monthYearText = findViewById(R.id.monthYearTVWeekView);
+        eventListView = findViewById(R.id.eventListViewWeek);
     }
 
     private void setWeekView() {
