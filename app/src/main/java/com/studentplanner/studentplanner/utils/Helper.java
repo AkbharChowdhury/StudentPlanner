@@ -143,13 +143,6 @@ public final class Helper {
         return date.getTime();
 
     }
-    public static long convertLocalTimeToLong(LocalTime localDate) {
-//        ZoneId defaultZoneId = ZoneId.systemDefault();
-//        Date date = Date.from(localDate.at(defaultZoneId).toInstant());
-//        return date.getTime();
-        return 022;
-
-    }
 
     public static long getNow() {
         return System.currentTimeMillis() - 1000;

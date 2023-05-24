@@ -38,12 +38,12 @@ public final class Validation {
     }
 
 
-    public boolean validateAddModuleForm(Module errorFields) {
+    public boolean validateAddModuleForm(Module module) {
         List<Boolean> errors = new ArrayList<>();
 
-        TextInputLayout txtModuleCode = errorFields.getTxtModuleCode();
+        TextInputLayout txtModuleCode = module.getTxtModuleCode();
         errors.add(isEmpty(txtModuleCode, "Module Code"));
-        errors.add(isEmpty(errorFields.getTxtModuleName(), "Module Name"));
+        errors.add(isEmpty(module.getTxtModuleName(), "Module Name"));
         errors.add(moduleExists(txtModuleCode));
 
         return !errors.contains(true);
@@ -61,11 +61,11 @@ public final class Validation {
     }
 
 
-    public boolean validateEditModuleForm(Module errorFields, String excludedModuleCode) {
+    public boolean validateEditModuleForm(Module module, String excludedModuleCode) {
         List<Boolean> errors = new ArrayList<>();
-        boolean code = isEmpty(errorFields.getTxtModuleCode(), "Module Code");
-        boolean name = isEmpty(errorFields.getTxtModuleName(), "Module Name");
-        boolean codeExists = moduleCodeExists(errorFields.getTxtModuleCode(), excludedModuleCode);
+        boolean code = isEmpty(module.getTxtModuleCode(), "Module Code");
+        boolean name = isEmpty(module.getTxtModuleName(), "Module Name");
+        boolean codeExists = moduleCodeExists(module.getTxtModuleCode(), excludedModuleCode);
 
         errors.add(code);
         errors.add(name);
@@ -136,24 +136,6 @@ public final class Validation {
 
     }
 
-    private boolean isValidFirstName(TextInputLayout textField) {
-        String firstname = Helper.trimStr(textField);
-        String fieldName = Helper.capitalise(StudentTable.COLUMN_FIRSTNAME);
-
-        if (firstname.isEmpty()) {
-            setError(textField, getRequiredFieldError(fieldName));
-            return false;
-        }
-
-        if (!isValidName(firstname)) {
-            setError(textField, getNameError(fieldName));
-            return false;
-        }
-
-        textField.setError(null);
-        return true;
-    }
-
     private boolean isValidName(TextInputLayout textField, String column) {
         String name = Helper.trimStr(textField);
         String fieldName = Helper.capitalise(column);
@@ -213,7 +195,6 @@ public final class Validation {
     private boolean isValidPhone(TextInputLayout textField) {
 
         String phone = Helper.trimStr(textField);
-        String fieldName = Helper.capitalise(StudentTable.COLUMN_PHONE);
         List<String> phoneErrors = new ArrayList<>();
 
 

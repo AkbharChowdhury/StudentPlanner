@@ -20,6 +20,10 @@ public class DatePickerFragment extends DialogFragment {
     private boolean isConstrainEndDate = false;
     private boolean isCustomDate = false;
     private LocalDate selectedDate;
+    private DatePickerDialog datePicker;
+
+    private LocalDate startDate;
+    private LocalDate endDate;
 
     public void setCustomDate(LocalDate selectedDate) {
         isCustomDate = true;
@@ -42,10 +46,7 @@ public class DatePickerFragment extends DialogFragment {
     }
 
 
-    private DatePickerDialog datePicker;
 
-    private LocalDate startDate;
-    private LocalDate endDate;
 
 
     public void setMinDateToToday() {

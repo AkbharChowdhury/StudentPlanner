@@ -173,7 +173,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         );
 
     }
-//    createModuleTeacherTable
 
 
     public void createSemesterTable(SQLiteDatabase db) {
