@@ -42,7 +42,7 @@
         app:layout_constraintHorizontal_bias="0.542"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_book" />
+        app:srcCompat="@drawable/ic_teacher_empty" />
 
     <TextView
         android:id="@+id/emptyText"
@@ -50,7 +50,7 @@
 
         android:layout_height="wrap_content"
         android:alpha="0.7"
-        android:text="@string/no_semesters_found"
+        android:text="@string/no_teachers_assigned_to_module"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

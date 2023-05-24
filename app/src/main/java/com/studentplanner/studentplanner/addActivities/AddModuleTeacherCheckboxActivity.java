@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
+import com.studentplanner.studentplanner.fragments.ModuleTeacherFragment;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.Teacher;
 import com.studentplanner.studentplanner.tables.ModuleTable;
@@ -109,7 +110,7 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
 
                 if(db.addModuleTeacher(teacherIDs, moduleID)){
 
-//                    Helper.setRedirectMessageFragment(this, ModuleTeacherFragment.class, "teacher successfully assigned to ");
+                    Helper.setRedirectMessageFragment(this, ModuleTeacherFragment.class, "teacher successfully assigned to ");
 
 
                 }

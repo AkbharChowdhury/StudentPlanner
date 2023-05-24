@@ -22,6 +22,8 @@ import static com.studentplanner.studentplanner.utils.CalendarUtils.monthYearFro
 
 import com.studentplanner.studentplanner.addActivities.AddClassesActivity;
 import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
+import com.studentplanner.studentplanner.databinding.ActivityAddModuleBinding;
+import com.studentplanner.studentplanner.databinding.ActivityWeekViewBinding;
 import com.studentplanner.studentplanner.utils.CalendarUtils;
 import com.studentplanner.studentplanner.utils.Helper;
 
@@ -30,11 +32,16 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
     private TextView monthYearText;
     private RecyclerView calendarWeekRecyclerView;
     private ListView eventListView;
+    private ActivityWeekViewBinding binding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_week_view);
+        binding = ActivityWeekViewBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
         setTitle(getApplication().getResources().getString(R.string.week_view_calendar));
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -47,9 +54,9 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
 
 
     private void initWidgets() {
-        calendarWeekRecyclerView = findViewById(R.id.calendarRecyclerWeekView);
-        monthYearText = findViewById(R.id.monthYearTVWeekView);
-        eventListView = findViewById(R.id.eventListView);
+        calendarWeekRecyclerView = binding.calendarRecyclerWeekView;
+        monthYearText = binding.monthYearTVWeekView;
+        eventListView = binding.eventListView;
     }
 
     private void setWeekView() {

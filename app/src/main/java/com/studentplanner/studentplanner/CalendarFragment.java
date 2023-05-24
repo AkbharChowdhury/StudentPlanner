@@ -3,17 +3,10 @@ package com.studentplanner.studentplanner;
 import static com.studentplanner.studentplanner.utils.CalendarUtils.daysInMonthArray;
 import static com.studentplanner.studentplanner.utils.CalendarUtils.monthYearFromDate;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,9 +16,17 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.studentplanner.studentplanner.adapters.EventAdapter;
 import com.studentplanner.studentplanner.addActivities.AddClassesActivity;
 import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
+import com.studentplanner.studentplanner.databinding.FragmentCalendarBinding;
 import com.studentplanner.studentplanner.models.Event;
 import com.studentplanner.studentplanner.tables.CourseworkTable;
 import com.studentplanner.studentplanner.utils.CalendarUtils;
@@ -39,13 +40,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CalendarFragment extends Fragment implements CalendarAdapter.OnItemListener {
-    private View view;
+    private Activity activity;
     private Context context;
 
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
     private ListView eventListView;
     private DatabaseHelper db;
+    private FragmentCalendarBinding binding;
+
 
 
     public CalendarFragment() {
@@ -57,10 +60,10 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
         super.onCreate(savedInstanceState);
 
     }
-    private void initFragment(LayoutInflater inflater, ViewGroup container) {
-        view = inflater.inflate(R.layout.fragment_calendar, container, false);
+    private void initFragment() {
+        activity = getActivity();
         context = getContext();
-        getActivity().setTitle(context.getString(R.string.my_calendar));
+        activity.setTitle(context.getString(R.string.my_calendar));
         setHasOptionsMenu(true);
 
     }
@@ -68,14 +71,15 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        initFragment(inflater, container);
+        initFragment();
+        binding = FragmentCalendarBinding.inflate(inflater, container, false);
 
 
         db = DatabaseHelper.getInstance(context);
         initWidgets();
-        view.findViewById(R.id.btNextMonthAction).setOnClickListener(v -> nextMonthAction());
-        view.findViewById(R.id.btnPreviousMonthAction).setOnClickListener(v -> previousMonthAction());
-
+        binding.btNextMonthAction.setOnClickListener(v -> nextMonthAction());
+        binding.btnPreviousMonthAction.setOnClickListener(v -> previousMonthAction());
+        binding.btnTodayAction.setOnClickListener(v -> resetToCurrentDate());
         try {
             getEventsFromDB();
 
@@ -91,7 +95,7 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
         EventAdapter eventAdapter = new EventAdapter(context, dailyEvents);
         eventListView.setAdapter(eventAdapter);
 
-        return view;
+        return binding.getRoot();
     }
 
     private void resetToCurrentDate() {
@@ -150,9 +154,10 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     }
 
     private void initWidgets() {
-        calendarRecyclerView = view.findViewById(R.id.calendarRecyclerView);
-        monthYearText = view.findViewById(R.id.monthYearTV);
-        eventListView = view.findViewById(R.id.eventListView1);
+
+        calendarRecyclerView = binding.calendarRecyclerView;
+        monthYearText = binding.monthYearTV;
+        eventListView = binding.eventListView;
 
     }
 
@@ -174,7 +179,7 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        getActivity().getMenuInflater().inflate(R.menu.classes_menu, menu);
+        activity.getMenuInflater().inflate(R.menu.classes_menu, menu);
     }
 
     @Override
@@ -182,7 +187,7 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
         int id = item.getItemId();
         if (id == R.id.add_coursework_action) {
             if (Validation.isPastDate(CalendarUtils.getSelectedDate().toString())) {
-                Helper.goToActivity(getActivity(), AddCourseworkActivity.class);
+                Helper.goToActivity(activity, AddCourseworkActivity.class);
                 return true;
             }
             // set deadline to selected calendar date
@@ -191,10 +196,10 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
         }
         if (id == R.id.add_class_action) {
 
-            Helper.goToActivity(getActivity(), AddClassesActivity.class);
+            Helper.goToActivity(activity, AddClassesActivity.class);
         }
         if (id == R.id.action_week_view) {
-            Helper.goToActivity(getActivity(), WeekViewActivity.class);
+            Helper.goToActivity(activity, WeekViewActivity.class);
         }
 
         return super.onOptionsItemSelected(item);
@@ -202,12 +207,12 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     }
 
     private Intent courseworkIntent() {
-        Intent intent = new Intent(getActivity(), AddCourseworkActivity.class);
+        Intent intent = new Intent(activity, AddCourseworkActivity.class);
         intent.putExtra(CourseworkTable.COLUMN_DEADLINE, Helper.formatDate(CalendarUtils.getSelectedDate().toString()));
         return intent;
     }
 
-    private ActivityResultLauncher<Intent> startForResult = registerForActivityResult(
+    private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
 
