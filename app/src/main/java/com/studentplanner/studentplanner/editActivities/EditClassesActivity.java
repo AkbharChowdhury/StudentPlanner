@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,8 +16,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.TimePicker;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.studentplanner.studentplanner.CalendarFragment;
 import com.studentplanner.studentplanner.DatabaseHelper;
-import com.studentplanner.studentplanner.MainActivity;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.enums.TimePickerType;
 import com.studentplanner.studentplanner.models.Classes;
@@ -67,7 +68,16 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
         findViewById(R.id.btn_edit_class).setOnClickListener(v -> {
 
             if (db.updateClass(getClassDetails())) {
-                Helper.longToastMessage(this, "class updated");
+                Intent intent = new Intent(this, CalendarFragment .class);
+                startActivityForResult(intent, 1);
+
+                finish();
+//                fragmentManager.beginTransaction().detach(this).attach(this).commit();
+
+//                Helper.setRedirectMessageFragment(this, CalendarFragment.class, "Class updated");
+
+
+
             }
 
 
@@ -75,6 +85,8 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
 
 
     }
+
+
 
     private void setUpTimePickers() {
         setStartTimePicker();
@@ -203,7 +215,7 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
                     .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
                         int id = getIntent().getIntExtra(ClassTable.COLUMN_ID, 0);
                         if (db.deleteRecord(ClassTable.TABLE_NAME, ClassTable.COLUMN_ID, id)) {
-                            Helper.setRedirectMessage(this, MainActivity.class, "Class deleted");
+                            Helper.setRedirectMessageFragment(this, CalendarFragment.class, "Class deleted");
                         }
 
 
