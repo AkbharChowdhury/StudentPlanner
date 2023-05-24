@@ -14,6 +14,10 @@ import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.models.ModuleTeacher;
 import com.studentplanner.studentplanner.models.Teacher;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -295,6 +299,19 @@ public final class Helper {
 
     public static String getReminderTitle(){
         return WordUtils.capitalizeFully(String.format("Reminders %s %s", LocalDate.now().getMonth().toString(), LocalDate.now().getYear()));
+    }
+
+    public static String readStream(InputStream in) {
+        StringBuilder sb = new StringBuilder();
+        try(BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
+            String nextLine = "";
+            while ((nextLine = reader.readLine()) != null) {
+                sb.append(nextLine);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return sb.toString();
     }
 
 
