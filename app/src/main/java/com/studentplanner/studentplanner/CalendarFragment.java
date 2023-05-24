@@ -157,7 +157,7 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
 
         calendarRecyclerView = binding.calendarRecyclerView;
         monthYearText = binding.monthYearTV;
-        eventListView = binding.eventListViewMonth;
+        eventListView = binding.eventListView;
 
     }
 
