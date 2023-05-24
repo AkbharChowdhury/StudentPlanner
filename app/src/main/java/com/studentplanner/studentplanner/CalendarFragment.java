@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,7 +28,9 @@ import com.studentplanner.studentplanner.adapters.EventAdapter;
 import com.studentplanner.studentplanner.addActivities.AddClassesActivity;
 import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
 import com.studentplanner.studentplanner.databinding.FragmentCalendarBinding;
+import com.studentplanner.studentplanner.models.Classes;
 import com.studentplanner.studentplanner.models.Event;
+import com.studentplanner.studentplanner.models.Semester;
 import com.studentplanner.studentplanner.tables.CourseworkTable;
 import com.studentplanner.studentplanner.utils.CalendarUtils;
 import com.studentplanner.studentplanner.utils.Helper;
@@ -122,11 +125,19 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     private void getClassDetails() {
         List<Event> classes = Event.getClassesDetails(db);
         for (Event myClass : classes) {
-            LocalDate startDate = myClass.getSemesterStartDate();
-            LocalDate endDate = myClass.getSemesterEndDate();
+
+            Classes c = myClass.getClasses();
+
+            int semesterID = c.getSemesterID();
+            Semester semester = db.getSelectedSemester(semesterID);
+
+            LocalDate startDate = semester.getStart();
+            LocalDate endDate = semester.getEnd();
+
+
             long numOfDays = ChronoUnit.DAYS.between(startDate, endDate);
             for (LocalDate date : CalendarUtils.getRecurringEvents(numOfDays, startDate)) {
-                if (date.getDayOfWeek() == DayOfWeek.of(myClass.getDow())) {
+                if (date.getDayOfWeek() == DayOfWeek.of(c.getDow())) {
 
                     Event classEvent = new Event(
                             myClass.getName(),
