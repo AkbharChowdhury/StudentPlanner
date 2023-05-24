@@ -22,8 +22,8 @@ public class AlertDialogFragment {
 
     public void showTermsPolicyError(){
         new AlertDialog.Builder(context)
-                .setTitle("Please accept the terms and conditions")
-                .setPositiveButton("OK", (dialog, which) -> dialog.cancel())
+                .setTitle(context.getString(R.string.accept_terms_and_conditions))
+                .setPositiveButton(context.getString(R.string.ok), (dialog, which) -> dialog.cancel())
                 .create()
                 .show();
     }
@@ -32,7 +32,7 @@ public class AlertDialogFragment {
 
     public void showTermsAndConditions(){
 
-        String title = WordUtils.capitalizeFully("Student Planner Terms and Conditions");
+        String title = WordUtils.capitalizeFully(context.getString(R.string.terms_and_conditions_title));
         String message = readStream(context.getResources().openRawResource(R.raw.policy));
 
         new AlertDialog.Builder(context)

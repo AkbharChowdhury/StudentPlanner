@@ -60,6 +60,9 @@
     <string name="module_name">module Name</string>
     <string name="close">Close</string>
     <string name="ok">OK</string>
+    <string name="accept_terms_and_conditions">Please accept the terms and conditions</string>
+
+    <string name="terms_and_conditions_title">Student Planner Terms and Conditions</string>
 
 
     <string name="search">Search</string>
