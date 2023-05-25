@@ -1,7 +1,10 @@
 package com.studentplanner.studentplanner.fragments;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -10,6 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
@@ -19,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.adapters.SemesterAdapter;
+import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
 import com.studentplanner.studentplanner.addActivities.AddSemesterActivity;
 import com.studentplanner.studentplanner.databinding.FragmentSemesterBinding;
 import com.studentplanner.studentplanner.models.Semester;
@@ -37,6 +43,13 @@ public class SemesterFragment extends Fragment {
     private List<Semester> list;
     private FragmentSemesterBinding binding;
     private DatabaseHelper db;
+    private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+
+        if (result.getResultCode() == RESULT_OK){
+            getSemester();
+        }
+
+    });
 
 
     public SemesterFragment() {
@@ -49,16 +62,16 @@ public class SemesterFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         initFragment();
         binding = FragmentSemesterBinding.inflate(inflater, container, false);
         recyclerView = binding.recyclerView;
-        binding.fabAdd.setOnClickListener((v -> Helper.goToActivity(activity, AddSemesterActivity.class)));
+        binding.fabAdd.setOnClickListener(v -> startForResult.launch(new Intent(getActivity(), AddSemesterActivity.class)));
+
 
         db = DatabaseHelper.getInstance(context);
         Helper.getIntentMessage(context, activity.getIntent().getExtras());
-
-        getSemester();;
+        getSemester();
 
         return binding.getRoot();
     }
@@ -70,26 +83,18 @@ public class SemesterFragment extends Fragment {
         setHasOptionsMenu(true);
 
     }
-    private void getSemester(){
+    private void getSemester() {
         list = db.getSemester();
         buildRecyclerView();
     }
 
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (Helper.isUpdated()){
-            getSemester();
-            Helper.setUpdatedStatus(false);
-        }
 
-    }
 
 
     private void buildRecyclerView() {
         if (list.size() > 0) {
-            adapter = new SemesterAdapter(list, context, activity);
+            adapter = new SemesterAdapter(list, context, startForResult);
             LinearLayoutManager manager = new LinearLayoutManager(context);
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(manager);

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,14 +33,15 @@ public class CourseworkAdapter extends RecyclerView.Adapter<CourseworkAdapter.Vi
 
     private List<Coursework> courseworkList;
     private final Context context;
-    private final Activity activity;
+    private  final ActivityResultLauncher<Intent> startForResult;
     private final DatabaseHelper db;
 
 
-    public CourseworkAdapter(List<Coursework> courseworkList, Context context, Activity activity) {
+
+    public CourseworkAdapter(List<Coursework> courseworkList, Context context, ActivityResultLauncher<Intent> startForResult) {
         this.courseworkList = courseworkList;
         this.context = context;
-        this.activity = activity;
+        this.startForResult = startForResult;
         db = DatabaseHelper.getInstance(context);
     }
 
@@ -78,7 +80,8 @@ public class CourseworkAdapter extends RecyclerView.Adapter<CourseworkAdapter.Vi
         holder.tvCourseworkCompleted.setTextColor(coursework.isCompleted()? context.getColor(R.color.green) : Color.RED);
 
 
-        holder.layout.setOnClickListener(view -> activity.startActivityForResult(intent(position), 1));
+        holder.layout.setOnClickListener(v -> startForResult.launch(intent(position)));
+
         holder.tvTimeLeft.setTextColor(Helper.getPriorityColour(coursework.getPriority(), context));
 
     }

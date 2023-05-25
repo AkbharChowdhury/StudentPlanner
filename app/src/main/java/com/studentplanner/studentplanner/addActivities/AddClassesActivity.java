@@ -98,10 +98,9 @@ public class AddClassesActivity extends AppCompatActivity implements TimePickerD
             Classes errorFields = new Classes(txtDayError, txtSemesterError, txtModuleError, txtClassTypeError);
             if (form.validateClassForm(errorFields)){
                 if (db.addClass(getClassDetails())){
-//                    Helper.setRedirectMessageFragment(this, ReminderFragment.class, "Class Added");
                     Helper.longToastMessage(this,"Class added");
+                    setResult(RESULT_OK);
                     finish();
-
 
                 }
             }

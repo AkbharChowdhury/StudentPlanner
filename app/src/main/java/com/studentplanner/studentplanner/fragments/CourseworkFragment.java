@@ -1,7 +1,10 @@
 package com.studentplanner.studentplanner.fragments;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -10,6 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
@@ -20,6 +25,7 @@ import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.adapters.CourseworkAdapter;
 import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
+import com.studentplanner.studentplanner.addActivities.AddModuleActivity;
 import com.studentplanner.studentplanner.databinding.FragmentCourseworkBinding;
 import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.models.Event;
@@ -38,6 +44,13 @@ public class CourseworkFragment extends Fragment {
     private List<Coursework> list;
     private DatabaseHelper db;
     private FragmentCourseworkBinding binding;
+    private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+
+        if (result.getResultCode() == RESULT_OK){
+            getCoursework();
+        }
+
+    });
 
 
     public CourseworkFragment() {
@@ -53,7 +66,7 @@ public class CourseworkFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         initFragment();
         binding = FragmentCourseworkBinding.inflate(inflater, container, false);
-        binding.fabAdd.setOnClickListener((v -> Helper.goToActivity(activity, AddCourseworkActivity.class)));
+        binding.fabAdd.setOnClickListener(v -> startForResult.launch(new Intent(getActivity(), AddCourseworkActivity.class)));
         recyclerView = binding.recyclerView;
 
 
@@ -73,10 +86,10 @@ public class CourseworkFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (Helper.isUpdated()){
-            getCoursework();
-            Helper.setUpdatedStatus(false);
-        }
+//        if (Helper.isUpdated()){
+//            getCoursework();
+//            Helper.setUpdatedStatus(false);
+//        }
 
     }
 
@@ -91,7 +104,7 @@ public class CourseworkFragment extends Fragment {
 
     private void buildRecyclerView() {
         if (list.size() > 0) {
-            adapter = new CourseworkAdapter(list, context, activity);
+            adapter = new CourseworkAdapter(list, context, startForResult);
             LinearLayoutManager manager = new LinearLayoutManager(context);
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(manager);

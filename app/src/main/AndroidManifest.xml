@@ -71,6 +71,7 @@
             android:exported="false" />
         <activity
             android:name=".editActivities.EditModuleActivity"
+            android:label="@string/edit_module"
             android:theme="@style/AppTheme.ActionPar"
 
             android:exported="false" />

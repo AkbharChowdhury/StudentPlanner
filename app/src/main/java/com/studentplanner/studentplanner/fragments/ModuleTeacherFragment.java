@@ -1,7 +1,10 @@
 package com.studentplanner.studentplanner.fragments;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -10,6 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
@@ -19,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.adapters.ModuleTeacherAdapter;
+import com.studentplanner.studentplanner.addActivities.AddModuleActivity;
 import com.studentplanner.studentplanner.addActivities.AddModuleTeacherActivity;
 import com.studentplanner.studentplanner.databinding.FragmentModuleTeacherBinding;
 import com.studentplanner.studentplanner.models.ModuleTeacher;
@@ -39,6 +45,16 @@ public class ModuleTeacherFragment extends Fragment {
     private DatabaseHelper db;
 
 
+    private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+
+        if (result.getResultCode() == RESULT_OK){
+            getModuleTeacher();
+        }
+
+    });
+
+
+
     public ModuleTeacherFragment() {
 
     }
@@ -52,8 +68,9 @@ public class ModuleTeacherFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         initFragment();
         binding = FragmentModuleTeacherBinding.inflate(inflater, container, false);
-        binding.fabAdd.setOnClickListener((v -> Helper.goToActivity(activity, AddModuleTeacherActivity.class)));
         recyclerView = binding.recyclerView;
+
+        binding.fabAdd.setOnClickListener(v -> startForResult.launch(new Intent(getActivity(), AddModuleTeacherActivity.class)));
 
 
         db = DatabaseHelper.getInstance(context);
@@ -68,15 +85,7 @@ public class ModuleTeacherFragment extends Fragment {
     }
 
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (Helper.isUpdated()){
-            getModuleTeacher();
-            Helper.setUpdatedStatus(false);
-        }
 
-    }
 
     private void initFragment() {
         context = getContext();
@@ -89,7 +98,7 @@ public class ModuleTeacherFragment extends Fragment {
 
     private void buildRecyclerView() {
         if (list.size() > 0) {
-            adapter = new ModuleTeacherAdapter(list, context, activity);
+            adapter = new ModuleTeacherAdapter(list, context, startForResult);
             LinearLayoutManager manager = new LinearLayoutManager(context);
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(manager);

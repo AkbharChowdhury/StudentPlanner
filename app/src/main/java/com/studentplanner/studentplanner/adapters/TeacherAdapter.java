@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,14 +25,15 @@ public class TeacherAdapter extends RecyclerView.Adapter<TeacherAdapter.ViewHold
 
     private List<Teacher> teacherList;
     private final Context context;
-    private final Activity activity;
     private final DatabaseHelper db;
+    private  final ActivityResultLauncher<Intent> startForResult;
 
 
-    public TeacherAdapter(List<Teacher> teacherList, Context context, Activity activity) {
+
+    public TeacherAdapter(List<Teacher> teacherList, Context context, ActivityResultLauncher<Intent> startForResult) {
         this.teacherList = teacherList;
         this.context = context;
-        this.activity = activity;
+        this.startForResult = startForResult;
         db = DatabaseHelper.getInstance(context);
     }
 
@@ -55,7 +57,7 @@ public class TeacherAdapter extends RecyclerView.Adapter<TeacherAdapter.ViewHold
         holder.tvTeacherName.setText(teacher.getName());
 
 
-        holder.layout.setOnClickListener(view -> activity.startActivityForResult(intent(position), 1));
+        holder.layout.setOnClickListener(view -> startForResult.launch(intent(position)));
 
     }
 

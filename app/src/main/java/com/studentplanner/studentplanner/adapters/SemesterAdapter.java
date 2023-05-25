@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,13 +28,14 @@ public class SemesterAdapter extends RecyclerView.Adapter<SemesterAdapter.ViewHo
 
     private List<Semester> semesterList;
     private final Context context;
-    private final Activity activity;
+    private  final ActivityResultLauncher<Intent> startForResult;
 
 
-    public SemesterAdapter(List<Semester> semesterList, Context context, Activity activity) {
+
+    public SemesterAdapter(List<Semester> semesterList, Context context, ActivityResultLauncher<Intent> startForResult) {
         this.semesterList = semesterList;
         this.context = context;
-        this.activity = activity;
+        this.startForResult = startForResult;
     }
 
     public void filterList(List<Semester> filterlist) {
@@ -60,7 +62,7 @@ public class SemesterAdapter extends RecyclerView.Adapter<SemesterAdapter.ViewHo
         holder.tvSemesterID.setText(String.valueOf(model.getSemesterID()));
         holder.tvSemesterName.setText(WordUtils.capitalizeFully(model.getName()));
         holder.tvDateDescription.setText(dateMessage);
-        holder.layout.setOnClickListener(view -> activity.startActivityForResult(intent(position), 1));
+        holder.layout.setOnClickListener(v -> startForResult.launch(intent(position)));
 
     }
 

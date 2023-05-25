@@ -1,5 +1,6 @@
 package com.studentplanner.studentplanner;
 
+import static android.app.Activity.RESULT_OK;
 import static com.studentplanner.studentplanner.utils.CalendarUtils.daysInMonthArray;
 import static com.studentplanner.studentplanner.utils.CalendarUtils.monthYearFromDate;
 
@@ -54,6 +55,14 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     private ListView eventListView;
     private DatabaseHelper db;
     private FragmentCalendarBinding binding;
+    private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+
+        if (result.getResultCode() == RESULT_OK){
+            Event.getEventsList().clear();
+            getEvents();
+        }
+
+    });
 
 
     public CalendarFragment() {
@@ -150,11 +159,11 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     @Override
     public void onResume() {
         super.onResume();
-        if (Helper.isUpdated()){
-            Event.getEventsList().clear();
-            getEvents();
-            Helper.setUpdatedStatus(false);
-        }
+//        if (Helper.isUpdated()){
+//            Event.getEventsList().clear();
+//            getEvents();
+//            Helper.setUpdatedStatus(false);
+//        }
 
     }
 
@@ -164,7 +173,7 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
         getEventsFromDB();
         resetToCurrentDate();
         ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtils.getSelectedDate());
-        EventAdapter eventAdapter = new EventAdapter(context, dailyEvents);
+        EventAdapter eventAdapter = new EventAdapter(context, dailyEvents, startForResult);
         eventListView.setAdapter(eventAdapter);
     }
 
@@ -186,7 +195,7 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
         ArrayList<LocalDate> daysInMonth = daysInMonthArray(CalendarUtils.getSelectedDate());
         calendarRecyclerView.setLayoutManager(new GridLayoutManager(context, 7));
         calendarRecyclerView.setAdapter(new CalendarAdapter(daysInMonth, this));
-        CalendarUtils.setEventAdapter(eventListView, context);
+        CalendarUtils.setEventAdapter(eventListView, context, startForResult);
     }
 
 
@@ -232,12 +241,7 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
         return intent;
     }
 
-    private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
 
-            }
-    );
 
 
 }

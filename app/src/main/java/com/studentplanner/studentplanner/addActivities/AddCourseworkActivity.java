@@ -84,8 +84,9 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
             TextInputLayout errorPriority = findViewById(R.id.txtPriorityError);
             if (form.validateAddCourseworkForm(new Coursework(txtTitle, txtModuleError, errorPriority))) {
                 if (db.addCoursework(getCourseworkDetails())) {
-                    Helper.longToastMessage(this, "Coursework Added");
-//                    Helper.setRedirectMessageFragment(this, CourseworkFragment.class, "Coursework Added");
+                    Helper.longToastMessage(this,"Coursework Added");
+                    setResult(RESULT_OK);
+                    finish();
                 }
 
             }

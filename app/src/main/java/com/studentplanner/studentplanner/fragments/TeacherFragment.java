@@ -1,7 +1,10 @@
 package com.studentplanner.studentplanner.fragments;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -10,6 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
@@ -19,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.adapters.TeacherAdapter;
+import com.studentplanner.studentplanner.addActivities.AddModuleActivity;
 import com.studentplanner.studentplanner.addActivities.AddTeacherActivity;
 import com.studentplanner.studentplanner.databinding.FragmentTeacherBinding;
 import com.studentplanner.studentplanner.models.Teacher;
@@ -36,6 +42,17 @@ public class TeacherFragment extends Fragment {
     private TeacherAdapter adapter;
     private List<Teacher> list;
     private FragmentTeacherBinding binding;
+    private DatabaseHelper db;
+
+    private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+
+        if (result.getResultCode() == RESULT_OK){
+            getTeachers();
+
+
+        }
+
+    });
 
 
     public TeacherFragment() {
@@ -51,16 +68,18 @@ public class TeacherFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         initFragment();
         binding = FragmentTeacherBinding.inflate(inflater, container, false);
-        binding.fabAdd.setOnClickListener((v -> Helper.goToActivity(activity, AddTeacherActivity.class)));
-
-
-        DatabaseHelper db = DatabaseHelper.getInstance(context);
-        Helper.getIntentMessage(context, activity.getIntent().getExtras());
-
-        list = db.getTeachers();
+        binding.fabAdd.setOnClickListener(v -> startForResult.launch(new Intent(getActivity(), AddTeacherActivity.class)));
         recyclerView = binding.recyclerView;
-        buildRecyclerView();
+
+        db = DatabaseHelper.getInstance(context);
+        Helper.getIntentMessage(context, activity.getIntent().getExtras());
+        getTeachers();
+
         return binding.getRoot();
+    }
+    private void getTeachers(){
+        list = db.getTeachers();
+        buildRecyclerView();
     }
 
     private void initFragment() {
@@ -74,7 +93,7 @@ public class TeacherFragment extends Fragment {
 
     private void buildRecyclerView() {
         if (list.size() > 0) {
-            adapter = new TeacherAdapter(list, context, activity);
+            adapter = new TeacherAdapter(list, context, startForResult);
             LinearLayoutManager manager = new LinearLayoutManager(context);
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(manager);

@@ -1,8 +1,11 @@
 package com.studentplanner.studentplanner.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
+
+import androidx.activity.result.ActivityResultLauncher;
 
 import com.studentplanner.studentplanner.models.Event;
 import com.studentplanner.studentplanner.adapters.EventAdapter;
@@ -108,9 +111,9 @@ public class CalendarUtils {
     }
 
 
-    public static void setEventAdapter(ListView eventListView, Context context) {
+    public static void setEventAdapter(ListView eventListView, Context context, ActivityResultLauncher<Intent> startForResult) {
         ArrayList<Event> dailyEvents = Event.eventsForDate(selectedDate);
-        EventAdapter eventAdapter = new EventAdapter(context, dailyEvents);
+        EventAdapter eventAdapter = new EventAdapter(context, dailyEvents, startForResult);
         eventListView.setAdapter(eventAdapter);
     }
 

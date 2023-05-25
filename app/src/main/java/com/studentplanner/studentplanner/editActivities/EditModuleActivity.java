@@ -1,5 +1,6 @@
 package com.studentplanner.studentplanner.editActivities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,8 +41,9 @@ public class EditModuleActivity extends AppCompatActivity {
         findViewById(R.id.btn_edit_module).setOnClickListener(v -> {
             if (form.validateEditModuleForm(new Module(txtModuleCode, txtModuleName), excludedModuleCode)) {
                 if (db.updateModule(getModuleDetails())) {
-                    Helper.setUpdatedStatus(true);
+//                    Helper.setUpdatedStatus(true);
                     Helper.longToastMessage(this,"Module Updated");
+                    setResult(RESULT_OK);
                     finish();
                 }
             }
@@ -76,6 +78,9 @@ public class EditModuleActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) finish();
+
+
         if (item.getItemId() == R.id.ic_delete){
             new AlertDialog.Builder(this)
                     .setMessage("Doing so will delete all associated coursework and classes with this module").setCancelable(false)

@@ -137,8 +137,8 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
                 int moduleID = getIntent().getIntExtra(SELECTED_ID, 0);
 
                 if(db.updateModuleTeacher(teacherIDs, moduleID)){
-                    Helper.setUpdatedStatus(true);
                     Helper.longToastMessage(this, String.format(Locale.ENGLISH,"Teacher updated for %s", db.getSelectedModule(moduleID).getModuleDetails()));
+                    setResult(RESULT_OK);
                     finish();
 
                 }

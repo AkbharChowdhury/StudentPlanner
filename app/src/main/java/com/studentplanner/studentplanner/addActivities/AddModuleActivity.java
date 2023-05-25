@@ -42,7 +42,11 @@ public class AddModuleActivity extends AppCompatActivity {
         findViewById(R.id.btn_add_module).setOnClickListener(v -> {
             if (form.validateAddModuleForm(new Module(txtModuleCode, txtModuleName))) {
                 if (db.addModule(getModuleDetails())) {
-                    Helper.setRedirectMessageFragment(this, ModuleFragment.class,"Module added");
+
+
+                    Helper.longToastMessage(this,"Module Added");
+                    setResult(RESULT_OK);
+                    finish();
                 }
             }
 

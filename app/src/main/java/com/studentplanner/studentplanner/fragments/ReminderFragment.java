@@ -1,7 +1,10 @@
 package com.studentplanner.studentplanner.fragments;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -10,6 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
@@ -35,6 +40,18 @@ public class ReminderFragment extends Fragment {
     private CourseworkAdapter adapter;
     private List<Coursework> list;
     private FragmentReminderBinding binding;
+    private DatabaseHelper db;
+
+
+    private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        if (result.getResultCode() == RESULT_OK){
+            getReminders();
+        }
+
+
+
+
+    });
 
 
     public ReminderFragment() {
@@ -50,15 +67,17 @@ public class ReminderFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         initFragment();
         binding = FragmentReminderBinding.inflate(inflater, container, false);
-
-
-        DatabaseHelper db = DatabaseHelper.getInstance(context);
-        Helper.getIntentMessage(context, activity.getIntent().getExtras());
-
-        list = db.getUpComingCourseworkByMonth();
         recyclerView = binding.recyclerView;
-        buildRecyclerView();
+
+        db = DatabaseHelper.getInstance(context);
+        Helper.getIntentMessage(context, activity.getIntent().getExtras());
+        getReminders();
+
         return binding.getRoot();
+    }
+    private void getReminders(){
+        list = db.getUpComingCourseworkByMonth();
+        buildRecyclerView();
     }
 
     private void initFragment() {
@@ -72,7 +91,7 @@ public class ReminderFragment extends Fragment {
 
     private void buildRecyclerView() {
         if (list.size() > 0) {
-            adapter = new CourseworkAdapter(list, context, activity);
+            adapter = new CourseworkAdapter(list, context, startForResult);
             LinearLayoutManager manager = new LinearLayoutManager(context);
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(manager);

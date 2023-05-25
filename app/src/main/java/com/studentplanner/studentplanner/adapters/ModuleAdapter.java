@@ -1,18 +1,19 @@
 package com.studentplanner.studentplanner.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.studentplanner.studentplanner.editActivities.EditModuleActivity;
 import com.studentplanner.studentplanner.R;
+import com.studentplanner.studentplanner.editActivities.EditModuleActivity;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.tables.ModuleTable;
 
@@ -22,14 +23,14 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ViewHolder
 
     private List<Module> moduleList;
     private final Context context;
-    private final Activity activity;
+    private  final ActivityResultLauncher<Intent> startForResult;
 
-
-    public ModuleAdapter(List<Module> courseModelArrayList, Context context, Activity activity) {
-        this.moduleList = courseModelArrayList;
+    public ModuleAdapter(List<Module> moduleList, Context context, ActivityResultLauncher<Intent> startForResult) {
+        this.moduleList = moduleList;
         this.context = context;
-        this.activity = activity;
+        this.startForResult = startForResult;
     }
+
 
     public void filterList(List<Module> filterlist) {
         moduleList = filterlist;
@@ -49,7 +50,9 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ViewHolder
         holder.tvModuleID.setText(String.valueOf(model.getModuleID()));
         holder.tvModuleName.setText(model.getModuleName());
         holder.tvModuleCode.setText(model.getModuleCode());
-        holder.layout.setOnClickListener(view -> activity.startActivityForResult(intent(position), 1));
+        holder.layout.setOnClickListener(v -> startForResult.launch(intent(position)));
+
+
 
     }
 

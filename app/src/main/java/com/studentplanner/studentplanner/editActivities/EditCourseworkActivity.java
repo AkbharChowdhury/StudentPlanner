@@ -71,8 +71,8 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
         findViewById(R.id.btn_edit_coursework).setOnClickListener(v -> {
             if (form.validateEditCourseworkForm(txtTitle, txtDeadline, txtDeadlineError)){
                 if (db.updateCoursework(getCourseworkDetails())) {
-                    Helper.setUpdatedStatus(true);
                     Helper.longToastMessage(this,"Coursework Updated");
+                    setResult(RESULT_OK);
                     finish();
                 }
             }
@@ -109,8 +109,6 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
             txtModules.setText(txtModules.getAdapter().getItem(Dropdown.getModuleID(coursework.getModuleID(), db.getModules())).toString(), false);
             selectedModuleID = coursework.getModuleID();
             checkBoxCompleted.setChecked(coursework.isCompleted());
-
-
 
         }
 

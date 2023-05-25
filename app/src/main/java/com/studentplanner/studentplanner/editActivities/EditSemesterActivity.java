@@ -53,9 +53,8 @@ public class EditSemesterActivity extends AppCompatActivity  implements DatePick
 
             if (form.validateSemesterForm(txtName)){
                 if (db.updateSemester(getSemesterDetails())) {
-
-                    Helper.setUpdatedStatus(true);
                     Helper.longToastMessage(this,"Semester Updated");
+                    setResult(RESULT_OK);
                     finish();
                 }
 

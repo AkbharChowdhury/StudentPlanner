@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -33,12 +34,20 @@ import java.text.MessageFormat;
 import java.util.List;
 
 public class EventAdapter extends ArrayAdapter<Event> {
-    private Context context;
+    private final Context context;
+    private final  ActivityResultLauncher<Intent> startForResult;
 
-    public EventAdapter(@NonNull Context context, List<Event> events) {
+    public EventAdapter(@NonNull Context context, List<Event> events, ActivityResultLauncher<Intent> startForResult) {
         super(context, 0, events);
         this.context = context;
+        this.startForResult = startForResult;
     }
+
+
+//    public EventAdapter(@NonNull Context context, List<Event> events) {
+//        super(context, 0, events);
+//        this.context = context;
+//    }
 
 
     @NonNull
@@ -51,7 +60,9 @@ public class EventAdapter extends ArrayAdapter<Event> {
         }
 
         final Activity CURRENT_ACTIVITY = (Activity) convertView.getContext();
+
         final DatabaseHelper db = DatabaseHelper.getInstance(context);
+//        ActivityResultLauncher<Intent> startForResult
 
         convertView.setOnClickListener(v -> {
             final int ID = event.getId();
@@ -59,9 +70,12 @@ public class EventAdapter extends ArrayAdapter<Event> {
                 case COURSEWORK:
                     Helper.longToastMessage(getContext(), String.valueOf(event.getId()));
                     CURRENT_ACTIVITY.startActivityForResult(getCourseworkIntent(ID), 1);
+//                    startForResult.launch(getCourseworkIntent(ID));
                     break;
                 case CLASSES:
-                    CURRENT_ACTIVITY.startActivityForResult(getClassesIntent(ID), 1);
+//                    CURRENT_ACTIVITY.startActivityForResult(getClassesIntent(ID), 1);
+                    startForResult.launch(getClassesIntent(ID));
+
                     break;
 
             }

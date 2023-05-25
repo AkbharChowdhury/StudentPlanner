@@ -68,8 +68,8 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
         findViewById(R.id.btn_edit_class).setOnClickListener(v -> {
 
             if (db.updateClass(getClassDetails())) {
-                Helper.setUpdatedStatus(true);
                 Helper.longToastMessage(this,"Class Updated");
+                setResult(RESULT_OK);
                 finish();
             }
 

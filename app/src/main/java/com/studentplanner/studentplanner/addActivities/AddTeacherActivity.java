@@ -14,6 +14,8 @@ import com.studentplanner.studentplanner.models.Teacher;
 import com.studentplanner.studentplanner.utils.Helper;
 import com.studentplanner.studentplanner.utils.Validation;
 
+import java.util.Locale;
+
 public class AddTeacherActivity extends AppCompatActivity {
     private DatabaseHelper db;
     private Validation form;
@@ -37,8 +39,9 @@ public class AddTeacherActivity extends AppCompatActivity {
             Teacher teacher = new Teacher(txtFirstName, txtLastName, txtEmail);
             if (form.validateAddTeacherForm(teacher)){
                 if (db.addTeacher(getTeacherDetails())){
-                    Helper.setRedirectMessageFragment(this, TeacherFragment.class, "Teacher Added");
-
+                    Helper.longToastMessage(getApplicationContext(), "Teacher added");
+                    setResult(RESULT_OK);
+                    finish();
 
                 }
             }

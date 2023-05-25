@@ -20,6 +20,7 @@ import com.studentplanner.studentplanner.utils.Helper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
     private DatabaseHelper db;
@@ -109,9 +110,9 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
                 int moduleID = getIntent().getIntExtra(SELECTED_ID, 0);
 
                 if(db.addModuleTeacher(teacherIDs, moduleID)){
-
-                    Helper.setRedirectMessageFragment(this, ModuleTeacherFragment.class, "teacher successfully assigned to ");
-
+                    Helper.longToastMessage(this, String.format(Locale.ENGLISH,"Teacher Added for %s", db.getSelectedModule(moduleID).getModuleDetails()));
+                    setResult(RESULT_OK);
+                    finish();
 
                 }
 

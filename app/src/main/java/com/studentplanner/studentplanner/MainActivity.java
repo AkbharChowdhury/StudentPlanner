@@ -12,6 +12,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+import com.studentplanner.studentplanner.fragments.CourseworkFragment;
+import com.studentplanner.studentplanner.fragments.ModuleFragment;
 import com.studentplanner.studentplanner.fragments.ReminderFragment;
 import com.studentplanner.studentplanner.fragments.SemesterFragment;
 import com.studentplanner.studentplanner.models.Student;
@@ -99,13 +101,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     new CalendarFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_calendar);
 
-
-
-
-//            MessageFragment firstFragmentInstance=new MessageFragment();
-//            FragmentManager firstFragmentManager=getSupportFragmentManager();
-//            FragmentTransaction firstFragmentTransaction=firstFragmentManager.beginTransaction();
-//            firstFragmentTransaction.replace(R.id.fragment_container,firstFragmentInstance,"s").addToBackStack(null).commit();
         }
 
     }

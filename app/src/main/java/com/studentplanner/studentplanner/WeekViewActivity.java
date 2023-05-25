@@ -1,5 +1,7 @@
 package com.studentplanner.studentplanner;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,6 +9,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,6 +36,13 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
     private RecyclerView calendarWeekRecyclerView;
     private ListView eventListView;
     private ActivityWeekViewBinding binding;
+
+
+    private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+
+
+
+    });
 
 
     @Override
@@ -62,7 +72,7 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
         ArrayList<LocalDate> days = daysInWeekArray(CalendarUtils.getSelectedDate());
         calendarWeekRecyclerView.setLayoutManager(new GridLayoutManager(this, 7));
         calendarWeekRecyclerView.setAdapter(new CalendarAdapter(days, this));
-        CalendarUtils.setEventAdapter(eventListView, this);
+        CalendarUtils.setEventAdapter(eventListView, this, startForResult);
 
 
     }
@@ -87,7 +97,7 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
     @Override
     protected void onResume() {
         super.onResume();
-        CalendarUtils.setEventAdapter(eventListView,this);
+        CalendarUtils.setEventAdapter(eventListView, this, startForResult);
 
     }
 
@@ -98,7 +108,7 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
     }
 
     public void goBack(View view) {
-        CalendarUtils.setEventAdapter(eventListView,this);
+        CalendarUtils.setEventAdapter(eventListView, this, startForResult);
         finish();
 
 
@@ -143,7 +153,7 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
 
     }
     private void goBack(){
-        CalendarUtils.setEventAdapter(eventListView,this);
+        CalendarUtils.setEventAdapter(eventListView, this, startForResult);
         finish();
     }
 }

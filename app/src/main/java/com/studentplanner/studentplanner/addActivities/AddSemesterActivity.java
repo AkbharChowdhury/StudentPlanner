@@ -53,8 +53,9 @@ public class AddSemesterActivity extends AppCompatActivity implements DatePicker
 
             if (form.validateSemesterForm(txtSemesterName)){
                 if (db.addSemester(new Semester(name, start, end))){
-                    Helper.setRedirectMessageFragment(this, SemesterFragment.class, "Semester Added");
-
+                    Helper.longToastMessage(this,"Semester added");
+                    setResult(RESULT_OK);
+                    finish();
                 }
 
             }
