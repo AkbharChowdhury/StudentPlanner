@@ -36,6 +36,7 @@ public class ModuleFragment extends Fragment {
     private ModuleAdapter adapter;
     private List<Module> list;
     private FragmentModuleBinding binding;
+    private DatabaseHelper db;
 
 
     public ModuleFragment() {
@@ -52,15 +53,29 @@ public class ModuleFragment extends Fragment {
         initFragment();
         binding = FragmentModuleBinding.inflate(inflater, container, false);
         binding.fabAdd.setOnClickListener((v -> Helper.goToActivity(activity, AddModuleActivity.class)));
-
-
-        DatabaseHelper db = DatabaseHelper.getInstance(context);
-        Helper.getIntentMessage(context, activity.getIntent().getExtras());
-
-        list = db.getModules();
         recyclerView = binding.recyclerView;
-        buildRecyclerView();
+
+        db = DatabaseHelper.getInstance(context);
+        Helper.getIntentMessage(context, activity.getIntent().getExtras());
+        getModule();
+
         return binding.getRoot();
+    }
+
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (Helper.isUpdated()){
+            getModule();
+            Helper.setUpdatedStatus(false);
+        }
+
+    }
+    private void getModule(){
+        list = db.getModules();
+        buildRecyclerView();
     }
 
     private void initFragment() {

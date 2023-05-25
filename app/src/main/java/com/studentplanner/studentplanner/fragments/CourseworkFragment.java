@@ -22,6 +22,7 @@ import com.studentplanner.studentplanner.adapters.CourseworkAdapter;
 import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
 import com.studentplanner.studentplanner.databinding.FragmentCourseworkBinding;
 import com.studentplanner.studentplanner.models.Coursework;
+import com.studentplanner.studentplanner.models.Event;
 import com.studentplanner.studentplanner.utils.Helper;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class CourseworkFragment extends Fragment {
     private RecyclerView recyclerView;
     private CourseworkAdapter adapter;
     private List<Coursework> list;
+    private DatabaseHelper db;
     private FragmentCourseworkBinding binding;
 
 
@@ -52,15 +54,30 @@ public class CourseworkFragment extends Fragment {
         initFragment();
         binding = FragmentCourseworkBinding.inflate(inflater, container, false);
         binding.fabAdd.setOnClickListener((v -> Helper.goToActivity(activity, AddCourseworkActivity.class)));
-
-
-        DatabaseHelper db = DatabaseHelper.getInstance(context);
-        Helper.getIntentMessage(context, activity.getIntent().getExtras());
-
-        list = db.getCoursework();
         recyclerView = binding.recyclerView;
-        buildRecyclerView();
+
+
+        db = DatabaseHelper.getInstance(context);
+        Helper.getIntentMessage(context, activity.getIntent().getExtras());
+        getCoursework();
+
         return binding.getRoot();
+    }
+
+    private void getCoursework(){
+        list = db.getCoursework();
+        buildRecyclerView();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (Helper.isUpdated()){
+            getCoursework();
+            Helper.setUpdatedStatus(false);
+        }
+
     }
 
     private void initFragment() {

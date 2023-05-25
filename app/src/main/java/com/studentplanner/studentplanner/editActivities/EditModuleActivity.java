@@ -40,8 +40,9 @@ public class EditModuleActivity extends AppCompatActivity {
         findViewById(R.id.btn_edit_module).setOnClickListener(v -> {
             if (form.validateEditModuleForm(new Module(txtModuleCode, txtModuleName), excludedModuleCode)) {
                 if (db.updateModule(getModuleDetails())) {
-//                    Helper.setRedirectMessageFragment(this, ModuleFragment.class, "Module Updated");
-
+                    Helper.setUpdatedStatus(true);
+                    Helper.longToastMessage(this,"Module Updated");
+                    finish();
                 }
             }
         });

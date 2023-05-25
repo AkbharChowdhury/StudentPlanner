@@ -49,11 +49,11 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ViewHolder
         holder.tvModuleID.setText(String.valueOf(model.getModuleID()));
         holder.tvModuleName.setText(model.getModuleName());
         holder.tvModuleCode.setText(model.getModuleCode());
-        holder.layout.setOnClickListener(view -> activity.startActivityForResult(moduleIntent(position), 1));
+        holder.layout.setOnClickListener(view -> activity.startActivityForResult(intent(position), 1));
 
     }
 
-    private Intent moduleIntent(int position){
+    private Intent intent(int position){
         Intent intent = new Intent(context, EditModuleActivity.class);
         intent.putExtra(ModuleTable.COLUMN_ID, moduleList.get(position).getModuleID());
         return intent;

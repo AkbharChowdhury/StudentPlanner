@@ -110,8 +110,6 @@ public final class Helper {
     }
 
 
-
-
     public static void getIntentMessage(Context context, Bundle extras) {
         if (extras != null && extras.getString(Helper.INTENT_MESSAGE) != null) {
             Helper.longToastMessage(context, extras.getString(Helper.INTENT_MESSAGE));

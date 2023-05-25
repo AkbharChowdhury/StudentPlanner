@@ -71,6 +71,8 @@
             android:exported="false" />
         <activity
             android:name=".editActivities.EditModuleActivity"
+            android:theme="@style/AppTheme.ActionPar"
+
             android:exported="false" />
         <activity
             android:name=".editActivities.EditSemesterActivity"

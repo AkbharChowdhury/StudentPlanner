@@ -150,7 +150,6 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     @Override
     public void onResume() {
         super.onResume();
-        
         if (Helper.isUpdated()){
             Event.getEventsList().clear();
             getEvents();
