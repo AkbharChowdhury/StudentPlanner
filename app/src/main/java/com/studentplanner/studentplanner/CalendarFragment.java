@@ -150,8 +150,7 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     @Override
     public void onResume() {
         super.onResume();
-
-
+        
         if (Helper.isUpdated()){
             Event.getEventsList().clear();
             getEvents();
@@ -160,14 +159,7 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
 
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.d("SSSss",String.valueOf(requestCode));
 
-
-//        getActivity().startactivityfr
-    }
 
     private void getEvents() {
         getEventsFromDB();
