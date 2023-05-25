@@ -208,7 +208,9 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
                     .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
                         int id = getIntent().getIntExtra(ClassTable.COLUMN_ID, 0);
                         if (db.deleteRecord(ClassTable.TABLE_NAME, ClassTable.COLUMN_ID, id)) {
-                            Helper.setRedirectMessageFragment(this, CalendarFragment.class, "Class deleted");
+                            Helper.longToastMessage(this,"Class deleted");
+                            setResult(RESULT_OK);
+                            finish();
                         }
 
 
