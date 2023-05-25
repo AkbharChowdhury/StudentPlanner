@@ -76,6 +76,7 @@
             android:exported="false" />
         <activity
             android:name=".editActivities.EditSemesterActivity"
+
             android:exported="false"
 
 

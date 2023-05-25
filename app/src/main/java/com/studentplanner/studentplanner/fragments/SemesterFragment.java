@@ -36,6 +36,7 @@ public class SemesterFragment extends Fragment {
     private SemesterAdapter adapter;
     private List<Semester> list;
     private FragmentSemesterBinding binding;
+    private DatabaseHelper db;
 
 
     public SemesterFragment() {
@@ -51,14 +52,14 @@ public class SemesterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         initFragment();
         binding = FragmentSemesterBinding.inflate(inflater, container, false);
+        recyclerView = binding.recyclerView;
+        binding.fabAdd.setOnClickListener((v -> Helper.goToActivity(activity, AddSemesterActivity.class)));
 
-        DatabaseHelper db = DatabaseHelper.getInstance(context);
+        db = DatabaseHelper.getInstance(context);
         Helper.getIntentMessage(context, activity.getIntent().getExtras());
 
-        list = db.getSemester();
-        recyclerView = binding.recyclerView;
-        buildRecyclerView();
-        binding.fabAdd.setOnClickListener((v -> Helper.goToActivity(activity, AddSemesterActivity.class)));
+        getSemester();;
+
         return binding.getRoot();
     }
 
@@ -67,6 +68,21 @@ public class SemesterFragment extends Fragment {
         activity = getActivity();
         activity.setTitle(context.getString(R.string.my_semesters));
         setHasOptionsMenu(true);
+
+    }
+    private void getSemester(){
+        list = db.getSemester();
+        buildRecyclerView();
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (Helper.isUpdated()){
+            getSemester();
+            Helper.setUpdatedStatus(false);
+        }
 
     }
 

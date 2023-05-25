@@ -20,6 +20,7 @@ import com.studentplanner.studentplanner.utils.Helper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 public class EditModuleTeacherActivity extends AppCompatActivity {
@@ -136,8 +137,9 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
                 int moduleID = getIntent().getIntExtra(SELECTED_ID, 0);
 
                 if(db.updateModuleTeacher(teacherIDs, moduleID)){
-                    Helper.setRedirectMessageFragment(this, ModuleTeacherFragment.class, "teacher Updated ");
-
+                    Helper.setUpdatedStatus(true);
+                    Helper.longToastMessage(this, String.format(Locale.ENGLISH,"Teacher updated for %s", db.getSelectedModule(moduleID).getModuleDetails()));
+                    finish();
 
                 }
 
