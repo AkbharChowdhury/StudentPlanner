@@ -20,6 +20,7 @@ import android.widget.TextView;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -149,8 +150,23 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     @Override
     public void onResume() {
         super.onResume();
-        Event.getEventsList().clear();
-        getEvents();
+
+
+        if (Helper.isUpdated()){
+            Event.getEventsList().clear();
+            getEvents();
+            Helper.setUpdatedStatus(false);
+        }
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("SSSss",String.valueOf(requestCode));
+
+
+//        getActivity().startactivityfr
     }
 
     private void getEvents() {

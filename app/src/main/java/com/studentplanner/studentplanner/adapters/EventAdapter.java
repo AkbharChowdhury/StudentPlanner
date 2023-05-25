@@ -59,7 +59,6 @@ public class EventAdapter extends ArrayAdapter<Event> {
                 case COURSEWORK:
                     Helper.longToastMessage(getContext(), String.valueOf(event.getId()));
                     CURRENT_ACTIVITY.startActivityForResult(getCourseworkIntent(ID), 1);
-
                     break;
                 case CLASSES:
                     CURRENT_ACTIVITY.startActivityForResult(getClassesIntent(ID), 1);

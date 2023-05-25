@@ -43,6 +43,7 @@ import org.apache.commons.text.WordUtils;
 
 public final class Helper {
     private static final String INTENT_MESSAGE = "message";
+    private static boolean updated = false;
 
 
     private Helper() {
@@ -99,6 +100,15 @@ public final class Helper {
         intent.putExtra(INTENT_MESSAGE, message);
         currentActivity.startActivity(intent);
     }
+
+
+    public static void setUpdatedStatus(boolean status) {
+       updated = status;
+    }
+    public static boolean isUpdated(){
+        return updated;
+    }
+
 
 
 

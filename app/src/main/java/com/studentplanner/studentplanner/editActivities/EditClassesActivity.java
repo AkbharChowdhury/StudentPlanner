@@ -68,16 +68,9 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
         findViewById(R.id.btn_edit_class).setOnClickListener(v -> {
 
             if (db.updateClass(getClassDetails())) {
-                Intent intent = new Intent(this, CalendarFragment .class);
-                startActivityForResult(intent, 1);
-
+                Helper.setUpdatedStatus(true);
+                Helper.longToastMessage(this,"Class Updated");
                 finish();
-//                fragmentManager.beginTransaction().detach(this).attach(this).commit();
-
-//                Helper.setRedirectMessageFragment(this, CalendarFragment.class, "Class updated");
-
-
-
             }
 
 

@@ -71,8 +71,9 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
         findViewById(R.id.btn_edit_coursework).setOnClickListener(v -> {
             if (form.validateEditCourseworkForm(txtTitle, txtDeadline, txtDeadlineError)){
                 if (db.updateCoursework(getCourseworkDetails())) {
+                    Helper.setUpdatedStatus(true);
                     Helper.longToastMessage(this,"Coursework Updated");
-                    Helper.setRedirectMessageFragment(this, CourseworkFragment.class, "Coursework Updated");
+                    finish();
                 }
             }
         });
