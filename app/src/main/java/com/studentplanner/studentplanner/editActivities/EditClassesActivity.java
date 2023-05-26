@@ -124,7 +124,7 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
             Helper.getStringArray(this, txtClassType, R.array.type_array);
             txtModules.setText(txtModules.getAdapter().getItem(Dropdown.getModuleID(model.getModuleID(), db.getModules())).toString(), false);
             txtSemester.setText(txtSemester.getAdapter().getItem(Dropdown.getSemesterID(model.getModuleID(), db.getSemester())).toString(), false);
-            txtClassType.setText(txtClassType.getAdapter().getItem(Dropdown.getClassTypeNumber(model.getClassType(), this)).toString(), false);
+            txtClassType.setText(txtClassType.getAdapter().getItem(Dropdown.getSelectedStringArrayNumber(model.getClassType(), this, R.array.type_array)).toString(), false);
             String classDay = DayOfWeek.of(model.getDow()).toString();
 
             txtDays.setText(

@@ -35,7 +35,7 @@ import java.util.List;
 
 public class EventAdapter extends ArrayAdapter<Event> {
     private final Context context;
-    private final  ActivityResultLauncher<Intent> startForResult;
+    private  final ActivityResultLauncher<Intent> startForResult;
 
     public EventAdapter(@NonNull Context context, List<Event> events, ActivityResultLauncher<Intent> startForResult) {
         super(context, 0, events);
@@ -44,10 +44,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
     }
 
 
-//    public EventAdapter(@NonNull Context context, List<Event> events) {
-//        super(context, 0, events);
-//        this.context = context;
-//    }
+
 
 
     @NonNull
@@ -59,23 +56,18 @@ public class EventAdapter extends ArrayAdapter<Event> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.event_row, parent, false);
         }
 
-        final Activity CURRENT_ACTIVITY = (Activity) convertView.getContext();
 
         final DatabaseHelper db = DatabaseHelper.getInstance(context);
-//        ActivityResultLauncher<Intent> startForResult
 
         convertView.setOnClickListener(v -> {
             final int ID = event.getId();
             switch (event.getEventType()) {
                 case COURSEWORK:
-                    Helper.longToastMessage(getContext(), String.valueOf(event.getId()));
-                    CURRENT_ACTIVITY.startActivityForResult(getCourseworkIntent(ID), 1);
-//                    startForResult.launch(getCourseworkIntent(ID));
+                    startForResult.launch(getCourseworkIntent(ID));
                     break;
-                case CLASSES:
-//                    CURRENT_ACTIVITY.startActivityForResult(getClassesIntent(ID), 1);
-                    startForResult.launch(getClassesIntent(ID));
 
+                case CLASSES:
+                    startForResult.launch(getClassesIntent(ID));
                     break;
 
             }
@@ -88,13 +80,6 @@ public class EventAdapter extends ArrayAdapter<Event> {
         classesIcon.setImageResource(eventIcon);
         courseworkIcon.setImageResource(eventIcon);
 
-
-        String timeMessage = event.getTime() != null
-                ? Helper.formatTimeShort(event.getTime().toString()) :
-                MessageFormat.format("{0} to {1}",
-                        Helper.formatTimeShort(event.getStartTime().toString()),
-                        Helper.formatTimeShort(event.getEndTime().toString())
-                );
 
         TextView txtClassType = convertView.findViewById(R.id.tv_class_type_lecture);
         TextView txtClassTitle = convertView.findViewById(R.id.tv_class_title);

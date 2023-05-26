@@ -103,7 +103,7 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
             Coursework coursework = db.getSelectedCoursework(id);
             txtTitle.getEditText().setText(coursework.getTitle());
             txtDescription.getEditText().setText(coursework.getDescription());
-            txtPriority.setText(txtPriority.getAdapter().getItem(Dropdown.getPriorityNumber(coursework.getPriority(), this)).toString(), false);
+            txtPriority.setText(txtPriority.getAdapter().getItem(Dropdown.getSelectedStringArrayNumber(coursework.getPriority(), this, R.array.priority_array)).toString(), false);
             txtDeadline.setText(Helper.formatDate(coursework.getDeadline()));
             txtDeadlineTime.setText(Helper.showFormattedDBTime(coursework.getDeadlineTime(), this));
             txtModules.setText(txtModules.getAdapter().getItem(Dropdown.getModuleID(coursework.getModuleID(), db.getModules())).toString(), false);

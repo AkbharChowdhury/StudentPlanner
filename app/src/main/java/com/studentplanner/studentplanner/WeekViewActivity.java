@@ -27,8 +27,10 @@ import com.studentplanner.studentplanner.addActivities.AddClassesActivity;
 import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
 import com.studentplanner.studentplanner.databinding.ActivityAddModuleBinding;
 import com.studentplanner.studentplanner.databinding.ActivityWeekViewBinding;
+import com.studentplanner.studentplanner.tables.CourseworkTable;
 import com.studentplanner.studentplanner.utils.CalendarUtils;
 import com.studentplanner.studentplanner.utils.Helper;
+import com.studentplanner.studentplanner.utils.Validation;
 
 
 public class WeekViewActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener {
@@ -39,6 +41,7 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
 
 
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+
 
 
 
@@ -138,12 +141,29 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
 
         int id = item.getItemId();
 
-        if (id == R.id.add_coursework_action){
-            Helper.goToActivity(this, AddCourseworkActivity.class);
+
+        if (id == R.id.add_coursework_action) {
+            if (Validation.isPastDate(CalendarUtils.getSelectedDate().toString())) {
+                startForResult.launch(new Intent(this, AddCourseworkActivity.class));
+
+                return true;
+            }
+            // set deadline to selected calendar date
+            startForResult.launch(courseworkIntent());
+
         }
-        if (id == R.id.add_class_action){
-            Helper.goToActivity(this, AddClassesActivity.class);
+        if (id == R.id.add_class_action) {
+
+            startForResult.launch(new Intent(this, AddClassesActivity.class));
+
         }
+        if (id == R.id.action_week_view) {
+            startForResult.launch(new Intent(this, WeekViewActivity.class));
+
+        }
+
+
+
 
         if (id == android.R.id.home | id == R.id.action_week_view) {
             goBack();
@@ -152,6 +172,13 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
         return super.onOptionsItemSelected(item);
 
     }
+
+    private Intent courseworkIntent() {
+        Intent intent = new Intent(this, AddCourseworkActivity.class);
+        intent.putExtra(CourseworkTable.COLUMN_DEADLINE, Helper.formatDate(CalendarUtils.getSelectedDate().toString()));
+        return intent;
+    }
+
     private void goBack(){
         CalendarUtils.setEventAdapter(eventListView, this, startForResult);
         finish();

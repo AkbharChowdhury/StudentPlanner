@@ -22,8 +22,10 @@ public final class Dropdown {
 
 
     }
-    public static int getPriorityNumber(String priority, Context context) {
-        String[] items = context.getResources().getStringArray(R.array.priority_array);
+
+
+    public static int getSelectedStringArrayNumber(String priority, Context context, int array) {
+        String[] items = context.getResources().getStringArray(array);
         int num = 0;
         for (int i = 0; i < items.length; i++) {
             if (items[i].equalsIgnoreCase(priority)) {
@@ -31,22 +33,9 @@ public final class Dropdown {
             }
         }
         return num;
-
-
     }
 
-    public static int getClassTypeNumber(String type, Context context) {
-        String[] items = context.getResources().getStringArray(R.array.type_array);
-        int num = 0;
-        for (int i = 0; i < items.length; i++) {
-            if (items[i].equalsIgnoreCase(type)) {
-                num = i;
-            }
-        }
-        return num;
 
-
-    }
     public static int getModuleID(int moduleID, List<Module> moduleList) {
         int size = moduleList.size();
         int num = 0;

@@ -83,15 +83,6 @@ public class CourseworkFragment extends Fragment {
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-//        if (Helper.isUpdated()){
-//            getCoursework();
-//            Helper.setUpdatedStatus(false);
-//        }
-
-    }
 
     private void initFragment() {
         context = getContext();

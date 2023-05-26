@@ -8,7 +8,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,7 +20,6 @@ import android.widget.TextView;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -59,7 +57,7 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
 
         if (result.getResultCode() == RESULT_OK){
             Event.getEventsList().clear();
-            getEvents();
+            getEventsFromDB();
         }
 
     });
@@ -93,7 +91,12 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
         binding.btNextMonthAction.setOnClickListener(v -> nextMonthAction());
         binding.btnPreviousMonthAction.setOnClickListener(v -> previousMonthAction());
         binding.btnTodayAction.setOnClickListener(v -> resetToCurrentDate());
-        getEvents();
+        resetToCurrentDate();
+        ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtils.getSelectedDate());
+        EventAdapter eventAdapter = new EventAdapter(context, dailyEvents, startForResult);
+
+        eventListView.setAdapter(eventAdapter);
+        getEventsFromDB();
         return binding.getRoot();
     }
 
@@ -159,23 +162,12 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     @Override
     public void onResume() {
         super.onResume();
-//        if (Helper.isUpdated()){
-//            Event.getEventsList().clear();
-//            getEvents();
-//            Helper.setUpdatedStatus(false);
-//        }
 
     }
 
 
 
-    private void getEvents() {
-        getEventsFromDB();
-        resetToCurrentDate();
-        ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtils.getSelectedDate());
-        EventAdapter eventAdapter = new EventAdapter(context, dailyEvents, startForResult);
-        eventListView.setAdapter(eventAdapter);
-    }
+
 
     private void getCourseworkDetails() {
         List<Event> courseworkEvent = Event.getCourseworkDetails(db);
@@ -214,9 +206,11 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+
         if (id == R.id.add_coursework_action) {
             if (Validation.isPastDate(CalendarUtils.getSelectedDate().toString())) {
-                Helper.goToActivity(activity, AddCourseworkActivity.class);
+                startForResult.launch(new Intent(getActivity(), AddCourseworkActivity.class));
+
                 return true;
             }
             // set deadline to selected calendar date
@@ -225,10 +219,12 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
         }
         if (id == R.id.add_class_action) {
 
-            Helper.goToActivity(activity, AddClassesActivity.class);
+            startForResult.launch(new Intent(getActivity(), AddClassesActivity.class));
+
         }
         if (id == R.id.action_week_view) {
-            Helper.goToActivity(activity, WeekViewActivity.class);
+            startForResult.launch(new Intent(getActivity(), WeekViewActivity.class));
+
         }
 
         return super.onOptionsItemSelected(item);
