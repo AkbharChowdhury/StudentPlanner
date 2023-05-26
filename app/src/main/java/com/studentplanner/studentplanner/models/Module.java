@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class Module {
+    private int moduleID;
     private String moduleCode;
     private String moduleName;
     private TextInputLayout txtModuleCode;
@@ -37,7 +38,6 @@ public class Module {
         this.txtModuleName = txtModuleName;
     }
 
-    private int moduleID;
 
     public int getModuleID() {
         return moduleID;
