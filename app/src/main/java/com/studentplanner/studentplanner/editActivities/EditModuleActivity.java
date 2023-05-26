@@ -88,7 +88,10 @@ public class EditModuleActivity extends AppCompatActivity {
                     .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
                         int id = getIntent().getIntExtra(ModuleTable.COLUMN_ID, 0);
                         if (db.deleteRecord(ModuleTable.TABLE_NAME, ModuleTable.COLUMN_ID, id)){
-//                            Helper.setRedirectMessageFragment(this, ModuleFragment.class, "Module deleted");
+
+                            Helper.longToastMessage(this,"Module Deleted");
+                            setResult(RESULT_OK);
+                            finish();
                         }
 
 

@@ -27,6 +27,7 @@ import com.studentplanner.studentplanner.addActivities.AddClassesActivity;
 import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
 import com.studentplanner.studentplanner.databinding.ActivityAddModuleBinding;
 import com.studentplanner.studentplanner.databinding.ActivityWeekViewBinding;
+import com.studentplanner.studentplanner.models.Event;
 import com.studentplanner.studentplanner.tables.CourseworkTable;
 import com.studentplanner.studentplanner.utils.CalendarUtils;
 import com.studentplanner.studentplanner.utils.Helper;
@@ -41,6 +42,11 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
 
 
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+
+
+        Event.getEventsList().clear();
+//        getEventsFromDB();
+        setWeekView();
 
 
 
@@ -145,29 +151,36 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
         if (id == R.id.add_coursework_action) {
             if (Validation.isPastDate(CalendarUtils.getSelectedDate().toString())) {
                 startForResult.launch(new Intent(this, AddCourseworkActivity.class));
-
                 return true;
             }
+
             // set deadline to selected calendar date
             startForResult.launch(courseworkIntent());
 
         }
+
         if (id == R.id.add_class_action) {
 
             startForResult.launch(new Intent(this, AddClassesActivity.class));
 
         }
+
         if (id == R.id.action_week_view) {
             startForResult.launch(new Intent(this, WeekViewActivity.class));
+        }
 
+
+        if (id == android.R.id.home | id == R.id.action_week_view){
+            CalendarUtils.setEventAdapter(eventListView, this, startForResult);
+            finish();
         }
 
 
 
 
-        if (id == android.R.id.home | id == R.id.action_week_view) {
-            goBack();
-        }
+//        if (id == android.R.id.home | id == R.id.action_week_view) {
+//            goBack();
+//        }
 
         return super.onOptionsItemSelected(item);
 

@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -58,6 +59,8 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
         if (result.getResultCode() == RESULT_OK){
             Event.getEventsList().clear();
             getEventsFromDB();
+            setMonthView();
+
         }
 
     });
@@ -92,9 +95,9 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
         binding.btnPreviousMonthAction.setOnClickListener(v -> previousMonthAction());
         binding.btnTodayAction.setOnClickListener(v -> resetToCurrentDate());
         resetToCurrentDate();
+
         ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtils.getSelectedDate());
         EventAdapter eventAdapter = new EventAdapter(context, dailyEvents, startForResult);
-
         eventListView.setAdapter(eventAdapter);
         getEventsFromDB();
         return binding.getRoot();
@@ -162,6 +165,12 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     @Override
     public void onResume() {
         super.onResume();
+
+
+//        Event.getEventsList().clear();
+//        getEventsFromDB();
+//        setMonthView();
+
 
     }
 

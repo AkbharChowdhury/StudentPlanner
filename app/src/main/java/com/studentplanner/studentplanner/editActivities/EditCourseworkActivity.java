@@ -197,7 +197,9 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
                     .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
                         int id = getIntent().getIntExtra(CourseworkTable.COLUMN_ID, 0);
                         if (db.deleteRecord(CourseworkTable.TABLE_NAME, CourseworkTable.COLUMN_ID, id)){
-                            Helper.setRedirectMessageFragment(this, CourseworkFragment.class, "coursework deleted");
+                            Helper.longToastMessage(this,"Coursework Deleted");
+                            setResult(RESULT_OK);
+                            finish();
                         }
 
 
