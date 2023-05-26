@@ -6,14 +6,13 @@ import java.util.List;
 public class ModuleTeacher {
     private int moduleID;
     private int teacherID;
+    private List<Integer> teacherIDList;
 
     public ModuleTeacher(int moduleID, List<Integer> teacherIDList) {
         this.moduleID = moduleID;
         this.teacherIDList = teacherIDList;
     }
 
-    //    private int teacherID;
-    private List<Integer> teacherIDList;
 
 
     public ModuleTeacher(int moduleID, int teacherID) {
