@@ -10,8 +10,6 @@ public final class Student extends User {
     private TextInputLayout txtPassword;
 
     private String phone;
-
-
     private String password;
 
     public String getPhone() {
