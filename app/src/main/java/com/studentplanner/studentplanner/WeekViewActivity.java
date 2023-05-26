@@ -136,10 +136,13 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getMenuInflater().inflate(R.menu.classes_menu, menu);
-        MenuItem weekView = menu.findItem(R.id.action_week_view);
-        weekView.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_calendar_view));
+        changeCalendarIcon(menu);
 
         return true;
+    }
+    private void changeCalendarIcon(Menu menu){
+        MenuItem weekView = menu.findItem(R.id.action_week_view);
+        weekView.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_calendar_view));
     }
 
     @Override
@@ -171,8 +174,7 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
 
 
         if (id == android.R.id.home | id == R.id.action_week_view){
-            CalendarUtils.setEventAdapter(eventListView, this, startForResult);
-            finish();
+            goBack();
         }
 
 
