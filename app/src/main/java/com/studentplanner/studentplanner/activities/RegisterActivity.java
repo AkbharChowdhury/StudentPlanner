@@ -1,4 +1,4 @@
-package com.studentplanner.studentplanner;
+package com.studentplanner.studentplanner.activities;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.textfield.TextInputLayout;
+import com.studentplanner.studentplanner.DatabaseHelper;
+import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.models.Student;
 import com.studentplanner.studentplanner.utils.AlertDialogFragment;
 import com.studentplanner.studentplanner.utils.Helper;

@@ -1,4 +1,4 @@
-package com.studentplanner.studentplanner;
+package com.studentplanner.studentplanner.activities;
 
 import static com.studentplanner.studentplanner.utils.CalendarUtils.daysInWeekArray;
 import static com.studentplanner.studentplanner.utils.CalendarUtils.monthYearFromDate;
@@ -20,9 +20,12 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.studentplanner.studentplanner.R;
+import com.studentplanner.studentplanner.adapters.CalendarAdapter;
 import com.studentplanner.studentplanner.addActivities.AddClassesActivity;
 import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
 import com.studentplanner.studentplanner.databinding.ActivityWeekViewBinding;
+import com.studentplanner.studentplanner.interfaces.OnItemListener;
 import com.studentplanner.studentplanner.models.Event;
 import com.studentplanner.studentplanner.tables.CourseworkTable;
 import com.studentplanner.studentplanner.utils.CalendarUtils;

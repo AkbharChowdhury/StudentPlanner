@@ -1,10 +1,13 @@
-package com.studentplanner.studentplanner;
+package com.studentplanner.studentplanner.viewholders;
 
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.studentplanner.studentplanner.R;
+import com.studentplanner.studentplanner.interfaces.OnItemListener;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

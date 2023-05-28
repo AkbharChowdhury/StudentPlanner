@@ -1,4 +1,4 @@
-package com.studentplanner.studentplanner;
+package com.studentplanner.studentplanner.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -11,14 +11,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.studentplanner.studentplanner.viewholders.CalendarViewHolder;
+import com.studentplanner.studentplanner.DatabaseHelper;
+import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.enums.EventType;
-import com.studentplanner.studentplanner.models.Coursework;
+import com.studentplanner.studentplanner.interfaces.OnItemListener;
 import com.studentplanner.studentplanner.models.Event;
 import com.studentplanner.studentplanner.utils.CalendarUtils;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
     private final ArrayList<LocalDate> days;

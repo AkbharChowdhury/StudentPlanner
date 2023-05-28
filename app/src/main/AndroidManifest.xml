@@ -32,7 +32,7 @@
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.ActionPar" />
         <activity
-            android:name=".WeekViewActivity"
+            android:name=".activities.WeekViewActivity"
             android:exported="true"
             android:theme="@style/AppTheme.ActionPar" />
         <activity
@@ -64,10 +64,10 @@
             android:theme="@style/AppTheme.ActionPar"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".activities.RegisterActivity"
             android:exported="true" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".editActivities.EditModuleActivity"

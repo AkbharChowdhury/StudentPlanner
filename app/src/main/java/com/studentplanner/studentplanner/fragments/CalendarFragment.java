@@ -1,4 +1,4 @@
-package com.studentplanner.studentplanner;
+package com.studentplanner.studentplanner.fragments;
 
 import static android.app.Activity.RESULT_OK;
 import static com.studentplanner.studentplanner.utils.CalendarUtils.daysInMonthArray;
@@ -8,7 +8,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,11 +24,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.studentplanner.studentplanner.DatabaseHelper;
+import com.studentplanner.studentplanner.R;
+import com.studentplanner.studentplanner.activities.WeekViewActivity;
+import com.studentplanner.studentplanner.adapters.CalendarAdapter;
 import com.studentplanner.studentplanner.adapters.EventAdapter;
 import com.studentplanner.studentplanner.addActivities.AddClassesActivity;
 import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
 import com.studentplanner.studentplanner.databinding.FragmentCalendarBinding;
 import com.studentplanner.studentplanner.enums.EventType;
+import com.studentplanner.studentplanner.interfaces.OnItemListener;
 import com.studentplanner.studentplanner.models.Classes;
 import com.studentplanner.studentplanner.models.Event;
 import com.studentplanner.studentplanner.models.Semester;

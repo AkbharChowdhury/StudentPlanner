@@ -1,4 +1,4 @@
-package com.studentplanner.studentplanner;
+package com.studentplanner.studentplanner.interfaces;
 
 import java.time.LocalDate;
 

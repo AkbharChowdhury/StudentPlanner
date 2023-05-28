@@ -1,4 +1,4 @@
-package com.studentplanner.studentplanner;
+package com.studentplanner.studentplanner.activities;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,6 +9,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.studentplanner.studentplanner.DatabaseHelper;
+import com.studentplanner.studentplanner.MainActivity;
+import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.utils.AccountPreferences;
 import com.studentplanner.studentplanner.utils.Encryption;
 import com.studentplanner.studentplanner.utils.Helper;

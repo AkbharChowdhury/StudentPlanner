@@ -94,13 +94,6 @@ public final class Helper {
         currentActivity.startActivity(intent);
     }
 
-    public static void setRedirectMessageFragment(Activity currentActivity, Class<? extends  Fragment> fragmentPageToOpen, String message) {
-        Intent intent = new Intent(currentActivity, fragmentPageToOpen);
-        intent.putExtra(INTENT_MESSAGE, message);
-        currentActivity.startActivity(intent);
-    }
-
-
 
 
 

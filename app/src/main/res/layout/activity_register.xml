@@ -13,7 +13,7 @@
         android:gravity="center"
         android:orientation="vertical"
         android:paddingHorizontal="16dp"
-        tools:context="RegisterActivity">
+        tools:context=".activities.RegisterActivity">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="100dp"

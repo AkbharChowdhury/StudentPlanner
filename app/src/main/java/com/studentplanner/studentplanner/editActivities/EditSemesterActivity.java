@@ -102,7 +102,10 @@ public class EditSemesterActivity extends AppCompatActivity  implements DatePick
                     .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
                         int id = getIntent().getIntExtra(SemesterTable.COLUMN_ID, 0);
                         if (db.deleteRecord(SemesterTable.TABLE_NAME, SemesterTable.COLUMN_ID, id)){
-                            Helper.setRedirectMessageFragment(this, SemesterFragment.class, "Semester deleted");
+
+                            Helper.longToastMessage(this,"Semester Deleted");
+                            setResult(RESULT_OK);
+                            finish();
                         }
                     })
                     .setNegativeButton(getString(R.string.no), (dialog, which) -> dialog.cancel()).create().show();

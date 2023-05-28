@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,7 +15,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.TimePicker;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.studentplanner.studentplanner.CalendarFragment;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.enums.TimePickerType;
