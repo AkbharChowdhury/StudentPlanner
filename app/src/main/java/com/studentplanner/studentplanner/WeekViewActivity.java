@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,14 +43,8 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
 
 
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-
-
         Event.getEventsList().clear();
-//        getEventsFromDB();
         setWeekView();
-
-
-
 
     });
 
@@ -149,8 +144,7 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         int id = item.getItemId();
-
-
+        
         if (id == R.id.add_coursework_action) {
             if (Validation.isPastDate(CalendarUtils.getSelectedDate().toString())) {
                 startForResult.launch(new Intent(this, AddCourseworkActivity.class));
@@ -168,21 +162,11 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
 
         }
 
-        if (id == R.id.action_week_view) {
-            startForResult.launch(new Intent(this, WeekViewActivity.class));
-        }
-
 
         if (id == android.R.id.home | id == R.id.action_week_view){
             goBack();
         }
 
-
-
-
-//        if (id == android.R.id.home | id == R.id.action_week_view) {
-//            goBack();
-//        }
 
         return super.onOptionsItemSelected(item);
 
