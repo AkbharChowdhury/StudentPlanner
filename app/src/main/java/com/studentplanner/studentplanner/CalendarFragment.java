@@ -45,7 +45,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CalendarFragment extends Fragment implements CalendarAdapter.OnItemListener {
+public class CalendarFragment extends Fragment implements OnItemListener {
     private Activity activity;
     private Context context;
 
@@ -162,19 +162,6 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
 
 
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-
-//        Event.getEventsList().clear();
-//        getEventsFromDB();
-//        setMonthView();
-
-
-    }
-
 
 
 

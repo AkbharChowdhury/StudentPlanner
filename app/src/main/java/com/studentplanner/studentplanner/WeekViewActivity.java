@@ -1,14 +1,7 @@
 package com.studentplanner.studentplanner;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import static com.studentplanner.studentplanner.utils.CalendarUtils.daysInWeekArray;
+import static com.studentplanner.studentplanner.utils.CalendarUtils.monthYearFromDate;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,15 +11,17 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-
-import static com.studentplanner.studentplanner.utils.CalendarUtils.daysInWeekArray;
-import static com.studentplanner.studentplanner.utils.CalendarUtils.monthYearFromDate;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.studentplanner.studentplanner.addActivities.AddClassesActivity;
 import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
-import com.studentplanner.studentplanner.databinding.ActivityAddModuleBinding;
 import com.studentplanner.studentplanner.databinding.ActivityWeekViewBinding;
 import com.studentplanner.studentplanner.models.Event;
 import com.studentplanner.studentplanner.tables.CourseworkTable;
@@ -34,8 +29,11 @@ import com.studentplanner.studentplanner.utils.CalendarUtils;
 import com.studentplanner.studentplanner.utils.Helper;
 import com.studentplanner.studentplanner.utils.Validation;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 
-public class WeekViewActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener {
+
+public class WeekViewActivity extends AppCompatActivity implements OnItemListener {
     private TextView monthYearText;
     private RecyclerView calendarWeekRecyclerView;
     private ListView eventListView;
@@ -144,7 +142,7 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         int id = item.getItemId();
-        
+
         if (id == R.id.add_coursework_action) {
             if (Validation.isPastDate(CalendarUtils.getSelectedDate().toString())) {
                 startForResult.launch(new Intent(this, AddCourseworkActivity.class));
