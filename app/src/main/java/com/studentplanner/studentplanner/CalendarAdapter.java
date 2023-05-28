@@ -57,30 +57,28 @@ class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
         final LocalDate date = days.get(position);
         if (date == null) {
             holder.dayOfMonth.setText("");
+            return;
 
-        } else {
-            holder.dayOfMonth.setText(String.valueOf(date.getDayOfMonth()));
-            if (date.equals(CalendarUtils.getSelectedDate())) {
-                holder.parentView.setBackgroundColor(Color.LTGRAY);
+        }
+        holder.dayOfMonth.setText(String.valueOf(date.getDayOfMonth()));
+        if (date.equals(CalendarUtils.getSelectedDate())) {
+            holder.parentView.setBackgroundColor(Color.LTGRAY);
 
-            }
+        }
 
-            for (Event event : Event.getEventsList()) {
+        for (Event event : Event.getEventsList()) {
 
-                if (date.equals(event.getDate())) {
-                    getEventIcon(event.getEventType(), holder);
+            if (date.equals(event.getDate())) {
 
+                getEventIcon(event.getEventType(), holder);
+                TextView lblTotalCoursework = holder.parentView.findViewById(R.id.lblCourseworkCounter);
 
-                    TextView lblTotalCoursework = (TextView) holder.parentView.findViewById(R.id.lblCourseworkCounter);
-                    if (event.getEventType() == EventType.COURSEWORK) {
-                        lblTotalCoursework.setVisibility(View.VISIBLE);
-
-                        int total = db.getCourseworkCountByDate(event.getDate());
-                        if (total > 1) {
-                            // show number of coursework due on calendar date
-                            lblTotalCoursework.setText(String.valueOf(total));
-                        }
-
+                if (event.getEventType() == EventType.COURSEWORK) {
+                    lblTotalCoursework.setVisibility(View.VISIBLE);
+                    int total = db.getCourseworkCountByDate(event.getDate());
+                    if (total > 1) {
+                        // show number of coursework due on calendar date
+                        lblTotalCoursework.setText(String.valueOf(total));
                     }
 
                 }
