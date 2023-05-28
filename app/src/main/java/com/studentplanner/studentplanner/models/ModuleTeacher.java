@@ -20,12 +20,13 @@ public class ModuleTeacher {
         this.teacherID = teacherID;
     }
 
-    public int getModuleID() {
-        return moduleID;
-    }
 
     public List<Integer> getTeacherIDList() {
         return teacherIDList;
+    }
+
+    public int getModuleID() {
+        return moduleID;
     }
 
     public int getTeacherID() {
