@@ -56,6 +56,10 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     private FragmentCalendarBinding binding;
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
 
+//           TextView lblTotalCoursework  = (TextView) convertView.findViewById(R.id.lblCourseworkCounter);
+//        lblTotalCoursework.setVisibility(View.VISIBLE);
+//        lblTotalCoursework.setText("3332");
+
         if (result.getResultCode() == RESULT_OK){
             Event.getEventsList().clear();
             getEventsFromDB();

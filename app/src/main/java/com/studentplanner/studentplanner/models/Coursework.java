@@ -12,6 +12,8 @@ public class Coursework {
     private String deadlineTime;
     private boolean isCompleted = false;
 
+
+
     public boolean isCompleted() {
         return isCompleted;
     }

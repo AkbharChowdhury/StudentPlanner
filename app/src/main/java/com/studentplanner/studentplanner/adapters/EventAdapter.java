@@ -59,6 +59,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
 
         final DatabaseHelper db = DatabaseHelper.getInstance(context);
 
+
         convertView.setOnClickListener(v -> {
             final int ID = event.getId();
             switch (event.getEventType()) {

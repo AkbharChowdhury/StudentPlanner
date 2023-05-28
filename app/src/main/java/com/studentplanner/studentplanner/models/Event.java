@@ -216,6 +216,7 @@ public class Event {
     private Coursework coursework;
     private Classes classes;
 
+
     public Coursework getCoursework() {
         return coursework;
     }
@@ -255,6 +256,7 @@ public class Event {
     public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
+
 
 
 

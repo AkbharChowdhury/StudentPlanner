@@ -1,15 +1,18 @@
 package com.studentplanner.studentplanner;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.studentplanner.studentplanner.enums.EventType;
+import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.models.Event;
 import com.studentplanner.studentplanner.utils.CalendarUtils;
 
@@ -47,6 +50,9 @@ class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull CalendarViewHolder holder, int position) {
+
+        Context context = holder.parentView.getContext();
+        DatabaseHelper db = DatabaseHelper.getInstance(context);
         // selected date hover
         final LocalDate date = days.get(position);
         if (date == null) {
@@ -64,9 +70,23 @@ class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
                 if (date.equals(event.getDate())) {
                     getEventIcon(event.getEventType(), holder);
 
+
+                    TextView lblTotalCoursework = (TextView) holder.parentView.findViewById(R.id.lblCourseworkCounter);
+                    if (event.getEventType() == EventType.COURSEWORK) {
+                        lblTotalCoursework.setVisibility(View.VISIBLE);
+
+                        int total = db.getCourseworkCountByDate(event.getDate());
+                        if (total > 1) {
+                            // show number of coursework due on calendar date
+                            lblTotalCoursework.setText(String.valueOf(total));
+                        }
+
+                    }
+
                 }
 
             }
+
         }
     }
 

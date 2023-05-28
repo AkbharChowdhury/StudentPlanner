@@ -31,7 +31,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cellDayText"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/ic_coursework" />
+        app:srcCompat="@drawable/ic_coursework"
+
+        />
+
 
     <ImageView
 
@@ -47,5 +50,17 @@
         app:layout_constraintVertical_bias="0.069"
         app:srcCompat="@drawable/ic_classes" />
 
+    <TextView
+        android:id="@+id/lblCourseworkCounter"
+        android:layout_width="wrap_content"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="10sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/img_cw_icon"
+        app:layout_constraintStart_toEndOf="@+id/img_cw_icon" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
