@@ -19,8 +19,10 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.models.Coursework;
+import com.studentplanner.studentplanner.models.CustomTimePicker;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.tables.CourseworkTable;
+import com.studentplanner.studentplanner.utils.BoundTimePickerDialog;
 import com.studentplanner.studentplanner.utils.CalendarUtils;
 import com.studentplanner.studentplanner.utils.DatePickerFragment;
 import com.studentplanner.studentplanner.utils.Dropdown;
@@ -35,6 +37,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class AddCourseworkActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+    private final CustomTimePicker deadlineCustomTimePicker = new CustomTimePicker(LocalTime.now().plusHours(1).getHour(), LocalTime.now().getMinute());
+
     private AutoCompleteTextView txtPriority;
     private AutoCompleteTextView txtModules;
 
@@ -45,6 +49,12 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
     private int selectedModuleID;
     final String SELECT_PRIORITY = "Select Priority";
     private DatabaseHelper db;
+    private BoundTimePickerDialog deadlineTimePicker;
+
+    private void deadlineSetup(BoundTimePickerDialog deadlineTimePicker, LocalDate localDate) {
+
+        Helper.setMinTimeStatus(deadlineTimePicker, localDate);
+    }
 
 
     @Override
@@ -82,7 +92,14 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
             Validation form = new Validation(this);
             TextInputLayout txtModuleError = findViewById(R.id.txtModuleError);
             TextInputLayout errorPriority = findViewById(R.id.txtPriorityError);
-            if (form.validateAddCourseworkForm(new Coursework(txtTitle, txtModuleError, errorPriority))) {
+            TextInputLayout timeError = findViewById(R.id.txtDeadlineTimeError);
+            Coursework coursework = new Coursework(txtTitle, txtModuleError, errorPriority);
+            coursework.setTxtDeadline(txtDeadline);
+            coursework.setTxtDeadlineTime(txtDeadlineTime);
+            coursework.setTxtDeadlineTimeError(timeError);
+
+            if (form.validateAddCourseworkForm(coursework)) {
+                Helper.longToastMessage(this, "Passed");
                 if (db.addCoursework(getCourseworkDetails())) {
                     Helper.longToastMessage(this,"Coursework Added");
                     setResult(RESULT_OK);
@@ -123,8 +140,11 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onDateSet(DatePicker d, int year, int month, int day) {
-        LocalDate date = Helper.formatDate(year, month, day);
-        txtDeadline.setText(Helper.formatDate(String.valueOf(date)));
+        LocalDate selectedDate = Helper.formatDate(year, month, day);
+
+
+
+        txtDeadline.setText(Helper.formatDate(String.valueOf(selectedDate)));
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -145,7 +165,14 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
     private void setTimePicker() {
         txtDeadlineTime.setOnTouchListener((view, motionEvent) -> {
             if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                new TimePickerFragment().show(getSupportFragmentManager(), "timePicker");
+                deadlineTimePicker = new BoundTimePickerDialog(this, this, deadlineCustomTimePicker.getSelectedHour(), deadlineCustomTimePicker.getSelectedMinute());
+
+                String deadlineDate  = Helper.convertFUllDateToYYMMDD(Helper.trimStr(txtDeadline));
+                LocalDate deadline = LocalDate.parse(deadlineDate);
+                LocalDate today = CalendarUtils.getCurrentDate();
+                LocalDate date = deadline.isEqual(today)? today: deadline;
+                deadlineSetup(deadlineTimePicker, date);
+                deadlineTimePicker.show();
             }
 
             return false;
@@ -154,12 +181,13 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
 
     @Override
     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+        deadlineCustomTimePicker.setSelectedHour(selectedHour);
+        deadlineCustomTimePicker.setSelectedMinute(selectedMinute);
+
         String selectedTime = String.format(Locale.getDefault(), getString(R.string.time_format_database), selectedHour, selectedMinute);
         txtDeadlineTime.setText(Helper.formatTime(selectedTime));
 
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

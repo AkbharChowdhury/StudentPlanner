@@ -17,6 +17,7 @@ import com.studentplanner.studentplanner.tables.StudentTable;
 import com.studentplanner.studentplanner.tables.TeacherTable;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -88,11 +89,30 @@ public final class Validation {
         boolean title = isEmpty(errorFields.getTxtTitle(), "Title");
         boolean moduleID = isDropdownEmpty(errorFields.getTxtModuleID(), "Please select a module!", context.getString(R.string.select_module));
         boolean priority = isDropdownEmpty(errorFields.getTxtPriority(), "Please select a Priority!", context.getString(R.string.select_priority));
+        boolean isValidDueTime = isValidDueTime(
+                errorFields.getTxtDeadline(),
+                errorFields.getTxtDeadlineTimeError(),
+                errorFields.getTxtDeadlineTime()
+        );
         errors.add(title);
         errors.add(moduleID);
         errors.add(priority);
+        errors.add(isValidDueTime);
         return !errors.contains(true);
 
+    }
+    public boolean isValidDueTime(AutoCompleteTextView txtDeadline, TextInputLayout txtTimeError, AutoCompleteTextView txtDeadlineTime) {
+        LocalDate date = LocalDate.parse(Helper.convertFUllDateToYYMMDD(Helper.trimStr(txtDeadline)));
+        LocalTime time = LocalTime.parse(Helper.convertFormattedTimeToDBFormat(txtDeadlineTime.getText().toString()));
+
+        LocalDate today = LocalDate.now();
+        if (date.isEqual(today) && time.isBefore(LocalTime.now())){
+            txtTimeError.setError("this time should be now or a future time!");
+            return true;
+
+        }
+        txtTimeError.setError(null);
+        return false;
     }
 
     public boolean validateEditCourseworkForm(TextInputLayout txtTitle, AutoCompleteTextView deadline, TextInputLayout deadlineError) {

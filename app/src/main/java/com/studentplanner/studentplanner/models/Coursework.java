@@ -1,5 +1,7 @@
 package com.studentplanner.studentplanner.models;
 
+import android.widget.AutoCompleteTextView;
+
 import com.google.android.material.textfield.TextInputLayout;
 
 public class Coursework {
@@ -11,8 +13,36 @@ public class Coursework {
     private String deadline;
     private String deadlineTime;
     private boolean isCompleted = false;
+    private TextInputLayout txtTitle;
+    private TextInputLayout txtModuleID;
 
+    private AutoCompleteTextView txtDeadline;
+    private AutoCompleteTextView txtDeadlineTime;
+    private TextInputLayout txtDeadlineTimeError;
 
+    public AutoCompleteTextView getTxtDeadline() {
+        return txtDeadline;
+    }
+
+    public void setTxtDeadline(AutoCompleteTextView txtDeadline) {
+        this.txtDeadline = txtDeadline;
+    }
+
+    public AutoCompleteTextView getTxtDeadlineTime() {
+        return txtDeadlineTime;
+    }
+
+    public void setTxtDeadlineTime(AutoCompleteTextView txtDeadlineTime) {
+        this.txtDeadlineTime = txtDeadlineTime;
+    }
+
+    public TextInputLayout getTxtDeadlineTimeError() {
+        return txtDeadlineTimeError;
+    }
+
+    public void setTxtDeadlineTimeError(TextInputLayout txtDeadlineTimeError) {
+        this.txtDeadlineTimeError = txtDeadlineTimeError;
+    }
 
     public boolean isCompleted() {
         return isCompleted;
@@ -22,8 +52,7 @@ public class Coursework {
         isCompleted = completed;
     }
 
-    private TextInputLayout txtTitle;
-    private TextInputLayout txtModuleID;
+
 
     public TextInputLayout getTxtPriority() {
         return txtPriority;

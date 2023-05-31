@@ -302,4 +302,18 @@ public final class Helper {
     }
 
 
+    public static void setMinTimeStatus(BoundTimePickerDialog deadlineTimePicker, LocalDate date){
+        LocalDate today = LocalDate.now();
+        deadlineTimePicker.setMinTimeToNow(false);
+
+        if (date.isEqual(today)){
+            deadlineTimePicker.setMinTimeToNow(true);
+        } else if (date.isAfter(today)) {
+            deadlineTimePicker.setMinTimeToNow(false);
+
+        }
+
+    }
+
+
 }
