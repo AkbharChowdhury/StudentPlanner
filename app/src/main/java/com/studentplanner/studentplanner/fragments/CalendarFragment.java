@@ -99,12 +99,12 @@ public class CalendarFragment extends Fragment implements OnItemListener {
         binding.btNextMonthAction.setOnClickListener(v -> nextMonthAction());
         binding.btnPreviousMonthAction.setOnClickListener(v -> previousMonthAction());
         binding.btnTodayAction.setOnClickListener(v -> resetToCurrentDate());
-        resetToCurrentDate();
 
         ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtils.getSelectedDate());
         EventAdapter eventAdapter = new EventAdapter(context, dailyEvents, startForResult);
         eventListView.setAdapter(eventAdapter);
         getEventsFromDB();
+        resetToCurrentDate();
         return binding.getRoot();
     }
 
