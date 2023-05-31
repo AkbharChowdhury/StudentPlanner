@@ -168,5 +168,11 @@
     <string name="nav_modules">Modules</string>
     <string name="nav_title_profile">Profile</string>
     <string name="nav_logout">Logout</string>
+    <string name="placeholder_date">Wed 24</string>
+    <string name="placeholder_description">cw description</string>
+    <string name="placeholder_priority">High</string>
+    <string name="placeholder_module">COMP152 Test</string>
+    <string name="placeholder_completion_status">Completed</string>
+    <string name="placeholder_durarion">in 5 days</string>
 
 </resources>

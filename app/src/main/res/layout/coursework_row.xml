@@ -36,20 +36,19 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_coursework_title"
             android:padding="5dp"
-            android:text="cw description"
+            android:text="@string/placeholder_description"
             android:textColor="@color/black" />
-
-
-
 
 
         <TextView
             android:id="@+id/tv_coursework_deadline"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:textStyle="italic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_coursework_desc"
             android:padding="5dp"
-            android:text="Wed 24"
+            android:text="@string/placeholder_date"
             android:textColor="@color/black" />
 
 <!--        <TextView-->
@@ -67,7 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_coursework_deadline"
             android:padding="5dp"
-            android:text="High"
+            android:text="@string/placeholder_priority"
             android:textStyle="bold"
             android:textColor="@color/black" />
 
@@ -79,7 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_coursework_priority"
             android:padding="5dp"
-            android:text="COMP152 Test"
+            android:text="@string/placeholder_module"
             android:textColor="@color/black" />
 
         <TextView
@@ -88,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_coursework_module"
             android:padding="5dp"
-            android:text="Completed"
+            android:text="@string/placeholder_completion_status"
             android:textColor="@color/black" />
 
 
@@ -111,7 +110,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="5dp"
-            android:text="in 5 days"
+            android:text="@string/placeholder_durarion"
             android:textSize="20sp" />
 <!--            android:layout_below="@id/instructions"-->
     </RelativeLayout>
