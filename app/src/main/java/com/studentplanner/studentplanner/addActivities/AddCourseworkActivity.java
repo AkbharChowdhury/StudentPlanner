@@ -1,5 +1,7 @@
 package com.studentplanner.studentplanner.addActivities;
 
+import static com.studentplanner.studentplanner.utils.Helper.deadlineSetup;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -55,10 +57,10 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
     private Validation form;
     private ActivityAddCourseworkBinding binding;
 
-    private void deadlineSetup(BoundTimePickerDialog deadlineTimePicker, LocalDate localDate) {
-
-        Helper.setMinTimeStatus(deadlineTimePicker, localDate);
-    }
+//    private void deadlineSetup(BoundTimePickerDialog deadlineTimePicker, LocalDate localDate) {
+//
+//        Helper.setMinTimeStatus(deadlineTimePicker, localDate);
+//    }
 
 
     @Override
@@ -176,7 +178,6 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
         txtDeadlineTime.setOnTouchListener((view, motionEvent) -> {
             if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                 deadlineTimePicker = new BoundTimePickerDialog(this, this, deadlineCustomTimePicker.getSelectedHour(), deadlineCustomTimePicker.getSelectedMinute());
-
                 String deadlineDate  = Helper.convertFUllDateToYYMMDD(Helper.trimStr(txtDeadline));
                 LocalDate deadline = LocalDate.parse(deadlineDate);
                 LocalDate today = CalendarUtils.getCurrentDate();
@@ -193,7 +194,6 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
         deadlineCustomTimePicker.setSelectedHour(selectedHour);
         deadlineCustomTimePicker.setSelectedMinute(selectedMinute);
-
         String selectedTime = String.format(Locale.getDefault(), getString(R.string.time_format_database), selectedHour, selectedMinute);
         txtDeadlineTime.setText(Helper.formatTime(selectedTime));
 

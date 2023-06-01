@@ -1,5 +1,7 @@
 package com.studentplanner.studentplanner.editActivities;
 
+import static com.studentplanner.studentplanner.utils.Helper.deadlineSetup;
+
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -27,6 +29,7 @@ import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.models.CustomTimePicker;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.tables.CourseworkTable;
+import com.studentplanner.studentplanner.utils.BoundTimePickerDialog;
 import com.studentplanner.studentplanner.utils.CalendarUtils;
 import com.studentplanner.studentplanner.utils.DatePickerFragment;
 import com.studentplanner.studentplanner.utils.Dropdown;
@@ -57,6 +60,8 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
     private MaterialCheckBox checkBoxCompleted;
 
     private ActivityEditCourseworkBinding binding;
+    private BoundTimePickerDialog deadlineTimePicker;
+
 
 
 
@@ -84,11 +89,12 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
         binding.btnEditCoursework.setOnClickListener(v -> {
 
             if (form.validateEditCourseworkForm(getCourseworkErrorFields())){
-                if (db.updateCoursework(getCourseworkDetails())) {
-                    Helper.longToastMessage(this,"Coursework Updated");
-                    setResult(RESULT_OK);
-                    finish();
-                }
+                Helper.longToastMessage(this, "passed");
+//                if (db.updateCoursework(getCourseworkDetails())) {
+//                    Helper.longToastMessage(this,"Coursework Updated");
+//                    setResult(RESULT_OK);
+//                    finish();
+//                }
             }
         });
 
@@ -96,6 +102,7 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
 
     private Coursework getCourseworkErrorFields(){
         Coursework coursework = new Coursework();
+
         coursework.setTxtDeadlineTime(txtDeadlineTime);
         coursework.setTxtDeadlineTimeError(binding.txtDeadlineTimeError);
         coursework.setTxtDeadline(txtDeadline);
@@ -162,12 +169,21 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
     }
 
 
+//    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+////        String selectedTime = String.format(Locale.getDefault(), getString(R.string.time_format_database), selectedHour, selectedMinute);
+////        txtDeadlineTime.setText(Helper.formatTime(selectedTime));
+//
+//
+//    }
     @Override
     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+        deadlineCustomTimePicker.setSelectedHour(selectedHour);
+        deadlineCustomTimePicker.setSelectedMinute(selectedMinute);
         String selectedTime = String.format(Locale.getDefault(), getString(R.string.time_format_database), selectedHour, selectedMinute);
         txtDeadlineTime.setText(Helper.formatTime(selectedTime));
 
     }
+
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onDateSet(DatePicker d, int year, int month, int day) {
@@ -175,13 +191,31 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
         txtDeadline.setText(Helper.formatDate(String.valueOf(date)));
     }
 
+//
+//    @SuppressLint("ClickableViewAccessibility")
+//    private void setTimePicker() {
+//        txtDeadlineTime.setOnTouchListener((view, motionEvent) -> {
+//            if (motionEvent.getAction() == MotionEvent.ACTION_UP){
+//                new TimePickerFragment().show(getSupportFragmentManager(), "timePicker");
+//            }
+//
+//
+//            return false;
+//        });
+//    }
+
     @SuppressLint("ClickableViewAccessibility")
     private void setTimePicker() {
         txtDeadlineTime.setOnTouchListener((view, motionEvent) -> {
-            if (motionEvent.getAction() == MotionEvent.ACTION_UP){
-                new TimePickerFragment().show(getSupportFragmentManager(), "timePicker");
+            if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                deadlineTimePicker = new BoundTimePickerDialog(this, this, deadlineCustomTimePicker.getSelectedHour(), deadlineCustomTimePicker.getSelectedMinute());
+                String deadlineDate  = Helper.convertFUllDateToYYMMDD(Helper.trimStr(txtDeadline));
+                LocalDate deadline = LocalDate.parse(deadlineDate);
+                LocalDate today = CalendarUtils.getCurrentDate();
+                LocalDate date = deadline.isEqual(today)? today: deadline;
+                deadlineSetup(deadlineTimePicker, date);
+                deadlineTimePicker.show();
             }
-
 
             return false;
         });

@@ -89,6 +89,7 @@ public final class Validation {
         boolean title = isEmpty(errorFields.getTxtTitle(), "Title");
         boolean moduleID = isDropdownEmpty(errorFields.getTxtModuleID(), "Please select a module!", context.getString(R.string.select_module));
         boolean priority = isDropdownEmpty(errorFields.getTxtPriority(), "Please select a Priority!", context.getString(R.string.select_priority));
+
         boolean isValidDueTime = isValidDueTime(
                 errorFields.getTxtDeadline(),
                 errorFields.getTxtDeadlineTimeError(),
@@ -102,6 +103,7 @@ public final class Validation {
 
     }
     public boolean isValidDueTime(AutoCompleteTextView txtDeadline, TextInputLayout txtTimeError, AutoCompleteTextView txtDeadlineTime) {
+
         LocalDate date = LocalDate.parse(Helper.convertFUllDateToYYMMDD(Helper.trimStr(txtDeadline)));
         LocalTime time = LocalTime.parse(Helper.convertFormattedTimeToDBFormat(txtDeadlineTime.getText().toString()));
 
@@ -115,15 +117,7 @@ public final class Validation {
         return false;
     }
 
-    public boolean validateEditCourseworkForm(TextInputLayout txtTitle, AutoCompleteTextView deadline, TextInputLayout deadlineError) {
-        List<Boolean> errors = new ArrayList<>();
-        errors.add(isEmpty(txtTitle, "Title"));
-        errors.add(isPastDate(deadline, deadlineError));
 
-        return !errors.contains(true);
-
-
-    }
 
     public boolean validateEditCourseworkForm(Coursework errorFields) {
         List<Boolean> errors = new ArrayList<>();
@@ -136,6 +130,7 @@ public final class Validation {
                 errorFields.getTxtDeadlineTimeError(),
                 errorFields.getTxtDeadlineTime()
         );
+
         errors.add(isValidDueTime);
         return !errors.contains(true);
 
