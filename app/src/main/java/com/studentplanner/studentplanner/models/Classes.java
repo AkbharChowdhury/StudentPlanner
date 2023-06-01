@@ -16,6 +16,24 @@ public class Classes {
     private TextInputLayout txtSemesterError;
     private TextInputLayout txtModuleError;
     private TextInputLayout txtClassTypeError;
+    private TextInputLayout txtStartTimeError;
+    private TextInputLayout txtEndTimeError;
+
+    public TextInputLayout getTxtStartTimeError() {
+        return txtStartTimeError;
+    }
+
+    public void setTxtStartTimeError(TextInputLayout txtStartTimeError) {
+        this.txtStartTimeError = txtStartTimeError;
+    }
+
+    public TextInputLayout getTxtEndTimeError() {
+        return txtEndTimeError;
+    }
+
+    public void setTxtEndTimeError(TextInputLayout txtEndTimeError) {
+        this.txtEndTimeError = txtEndTimeError;
+    }
 
     public TextInputLayout getTxtDayError() {
         return txtDayError;

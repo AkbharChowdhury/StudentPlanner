@@ -1,8 +1,5 @@
 package com.studentplanner.studentplanner.addActivities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
@@ -12,17 +9,21 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.TimePicker;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
+import com.studentplanner.studentplanner.databinding.ActivityAddClassesBinding;
 import com.studentplanner.studentplanner.enums.TimePickerType;
-import com.studentplanner.studentplanner.fragments.ReminderFragment;
 import com.studentplanner.studentplanner.models.Classes;
+import com.studentplanner.studentplanner.models.CustomTimePicker;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.Semester;
+import com.studentplanner.studentplanner.utils.BoundTimePickerDialog;
 import com.studentplanner.studentplanner.utils.CalendarUtils;
 import com.studentplanner.studentplanner.utils.Helper;
-import com.studentplanner.studentplanner.utils.TimePickerFragment;
 import com.studentplanner.studentplanner.utils.Validation;
 
 import java.time.LocalTime;
@@ -37,8 +38,7 @@ public class AddClassesActivity extends AppCompatActivity implements TimePickerD
 
     private AutoCompleteTextView txtStartTime;
     private AutoCompleteTextView txtEndTime;
-    private TimePickerFragment timePickerStart;
-    private TimePickerFragment timePickerEnd;
+
 
     private int selectedModuleID;
     private int selectedSemesterID;
@@ -49,11 +49,17 @@ public class AddClassesActivity extends AppCompatActivity implements TimePickerD
     private DatabaseHelper db;
     private Validation form;
 
+    private TextInputLayout txtDayError;
+    private TextInputLayout txtSemesterError;
+    private TextInputLayout txtModuleError;
+    private TextInputLayout txtClassTypeError;
+    private ActivityAddClassesBinding binding;
 
-    TextInputLayout txtDayError;
-    TextInputLayout txtSemesterError;
-    TextInputLayout txtModuleError;
-    TextInputLayout txtClassTypeError;
+    private BoundTimePickerDialog startTimePicker;
+    private BoundTimePickerDialog endTimePicker;
+    private CustomTimePicker startCustomTimePicker = new CustomTimePicker(LocalTime.now().getHour(), LocalTime.now().getMinute());
+    private CustomTimePicker endCustomTimePicker = new CustomTimePicker(LocalTime.now().getHour(), LocalTime.now().getMinute());
+
 
 
     @Override
@@ -61,42 +67,27 @@ public class AddClassesActivity extends AppCompatActivity implements TimePickerD
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_classes);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        binding = ActivityAddClassesBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-
-        txtDayError = findViewById(R.id.txtDayError);
-        txtSemesterError = findViewById(R.id.txtSemesterErrorClasses);
-        txtModuleError = findViewById(R.id.txtModuleErrorClasses);
-        txtClassTypeError = findViewById(R.id.txtClassTypeError);
-        form = new Validation(this);
-
-
-        txtDays = findViewById(R.id.txtDay);
-        txtModules = findViewById(R.id.txtModuleClasses);
-        txtSemester = findViewById(R.id.txtSemesterClasses);
-        txtClassType = findViewById(R.id.txtClassType);
-        txtStartTime = findViewById(R.id.txtStartTime);
-        txtEndTime = findViewById(R.id.txtEndTime);
-        txtRoom = findViewById(R.id.txtRoom);
-
-        txtDays.setText(getString(R.string.select_day));
-        txtSemester.setText(getString(R.string.select_semester));
-        txtModules.setText(getString(R.string.select_module));
-        txtClassType.setText(getString(R.string.select_class_type));
-        txtStartTime.setText(Helper.showFormattedDBTime(LocalTime.now().plusHours(1).toString(), this));
-        txtEndTime.setText(Helper.showFormattedDBTime(LocalTime.now().plusHours(2).toString(), this));
-
+        initAndSetFields();
 
         db = DatabaseHelper.getInstance(this);
+        form = new Validation(this);
+
         setUpTimePickers();
         Helper.getDays(txtDays, this);
         getModulesList();
         getSemesterList();
         Helper.getStringArray(this, txtClassType, R.array.type_array);
 
-        findViewById(R.id.btn_add_classes).setOnClickListener(v -> {
+        binding.btnAddClasses.setOnClickListener(v -> {
 
             Classes errorFields = new Classes(txtDayError, txtSemesterError, txtModuleError, txtClassTypeError);
-            if (form.validateClassForm(errorFields)){
+            errorFields.setTxtStartTimeError(binding.txtStartTimeError);
+            errorFields.setTxtEndTimeError(binding.txtEndTimeError);
+
+            if (form.validateAddClassForm(errorFields)){
                 if (db.addClass(getClassDetails())){
                     Helper.longToastMessage(this,"Class added");
                     setResult(RESULT_OK);
@@ -108,6 +99,27 @@ public class AddClassesActivity extends AppCompatActivity implements TimePickerD
 
         });
     }
+    private void initAndSetFields(){
+        txtDayError = binding.txtDayError;
+        txtSemesterError = binding.txtSemesterErrorClasses;
+        txtModuleError = binding.txtModuleErrorClasses;
+        txtClassTypeError = binding.txtClassTypeError;
+
+        txtDays = binding.txtDay;
+        txtModules = binding.txtModuleClasses;
+        txtSemester = binding.txtSemesterClasses;
+        txtClassType = binding.txtClassType;
+        txtStartTime = binding.txtStartTime;
+        txtEndTime = binding.txtEndTime;
+        txtRoom = binding.txtRoom;
+
+        txtDays.setText(getString(R.string.select_day));
+        txtSemester.setText(getString(R.string.select_semester));
+        txtModules.setText(getString(R.string.select_module));
+        txtClassType.setText(getString(R.string.select_class_type));
+        txtStartTime.setText(getString(R.string.select_start_time));
+        txtEndTime.setText(getString(R.string.select_end_time));
+    }
 
     private Classes getClassDetails() {
         return new Classes(
@@ -118,7 +130,6 @@ public class AddClassesActivity extends AppCompatActivity implements TimePickerD
                 Helper.convertFormattedTimeToDBFormat(Helper.trimStr(txtEndTime)),
                 Helper.trimStr(txtRoom),
                 Helper.trimStr(txtClassType)
-
         );
     }
 
@@ -151,10 +162,15 @@ public class AddClassesActivity extends AppCompatActivity implements TimePickerD
         String formattedTime = Helper.formatTime(selectedTime);
         switch (type) {
             case START_TIME:
+                startCustomTimePicker.setSelectedHour(selectedHour);
+                startCustomTimePicker.setSelectedMinute(selectedMinute);
                 txtStartTime.setText(formattedTime);
                 break;
-            case END_TIME:
-                txtEndTime.setText(formattedTime);
+
+                case END_TIME:
+                    endCustomTimePicker.setSelectedHour(selectedHour);
+                    endCustomTimePicker.setSelectedMinute(selectedMinute);
+                    txtEndTime.setText(formattedTime);
                 break;
         }
 
@@ -163,8 +179,6 @@ public class AddClassesActivity extends AppCompatActivity implements TimePickerD
     private void setUpTimePickers() {
         setStartTimePicker();
         setEndTimePicker();
-
-
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -172,9 +186,13 @@ public class AddClassesActivity extends AppCompatActivity implements TimePickerD
         txtStartTime.setOnTouchListener((view, motionEvent) -> {
             if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                 type = TimePickerType.START_TIME;
-                timePickerStart = new TimePickerFragment();
-                timePickerStart.show(getSupportFragmentManager(), "timePickerStart");
+                startTimePicker = new BoundTimePickerDialog(this, this, startCustomTimePicker.getSelectedHour(), startCustomTimePicker.getSelectedMinute());
 
+                if (!Helper.trimStr(txtEndTime).equals(getString(R.string.select_end_time))){
+                    LocalTime endTime = LocalTime.of(endCustomTimePicker.getSelectedHour(), endCustomTimePicker.getSelectedMinute());
+                    startTimePicker.setMax(endTime.getHour(), endTime.getMinute());
+                }
+                startTimePicker.show();
             }
 
             return false;
@@ -186,9 +204,13 @@ public class AddClassesActivity extends AppCompatActivity implements TimePickerD
         txtEndTime.setOnTouchListener((view, motionEvent) -> {
             if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                 type = TimePickerType.END_TIME;
-                timePickerEnd = new TimePickerFragment();
-                timePickerEnd.show(getSupportFragmentManager(), "timePickerEnd");
+                endTimePicker = new BoundTimePickerDialog(this, this, endCustomTimePicker.getSelectedHour(), endCustomTimePicker.getSelectedMinute());
 
+                if (!Helper.trimStr(txtStartTime).equals(getString(R.string.select_start_time))){
+                    LocalTime startTime = LocalTime.of(startCustomTimePicker.getSelectedHour(), startCustomTimePicker.getSelectedMinute());
+                    endTimePicker.setMin(startTime.getHour(), startTime.getMinute());
+                }
+                endTimePicker.show();
             }
 
             return false;

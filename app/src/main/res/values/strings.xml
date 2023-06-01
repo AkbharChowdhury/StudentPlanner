@@ -96,6 +96,17 @@
     <string name="no_coursework_found">No Coursework found</string>
     <string name="add_class">Add Class</string>
     <string name="select_class_type">Select class type</string>
+    <string name="select_start_time">Select Start Time</string>
+
+    <string name="select_start_time_error">Please select a Start Time!</string>
+    <string name="select_end_time_error">Please select a End Time!</string>
+    <string name="select_day_error">Please select a day!</string>
+    <string name="select_semester_error">Please select a semester!</string>
+    <string name="select_module_error">Please select a module!</string>
+    <string name="select_class_type_error">Please select a class type!</string>
+
+    <string name="select_end_time">Select End Time</string>
+
     <string name="delete_icon">Delete</string>
 
     <string name="yes">Yes</string>

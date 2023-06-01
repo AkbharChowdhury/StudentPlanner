@@ -1,7 +1,6 @@
 package com.studentplanner.studentplanner.utils;
 
 import android.content.Context;
-import android.util.Log;
 import android.util.Patterns;
 import android.widget.AutoCompleteTextView;
 
@@ -19,7 +18,6 @@ import com.studentplanner.studentplanner.tables.TeacherTable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -374,20 +372,29 @@ public final class Validation {
     }
 
 
-    public boolean validateClassForm(Classes errorFields) {
+    public boolean validateAddClassForm(Classes errorFields) {
+
         List<Boolean> errorList = new ArrayList<>();
 
-        boolean dayError = isDropdownEmpty(errorFields.getTxtDayError(), "Please select a day!", context.getString(R.string.select_day));
-        boolean semesterError = isDropdownEmpty(errorFields.getTxtSemesterError(), "Please select a semester!", context.getString(R.string.select_semester));
-        boolean moduleError = isDropdownEmpty(errorFields.getTxtModuleError(), "Please select a module!", context.getString(R.string.select_module));
-        boolean classTypeError = isDropdownEmpty(errorFields.getTxtClassTypeError(), "Please select a class type!", context.getString(R.string.select_class_type));
+        boolean dayError = isDropdownEmpty(errorFields.getTxtDayError(), getString(R.string.select_day_error), context.getString(R.string.select_day));
+        boolean semesterError = isDropdownEmpty(errorFields.getTxtSemesterError(), getString(R.string.select_semester_error), context.getString(R.string.select_semester));
+        boolean moduleError = isDropdownEmpty(errorFields.getTxtModuleError(), getString(R.string.select_module_error), context.getString(R.string.select_module));
+        boolean classTypeError = isDropdownEmpty(errorFields.getTxtClassTypeError(), getString(R.string.select_class_type_error), context.getString(R.string.select_class_type));
+        boolean startTimeError = isDropdownEmpty(errorFields.getTxtStartTimeError(), getString(R.string.select_start_time_error), context.getString(R.string.select_start_time));
+        boolean endTimeError = isDropdownEmpty(errorFields.getTxtEndTimeError(), getString(R.string.select_end_time_error), context.getString(R.string.select_end_time));
 
         errorList.add(dayError);
         errorList.add(semesterError);
         errorList.add(moduleError);
         errorList.add(classTypeError);
+        errorList.add(startTimeError);
+        errorList.add(endTimeError);
+
 
         return !errorList.contains(true);
+    }
+    private String getString(int resId){
+        return context.getString(resId);
     }
 
     public static boolean isDropdownEmpty(TextInputLayout textField, String errorMessage, String defaultTextOption) {

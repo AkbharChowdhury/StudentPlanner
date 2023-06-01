@@ -2,26 +2,24 @@ package com.studentplanner.studentplanner.addActivities;
 
 import static com.studentplanner.studentplanner.utils.Helper.deadlineSetup;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.databinding.ActivityAddCourseworkBinding;
-import com.studentplanner.studentplanner.databinding.ActivityAddModuleBinding;
 import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.models.CustomTimePicker;
 import com.studentplanner.studentplanner.models.Module;
@@ -31,11 +29,9 @@ import com.studentplanner.studentplanner.utils.CalendarUtils;
 import com.studentplanner.studentplanner.utils.DatePickerFragment;
 import com.studentplanner.studentplanner.utils.Dropdown;
 import com.studentplanner.studentplanner.utils.Helper;
-import com.studentplanner.studentplanner.utils.TimePickerFragment;
 import com.studentplanner.studentplanner.utils.Validation;
 
 import java.time.LocalDate;
-
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Locale;
@@ -56,11 +52,6 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
     private BoundTimePickerDialog deadlineTimePicker;
     private Validation form;
     private ActivityAddCourseworkBinding binding;
-
-//    private void deadlineSetup(BoundTimePickerDialog deadlineTimePicker, LocalDate localDate) {
-//
-//        Helper.setMinTimeStatus(deadlineTimePicker, localDate);
-//    }
 
 
     @Override
@@ -181,7 +172,7 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
                 String deadlineDate  = Helper.convertFUllDateToYYMMDD(Helper.trimStr(txtDeadline));
                 LocalDate deadline = LocalDate.parse(deadlineDate);
                 LocalDate today = CalendarUtils.getCurrentDate();
-                LocalDate date = deadline.isEqual(today)? today: deadline;
+                LocalDate date = deadline.isEqual(today) ? today: deadline;
                 deadlineSetup(deadlineTimePicker, date);
                 deadlineTimePicker.show();
             }
