@@ -27,6 +27,8 @@ import java.time.Period;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -195,8 +197,78 @@ public final class Helper {
         }
     }
 
+    private static ArrayList<Integer> isWeek() {
+        ArrayList<Integer> daysWeek = new ArrayList<>();
+        for (int i = 0; i < 365; i++) {
+            if (i % 7 == 0) {
+                daysWeek.add(i);
+            }
+
+        }
+        return daysWeek;
+    }
+    public static String calcDeadlineDate(LocalDate deadline, boolean isCompleted) {
+        LocalDate today = LocalDate.now();
+        Period p = Period.between(today, deadline);
+        long weeks = ChronoUnit.WEEKS.between(today, deadline);
+        int days = p.getDays();
+        int months = p.getMonths();
+
+        if (days == 0) {
+            return "Due Today";
+        }
+
+        ArrayList<Integer> isWeek = isWeek();
+
+        StringBuilder sb = new StringBuilder("In ");
+        if (months == 0 && days == 0 && !isCompleted) {
+
+            return "Overdue";
+        }
 
 
+        if (months == 1 && days == 0 && isCompleted) {
+
+            return sb.append("1 month").toString();
+        }
+
+        if (months == 0 && isWeek.contains(days)) {
+
+            return sb.append(weeks == 1 ? "1 week" : weeks + " weeks").toString();
+        }
+
+        if (months > 1 && days == 0){
+            return sb.append(months).append(" months").toString();
+
+        }
+        if (months > 1 && days == 1){
+            return sb.append(months).append(" months").append(" and 1 day").toString();
+
+        }
+        if (months == 1 && days == 1){
+            return sb.append("1 month and 1 day").toString();
+
+        }
+
+        if (months == 0 && days> 0){
+            return sb.append(days).append(" days").toString();
+
+        }
+
+
+
+        if (days <0 && !isCompleted){
+            return "Overdue";
+        } else if (days <0){
+
+            return "";
+        }
+
+        return sb.append(months).append(" months and ").append(days).append(" days").toString();
+
+
+
+    }
 
 
     public static String calcDeadlineDate(LocalDate deadline) {
@@ -212,9 +284,9 @@ public final class Helper {
 
         if (period.getDays() >= 1) {
             s.append(period.getDays()).append(" days");
-        } else if (period.getDays() < 1) {
+        }
+        if (period.getDays() < 1) {
             return "Due Today";
-
         }
         return s.toString();
     }

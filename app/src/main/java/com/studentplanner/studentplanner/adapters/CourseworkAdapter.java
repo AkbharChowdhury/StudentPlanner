@@ -62,6 +62,7 @@ public class CourseworkAdapter extends RecyclerView.Adapter<CourseworkAdapter.Vi
         Coursework coursework = courseworkList.get(position);
 
         Module module = db.getSelectedModule(coursework.getModuleID());
+        LocalDate deadline = LocalDate.parse(coursework.getDeadline());
 
         holder.tvCourseworkID.setText(String.valueOf(coursework.getCourseworkID()));
         holder.tvCourseworkTitle.setText(WordUtils.capitalizeFully(coursework.getTitle()));
@@ -73,7 +74,9 @@ public class CourseworkAdapter extends RecyclerView.Adapter<CourseworkAdapter.Vi
         holder.tvPriority.setText(coursework.getPriority());
         holder.tvPriority.setTextColor(Helper.getPriorityColour(coursework.getPriority(), context));
         holder.tvCourseworkModule.setText(String.format("%s %s", module.getModuleCode(), module.getModuleName()));
-        holder.tvTimeLeft.setText(Helper.calcDeadlineDate(LocalDate.parse(coursework.getDeadline())));
+
+        holder.tvTimeLeft.setText(Helper.calcDeadlineDate(deadline, coursework.isCompleted()));
+
 
 
         holder.tvCourseworkCompleted.setText(coursework.isCompleted()? "Completed" : "Not Completed");

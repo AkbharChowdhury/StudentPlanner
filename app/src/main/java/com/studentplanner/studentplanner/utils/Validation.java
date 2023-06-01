@@ -110,6 +110,7 @@ public final class Validation {
         LocalDate today = LocalDate.now();
         if (date.isEqual(today) && time.isBefore(LocalTime.now())){
             txtTimeError.setError("this time should be now or a future time!");
+            Helper.longToastMessage(context, "time error");
             return true;
 
         }
@@ -125,6 +126,7 @@ public final class Validation {
         errors.add(isEmpty(errorFields.getTxtTitle(), "Title"));
 
         errors.add(isPastDate(errorFields.getTxtDeadline(), errorFields.getTxtDeadlineError()));
+
         boolean isValidDueTime = isValidDueTime(
                 errorFields.getTxtDeadline(),
                 errorFields.getTxtDeadlineTimeError(),
