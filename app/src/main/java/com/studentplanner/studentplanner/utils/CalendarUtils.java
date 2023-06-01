@@ -93,12 +93,13 @@ public class CalendarUtils {
     }
 
 
+
     public static List<String> getDays(){
+
         List<String> days = new ArrayList<>();
         for(DayOfWeek dow : DayOfWeek.values()) {
             days.add(dow.getDisplayName(TextStyle.FULL, Locale.UK ));
             if (dow == DayOfWeek.FRIDAY) break;
-            if (dow.getValue() == 5) break;
         }
         return days;
     }
