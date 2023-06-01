@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".editActivities.EditCourseworkActivity">
 
 
@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingHorizontal="16dp">
+        android:paddingHorizontal="16dp"
+        tools:context=".editActivities.EditCourseworkActivity">
 
         <TextView
             android:layout_width="match_parent"
@@ -21,24 +22,29 @@
             android:text="@string/edit_coursework"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textColor="@color/black" />
+
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txtModuleError"
+            android:id="@+id/txtModuleErrorEdit"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:hint="@string/module">
 
+            >
+
             <AutoCompleteTextView
-                android:id="@+id/txtModule"
+                android:id="@+id/txtModuleEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none" />
+                android:inputType="none"
+
+                />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txtTitle"
+            android:id="@+id/txtTitleEdit"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -59,7 +65,7 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txtDescription"
+            android:id="@+id/txtDescriptionEdit"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -75,7 +81,9 @@
                 android:overScrollMode="always"
                 android:scrollbarStyle="insideInset"
                 android:scrollbars="vertical"
-                android:scrollHorizontally="false">
+                android:scrollHorizontally="false"
+
+                >
 
             </com.google.android.material.textfield.TextInputEditText>
 
@@ -84,7 +92,7 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txtPriorityError"
+            android:id="@+id/txtPriorityErrorEdit"
 
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
@@ -92,8 +100,10 @@
             android:layout_margin="16dp"
             android:hint="@string/priority">
 
+            >
+
             <AutoCompleteTextView
-                android:id="@+id/txtPriority"
+                android:id="@+id/txtPriorityEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"
@@ -109,13 +119,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:hint="@string/deadline"
-            app:startIconDrawable="@drawable/baseline_calendar_today_24">
+            android:hint="@string/deadline">
 
 
             <AutoCompleteTextView
-
-                android:id="@+id/txtDeadline"
+                android:id="@+id/txtDeadlineEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"
@@ -126,19 +134,18 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txtDeadlineTimeError"
+            android:id="@+id/txtDeadlineTimeErrorEdit"
 
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:hint="@string/deadline_time"
-            app:startIconDrawable="@drawable/baseline_access_time_24">
+            android:hint="@string/deadline_time">
 
             >
 
             <AutoCompleteTextView
-                android:id="@+id/txtDeadlineTime"
+                android:id="@+id/txtDeadlineTimeEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"
@@ -146,6 +153,7 @@
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
+
         <com.google.android.material.checkbox.MaterialCheckBox
             app:checkedState="unchecked"
             android:id="@+id/checkbox_edit_coursework"

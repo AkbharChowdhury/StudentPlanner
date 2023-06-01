@@ -119,6 +119,24 @@ public final class Validation {
         List<Boolean> errors = new ArrayList<>();
         errors.add(isEmpty(txtTitle, "Title"));
         errors.add(isPastDate(deadline, deadlineError));
+
+        return !errors.contains(true);
+
+
+    }
+
+    public boolean validateEditCourseworkForm(Coursework errorFields) {
+        List<Boolean> errors = new ArrayList<>();
+
+        errors.add(isEmpty(errorFields.getTxtTitle(), "Title"));
+
+        errors.add(isPastDate(errorFields.getTxtDeadline(), errorFields.getTxtDeadlineError()));
+        boolean isValidDueTime = isValidDueTime(
+                errorFields.getTxtDeadline(),
+                errorFields.getTxtDeadlineTimeError(),
+                errorFields.getTxtDeadlineTime()
+        );
+        errors.add(isValidDueTime);
         return !errors.contains(true);
 
 

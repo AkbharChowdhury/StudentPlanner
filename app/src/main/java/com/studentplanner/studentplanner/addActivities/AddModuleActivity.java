@@ -20,7 +20,7 @@ public class AddModuleActivity extends AppCompatActivity {
     private TextInputLayout txtModuleCode;
     private TextInputLayout txtModuleName;
     private Validation form;
-    ActivityAddModuleBinding binding;
+    private ActivityAddModuleBinding binding;
 
 
     @Override
@@ -28,7 +28,6 @@ public class AddModuleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_module);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
         binding = ActivityAddModuleBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -42,8 +41,6 @@ public class AddModuleActivity extends AppCompatActivity {
         findViewById(R.id.btn_add_module).setOnClickListener(v -> {
             if (form.validateAddModuleForm(new Module(txtModuleCode, txtModuleName))) {
                 if (db.addModule(getModuleDetails())) {
-
-
                     Helper.longToastMessage(this,"Module Added");
                     setResult(RESULT_OK);
                     finish();

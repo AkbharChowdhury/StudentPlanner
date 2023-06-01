@@ -13,12 +13,29 @@ public class Coursework {
     private String deadline;
     private String deadlineTime;
     private boolean isCompleted = false;
+
+
     private TextInputLayout txtTitle;
     private TextInputLayout txtModuleID;
+    private TextInputLayout txtPriority;
 
     private AutoCompleteTextView txtDeadline;
     private AutoCompleteTextView txtDeadlineTime;
     private TextInputLayout txtDeadlineTimeError;
+
+
+
+
+    public TextInputLayout getTxtDeadlineError() {
+        return txtDeadlineError;
+    }
+
+    public void setTxtDeadlineError(TextInputLayout txtDeadlineError) {
+        this.txtDeadlineError = txtDeadlineError;
+    }
+
+    private TextInputLayout txtDeadlineError;
+
 
     public AutoCompleteTextView getTxtDeadline() {
         return txtDeadline;
@@ -58,7 +75,6 @@ public class Coursework {
         return txtPriority;
     }
 
-    private TextInputLayout txtPriority;
 
 
     public TextInputLayout getTxtModuleID() {
@@ -69,6 +85,50 @@ public class Coursework {
         return txtTitle;
     }
 
+
+    public void setCourseworkID(int courseworkID) {
+        this.courseworkID = courseworkID;
+    }
+
+    public void setModuleID(int moduleID) {
+        this.moduleID = moduleID;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
+    }
+
+    public void setDeadlineTime(String deadlineTime) {
+        this.deadlineTime = deadlineTime;
+    }
+
+    public void setTxtTitle(TextInputLayout txtTitle) {
+        this.txtTitle = txtTitle;
+    }
+
+    public void setTxtModuleID(TextInputLayout txtModuleID) {
+        this.txtModuleID = txtModuleID;
+    }
+
+    public void setTxtPriority(TextInputLayout txtPriority) {
+        this.txtPriority = txtPriority;
+    }
+
+    public Coursework(){
+
+    }
     public Coursework(TextInputLayout txtTitle, TextInputLayout txtModuleID, TextInputLayout txtPriority) {
         this.txtTitle = txtTitle;
         this.txtModuleID = txtModuleID;

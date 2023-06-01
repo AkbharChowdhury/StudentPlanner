@@ -20,8 +20,11 @@ import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
+import com.studentplanner.studentplanner.databinding.ActivityAddCourseworkBinding;
+import com.studentplanner.studentplanner.databinding.ActivityEditCourseworkBinding;
 import com.studentplanner.studentplanner.fragments.CourseworkFragment;
 import com.studentplanner.studentplanner.models.Coursework;
+import com.studentplanner.studentplanner.models.CustomTimePicker;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.tables.CourseworkTable;
 import com.studentplanner.studentplanner.utils.CalendarUtils;
@@ -32,10 +35,14 @@ import com.studentplanner.studentplanner.utils.TimePickerFragment;
 import com.studentplanner.studentplanner.utils.Validation;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Locale;
 
 public class EditCourseworkActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+
+    private CustomTimePicker deadlineCustomTimePicker;
+
     private DatabaseHelper db;
     private Validation form;
     private AutoCompleteTextView txtPriority;
@@ -49,14 +56,20 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
     private TextInputLayout txtDeadlineError;
     private MaterialCheckBox checkBoxCompleted;
 
+    private ActivityEditCourseworkBinding binding;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_edit_coursework);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        setContentView(R.layout.activity_edit_coursework);
+        binding = ActivityEditCourseworkBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+
         db = DatabaseHelper.getInstance(this);
         form = new Validation(this);
         initFields();
@@ -68,8 +81,9 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
         setTimePicker();
 
 
-        findViewById(R.id.btn_edit_coursework).setOnClickListener(v -> {
-            if (form.validateEditCourseworkForm(txtTitle, txtDeadline, txtDeadlineError)){
+        binding.btnEditCoursework.setOnClickListener(v -> {
+
+            if (form.validateEditCourseworkForm(getCourseworkErrorFields())){
                 if (db.updateCoursework(getCourseworkDetails())) {
                     Helper.longToastMessage(this,"Coursework Updated");
                     setResult(RESULT_OK);
@@ -80,16 +94,27 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
 
     }
 
+    private Coursework getCourseworkErrorFields(){
+        Coursework coursework = new Coursework();
+        coursework.setTxtDeadlineTime(txtDeadlineTime);
+        coursework.setTxtDeadlineTimeError(binding.txtDeadlineTimeError);
+        coursework.setTxtDeadline(txtDeadline);
+        coursework.setTxtDeadlineError(txtDeadlineError);
+        coursework.setTxtTitle(txtTitle);
+        return coursework;
+    }
+
     private void initFields() {
-        txtPriority = findViewById(R.id.txtPriorityEdit);
-        txtDeadline = findViewById(R.id.txtDeadlineEdit);
-        txtDeadlineTime = findViewById(R.id.txtDeadlineTimeEdit);
-        txtModules = findViewById(R.id.txtModuleEdit);
-        txtTitle = findViewById(R.id.txtTitleEdit);
-        txtDescription = findViewById(R.id.txtDescriptionEdit);
+        txtPriority = binding.txtPriority;
+        txtDeadline = binding.txtDeadline;
+        txtDeadlineTime = binding.txtDeadlineTime;
+        txtModules = binding.txtModule;
+        txtTitle = binding.txtTitle;
+        txtDescription = binding.txtDescription;
+
         Dropdown.getStringArray(txtPriority, this,R.array.priority_array );
-        txtDeadlineError = findViewById(R.id.txtDeadlineError);
-        checkBoxCompleted = findViewById(R.id.checkbox_edit_coursework);
+        txtDeadlineError = binding.txtDeadlineError;
+        checkBoxCompleted = binding.checkboxEditCoursework;
 
 
 
@@ -109,6 +134,14 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
             txtModules.setText(txtModules.getAdapter().getItem(Dropdown.getModuleID(coursework.getModuleID(), db.getModules())).toString(), false);
             selectedModuleID = coursework.getModuleID();
             checkBoxCompleted.setChecked(coursework.isCompleted());
+
+
+            LocalTime deadlineTime = LocalTime.parse(coursework.getDeadlineTime());
+
+            deadlineCustomTimePicker = new CustomTimePicker(deadlineTime.getHour(), deadlineTime.getMinute());
+
+
+
 
         }
 

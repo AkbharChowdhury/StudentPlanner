@@ -18,6 +18,8 @@ import android.widget.TimePicker;
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
+import com.studentplanner.studentplanner.databinding.ActivityAddCourseworkBinding;
+import com.studentplanner.studentplanner.databinding.ActivityAddModuleBinding;
 import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.models.CustomTimePicker;
 import com.studentplanner.studentplanner.models.Module;
@@ -50,6 +52,8 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
     final String SELECT_PRIORITY = "Select Priority";
     private DatabaseHelper db;
     private BoundTimePickerDialog deadlineTimePicker;
+    private Validation form;
+    private ActivityAddCourseworkBinding binding;
 
     private void deadlineSetup(BoundTimePickerDialog deadlineTimePicker, LocalDate localDate) {
 
@@ -62,16 +66,21 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_coursework);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        db = DatabaseHelper.getInstance(this);
 
-        txtPriority = findViewById(R.id.txtPriority);
-        txtDeadline = findViewById(R.id.txtDeadline);
-        txtDeadlineTime = findViewById(R.id.txtDeadlineTime);
-        txtModules = findViewById(R.id.txtModule);
+        binding = ActivityAddCourseworkBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        db = DatabaseHelper.getInstance(this);
+        form = new Validation(this);
+
+        txtPriority = binding.txtPriority;
+        txtDeadline = binding.txtDeadline;
+        txtDeadlineTime = binding.txtDeadlineTime;
+        txtModules = binding.txtModule;
         txtModules.setText(R.string.select_module);
         txtPriority.setText(SELECT_PRIORITY);
-        txtTitle = findViewById(R.id.txtTitle);
-        txtDescription = findViewById(R.id.txtDescription);
+        txtTitle = binding.txtTitle;
+        txtDescription = binding.txtDescription;
         setTimePicker();
 
 
@@ -88,18 +97,9 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
         getModulesList();
 
 
-        findViewById(R.id.btn_add_coursework).setOnClickListener(v -> {
-            Validation form = new Validation(this);
-            TextInputLayout txtModuleError = findViewById(R.id.txtModuleError);
-            TextInputLayout errorPriority = findViewById(R.id.txtPriorityError);
-            TextInputLayout timeError = findViewById(R.id.txtDeadlineTimeError);
-            Coursework coursework = new Coursework(txtTitle, txtModuleError, errorPriority);
-            coursework.setTxtDeadline(txtDeadline);
-            coursework.setTxtDeadlineTime(txtDeadlineTime);
-            coursework.setTxtDeadlineTimeError(timeError);
+        binding.btnAddCoursework.setOnClickListener(v -> {
 
-            if (form.validateAddCourseworkForm(coursework)) {
-                Helper.longToastMessage(this, "Passed");
+            if (form.validateAddCourseworkForm(getCourseworkErrorFields())) {
                 if (db.addCoursework(getCourseworkDetails())) {
                     Helper.longToastMessage(this,"Coursework Added");
                     setResult(RESULT_OK);
@@ -112,6 +112,16 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
         });
 
 
+    }
+    private Coursework getCourseworkErrorFields(){
+        TextInputLayout txtModuleError = binding.txtModuleError;
+        TextInputLayout errorPriority = binding.txtPriorityError;
+        TextInputLayout timeError = binding.txtDeadlineTimeError;
+        Coursework coursework = new Coursework(txtTitle, txtModuleError, errorPriority);
+        coursework.setTxtDeadline(txtDeadline);
+        coursework.setTxtDeadlineTime(txtDeadlineTime);
+        coursework.setTxtDeadlineTimeError(timeError);
+        return coursework;
     }
 
     private Coursework getCourseworkDetails() {

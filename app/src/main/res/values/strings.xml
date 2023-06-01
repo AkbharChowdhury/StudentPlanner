@@ -174,5 +174,7 @@
     <string name="placeholder_module">COMP152 Test</string>
     <string name="placeholder_completion_status">Completed</string>
     <string name="placeholder_durarion">in 5 days</string>
+    <string name="add_module_teacher_description">Please select a module from the list below which will show your list of teachers in the next page.</string>
+    <string name="add_module_teacher">Add Module teacher</string>
 
 </resources>
