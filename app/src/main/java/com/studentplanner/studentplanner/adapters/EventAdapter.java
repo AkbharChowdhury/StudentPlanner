@@ -24,6 +24,7 @@ import com.studentplanner.studentplanner.editActivities.EditClassesActivity;
 import com.studentplanner.studentplanner.editActivities.EditCourseworkActivity;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.enums.EventType;
+import com.studentplanner.studentplanner.enums.Status;
 import com.studentplanner.studentplanner.models.Classes;
 import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.models.Event;
@@ -112,7 +113,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
                         coursework.getTitle(),
                         coursework.getPriority(),
                         Helper.formatTimeShort(coursework.getDeadlineTime()),
-                        coursework.isCompleted()? "Completed": "Not Completed"
+                        coursework.isCompleted() ? Status.COMPLETED.label : Status.NOT_COMPLETED.label
                 );
                 eventCellTV.setText(message);
                 break;

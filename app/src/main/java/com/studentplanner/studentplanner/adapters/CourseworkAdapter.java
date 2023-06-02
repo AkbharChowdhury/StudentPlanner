@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.editActivities.EditCourseworkActivity;
+import com.studentplanner.studentplanner.enums.Status;
 import com.studentplanner.studentplanner.tables.CourseworkTable;
 import com.studentplanner.studentplanner.utils.Helper;
 import com.studentplanner.studentplanner.R;
@@ -78,8 +79,7 @@ public class CourseworkAdapter extends RecyclerView.Adapter<CourseworkAdapter.Vi
         holder.tvTimeLeft.setText(Helper.calcDeadlineDate(deadline, coursework.isCompleted()));
 
 
-
-        holder.tvCourseworkCompleted.setText(coursework.isCompleted()? "Completed" : "Not Completed");
+        holder.tvCourseworkCompleted.setText(coursework.isCompleted() ? Status.COMPLETED.label : Status.NOT_COMPLETED.label);
         holder.tvCourseworkCompleted.setTextColor(coursework.isCompleted()? context.getColor(R.color.green) : Color.RED);
 
 
