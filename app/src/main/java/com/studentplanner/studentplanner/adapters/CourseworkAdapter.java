@@ -23,6 +23,7 @@ import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.models.Module;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.WordUtils;
 
 import java.time.LocalDate;
@@ -66,7 +67,11 @@ public class CourseworkAdapter extends RecyclerView.Adapter<CourseworkAdapter.Vi
         LocalDate deadline = LocalDate.parse(coursework.getDeadline());
 
         holder.tvCourseworkID.setText(String.valueOf(coursework.getCourseworkID()));
-        holder.tvCourseworkTitle.setText(WordUtils.capitalizeFully(coursework.getTitle()));
+        String title;
+//        title = StringUtils.left(title, 10);
+        title = WordUtils.capitalizeFully(coursework.getTitle());
+
+        holder.tvCourseworkTitle.setText(Helper.getSnippet(title));
         holder.tvCourseworkDescription.setText(coursework.getDescription());
         holder.tvDeadline.setText(String.format(Locale.ENGLISH,"%s, %s",
                 Helper.formatDate(coursework.getDeadline()),

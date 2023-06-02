@@ -31,6 +31,8 @@ import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.models.Event;
 import com.studentplanner.studentplanner.utils.Helper;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +48,7 @@ public class CourseworkFragment extends Fragment {
     private FragmentCourseworkBinding binding;
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
 
-        if (result.getResultCode() == RESULT_OK){
+        if (result.getResultCode() == RESULT_OK) {
             getCoursework();
         }
 
@@ -77,8 +79,21 @@ public class CourseworkFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void getCoursework(){
+    private void getCoursework() {
+
+        Coursework coursework = new Coursework(
+                11,
+                "A really long title that needs to be trimmed otherwise it could be very messy to read",
+                "create java GUI",
+                "High",
+                LocalDate.now().plusDays(3).toString(),
+                LocalTime.now().plusHours(1).plusMinutes(33).toString()
+
+
+        );
+
         list = db.getCoursework();
+        list.add(coursework);
         buildRecyclerView();
 
     }

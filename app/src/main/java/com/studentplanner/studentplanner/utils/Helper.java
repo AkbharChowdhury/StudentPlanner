@@ -41,10 +41,12 @@ import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.WordUtils;
 
 public final class Helper {
     private static final String INTENT_MESSAGE = "message";
+    private static final String ellipses ="...";
 
 
     private Helper() {
@@ -394,6 +396,13 @@ public final class Helper {
 
         Helper.setMinTimeStatus(deadlineTimePicker, localDate);
     }
+    public static String getSnippet(String str, int length){
 
+        return StringUtils.left(str, length) + (str.length() >=length? ellipses: "");
+    }
+    public static String getSnippet(String str){
+        final int length = 36;
+        return StringUtils.left(str, length) + (str.length() >= length?  ellipses : "");
+    }
 
 }
