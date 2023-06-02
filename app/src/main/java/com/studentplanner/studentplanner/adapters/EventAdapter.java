@@ -107,11 +107,12 @@ public class EventAdapter extends ArrayAdapter<Event> {
                 Module module = DatabaseHelper.getInstance(context).getSelectedModule(coursework.getModuleID());
 
                 String moduleDetails = module.getModuleDetails();
-                String message = String.format("%s\n%s\nPriority: %s\n%s",
+                String message = String.format("%s\n%s\nPriority: %s\n%s\nStatus: %s",
                         moduleDetails,
                         coursework.getTitle(),
                         coursework.getPriority(),
-                        Helper.formatTimeShort(coursework.getDeadlineTime())
+                        Helper.formatTimeShort(coursework.getDeadlineTime()),
+                        coursework.isCompleted()? "Completed": "Not Completed"
                 );
                 eventCellTV.setText(message);
                 break;
