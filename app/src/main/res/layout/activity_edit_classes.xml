@@ -11,8 +11,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingHorizontal="16dp"
-        tools:context=".editActivities.EditClassesActivity">
+        android:paddingHorizontal="16dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -33,7 +32,7 @@
             >
 
             <AutoCompleteTextView
-                android:id="@+id/txtModuleClassesEdit"
+                android:id="@+id/txtModuleClasses"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"
@@ -54,7 +53,7 @@
             >
 
             <AutoCompleteTextView
-                android:id="@+id/txtSemesterClassesEdit"
+                android:id="@+id/txtSemesterClasses"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"
@@ -76,7 +75,7 @@
             >
 
             <AutoCompleteTextView
-                android:id="@+id/txtDayEdit"
+                android:id="@+id/txtDay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"
@@ -87,7 +86,7 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txtStartTimeErrorEdit"
+            android:id="@+id/txtStartTimeError"
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -98,7 +97,7 @@
             >
 
             <AutoCompleteTextView
-                android:id="@+id/txtStartTimeEdit"
+                android:id="@+id/txtStartTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"
@@ -109,7 +108,7 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txtEndTimeErrorEdit"
+            android:id="@+id/txtEndTimeError"
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -120,7 +119,7 @@
             >
 
             <AutoCompleteTextView
-                android:id="@+id/txtEndTimeEdit"
+                android:id="@+id/txtEndTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"
@@ -133,7 +132,7 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txtRoomEdit"
+            android:id="@+id/txtRoom"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -164,7 +163,7 @@
             >
 
             <AutoCompleteTextView
-                android:id="@+id/txtClassTypeEdit"
+                android:id="@+id/txtClassType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"

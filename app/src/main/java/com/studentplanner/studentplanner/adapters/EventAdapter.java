@@ -17,6 +17,9 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.studentplanner.studentplanner.DatabaseHelper;
+import com.studentplanner.studentplanner.databinding.ActivityAddClassesBinding;
+import com.studentplanner.studentplanner.databinding.EventRowBinding;
+import com.studentplanner.studentplanner.databinding.FragmentModuleBinding;
 import com.studentplanner.studentplanner.editActivities.EditClassesActivity;
 import com.studentplanner.studentplanner.editActivities.EditCourseworkActivity;
 import com.studentplanner.studentplanner.R;
@@ -46,14 +49,18 @@ public class EventAdapter extends ArrayAdapter<Event> {
 
 
 
-
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         Event event = getItem(position);
 
+        EventRowBinding binding = EventRowBinding.inflate(LayoutInflater.from(context), parent,false);
+        binding.getRoot();
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.event_row, parent, false);
+//https://stackoverflow.com/questions/72326584/how-to-use-viewbinding-in-a-recyclerview-adapter-with-interface-and-cardview-in
+//            MyViewHolder holder = new MyViewHolder(binding);
+
         }
 
 
@@ -73,8 +80,9 @@ public class EventAdapter extends ArrayAdapter<Event> {
 
             }
         });
-
-        ImageView classesIcon = convertView.findViewById(R.id.event_icon_classes);
+        ImageView classesIcon =
+//                binding.eventIconClasses;
+                convertView.findViewById(R.id.event_icon_classes);
         ImageView courseworkIcon = convertView.findViewById(R.id.event_icon_coursework);
 
         int eventIcon = getEventIcon(event.getEventType());

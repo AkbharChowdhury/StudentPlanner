@@ -166,10 +166,14 @@ public final class Helper {
     }
 
     public static String formatTimeShort(String time) {
-        String timeColonPattern = "h:mma";
-        DateTimeFormatter timeColonFormatter = DateTimeFormatter.ofPattern(timeColonPattern);
-        LocalTime colonTime = LocalTime.parse(time);
-        return timeColonFormatter.format(colonTime);
+//        String timeColonPattern = "h:mm a";
+//        DateTimeFormatter timeColonFormatter = DateTimeFormatter.ofPattern(timeColonPattern);
+//        LocalTime colonTime = LocalTime.parse(time);
+//        return timeColonFormatter.format(colonTime);
+        String timePattern = "hh:mm a";
+        LocalTime localTime = LocalTime.parse(time);
+        DateTimeFormatter timeColonFormatter = DateTimeFormatter.ofPattern(timePattern);
+        return timeColonFormatter.format(localTime);
     }
 
     //link https://beginnersbook.com/2014/01/how-to-convert-12-hour-time-to-24-hour-date-in-java/

@@ -17,17 +17,22 @@ import android.widget.TimePicker;
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
+import com.studentplanner.studentplanner.databinding.ActivityAddClassesBinding;
+import com.studentplanner.studentplanner.databinding.ActivityEditClassesBinding;
 import com.studentplanner.studentplanner.enums.TimePickerType;
 import com.studentplanner.studentplanner.models.Classes;
+import com.studentplanner.studentplanner.models.CustomTimePicker;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.Semester;
 import com.studentplanner.studentplanner.tables.ClassTable;
+import com.studentplanner.studentplanner.utils.BoundTimePickerDialog;
 import com.studentplanner.studentplanner.utils.CalendarUtils;
 import com.studentplanner.studentplanner.utils.Dropdown;
 import com.studentplanner.studentplanner.utils.Helper;
 import com.studentplanner.studentplanner.utils.TimePickerFragment;
 
 import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Locale;
 
@@ -48,11 +53,20 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
     private TextInputLayout txtRoom;
 
     private DatabaseHelper db;
+    private ActivityEditClassesBinding binding;
+    private BoundTimePickerDialog startTimePicker;
+    private BoundTimePickerDialog endTimePicker;
+    private CustomTimePicker startCustomTimePicker;
+    private CustomTimePicker endCustomTimePicker;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_classes);
+        binding = ActivityEditClassesBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //
         db = DatabaseHelper.getInstance(this);
@@ -63,7 +77,7 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
         setupFields();
         setUpTimePickers();
 
-        findViewById(R.id.btn_edit_class).setOnClickListener(v -> {
+        binding.btnEditClass.setOnClickListener(v -> {
 
             if (db.updateClass(getClassDetails())) {
                 Helper.longToastMessage(this,"Class Updated");
@@ -101,14 +115,14 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
     }
 
     private void findFields() {
-        txtDays = findViewById(R.id.txtDayEdit);
-        txtModules = findViewById(R.id.txtModuleClassesEdit);
-        txtSemester = findViewById(R.id.txtSemesterClassesEdit);
-        txtClassType = findViewById(R.id.txtClassTypeEdit);
+        txtDays = binding.txtDay;
+        txtModules = binding.txtModuleClasses;
+        txtSemester = binding.txtSemesterClasses;
+        txtClassType = binding.txtClassType;
 
-        txtStartTime = findViewById(R.id.txtStartTimeEdit);
-        txtEndTime = findViewById(R.id.txtEndTimeEdit);
-        txtRoom = findViewById(R.id.txtRoomEdit);
+        txtStartTime = binding.txtStartTime;
+        txtEndTime = binding.txtEndTime;
+        txtRoom = binding.txtRoom;
     }
 
     private void setupFields() {
@@ -137,6 +151,12 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
             selectedModuleID = model.getModuleID();
             selectedSemesterID = model.getSemesterID();
 
+            LocalTime startTime = LocalTime.parse(model.getStartTime());
+            LocalTime endTime = LocalTime.parse(model.getEndTime());
+
+            startCustomTimePicker = new CustomTimePicker(startTime.getHour(), startTime.getMinute());
+            endCustomTimePicker = new CustomTimePicker(endTime.getHour(), endTime.getMinute());
+
 
         }
     }
@@ -160,14 +180,46 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
 
     }
 
+//    @SuppressLint("ClickableViewAccessibility")
+//    private void setStartTimePicker() {
+//        txtStartTime.setOnTouchListener((view, motionEvent) -> {
+//            if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+//                type = TimePickerType.START_TIME;
+//                timePickerStart = new TimePickerFragment();
+//                timePickerStart.show(getSupportFragmentManager(), "timePickerStart");
+//
+//            }
+//
+//            return false;
+//        });
+//    }
+//
+//    @SuppressLint("ClickableViewAccessibility")
+//    private void setEndTimePicker() {
+//        txtEndTime.setOnTouchListener((view, motionEvent) -> {
+//            if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+//                type = TimePickerType.END_TIME;
+//                timePickerEnd = new TimePickerFragment();
+//                timePickerEnd.show(getSupportFragmentManager(), "timePickerEnd");
+//
+//            }
+//
+//            return false;
+//        });
+//    }
+
     @SuppressLint("ClickableViewAccessibility")
     private void setStartTimePicker() {
         txtStartTime.setOnTouchListener((view, motionEvent) -> {
             if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                 type = TimePickerType.START_TIME;
-                timePickerStart = new TimePickerFragment();
-                timePickerStart.show(getSupportFragmentManager(), "timePickerStart");
+                startTimePicker = new BoundTimePickerDialog(this, this, startCustomTimePicker.getSelectedHour(), startCustomTimePicker.getSelectedMinute());
 
+                if (!Helper.trimStr(txtEndTime).equals(getString(R.string.select_end_time))){
+                    LocalTime endTime = LocalTime.of(endCustomTimePicker.getSelectedHour(), endCustomTimePicker.getSelectedMinute());
+                    startTimePicker.setMax(endTime.getHour(), endTime.getMinute());
+                }
+                startTimePicker.show();
             }
 
             return false;
@@ -179,9 +231,13 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
         txtEndTime.setOnTouchListener((view, motionEvent) -> {
             if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                 type = TimePickerType.END_TIME;
-                timePickerEnd = new TimePickerFragment();
-                timePickerEnd.show(getSupportFragmentManager(), "timePickerEnd");
+                endTimePicker = new BoundTimePickerDialog(this, this, endCustomTimePicker.getSelectedHour(), endCustomTimePicker.getSelectedMinute());
 
+                if (!Helper.trimStr(txtStartTime).equals(getString(R.string.select_start_time))){
+                    LocalTime startTime = LocalTime.of(startCustomTimePicker.getSelectedHour(), startCustomTimePicker.getSelectedMinute());
+                    endTimePicker.setMin(startTime.getHour(), startTime.getMinute());
+                }
+                endTimePicker.show();
             }
 
             return false;
@@ -219,15 +275,35 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
         return super.onOptionsItemSelected(item);
     }
 
+//    @Override
+//    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+//        String selectedTime = String.format(Locale.getDefault(), getString(R.string.time_format_database), selectedHour, selectedMinute);
+//        String formattedTime = Helper.formatTime(selectedTime);
+//        switch (type) {
+//            case START_TIME:
+//                txtStartTime.setText(formattedTime);
+//                break;
+//            case END_TIME:
+//                txtEndTime.setText(formattedTime);
+//                break;
+//        }
+//
+//    }
+
     @Override
     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
         String selectedTime = String.format(Locale.getDefault(), getString(R.string.time_format_database), selectedHour, selectedMinute);
         String formattedTime = Helper.formatTime(selectedTime);
         switch (type) {
             case START_TIME:
+                startCustomTimePicker.setSelectedHour(selectedHour);
+                startCustomTimePicker.setSelectedMinute(selectedMinute);
                 txtStartTime.setText(formattedTime);
                 break;
+
             case END_TIME:
+                endCustomTimePicker.setSelectedHour(selectedHour);
+                endCustomTimePicker.setSelectedMinute(selectedMinute);
                 txtEndTime.setText(formattedTime);
                 break;
         }

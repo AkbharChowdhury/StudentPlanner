@@ -15,6 +15,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.studentplanner.studentplanner.activities.LoginActivity;
 import com.studentplanner.studentplanner.addActivities.AddClassesActivity;
 import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
+import com.studentplanner.studentplanner.fragments.CalendarFragment;
 import com.studentplanner.studentplanner.fragments.CourseworkFragment;
 import com.studentplanner.studentplanner.fragments.ReminderFragment;
 import com.studentplanner.studentplanner.models.Student;
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         isLoggedIn();
         setupNavDrawer(savedInstanceState);
         showStudentDetails();
-        Helper.goToActivity(this, AddClassesActivity.class);
+//        Helper.goToActivity(this, AddClassesActivity.class);
 
 //        Module.addDefaultModules(this);
 //        Teacher.addDefaultTeachers(this);
@@ -101,8 +102,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new CourseworkFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_coursework);
+                    new CalendarFragment()).commit();
+            navigationView.setCheckedItem(R.id.nav_calendar);
 
         }
 
