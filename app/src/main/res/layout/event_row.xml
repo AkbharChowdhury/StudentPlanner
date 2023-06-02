@@ -96,36 +96,85 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <RelativeLayout
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/mainLayoutCoursework"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="left"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp" >
+        android:padding="12dp">
 
         <TextView
-            android:id="@+id/tv_coursework_details"
+            android:id="@+id/tv_cw_title"
+            android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:layout_toStartOf="@+id/event_icon_coursework"
+            android:text="M-Hike App"
             android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_cw_module"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="COMP1424: Mobile App Dev"
+
+            android:textColor="@color/gray"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_cw_title" />
+
+        <TextView
+            android:id="@+id/tv_cw_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="44dp"
+            android:text="11:30 PM"
+            android:textSize="15dp"
             android:textColor="@color/black"
-            android:text="@string/long_text" />
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/event_icon_coursework"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_alignParentEnd="true"
-            android:paddingStart="8dp"
-            android:src="@drawable/ic_event_colour"
-            tools:ignore="RtlSymmetry" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_coursework" />
 
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_cw_priority"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:text="Medium"
 
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.649"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_cw_completed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="36dp"
+
+            android:layout_marginBottom="16dp"
+            android:text="Not Completed"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </LinearLayout>

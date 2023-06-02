@@ -2,6 +2,7 @@ package com.studentplanner.studentplanner.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,8 @@ import com.studentplanner.studentplanner.tables.ClassTable;
 import com.studentplanner.studentplanner.tables.CourseworkTable;
 import com.studentplanner.studentplanner.utils.Helper;
 
+import org.apache.commons.text.WordUtils;
+
 import java.util.List;
 
 public class EventAdapter extends ArrayAdapter<Event> {
@@ -55,8 +58,6 @@ public class EventAdapter extends ArrayAdapter<Event> {
         binding.getRoot();
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.event_row, parent, false);
-//https://stackoverflow.com/questions/72326584/how-to-use-viewbinding-in-a-recyclerview-adapter-with-interface-and-cardview-in
-//            MyViewHolder holder = new MyViewHolder(binding);
 
         }
 
@@ -77,45 +78,52 @@ public class EventAdapter extends ArrayAdapter<Event> {
 
             }
         });
-        ImageView classesIcon =
-//                binding.eventIconClasses;
-                convertView.findViewById(R.id.event_icon_classes);
-        ImageView courseworkIcon = convertView.findViewById(R.id.event_icon_coursework);
+//
 
+        ImageView classesIcon = convertView.findViewById(R.id.event_icon_classes);
+        ImageView courseworkIcon = convertView.findViewById(R.id.event_icon_coursework);
+//
         int eventIcon = getEventIcon(event.getEventType());
         classesIcon.setImageResource(eventIcon);
         courseworkIcon.setImageResource(eventIcon);
-
-
+//
+//
         TextView txtClassType = convertView.findViewById(R.id.tv_class_type_lecture);
         TextView txtClassTitle = convertView.findViewById(R.id.tv_class_title);
         TextView txtRoom = convertView.findViewById(R.id.tv_room);
         TextView txtStartTime = convertView.findViewById(R.id.tv_start_time);
         TextView txtEndTime = convertView.findViewById(R.id.tv_end_time);
-        ConstraintLayout classRow  = (ConstraintLayout) convertView.findViewById(R.id.mainLayoutClasses);
-        RelativeLayout CourseworkRow  = (RelativeLayout) convertView.findViewById(R.id.mainLayoutCoursework);
+        ConstraintLayout classRow  = convertView.findViewById(R.id.mainLayoutClasses);
+//        RelativeLayout CourseworkRow  = (RelativeLayout) convertView.findViewById(R.id.mainLayoutCoursework);
 
         switch (event.getEventType()) {
             case COURSEWORK:
                 classRow.setVisibility(View.GONE);
+                TextView title = convertView.findViewById(R.id.tv_cw_title);
+                TextView lblModule = convertView.findViewById(R.id.tv_cw_module);
+                TextView priority = convertView.findViewById(R.id.tv_cw_priority);
+                TextView time = convertView.findViewById(R.id.tv_cw_time);
+                TextView completionStatus = convertView.findViewById(R.id.tv_cw_completed);
 
-                TextView eventCellTV = convertView.findViewById(R.id.tv_coursework_details);
+
                 Coursework coursework = event.getCoursework();
-                Module module = DatabaseHelper.getInstance(context).getSelectedModule(coursework.getModuleID());
+                String priorityLevel = coursework.getPriority();
 
+                Module module = DatabaseHelper.getInstance(context).getSelectedModule(coursework.getModuleID());
                 String moduleDetails = module.getModuleDetails();
-                String message = String.format("%s\n%s\nPriority: %s\n%s\nStatus: %s",
-                        moduleDetails,
-                        coursework.getTitle(),
-                        coursework.getPriority(),
-                        Helper.formatTimeShort(coursework.getDeadlineTime()),
-                        coursework.isCompleted() ? Status.COMPLETED.label : Status.NOT_COMPLETED.label
-                );
-                eventCellTV.setText(message);
+                title.setText(Helper.getSnippet(WordUtils.capitalizeFully(coursework.getTitle()) , 20));
+
+                lblModule.setText(moduleDetails);
+                priority.setText(priorityLevel);
+                priority.setTextColor(Helper.getPriorityColour(priorityLevel, context));
+                time.setText(Helper.formatTimeShort(coursework.getDeadlineTime()));
+
+                completionStatus.setText(coursework.isCompleted() ? Status.COMPLETED.label : Status.NOT_COMPLETED.label);
+                completionStatus.setTextColor(coursework.isCompleted()? context.getColor(R.color.green) : Color.RED);
                 break;
             case CLASSES:
 
-                CourseworkRow.setVisibility(View.GONE);
+                convertView.findViewById(R.id.mainLayoutCoursework).setVisibility(View.GONE);
                 Classes classes = event.getClasses();
                 List<ModuleTeacher> moduleTeacherList  = db.getModuleTeachers();
                 String teachers = "No teacher assigned";
