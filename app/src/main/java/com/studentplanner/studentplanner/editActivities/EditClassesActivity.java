@@ -1,9 +1,5 @@
 package com.studentplanner.studentplanner.editActivities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
@@ -14,10 +10,13 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.TimePicker;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
-import com.studentplanner.studentplanner.databinding.ActivityAddClassesBinding;
 import com.studentplanner.studentplanner.databinding.ActivityEditClassesBinding;
 import com.studentplanner.studentplanner.enums.TimePickerType;
 import com.studentplanner.studentplanner.models.Classes;
@@ -29,7 +28,6 @@ import com.studentplanner.studentplanner.utils.BoundTimePickerDialog;
 import com.studentplanner.studentplanner.utils.CalendarUtils;
 import com.studentplanner.studentplanner.utils.Dropdown;
 import com.studentplanner.studentplanner.utils.Helper;
-import com.studentplanner.studentplanner.utils.TimePickerFragment;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
@@ -44,8 +42,6 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
 
     private AutoCompleteTextView txtStartTime;
     private AutoCompleteTextView txtEndTime;
-    private TimePickerFragment timePickerStart;
-    private TimePickerFragment timePickerEnd;
 
     private int selectedModuleID;
     private int selectedSemesterID;
@@ -180,33 +176,7 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
 
     }
 
-//    @SuppressLint("ClickableViewAccessibility")
-//    private void setStartTimePicker() {
-//        txtStartTime.setOnTouchListener((view, motionEvent) -> {
-//            if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-//                type = TimePickerType.START_TIME;
-//                timePickerStart = new TimePickerFragment();
-//                timePickerStart.show(getSupportFragmentManager(), "timePickerStart");
-//
-//            }
-//
-//            return false;
-//        });
-//    }
-//
-//    @SuppressLint("ClickableViewAccessibility")
-//    private void setEndTimePicker() {
-//        txtEndTime.setOnTouchListener((view, motionEvent) -> {
-//            if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-//                type = TimePickerType.END_TIME;
-//                timePickerEnd = new TimePickerFragment();
-//                timePickerEnd.show(getSupportFragmentManager(), "timePickerEnd");
-//
-//            }
-//
-//            return false;
-//        });
-//    }
+
 
     @SuppressLint("ClickableViewAccessibility")
     private void setStartTimePicker() {
@@ -275,20 +245,7 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
         return super.onOptionsItemSelected(item);
     }
 
-//    @Override
-//    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-//        String selectedTime = String.format(Locale.getDefault(), getString(R.string.time_format_database), selectedHour, selectedMinute);
-//        String formattedTime = Helper.formatTime(selectedTime);
-//        switch (type) {
-//            case START_TIME:
-//                txtStartTime.setText(formattedTime);
-//                break;
-//            case END_TIME:
-//                txtEndTime.setText(formattedTime);
-//                break;
-//        }
-//
-//    }
+
 
     @Override
     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {

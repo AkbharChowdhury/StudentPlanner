@@ -22,9 +22,7 @@ import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
-import com.studentplanner.studentplanner.databinding.ActivityAddCourseworkBinding;
 import com.studentplanner.studentplanner.databinding.ActivityEditCourseworkBinding;
-import com.studentplanner.studentplanner.fragments.CourseworkFragment;
 import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.models.CustomTimePicker;
 import com.studentplanner.studentplanner.models.Module;
@@ -34,7 +32,6 @@ import com.studentplanner.studentplanner.utils.CalendarUtils;
 import com.studentplanner.studentplanner.utils.DatePickerFragment;
 import com.studentplanner.studentplanner.utils.Dropdown;
 import com.studentplanner.studentplanner.utils.Helper;
-import com.studentplanner.studentplanner.utils.TimePickerFragment;
 import com.studentplanner.studentplanner.utils.Validation;
 
 import java.time.LocalDate;
