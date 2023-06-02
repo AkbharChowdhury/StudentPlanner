@@ -1,6 +1,5 @@
 package com.studentplanner.studentplanner.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -17,9 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.studentplanner.studentplanner.DatabaseHelper;
-import com.studentplanner.studentplanner.databinding.ActivityAddClassesBinding;
 import com.studentplanner.studentplanner.databinding.EventRowBinding;
-import com.studentplanner.studentplanner.databinding.FragmentModuleBinding;
 import com.studentplanner.studentplanner.editActivities.EditClassesActivity;
 import com.studentplanner.studentplanner.editActivities.EditCourseworkActivity;
 import com.studentplanner.studentplanner.R;
@@ -34,7 +31,6 @@ import com.studentplanner.studentplanner.tables.ClassTable;
 import com.studentplanner.studentplanner.tables.CourseworkTable;
 import com.studentplanner.studentplanner.utils.Helper;
 
-import java.text.MessageFormat;
 import java.util.List;
 
 public class EventAdapter extends ArrayAdapter<Event> {
@@ -103,7 +99,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
             case COURSEWORK:
                 classRow.setVisibility(View.GONE);
 
-                TextView eventCellTV = convertView.findViewById(R.id.eventCellTV);
+                TextView eventCellTV = convertView.findViewById(R.id.tv_coursework_details);
                 Coursework coursework = event.getCoursework();
                 Module module = DatabaseHelper.getInstance(context).getSelectedModule(coursework.getModuleID());
 
