@@ -1,5 +1,6 @@
 package com.studentplanner.studentplanner.adapters;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -47,7 +48,8 @@ public class CourseworkAdapter extends RecyclerView.Adapter<CourseworkAdapter.Vi
         db = DatabaseHelper.getInstance(context);
     }
 
-    public void filterList(List<Coursework> filterlist) {
+    @SuppressLint("NotifyDataSetChanged")
+    public void filterListByTitle(List<Coursework> filterlist) {
         courseworkList = filterlist;
         notifyDataSetChanged();
     }

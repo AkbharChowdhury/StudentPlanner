@@ -35,6 +35,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 
 public class CourseworkFragment extends Fragment {
@@ -143,7 +145,7 @@ public class CourseworkFragment extends Fragment {
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    filter(newText);
+                    filterTitle(newText);
                     return false;
                 }
             });
@@ -152,20 +154,13 @@ public class CourseworkFragment extends Fragment {
     }
 
 
-    private void filter(String text) {
-        List<Coursework> filteredList = new ArrayList<>();
-
-        for (Coursework coursework : list) {
-            String name = coursework.getTitle().toLowerCase();
-            if (name.contains(text.toLowerCase())) {
-                filteredList.add(coursework);
-            }
-        }
+    private void filterTitle(String title) {
+        List<Coursework> filteredList = list.stream().filter(Coursework.filterTitle(title)).collect(Collectors.toList());
 
         if (filteredList.isEmpty()) {
             Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
         } else {
-            adapter.filterList(filteredList);
+            adapter.filterListByTitle(filteredList);
         }
     }
 

@@ -4,6 +4,8 @@ import android.widget.AutoCompleteTextView;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.function.Predicate;
+
 public class Coursework {
     private int courseworkID;
     private int moduleID;
@@ -13,8 +15,6 @@ public class Coursework {
     private String deadline;
     private String deadlineTime;
     private boolean isCompleted = false;
-
-
     private TextInputLayout txtTitle;
     private TextInputLayout txtModuleID;
     private TextInputLayout txtPriority;
@@ -22,6 +22,9 @@ public class Coursework {
     private AutoCompleteTextView txtDeadline;
     private AutoCompleteTextView txtDeadlineTime;
     private TextInputLayout txtDeadlineTimeError;
+
+//    private static final Predicate<Coursework> filterTitle = c -> c.getTitle().toLowerCase().contains(title.toLowerCase());
+
 
 
 
@@ -152,6 +155,10 @@ public class Coursework {
         this.priority = priority;
         this.deadline = deadline;
         this.deadlineTime = deadlineTime;
+
+    }
+    public static Predicate<Coursework> filterTitle(String title){
+        return c -> c.getTitle().toLowerCase().contains(title.toLowerCase());
 
     }
 
