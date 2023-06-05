@@ -186,7 +186,9 @@ package com.studentplanner.studentplanner.models;
 
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.enums.EventType;
+import com.studentplanner.studentplanner.utils.CalendarUtils;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -362,6 +364,10 @@ public class Event {
         }
         return courseworkEventList;
     }
+
+
+
+
 
 
 

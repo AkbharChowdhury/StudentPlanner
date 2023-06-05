@@ -143,15 +143,15 @@ public class CalendarFragment extends Fragment implements OnItemListener {
                 LocalDate startDate = semester.getStart();
                 LocalDate endDate = semester.getEnd();
                 long numOfDays = ChronoUnit.DAYS.between(startDate, endDate);
-                populateClassData(numOfDays, startDate, myClass);
-
+                Event.getEventsList().addAll(populateClassData(numOfDays, startDate, myClass));
 
             }
         }
 
 
     }
-    private void populateClassData(long numOfDays, LocalDate startDate, Classes myClass){
+    private List<Event> populateClassData(long numOfDays, LocalDate startDate, Classes myClass){
+        List<Event> classes = new ArrayList<>();
 
         for (LocalDate date : CalendarUtils.getRecurringEvents(numOfDays, startDate)) {
             if (date.getDayOfWeek() == DayOfWeek.of(myClass.getDow())) {
@@ -169,10 +169,12 @@ public class CalendarFragment extends Fragment implements OnItemListener {
                 );
                 classEvent.setId(myClass.getClassID());
                 classEvent.setClasses(myClass);
-                Event.getEventsList().add(classEvent);
+                classes.add(classEvent);
             }
         }
+        return classes;
     }
+
 
 
 
