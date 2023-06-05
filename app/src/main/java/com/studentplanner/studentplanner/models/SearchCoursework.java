@@ -1,7 +1,9 @@
 package com.studentplanner.studentplanner.models;
 
-import java.util.ArrayList;
-import java.util.Comparator;
+import android.content.Context;
+
+import com.studentplanner.studentplanner.R;
+
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -9,11 +11,22 @@ import java.util.stream.Collectors;
 public class SearchCoursework {
 
     private final List<Coursework> ALL_COURSEWORK;
+    private final Context context;
 
     private String title = "";
     private String priority = "";
     private boolean isCompleted = false;
-    private boolean resetCompletionStatus = false;
+
+
+    public boolean isDefaultStatus() {
+        return isDefaultStatus;
+    }
+
+    public void setDefaultStatus(boolean defaultStatus) {
+        isDefaultStatus = defaultStatus;
+    }
+
+    private boolean isDefaultStatus = false;
 
 
     private final Predicate<Coursework> filterTitle = c -> c.getTitle().toLowerCase().contains(title.toLowerCase());
@@ -21,7 +34,8 @@ public class SearchCoursework {
     private final Predicate<Coursework> filterCompletionStatus = c -> c.isCompleted() == isCompleted;
 
 
-    public SearchCoursework(List<Coursework> ALL_COURSEWORK) {
+    public SearchCoursework(Context context, List<Coursework> ALL_COURSEWORK) {
+        this.context = context;
         this.ALL_COURSEWORK = ALL_COURSEWORK;
     }
 
@@ -48,12 +62,17 @@ public class SearchCoursework {
     public void setCompleted(boolean completed) {
         isCompleted = completed;
     }
-    public void resetCompleted(){
-        resetCompletionStatus = true;
 
-    }
 
     public List<Coursework> filterResults() {
+        // any priority
+        if (context.getResources().getString(R.string.any_priority).equalsIgnoreCase(priority)){
+            return ALL_COURSEWORK.stream()
+                    .filter(filterTitle)
+                    .filter(filterCompletionStatus)
+                    .collect(Collectors.toList());
+
+        }
 
 
 //        if (resetCompletionStatus){
@@ -65,6 +84,7 @@ public class SearchCoursework {
 //        }
 //
 //
+        // filter all category
         return ALL_COURSEWORK.stream()
                 .filter(filterTitle)
                 .filter(filterPriority)

@@ -12,6 +12,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Spinner;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -28,16 +32,25 @@ import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
 import com.studentplanner.studentplanner.databinding.FragmentCourseworkBinding;
 import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.models.SearchCoursework;
+import com.studentplanner.studentplanner.utils.Dropdown;
 import com.studentplanner.studentplanner.utils.Helper;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 
 public class CourseworkFragment extends Fragment {
     private SearchCoursework search;
+    private Spinner txtPriority;
+    private Spinner txtCompletionStatus;
+
+
 
     private Context context;
     private Activity activity;
@@ -60,6 +73,61 @@ public class CourseworkFragment extends Fragment {
 
     }
 
+    private void setCompletionDropdown(){
+
+
+        txtCompletionStatus.setAdapter(new ArrayAdapter<String>(
+                getActivity(),
+                android.R.layout.simple_spinner_dropdown_item,
+                context.getResources().getStringArray(R.array.completion_array_search)
+        ));
+
+    }
+
+    private void setPriorityDropdown() {
+        Deque<String> deque = new LinkedList<>(Arrays.asList(context.getResources().getStringArray(R.array.priority_array)));
+        deque.addFirst(context.getString(R.string.any_priority));
+        List<String> priorityArray = new ArrayList<>(deque);
+
+        txtPriority.setAdapter(new ArrayAdapter<>(
+                getActivity(),
+                android.R.layout.simple_spinner_dropdown_item,
+                priorityArray
+        ));
+
+
+//        txtPriority.setOnItemClickListener((parent, view, position, id) -> {
+//            search.setPriority(txtPriority.getAdapter().getItem(position).toString());
+//            search.filterResults();
+////            Helper.longToastMessage(context, txtPriority.getAdapter().getItem(position).toString());
+////            selectedModuleID = moduleList.get(position).getModuleID()
+//        });
+
+//        txtPriority.setSelection(priorityArray.indexOf(context.getString(R.string.any_priority)));
+
+    }
+
+//    private void setPriorityDropdown(){
+//        Deque<String> deque = new LinkedList<>(Arrays.asList(context.getResources().getStringArray(R.array.priority_array)));
+//        deque.addFirst(context.getString(R.string.any_priority));
+//        List<String> priorityArray = new ArrayList<>(deque);
+//        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+//                getActivity(),
+//                android.R.layout.simple_spinner_dropdown_item,
+//                priorityArray
+//        );
+//        txtPriority.setAdapter(adapter);
+//        txtPriority.setOnItemClickListener((parent, view, position, id) -> {
+//            search.setPriority(txtPriority.getAdapter().getItem(position).toString());
+//            search.filterResults();
+////            Helper.longToastMessage(context, txtPriority.getAdapter().getItem(position).toString());
+////            selectedModuleID = moduleList.get(position).getModuleID()
+//        });
+//
+////        txtPriority.setSelection(priorityArray.indexOf(context.getString(R.string.any_priority)));
+//
+//    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +137,59 @@ public class CourseworkFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         initFragment();
         binding = FragmentCourseworkBinding.inflate(inflater, container, false);
+        txtPriority = binding.txtPriority;
+        txtCompletionStatus = binding.txtCompletionStatus;
+        setPriorityDropdown();
+        setCompletionDropdown();
+
+        txtPriority.setSelection(0,false);
+        txtCompletionStatus.setSelection(0,false);
+
+
+
+        txtPriority.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                search.setPriority(txtPriority.getAdapter().getItem(position).toString());
+                List<Coursework> filteredList = search.filterResults();
+
+                adapter.filterCourseworkList(filteredList);
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+
+        txtCompletionStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0){
+                    search.setDefaultStatus(true);
+                    return;
+                }
+                search.setDefaultStatus(false);
+                boolean isCompleted = txtCompletionStatus.getAdapter().getItem(position).toString().equalsIgnoreCase("completed");
+                search.setCompleted(isCompleted);
+                List<Coursework> filteredList = search.filterResults();
+                adapter.filterCourseworkList(filteredList);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
         binding.fabAdd.setOnClickListener(v -> startForResult.launch(new Intent(getActivity(), AddCourseworkActivity.class)));
         recyclerView = binding.recyclerView;
 
@@ -95,7 +216,7 @@ public class CourseworkFragment extends Fragment {
 
         list = db.getCoursework();
         list.add(coursework);
-        search = new SearchCoursework(list);
+        search = new SearchCoursework(context, list);
 
         buildRecyclerView();
 
@@ -158,15 +279,17 @@ public class CourseworkFragment extends Fragment {
 
     private void filterTitle(String title) {
         search.setTitle(title);
-//        search.setPriority("High");
-//        search.setCompleted(true);
 
         List<Coursework> filteredList = search.filterResults();
 
+        checkEmptyResults(filteredList);
+        adapter.filterCourseworkList(filteredList);
+
+    }
+    private void checkEmptyResults(List<Coursework> filteredList){
         if (filteredList.isEmpty()) {
             Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
         }
-        adapter.filterCourseworkList(filteredList);
 
     }
 

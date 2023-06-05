@@ -156,6 +156,16 @@
         <item>High</item>
     </string-array>
 
+
+    <string-array name="completion_array_search">
+        <item>Any Completion</item>
+        <item>Completed</item>
+        <item>Not Completed</item>
+    </string-array>
+
+
+
+
     <string-array name="type_array">
         <item>Lecture</item>
         <item>Tutorial</item>
@@ -197,4 +207,5 @@
     <string name="_11_30_pm">11:30 PM</string>
     <string name="medium">Medium</string>
     <string name="not_completed">Not Completed</string>
+    <string name="any_priority">Any Priority</string>
 </resources>
