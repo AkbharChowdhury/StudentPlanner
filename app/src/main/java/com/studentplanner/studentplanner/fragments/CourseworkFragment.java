@@ -110,13 +110,14 @@ public class CourseworkFragment extends Fragment {
 
     }
 
-
     private void buildRecyclerView() {
         if (list.size() > 0) {
             adapter = new CourseworkAdapter(list, context, startForResult);
             LinearLayoutManager manager = new LinearLayoutManager(context);
+
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(manager);
+
             recyclerView.setAdapter(adapter);
             return;
         }
@@ -157,7 +158,8 @@ public class CourseworkFragment extends Fragment {
 
     private void filterTitle(String title) {
         search.setTitle(title);
-        search.setCompleted(false);
+//        search.setPriority("High");
+//        search.setCompleted(true);
 
         List<Coursework> filteredList = search.filterResults();
 

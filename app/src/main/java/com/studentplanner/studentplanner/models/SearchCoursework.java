@@ -1,5 +1,7 @@
 package com.studentplanner.studentplanner.models;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -11,10 +13,11 @@ public class SearchCoursework {
     private String title = "";
     private String priority = "";
     private boolean isCompleted = false;
+    private boolean resetCompletionStatus = false;
 
 
     private final Predicate<Coursework> filterTitle = c -> c.getTitle().toLowerCase().contains(title.toLowerCase());
-    private final Predicate<Coursework> filterPriority = c -> c.getTitle().toLowerCase().contains(priority.toLowerCase());
+    private final Predicate<Coursework> filterPriority = c -> c.getPriority().toLowerCase().contains(priority.toLowerCase());
     private final Predicate<Coursework> filterCompletionStatus = c -> c.isCompleted() == isCompleted;
 
 
@@ -45,8 +48,23 @@ public class SearchCoursework {
     public void setCompleted(boolean completed) {
         isCompleted = completed;
     }
+    public void resetCompleted(){
+        resetCompletionStatus = true;
+
+    }
 
     public List<Coursework> filterResults() {
+
+
+//        if (resetCompletionStatus){
+//            return ALL_COURSEWORK.stream()
+//                    .filter(filterTitle)
+//                    .filter(filterPriority)
+//                    .collect(Collectors.toList());
+//
+//        }
+//
+//
         return ALL_COURSEWORK.stream()
                 .filter(filterTitle)
                 .filter(filterPriority)
