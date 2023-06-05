@@ -187,5 +187,5 @@
     <string name="placeholder_duration">in 5 days</string>
     <string name="add_module_teacher_description">Please select a module from the list below which will show your list of teachers in the next page.</string>
     <string name="add_module_teacher">Add Module teacher</string>
-
+    <string name="class_exists_error">This class already exists!\n please try choosing a different class type or choose another module</string>
 </resources>

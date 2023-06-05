@@ -1,6 +1,7 @@
 package com.studentplanner.studentplanner;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         isLoggedIn();
         setupNavDrawer(savedInstanceState);
         showStudentDetails();
+        Log.d("ITEM", String.valueOf(db.classExists(6,1,"Lectures")));
 //        Helper.goToActivity(this, AddClassesActivity.class);
 
 //        Module.addDefaultModules(this);

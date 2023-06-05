@@ -88,12 +88,18 @@ public class AddClassesActivity extends AppCompatActivity implements TimePickerD
             errorFields.setTxtEndTimeError(binding.txtEndTimeError);
 
             if (form.validateAddClassForm(errorFields)){
-                if (db.addClass(getClassDetails())){
-                    Helper.longToastMessage(this,"Class added");
-                    setResult(RESULT_OK);
-                    finish();
-
+                if (db.classExists(selectedModuleID, selectedSemesterID, Helper.trimStr(txtClassType))){
+//                    Helper.longToastMessage(this, "This class already exists! please try choosing a different class type or choose another module");
+                    txtClassTypeError.setError(getString(R.string.class_exists_error));
+                    return;
                 }
+                txtClassTypeError.setError(null);
+
+//                if (db.addClass(getClassDetails())){
+//                    Helper.longToastMessage(this,"Class added");
+//                    setResult(RESULT_OK);
+//                    finish();
+//                }
             }
 
 

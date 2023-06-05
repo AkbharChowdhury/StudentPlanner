@@ -263,6 +263,38 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+
+    @SuppressLint("Range")
+    public boolean classExists(int moduleID, int semesterID, String type) {
+        int studentID = AccountPreferences.getStudentID(context);
+        SQLiteDatabase db = getReadableDatabase();
+
+        try (Cursor cursor = db.rawQuery("SELECT\n" +
+                "count(*) class_exists\n" +
+                "\n" +
+                "FROM classes c\n" +
+                "JOIN modules m ON m.module_id =  c.module_id\n" +
+                "WHERE m.student_id = ?" +
+                " AND c.module_id =? AND semester_id =? AND type = ?", new String[]{
+                String.valueOf(studentID),
+                String.valueOf(moduleID),
+                String.valueOf(semesterID),
+                type,
+
+
+        })) {
+            if (cursor.moveToFirst()) {
+                return cursor.getInt(0) > 0;
+
+            }
+
+        } catch (Exception e) {
+            Log.d("ERROR", "There was an error finding if the class exists");
+        }
+        return false;
+
+    }
+
     @SuppressLint("Range")
     public boolean moduleCodeExists(String moduleCode, String excludedModuleCode) {
         int studentID = AccountPreferences.getStudentID(context);

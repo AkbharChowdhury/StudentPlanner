@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -35,6 +34,7 @@ import com.studentplanner.studentplanner.utils.Helper;
 import org.apache.commons.text.WordUtils;
 
 import java.util.List;
+import java.util.Locale;
 
 public class EventAdapter extends ArrayAdapter<Event> {
     private final Context context;
@@ -86,24 +86,30 @@ public class EventAdapter extends ArrayAdapter<Event> {
         int eventIcon = getEventIcon(event.getEventType());
         classesIcon.setImageResource(eventIcon);
         courseworkIcon.setImageResource(eventIcon);
-//
-//
-        TextView txtClassType = convertView.findViewById(R.id.tv_class_type_lecture);
-        TextView txtClassTitle = convertView.findViewById(R.id.tv_class_title);
-        TextView txtRoom = convertView.findViewById(R.id.tv_room);
-        TextView txtStartTime = convertView.findViewById(R.id.tv_start_time);
-        TextView txtEndTime = convertView.findViewById(R.id.tv_end_time);
+        // class row
+        TextView lblTeachers = convertView.findViewById(R.id.tv_class_teachers);
+        TextView lblClassTitle = convertView.findViewById(R.id.tv_class_title);
+        TextView lblRoom = convertView.findViewById(R.id.tv_room);
+        TextView lblStartTime = convertView.findViewById(R.id.tv_start_time);
+        TextView lblEndTime = convertView.findViewById(R.id.tv_end_time);
+        TextView lblType = convertView.findViewById(R.id.tv_class_type);
+
+
+        // coursework row
+        TextView title = convertView.findViewById(R.id.tv_cw_title);
+        TextView lblModule = convertView.findViewById(R.id.tv_cw_module);
+        TextView priority = convertView.findViewById(R.id.tv_cw_priority);
+        TextView time = convertView.findViewById(R.id.tv_cw_time);
+        TextView completionStatus = convertView.findViewById(R.id.tv_cw_completed);
+
+
+
         ConstraintLayout classRow  = convertView.findViewById(R.id.mainLayoutClasses);
 //        RelativeLayout CourseworkRow  = (RelativeLayout) convertView.findViewById(R.id.mainLayoutCoursework);
 
         switch (event.getEventType()) {
             case COURSEWORK:
                 classRow.setVisibility(View.GONE);
-                TextView title = convertView.findViewById(R.id.tv_cw_title);
-                TextView lblModule = convertView.findViewById(R.id.tv_cw_module);
-                TextView priority = convertView.findViewById(R.id.tv_cw_priority);
-                TextView time = convertView.findViewById(R.id.tv_cw_time);
-                TextView completionStatus = convertView.findViewById(R.id.tv_cw_completed);
 
 
                 Coursework coursework = event.getCoursework();
@@ -126,6 +132,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
                 convertView.findViewById(R.id.mainLayoutCoursework).setVisibility(View.GONE);
                 Classes classes = event.getClasses();
                 List<ModuleTeacher> moduleTeacherList  = db.getModuleTeachers();
+                lblType.setText(classes.getClassType());
                 String teachers = "No teacher assigned";
 
                 if (Helper.moduleIDExistsInModuleTeacher(moduleTeacherList, classes.getModuleID())){
@@ -133,13 +140,13 @@ public class EventAdapter extends ArrayAdapter<Event> {
 
                 }
 
-                txtClassType.setText(teachers);
+                lblTeachers.setText(teachers);
                 Module m = DatabaseHelper.getInstance(context).getSelectedModule(classes.getModuleID());
-                txtClassTitle.setText(m.getModuleName());
+                lblClassTitle.setText(m.getModuleName());
                 String room = classes.getRoom().isEmpty()? "No room assigned" : classes.getRoom();
-                txtRoom.setText(room);
-                txtStartTime.setText(Helper.formatTimeShort(classes.getStartTime()));
-                txtEndTime.setText(Helper.formatTimeShort(classes.getEndTime()));
+                lblRoom.setText(room);
+                lblStartTime.setText(Helper.formatTimeShort(classes.getStartTime()));
+                lblEndTime.setText(Helper.formatTimeShort(classes.getEndTime()));
 
 
                 break;
