@@ -46,10 +46,9 @@ public class SearchCoursework {
 
     public List<Coursework> filterResults() {
         return ALL_COURSEWORK.stream()
-                .filter(Coursework.filterTitle(title))
-                .filter(Coursework.filterPriority(priority))
+                .filter(filterTitle)
+                .filter(filterPriority)
                 .collect(Collectors.toList());
-
     }
 
 }
