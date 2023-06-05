@@ -16,6 +16,8 @@ public class SearchCoursework {
     private final Predicate<Coursework> filterTitle = c -> c.getTitle().toLowerCase().contains(title.toLowerCase());
     private final Predicate<Coursework> filterPriority = c -> c.getTitle().toLowerCase().contains(priority.toLowerCase());
     private final Predicate<Coursework> filterCompletionStatus = c -> c.isCompleted() == isCompleted;
+
+
     public SearchCoursework(List<Coursework> ALL_COURSEWORK) {
         this.ALL_COURSEWORK = ALL_COURSEWORK;
     }
@@ -48,6 +50,7 @@ public class SearchCoursework {
         return ALL_COURSEWORK.stream()
                 .filter(filterTitle)
                 .filter(filterPriority)
+                .filter(filterCompletionStatus)
                 .collect(Collectors.toList());
     }
 

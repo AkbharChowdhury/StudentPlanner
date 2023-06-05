@@ -55,27 +55,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setupNavDrawer(savedInstanceState);
         showStudentDetails();
 
-        List<Coursework> courseworkList = db.getCoursework();
-        Coursework c = new Coursework(
-                new Random().nextInt(100),
 
-                11,
-                "Apple System",
-                "create Apple GUI",
-                "Low",
-                LocalDate.now().plusDays(3).toString(),
-                LocalTime.now().plusHours(1).plusMinutes(33).toString()
-
-
-        );
-        courseworkList.add(c);
-        int size = courseworkList.size();
-        List<Coursework> filtered = Coursework.filterResults(courseworkList,"s","low");
-        Log.d("COURSEWORK", String.valueOf(filtered));
-//        Helper.goToActivity(this, AddClassesActivity.class);
-
-//        Module.addDefaultModules(this);
-//        Teacher.addDefaultTeachers(this);
 
 
 

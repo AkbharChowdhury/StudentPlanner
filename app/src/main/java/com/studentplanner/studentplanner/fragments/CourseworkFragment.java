@@ -27,6 +27,7 @@ import com.studentplanner.studentplanner.adapters.CourseworkAdapter;
 import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
 import com.studentplanner.studentplanner.databinding.FragmentCourseworkBinding;
 import com.studentplanner.studentplanner.models.Coursework;
+import com.studentplanner.studentplanner.models.SearchCoursework;
 import com.studentplanner.studentplanner.utils.Helper;
 
 import java.time.LocalDate;
@@ -36,6 +37,8 @@ import java.util.stream.Collectors;
 
 
 public class CourseworkFragment extends Fragment {
+    private SearchCoursework search;
+
     private Context context;
     private Activity activity;
 
@@ -92,6 +95,8 @@ public class CourseworkFragment extends Fragment {
 
         list = db.getCoursework();
         list.add(coursework);
+        search = new SearchCoursework(list);
+
         buildRecyclerView();
 
     }
@@ -151,11 +156,10 @@ public class CourseworkFragment extends Fragment {
 
 
     private void filterTitle(String title) {
-        List<Coursework> filteredList1 = list.stream()
-                .filter(Coursework.filterTitle(title))
-                .filter(Coursework.filterPriority("High"))
-                .collect(Collectors.toList());
-        List<Coursework> filteredList = Coursework.filterResults(list,title,"High");
+        search.setTitle(title);
+        search.setCompleted(false);
+
+        List<Coursework> filteredList = search.filterResults();
 
         if (filteredList.isEmpty()) {
             Helper.shortToastMessage(context, context.getString(R.string.no_data_found));

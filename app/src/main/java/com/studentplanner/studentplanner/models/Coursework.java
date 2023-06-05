@@ -166,13 +166,6 @@ public class Coursework {
 
     }
 
-    public static List<Coursework> filterResults(List<Coursework> courseworkList, String title, String priority) {
-        return courseworkList.stream()
-                .filter(Coursework.filterTitle(title))
-                .filter(Coursework.filterPriority(priority)).collect(Collectors.toList());
-
-    }
-
     public int getCourseworkID() {
         return courseworkID;
     }
