@@ -3,6 +3,7 @@ package com.studentplanner.studentplanner.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,9 +47,6 @@ public class EventAdapter extends ArrayAdapter<Event> {
         this.startForResult = startForResult;
     }
 
-
-
-
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -58,12 +56,9 @@ public class EventAdapter extends ArrayAdapter<Event> {
         binding.getRoot();
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.event_row, parent, false);
-
         }
 
-
         final DatabaseHelper db = DatabaseHelper.getInstance(context);
-
 
         convertView.setOnClickListener(v -> {
             final int ID = event.getId();
@@ -78,11 +73,9 @@ public class EventAdapter extends ArrayAdapter<Event> {
 
             }
         });
-//
 
         ImageView classesIcon = convertView.findViewById(R.id.event_icon_classes);
         ImageView courseworkIcon = convertView.findViewById(R.id.event_icon_coursework);
-//
         int eventIcon = getEventIcon(event.getEventType());
         classesIcon.setImageResource(eventIcon);
         courseworkIcon.setImageResource(eventIcon);
@@ -93,6 +86,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
         TextView lblStartTime = convertView.findViewById(R.id.tv_start_time);
         TextView lblEndTime = convertView.findViewById(R.id.tv_end_time);
         TextView lblType = convertView.findViewById(R.id.tv_class_type);
+        ConstraintLayout classRow  = convertView.findViewById(R.id.mainLayoutClasses);
 
 
         // coursework row
@@ -102,10 +96,6 @@ public class EventAdapter extends ArrayAdapter<Event> {
         TextView time = convertView.findViewById(R.id.tv_cw_time);
         TextView completionStatus = convertView.findViewById(R.id.tv_cw_completed);
 
-
-
-        ConstraintLayout classRow  = convertView.findViewById(R.id.mainLayoutClasses);
-//        RelativeLayout CourseworkRow  = (RelativeLayout) convertView.findViewById(R.id.mainLayoutCoursework);
 
         switch (event.getEventType()) {
             case COURSEWORK:
@@ -131,24 +121,21 @@ public class EventAdapter extends ArrayAdapter<Event> {
 
                 convertView.findViewById(R.id.mainLayoutCoursework).setVisibility(View.GONE);
                 Classes classes = event.getClasses();
+                int moduleID = classes.getModuleID();
+
                 List<ModuleTeacher> moduleTeacherList  = db.getModuleTeachers();
                 lblType.setText(classes.getClassType());
-                String teachers = "No teacher assigned";
-
-                if (Helper.moduleIDExistsInModuleTeacher(moduleTeacherList, classes.getModuleID())){
-                    teachers = Helper.getModuleTeachersList(position, db);
-
-                }
+                String teachers = Helper.moduleIDExistsInModuleTeacher(moduleTeacherList, classes.getModuleID())
+                        ? Helper.getSnippet(Helper.getTeachersForSelectedModule(context, moduleID), 35)
+                        : "No teacher assigned";
 
                 lblTeachers.setText(teachers);
-                Module m = DatabaseHelper.getInstance(context).getSelectedModule(classes.getModuleID());
+                Module m = DatabaseHelper.getInstance(context).getSelectedModule(moduleID);
                 lblClassTitle.setText(m.getModuleName());
                 String room = classes.getRoom().isEmpty()? "No room assigned" : classes.getRoom();
                 lblRoom.setText(room);
                 lblStartTime.setText(Helper.formatTimeShort(classes.getStartTime()));
                 lblEndTime.setText(Helper.formatTimeShort(classes.getEndTime()));
-
-
                 break;
         }
         return convertView;

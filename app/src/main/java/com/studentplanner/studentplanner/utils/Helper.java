@@ -46,7 +46,7 @@ import org.apache.commons.text.WordUtils;
 
 public final class Helper {
     private static final String INTENT_MESSAGE = "message";
-    private static final String ellipses ="...";
+    private static final String ellipses = "...";
 
 
     private Helper() {
@@ -56,7 +56,8 @@ public final class Helper {
         currentActivity.startActivity(new Intent(currentActivity, activityPageToOpen));
 
     }
-        public static void goToFragment(View view, Fragment fragmentToOpen){
+
+    public static void goToFragment(View view, Fragment fragmentToOpen) {
         AppCompatActivity activity = (AppCompatActivity) view.getContext();
         activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragmentToOpen).addToBackStack(null).commit();
     }
@@ -68,6 +69,7 @@ public final class Helper {
     public static void longToastMessage(Context context, String message) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
+
     public static void shortToastMessage(Context context, String message) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
@@ -97,8 +99,6 @@ public final class Helper {
         intent.putExtra(INTENT_MESSAGE, message);
         currentActivity.startActivity(intent);
     }
-
-
 
 
     public static void getIntentMessage(Context context, Bundle extras) {
@@ -213,6 +213,7 @@ public final class Helper {
         }
         return daysWeek;
     }
+
     public static String calcDeadlineDate(LocalDate deadline, boolean isCompleted) {
         LocalDate today = LocalDate.now();
         Period p = Period.between(today, deadline);
@@ -243,35 +244,33 @@ public final class Helper {
             return sb.append(weeks == 1 ? "1 week" : weeks + " weeks").toString();
         }
 
-        if (months > 1 && days == 0){
+        if (months > 1 && days == 0) {
             return sb.append(months).append(" months").toString();
 
         }
-        if (months > 1 && days == 1){
+        if (months > 1 && days == 1) {
             return sb.append(months).append(" months").append(" and 1 day").toString();
 
         }
-        if (months == 1 && days == 1){
+        if (months == 1 && days == 1) {
             return sb.append("1 month and 1 day").toString();
 
         }
 
-        if (months == 0 && days> 0){
+        if (months == 0 && days > 0) {
             return sb.append(days).append(" days").toString();
 
         }
 
 
-
-        if (days <0 && !isCompleted){
+        if (days < 0 && !isCompleted) {
             return "Overdue";
-        } else if (days <0){
+        } else if (days < 0) {
 
             return "";
         }
 
         return sb.append(months).append(" months and ").append(days).append(" days").toString();
-
 
 
     }
@@ -321,22 +320,25 @@ public final class Helper {
         return list.toArray(new String[list.size()]);
 
     }
-    public static List<Integer> convertStringArrayToIntArrayList(List<String> numbers){
+
+    public static List<Integer> convertStringArrayToIntArrayList(List<String> numbers) {
         return numbers.stream()
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());
     }
-    public static String formatList(String str){
+
+    public static String formatList(String str) {
         return str.substring(0, str.lastIndexOf(","));
     }
-    public static String getModuleTeachersList(int position, DatabaseHelper db){
+
+    public static String getModuleTeachersList(int position, DatabaseHelper db) {
         StringBuilder teachers = new StringBuilder();
 
-        List<ModuleTeacher> moduleTeacherList  = db.getModuleTeachers();
-        if (moduleTeacherList.size() > 0){
+        List<ModuleTeacher> moduleTeacherList = db.getModuleTeachers();
+        if (moduleTeacherList.size() > 0) {
             ModuleTeacher model = moduleTeacherList.get(position);
 
-            for (int teacherId : model.getTeacherIDList()){
+            for (int teacherId : model.getTeacherIDList()) {
                 Teacher teacher = db.getSelectedTeacher(teacherId);
                 teachers.append(teacher.getName()).append(", ");
             }
@@ -345,30 +347,38 @@ public final class Helper {
         }
         return null;
 
-
     }
 
-    public static boolean moduleIDExistsInModuleTeacher(List<ModuleTeacher> moduleTeacherList, int moduleID){
-        for (ModuleTeacher moduleTeacher: moduleTeacherList){
-            if (moduleTeacher.getModuleID() == moduleID){
+    public static String getTeachersForSelectedModule(Context context, int moduleID) {
+        DatabaseHelper db = DatabaseHelper.getInstance(context);
+        String teachers = db.getTeachersForSelectedModuleID(moduleID).toString();
+        return removeFirstAndLastChar(teachers);
+    }
+    private static String removeFirstAndLastChar(String s) {
+        return s.substring(1, s.length() - 1);
+    }
+
+    public static boolean moduleIDExistsInModuleTeacher(List<ModuleTeacher> moduleTeacherList, int moduleID) {
+        for (ModuleTeacher moduleTeacher : moduleTeacherList) {
+            if (moduleTeacher.getModuleID() == moduleID) {
                 return true;
             }
         }
         return false;
     }
-    public static String getReminderTitle(){
+
+    public static String getReminderTitle() {
         LocalDate now = LocalDate.now();
         String year = String.valueOf(now.getYear());
         String month = now.getMonth().toString();
-        return WordUtils.capitalizeFully(String.format(Locale.ENGLISH,"coursework %s %s", month, year));
+        return WordUtils.capitalizeFully(String.format(Locale.ENGLISH, "coursework %s %s", month, year));
 
     }
 
 
-
     public static String readStream(InputStream in) {
         StringBuilder sb = new StringBuilder();
-        try(BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
             String nextLine;
             while ((nextLine = reader.readLine()) != null) {
                 sb.append(nextLine);
@@ -380,11 +390,11 @@ public final class Helper {
     }
 
 
-    public static void setMinTimeStatus(BoundTimePickerDialog deadlineTimePicker, LocalDate date){
+    public static void setMinTimeStatus(BoundTimePickerDialog deadlineTimePicker, LocalDate date) {
         LocalDate today = LocalDate.now();
         deadlineTimePicker.setMinTimeToNow(false);
 
-        if (date.isEqual(today)){
+        if (date.isEqual(today)) {
             deadlineTimePicker.setMinTimeToNow(true);
         } else if (date.isAfter(today)) {
             deadlineTimePicker.setMinTimeToNow(false);
@@ -392,17 +402,20 @@ public final class Helper {
         }
 
     }
+
     public static void deadlineSetup(BoundTimePickerDialog deadlineTimePicker, LocalDate localDate) {
 
         Helper.setMinTimeStatus(deadlineTimePicker, localDate);
     }
-    public static String getSnippet(String str, int length){
 
-        return StringUtils.left(str, length) + (str.length() >=length? ellipses: "");
+    public static String getSnippet(String str, int length) {
+
+        return StringUtils.left(str, length) + (str.length() >= length ? ellipses : "");
     }
-    public static String getSnippet(String str){
+
+    public static String getSnippet(String str) {
         final int length = 36;
-        return StringUtils.left(str, length) + (str.length() >= length?  ellipses : "");
+        return StringUtils.left(str, length) + (str.length() >= length ? ellipses : "");
     }
 
 }

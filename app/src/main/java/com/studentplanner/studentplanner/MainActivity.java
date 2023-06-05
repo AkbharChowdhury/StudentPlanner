@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         isLoggedIn();
         setupNavDrawer(savedInstanceState);
         showStudentDetails();
-        Log.d("ITEM", String.valueOf(db.classExists(6,1,"Lectures")));
+        Log.d("ITEM", String.valueOf(db.getTeachersForSelectedModuleID(4)));
 //        Helper.goToActivity(this, AddClassesActivity.class);
 
 //        Module.addDefaultModules(this);

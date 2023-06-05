@@ -564,7 +564,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
             if (!isCursorEmpty(cursor)) {
                 while (cursor.moveToNext()) {
                     teacherIds.add(cursor.getInt(cursor.getColumnIndex(ModuleTeacherTable.COLUMN_TEACHER_ID)));
-
                 }
             }
         } catch (Exception e) {
@@ -799,6 +798,36 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                     List<String> teacherIDListStr = new ArrayList<>(Arrays.asList(teacherIDs.split(",")));
                     List<Integer> TeacherIDList = Helper.convertStringArrayToIntArrayList(teacherIDListStr);
                     list.add(new ModuleTeacher(moduleID, TeacherIDList));
+
+                }
+
+            }
+        } catch (Exception e) {
+            Log.d("ERROR", "There was an error fetching modules");
+        }
+        return list;
+    }
+
+
+
+
+    @SuppressLint("Range")
+    public List<String> getTeachersForSelectedModuleID(int module) {
+        List<String> list = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        final String SQL = "SELECT \n" +
+                "t.firstname, t.lastname\n" +
+                " FROM module_teacher  mt\n" +
+                " JOIN teachers t ON t.teacher_id = mt.teacher_id\n" +
+                " WHERE module_id = ?";
+        try (Cursor cursor = db.rawQuery(SQL, new String[]{String.valueOf(module)});) {
+            if (!isCursorEmpty(cursor)) {
+
+                while (cursor.moveToNext()) {
+                    String firstname = cursor.getString(cursor.getColumnIndex(TeacherTable.COLUMN_FIRSTNAME));
+                    String lastname = cursor.getString(cursor.getColumnIndex(TeacherTable.COLUMN_LASTNAME));
+
+                    list.add(String.format("%s %s", firstname, lastname));
 
                 }
 
