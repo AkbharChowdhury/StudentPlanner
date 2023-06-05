@@ -108,9 +108,6 @@ public class WeekViewActivity extends AppCompatActivity implements OnItemListene
 
 
 
-    public void newEventAction(View view) {
-//        startActivity(new Intent(this, EventEditActivity.class));
-    }
 
     public void goBack(View view) {
         CalendarUtils.setEventAdapter(eventListView, this, startForResult);

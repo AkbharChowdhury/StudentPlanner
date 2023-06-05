@@ -61,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Lecture,  John Smith"
+            android:text="@string/john_smith"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.563"
             app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Mobile Application Dev"
+            android:text="@string/mobile_application_dev"
 
             android:textColor="@color/black"
             android:textSize="15sp"
@@ -87,7 +87,7 @@
             android:id="@+id/tv_room"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Room1"
+            android:text="@string/room1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tv_class_title"
             app:layout_constraintTop_toBottomOf="@+id/tv_class_title" />
@@ -97,7 +97,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="My tutorial"
+            android:text="@string/my_tutorial"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/tv_class_teachers"
             app:layout_constraintHorizontal_bias="0.164"
@@ -108,8 +108,6 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/mainLayoutCoursework"
         android:layout_width="match_parent"
@@ -118,10 +116,10 @@
 
         <TextView
             android:id="@+id/tv_cw_title"
-            android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="M-Hike App"
+            android:text="@string/m_hike_app"
+            android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -131,7 +129,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="COMP1424: Mobile App Dev"
+            android:text="@string/comp1424_mobile_app_dev"
 
             android:textColor="@color/gray"
             app:layout_constraintStart_toStartOf="parent"
@@ -141,19 +139,22 @@
             android:id="@+id/tv_cw_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="44dp"
-            android:text="11:30 PM"
-            android:textSize="15dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:text="@string/_11_30_pm"
             android:textColor="@color/black"
 
+            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_cw_priority"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/event_icon_coursework"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -164,7 +165,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="40dp"
-            android:text="Medium"
+            android:text="@string/medium"
 
             android:textColor="@color/black"
             android:textStyle="bold"
@@ -177,14 +178,16 @@
             android:id="@+id/tv_cw_completed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="36dp"
+            android:layout_marginStart="8dp"
 
-            android:layout_marginBottom="16dp"
-            android:text="Not Completed"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="4dp"
+            android:text="@string/not_completed"
             android:textColor="@color/black"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_cw_module" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

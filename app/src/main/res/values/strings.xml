@@ -188,4 +188,13 @@
     <string name="add_module_teacher_description">Please select a module from the list below which will show your list of teachers in the next page.</string>
     <string name="add_module_teacher">Add Module teacher</string>
     <string name="class_exists_error">This class already exists!\n please try choosing a different class type or choose another module</string>
+    <string name="john_smith">John Smith</string>
+    <string name="mobile_application_dev">Mobile Application Dev</string>
+    <string name="room1">Room1</string>
+    <string name="my_tutorial">My tutorial</string>
+    <string name="m_hike_app">M-Hike App</string>
+    <string name="comp1424_mobile_app_dev">COMP1424: Mobile App Dev</string>
+    <string name="_11_30_pm">11:30 PM</string>
+    <string name="medium">Medium</string>
+    <string name="not_completed">Not Completed</string>
 </resources>
