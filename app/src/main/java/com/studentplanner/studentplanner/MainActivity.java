@@ -19,10 +19,16 @@ import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
 import com.studentplanner.studentplanner.fragments.CalendarFragment;
 import com.studentplanner.studentplanner.fragments.CourseworkFragment;
 import com.studentplanner.studentplanner.fragments.ReminderFragment;
+import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.models.Student;
 import com.studentplanner.studentplanner.utils.AccountPreferences;
 import com.studentplanner.studentplanner.utils.FragmentHandler;
 import com.studentplanner.studentplanner.utils.Helper;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
@@ -48,23 +54,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         isLoggedIn();
         setupNavDrawer(savedInstanceState);
         showStudentDetails();
-        Log.d("ITEM", String.valueOf(db.getTeachersForSelectedModuleID(4)));
+
+        List<Coursework> courseworkList = db.getCoursework();
+        Coursework c = new Coursework(
+                new Random().nextInt(100),
+
+                11,
+                "Apple System",
+                "create Apple GUI",
+                "Low",
+                LocalDate.now().plusDays(3).toString(),
+                LocalTime.now().plusHours(1).plusMinutes(33).toString()
+
+
+        );
+        courseworkList.add(c);
+        int size = courseworkList.size();
+        List<Coursework> filtered = Coursework.filterResults(courseworkList,"s","low");
+        Log.d("COURSEWORK", String.valueOf(filtered));
 //        Helper.goToActivity(this, AddClassesActivity.class);
 
 //        Module.addDefaultModules(this);
 //        Teacher.addDefaultTeachers(this);
 
-//        Coursework coursework = new Coursework(
-//                6,
-//                "Cinema ticket system",
-//                "create java GUI",
-//                "Medium",
-//                LocalDate.now().plusDays(3).toString(),
-//                LocalTime.now().plusHours(1).plusMinutes(33).toString()
-//
-//
-//        );
-//        db.addCoursework(coursework);
+
 
 
     }

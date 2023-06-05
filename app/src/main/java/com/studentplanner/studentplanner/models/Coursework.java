@@ -4,7 +4,9 @@ import android.widget.AutoCompleteTextView;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class Coursework {
     private int courseworkID;
@@ -24,9 +26,6 @@ public class Coursework {
     private TextInputLayout txtDeadlineTimeError;
 
 //    private static final Predicate<Coursework> filterTitle = c -> c.getTitle().toLowerCase().contains(title.toLowerCase());
-
-
-
 
 
     public TextInputLayout getTxtDeadlineError() {
@@ -73,11 +72,9 @@ public class Coursework {
     }
 
 
-
     public TextInputLayout getTxtPriority() {
         return txtPriority;
     }
-
 
 
     public TextInputLayout getTxtModuleID() {
@@ -129,9 +126,10 @@ public class Coursework {
         this.txtPriority = txtPriority;
     }
 
-    public Coursework(){
+    public Coursework() {
 
     }
+
     public Coursework(TextInputLayout txtTitle, TextInputLayout txtModuleID, TextInputLayout txtPriority) {
         this.txtTitle = txtTitle;
         this.txtModuleID = txtModuleID;
@@ -157,8 +155,21 @@ public class Coursework {
         this.deadlineTime = deadlineTime;
 
     }
-    public static Predicate<Coursework> filterTitle(String title){
+
+    public static Predicate<Coursework> filterTitle(String title) {
         return c -> c.getTitle().toLowerCase().contains(title.toLowerCase());
+
+    }
+
+    public static Predicate<Coursework> filterPriority(String priority) {
+        return c -> c.getPriority().toLowerCase().contains(priority.toLowerCase());
+
+    }
+
+    public static List<Coursework> filterResults(List<Coursework> courseworkList, String title, String priority) {
+        return courseworkList.stream()
+                .filter(Coursework.filterTitle(title))
+                .filter(Coursework.filterPriority(priority)).collect(Collectors.toList());
 
     }
 

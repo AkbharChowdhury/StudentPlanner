@@ -146,7 +146,7 @@ public class ReminderFragment extends Fragment {
         if (filteredList.isEmpty()) {
             Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
         } else {
-            adapter.filterListByTitle(filteredList);
+            adapter.filterCourseworkList(filteredList);
         }
     }
 

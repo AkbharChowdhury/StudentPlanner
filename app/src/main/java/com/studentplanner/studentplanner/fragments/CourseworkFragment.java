@@ -25,17 +25,13 @@ import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.adapters.CourseworkAdapter;
 import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
-import com.studentplanner.studentplanner.addActivities.AddModuleActivity;
 import com.studentplanner.studentplanner.databinding.FragmentCourseworkBinding;
 import com.studentplanner.studentplanner.models.Coursework;
-import com.studentplanner.studentplanner.models.Event;
 import com.studentplanner.studentplanner.utils.Helper;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 
@@ -155,12 +151,16 @@ public class CourseworkFragment extends Fragment {
 
 
     private void filterTitle(String title) {
-        List<Coursework> filteredList = list.stream().filter(Coursework.filterTitle(title)).collect(Collectors.toList());
+        List<Coursework> filteredList1 = list.stream()
+                .filter(Coursework.filterTitle(title))
+                .filter(Coursework.filterPriority("High"))
+                .collect(Collectors.toList());
+        List<Coursework> filteredList = Coursework.filterResults(list,title,"High");
 
         if (filteredList.isEmpty()) {
             Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
         }
-        adapter.filterListByTitle(filteredList);
+        adapter.filterCourseworkList(filteredList);
 
     }
 

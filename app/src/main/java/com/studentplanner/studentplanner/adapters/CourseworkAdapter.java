@@ -1,7 +1,6 @@
 package com.studentplanner.studentplanner.adapters;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -24,7 +23,6 @@ import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.models.Module;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.WordUtils;
 
 import java.time.LocalDate;
@@ -49,8 +47,8 @@ public class CourseworkAdapter extends RecyclerView.Adapter<CourseworkAdapter.Vi
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    public void filterListByTitle(List<Coursework> filterlist) {
-        courseworkList = filterlist;
+    public void filterCourseworkList(List<Coursework> filteredList) {
+        courseworkList = filteredList;
         notifyDataSetChanged();
     }
 
