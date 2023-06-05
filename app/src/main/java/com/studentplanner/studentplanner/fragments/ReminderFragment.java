@@ -124,7 +124,7 @@ public class ReminderFragment extends Fragment {
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    filter(newText);
+                    filterTitle(newText);
                     return false;
                 }
             });
@@ -133,7 +133,7 @@ public class ReminderFragment extends Fragment {
     }
 
 
-    private void filter(String text) {
+    private void filterTitle(String text) {
         List<Coursework> filteredList = new ArrayList<>();
 
         for (Coursework coursework : list) {
