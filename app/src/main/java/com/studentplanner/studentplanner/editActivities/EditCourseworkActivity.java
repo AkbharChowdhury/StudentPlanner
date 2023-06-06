@@ -87,7 +87,6 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
         binding.btnEditCoursework.setOnClickListener(v -> {
 
             if (form.validateEditCourseworkForm(getCourseworkErrorFields())){
-                Helper.longToastMessage(this, "passed");
                 if (db.updateCoursework(getCourseworkDetails())) {
                     Helper.longToastMessage(this,"Coursework Updated");
                     setResult(RESULT_OK);

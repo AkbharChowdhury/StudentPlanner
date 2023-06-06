@@ -171,17 +171,21 @@ public class CourseworkFragment extends Fragment {
         txtCompletionStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0){
+
+                if (position == 0) {
                     search.setDefaultStatus(true);
+                    adapter.filterCourseworkList(search.filterResults());
                     return;
                 }
                 search.setDefaultStatus(false);
                 boolean isCompleted = txtCompletionStatus.getAdapter().getItem(position).toString().equalsIgnoreCase("completed");
                 search.setCompleted(isCompleted);
-                List<Coursework> filteredList = search.filterResults();
-                adapter.filterCourseworkList(filteredList);
+                adapter.filterCourseworkList(search.filterResults());
 
             }
+
+
+
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -213,9 +217,23 @@ public class CourseworkFragment extends Fragment {
 
 
         );
+        Coursework coursework2 = new Coursework(
+                8,
+                "lorem",
+                "test",
+                "Low",
+                LocalDate.now().plusDays(5).toString(),
+                LocalTime.now().plusHours(1).plusMinutes(22).toString()
+
+
+
+        );
+//        coursework2.setCompleted(true);
+//        coursework2.setCompleted(true);
 
         list = db.getCoursework();
         list.add(coursework);
+//        list.add(coursework2);
         search = new SearchCoursework(context, list);
 
         buildRecyclerView();

@@ -1,9 +1,11 @@
 package com.studentplanner.studentplanner.models;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.studentplanner.studentplanner.R;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -30,6 +32,8 @@ public class SearchCoursework {
 
 
     private final Predicate<Coursework> filterTitle = c -> c.getTitle().toLowerCase().contains(title.toLowerCase());
+
+
     private final Predicate<Coursework> filterPriority = c -> c.getPriority().toLowerCase().contains(priority.toLowerCase());
     private final Predicate<Coursework> filterCompletionStatus = c -> c.isCompleted() == isCompleted;
 
@@ -64,15 +68,28 @@ public class SearchCoursework {
     }
 
 
-    public List<Coursework> filterResults() {
-        // any priority
-        if (context.getResources().getString(R.string.any_priority).equalsIgnoreCase(priority)){
-            return ALL_COURSEWORK.stream()
-                    .filter(filterTitle)
-                    .filter(filterCompletionStatus)
-                    .collect(Collectors.toList());
+//    public <T> List<T> f(){
+//        List<T> t = new ArrayList<>();
+//
+//        return t.stream()
+//                .filter(t -> t.getTitle().toLowerCase().contains(title.toLowerCase()))
+//                .collect(Collectors.toList());
+//
+//    }
 
-        }
+
+    public List<Coursework> filterResults() {
+        String defaultPriority = context.getResources().getString(R.string.any_priority);
+        boolean anyStatus = isDefaultStatus;
+
+        // any priority
+//        if (context.getResources().getString(R.string.any_priority).equalsIgnoreCase(priority)){
+//            return ALL_COURSEWORK.stream()
+//                    .filter(filterTitle)
+//                    .filter(filterCompletionStatus)
+//                    .collect(Collectors.toList());
+//
+//        }
 
 
 //        if (resetCompletionStatus){
@@ -85,10 +102,30 @@ public class SearchCoursework {
 //
 //
         // filter all category
+//        return ALL_COURSEWORK.stream()
+//                .filter(filterTitle)
+//                .filter(filterPriority)
+//                .filter(filterCompletionStatus)
+//                .collect(Collectors.toList());
+
+
+//    private final Predicate<Coursework> filterPriority = c -> c.getPriority().toLowerCase().contains(priority.toLowerCase());
+
+        Log.d("TAG1", String.valueOf(isDefaultStatus));
+
+        if (!isDefaultStatus){
+            return ALL_COURSEWORK.stream()
+                    .filter(filterTitle)
+                    .filter(!defaultPriority.equalsIgnoreCase(priority) ? filterPriority : c -> true)
+                    .filter(filterCompletionStatus)
+                    .collect(Collectors.toList());
+
+
+        }
+
         return ALL_COURSEWORK.stream()
                 .filter(filterTitle)
-                .filter(filterPriority)
-                .filter(filterCompletionStatus)
+                .filter(!defaultPriority.equalsIgnoreCase(priority) ? filterPriority : c -> true)
                 .collect(Collectors.toList());
     }
 
