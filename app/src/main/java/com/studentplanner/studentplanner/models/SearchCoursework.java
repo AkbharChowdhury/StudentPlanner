@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.studentplanner.studentplanner.R;
+import com.studentplanner.studentplanner.utils.Helper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +19,13 @@ public class SearchCoursework {
     private String priority = "";
     private boolean isCompleted = false;
     private final String DEFAULT_PRIORITY;
+    private final String DEFAULT_STATUS;
 
     public void setDefaultStatus(boolean defaultStatus) {
         isDefaultStatus = defaultStatus;
     }
 
-    private boolean isDefaultStatus = false;
+    private boolean isDefaultStatus = true;
 
 
     private final Predicate<Coursework> filterTitle = c -> c.getTitle().toLowerCase().contains(title.toLowerCase());
@@ -37,6 +39,8 @@ public class SearchCoursework {
     public SearchCoursework(Context context, List<Coursework> ALL_COURSEWORK) {
         this.ALL_COURSEWORK = ALL_COURSEWORK;
         DEFAULT_PRIORITY = context.getResources().getString(R.string.any_priority);
+        DEFAULT_STATUS = context.getResources().getStringArray(R.array.completion_array_search)[0];
+
     }
 
     public String getTitle() {
@@ -61,25 +65,64 @@ public class SearchCoursework {
     }
 
 
-
+//    public List<Coursework> filterResults() {
+//
+//        if (!isDefaultStatus){
+//            return ALL_COURSEWORK.stream()
+//                    .filter(filterTitle)
+//                    .filter(!DEFAULT_PRIORITY.equalsIgnoreCase(priority) ? filterPriority : c -> true)
+//                    .filter(filterCompletionStatus)
+//                    .collect(Collectors.toList());
+//
+//
+//        }
+//
+//        return ALL_COURSEWORK.stream()
+//                .filter(filterTitle)
+//                .filter(!DEFAULT_PRIORITY.equalsIgnoreCase(priority) ? filterPriority : c -> true)
+//                .collect(Collectors.toList());
+//    }
 
 
     public List<Coursework> filterResults() {
 
-        if (!isDefaultStatus){
-            return ALL_COURSEWORK.stream()
-                    .filter(filterTitle)
-                    .filter(!DEFAULT_PRIORITY.equalsIgnoreCase(priority) ? filterPriority : c -> true)
-                    .filter(filterCompletionStatus)
-                    .collect(Collectors.toList());
+        if (!isDefaultStatus) {
 
+            if (!priority.equals(DEFAULT_PRIORITY)) {
+                return ALL_COURSEWORK.stream()
+                        .filter(filterTitle)
+                        .filter(filterPriority)
+                        .filter(filterCompletionStatus)
+                        .collect(Collectors.toList());
+            }
 
         }
 
+
+        if (priority.equals(DEFAULT_PRIORITY)) {
+
+            if (isDefaultStatus) {
+                return ALL_COURSEWORK.stream()
+                        .filter(filterTitle)
+                        .collect(Collectors.toList());
+
+
+            }
+
+            return ALL_COURSEWORK.stream()
+                    .filter(filterTitle)
+                    .filter(filterCompletionStatus)
+                    .collect(Collectors.toList());
+        }
+
+
+
+
+
+
         return ALL_COURSEWORK.stream()
                 .filter(filterTitle)
-                .filter(!DEFAULT_PRIORITY.equalsIgnoreCase(priority) ? filterPriority : c -> true)
+                .filter(filterPriority)
                 .collect(Collectors.toList());
     }
-
 }

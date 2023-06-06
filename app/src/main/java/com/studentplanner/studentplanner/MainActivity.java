@@ -13,6 +13,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 import com.studentplanner.studentplanner.activities.LoginActivity;
+import com.studentplanner.studentplanner.fragments.CourseworkFragment;
 import com.studentplanner.studentplanner.fragments.ReminderFragment;
 import com.studentplanner.studentplanner.models.Student;
 import com.studentplanner.studentplanner.utils.AccountPreferences;
@@ -80,8 +81,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new ReminderFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_reminder);
+                    new CourseworkFragment()).commit();
+            navigationView.setCheckedItem(R.id.nav_coursework);
 
         }
 

@@ -175,7 +175,8 @@ public class CourseworkFragment extends Fragment {
                     return;
                 }
                 search.setDefaultStatus(false);
-                boolean isCompleted = txtCompletionStatus.getAdapter().getItem(position).toString().equalsIgnoreCase("completed");
+                boolean isCompleted = txtCompletionStatus.getAdapter().getItem(position).toString().equalsIgnoreCase("Completed");
+                Helper.longToastMessage(context, String.valueOf(isCompleted));
                 search.setCompleted(isCompleted);
                 adapter.filterList(search.filterResults());
 
