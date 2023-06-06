@@ -18,6 +18,8 @@ public class SearchCoursework {
     private String title = "";
     private String priority = "";
     private boolean isCompleted = false;
+    private final String DEFAULT_PRIORITY;
+
 
 
     public boolean isDefaultStatus() {
@@ -41,6 +43,7 @@ public class SearchCoursework {
     public SearchCoursework(Context context, List<Coursework> ALL_COURSEWORK) {
         this.context = context;
         this.ALL_COURSEWORK = ALL_COURSEWORK;
+        DEFAULT_PRIORITY = context.getResources().getString(R.string.any_priority);
     }
 
     public String getTitle() {
@@ -79,44 +82,11 @@ public class SearchCoursework {
 
 
     public List<Coursework> filterResults() {
-        String defaultPriority = context.getResources().getString(R.string.any_priority);
-        boolean anyStatus = isDefaultStatus;
-
-        // any priority
-//        if (context.getResources().getString(R.string.any_priority).equalsIgnoreCase(priority)){
-//            return ALL_COURSEWORK.stream()
-//                    .filter(filterTitle)
-//                    .filter(filterCompletionStatus)
-//                    .collect(Collectors.toList());
-//
-//        }
-
-
-//        if (resetCompletionStatus){
-//            return ALL_COURSEWORK.stream()
-//                    .filter(filterTitle)
-//                    .filter(filterPriority)
-//                    .collect(Collectors.toList());
-//
-//        }
-//
-//
-        // filter all category
-//        return ALL_COURSEWORK.stream()
-//                .filter(filterTitle)
-//                .filter(filterPriority)
-//                .filter(filterCompletionStatus)
-//                .collect(Collectors.toList());
-
-
-//    private final Predicate<Coursework> filterPriority = c -> c.getPriority().toLowerCase().contains(priority.toLowerCase());
-
-        Log.d("TAG1", String.valueOf(isDefaultStatus));
 
         if (!isDefaultStatus){
             return ALL_COURSEWORK.stream()
                     .filter(filterTitle)
-                    .filter(!defaultPriority.equalsIgnoreCase(priority) ? filterPriority : c -> true)
+                    .filter(!DEFAULT_PRIORITY.equalsIgnoreCase(priority) ? filterPriority : c -> true)
                     .filter(filterCompletionStatus)
                     .collect(Collectors.toList());
 
@@ -125,7 +95,7 @@ public class SearchCoursework {
 
         return ALL_COURSEWORK.stream()
                 .filter(filterTitle)
-                .filter(!defaultPriority.equalsIgnoreCase(priority) ? filterPriority : c -> true)
+                .filter(!DEFAULT_PRIORITY.equalsIgnoreCase(priority) ? filterPriority : c -> true)
                 .collect(Collectors.toList());
     }
 
