@@ -13,18 +13,11 @@ import java.util.stream.Collectors;
 public class SearchCoursework {
 
     private final List<Coursework> ALL_COURSEWORK;
-    private final Context context;
 
     private String title = "";
     private String priority = "";
     private boolean isCompleted = false;
     private final String DEFAULT_PRIORITY;
-
-
-
-    public boolean isDefaultStatus() {
-        return isDefaultStatus;
-    }
 
     public void setDefaultStatus(boolean defaultStatus) {
         isDefaultStatus = defaultStatus;
@@ -34,6 +27,7 @@ public class SearchCoursework {
 
 
     private final Predicate<Coursework> filterTitle = c -> c.getTitle().toLowerCase().contains(title.toLowerCase());
+//    private final Predicate<Module> filterTitleModule = c -> c.getModuleName().toLowerCase().contains(title.toLowerCase());
 
 
     private final Predicate<Coursework> filterPriority = c -> c.getPriority().toLowerCase().contains(priority.toLowerCase());
@@ -41,7 +35,6 @@ public class SearchCoursework {
 
 
     public SearchCoursework(Context context, List<Coursework> ALL_COURSEWORK) {
-        this.context = context;
         this.ALL_COURSEWORK = ALL_COURSEWORK;
         DEFAULT_PRIORITY = context.getResources().getString(R.string.any_priority);
     }
@@ -62,23 +55,13 @@ public class SearchCoursework {
         this.priority = priority;
     }
 
-    public boolean isCompleted() {
-        return isCompleted;
-    }
 
     public void setCompleted(boolean completed) {
         isCompleted = completed;
     }
 
 
-//    public <T> List<T> f(){
-//        List<T> t = new ArrayList<>();
-//
-//        return t.stream()
-//                .filter(t -> t.getTitle().toLowerCase().contains(title.toLowerCase()))
-//                .collect(Collectors.toList());
-//
-//    }
+
 
 
     public List<Coursework> filterResults() {

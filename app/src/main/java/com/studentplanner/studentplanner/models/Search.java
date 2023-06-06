@@ -1,0 +1,72 @@
+package com.studentplanner.studentplanner.models;
+
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public final class Search {
+
+
+
+    public  static <T> List<?> genericSearch(List<T> data, String text){
+
+        if (data instanceof ArrayList){
+
+            if (isType((List<Module>) data, ListType.MODULE)){
+                List<Module> list = (List<Module>) data;
+                return list.stream()
+                        .filter(m -> m.getModuleName().toLowerCase().contains(text.toLowerCase()))
+                        .collect(Collectors.toList());
+
+            }
+
+            if (isType((List<Teacher>) data, ListType.TEACHER)){
+                List<Teacher> list = (List<Teacher>) data;
+                return list.stream()
+                        .filter(t -> t.getName().toLowerCase().trim().contains(text.toLowerCase()))
+                        .collect(Collectors.toList());
+
+            }
+
+
+            if (isType((List<Coursework>) data, ListType.COURSEWORK)){
+                List<Coursework> list = (List<Coursework>) data;
+                return list.stream()
+                        .filter(c -> c.getTitle().toLowerCase().trim().contains(text.toLowerCase()))
+                        .collect(Collectors.toList());
+            }
+
+
+        }
+
+        return new ArrayList<>();
+    }
+
+
+    private static  boolean isModule(List rhsList) {
+
+        if(rhsList != null && !rhsList.isEmpty()) {
+
+
+            return rhsList.get(0) instanceof Module;
+        }
+        return false;
+    }
+
+
+
+
+    private static boolean isType(List rhsList, String listType) {
+
+        if(rhsList != null && !rhsList.isEmpty()) {
+            String listDataType = rhsList.get(0).getClass().getSimpleName();
+            Log.d("DS", listDataType);
+
+
+            return listDataType.equals(listType);
+        }
+        return false;
+    }
+}

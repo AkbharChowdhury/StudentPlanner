@@ -26,9 +26,9 @@ import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.adapters.CourseworkAdapter;
 import com.studentplanner.studentplanner.databinding.FragmentReminderBinding;
 import com.studentplanner.studentplanner.models.Coursework;
+import com.studentplanner.studentplanner.models.Search;
 import com.studentplanner.studentplanner.utils.Helper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -41,15 +41,13 @@ public class ReminderFragment extends Fragment {
     private List<Coursework> list;
     private FragmentReminderBinding binding;
     private DatabaseHelper db;
+    private List<Coursework> ALL_COURSEWORK_REMINDERS;
 
 
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
         if (result.getResultCode() == RESULT_OK){
             getReminders();
         }
-
-
-
 
     });
 
@@ -70,6 +68,7 @@ public class ReminderFragment extends Fragment {
         recyclerView = binding.recyclerView;
 
         db = DatabaseHelper.getInstance(context);
+
         Helper.getIntentMessage(context, activity.getIntent().getExtras());
         getReminders();
 
@@ -77,6 +76,7 @@ public class ReminderFragment extends Fragment {
     }
     private void getReminders(){
         list = db.getUpComingCourseworkByMonth();
+        ALL_COURSEWORK_REMINDERS = db.getUpComingCourseworkByMonth();
         buildRecyclerView();
     }
 
@@ -124,7 +124,7 @@ public class ReminderFragment extends Fragment {
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    filterTitle(newText);
+                    filter(newText);
                     return false;
                 }
             });
@@ -133,22 +133,17 @@ public class ReminderFragment extends Fragment {
     }
 
 
-    private void filterTitle(String text) {
-        List<Coursework> filteredList = new ArrayList<>();
 
-        for (Coursework coursework : list) {
-            String name = coursework.getTitle().toLowerCase();
-            if (name.contains(text.toLowerCase())) {
-                filteredList.add(coursework);
-            }
-        }
-
+    private void filter(String text) {
+        List<Coursework> filteredList = (List<Coursework>) Search.genericSearch(ALL_COURSEWORK_REMINDERS, text);
         if (filteredList.isEmpty()) {
             Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
         } else {
-            adapter.filterCourseworkList(filteredList);
+            adapter.filterList(filteredList);
         }
+
     }
+
 
 
     @Override

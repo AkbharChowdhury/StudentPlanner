@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Spinner;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -32,7 +31,6 @@ import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
 import com.studentplanner.studentplanner.databinding.FragmentCourseworkBinding;
 import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.models.SearchCoursework;
-import com.studentplanner.studentplanner.utils.Dropdown;
 import com.studentplanner.studentplanner.utils.Helper;
 
 import java.time.LocalDate;
@@ -42,7 +40,6 @@ import java.util.Arrays;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 public class CourseworkFragment extends Fragment {
@@ -154,7 +151,7 @@ public class CourseworkFragment extends Fragment {
                 search.setPriority(txtPriority.getAdapter().getItem(position).toString());
                 List<Coursework> filteredList = search.filterResults();
 
-                adapter.filterCourseworkList(filteredList);
+                adapter.filterList(filteredList);
 
 
             }
@@ -174,13 +171,13 @@ public class CourseworkFragment extends Fragment {
 
                 if (position == 0) {
                     search.setDefaultStatus(true);
-                    adapter.filterCourseworkList(search.filterResults());
+                    adapter.filterList(search.filterResults());
                     return;
                 }
                 search.setDefaultStatus(false);
                 boolean isCompleted = txtCompletionStatus.getAdapter().getItem(position).toString().equalsIgnoreCase("completed");
                 search.setCompleted(isCompleted);
-                adapter.filterCourseworkList(search.filterResults());
+                adapter.filterList(search.filterResults());
 
             }
 
@@ -301,7 +298,7 @@ public class CourseworkFragment extends Fragment {
         List<Coursework> filteredList = search.filterResults();
 
         checkEmptyResults(filteredList);
-        adapter.filterCourseworkList(filteredList);
+        adapter.filterList(filteredList);
 
     }
     private void checkEmptyResults(List<Coursework> filteredList){

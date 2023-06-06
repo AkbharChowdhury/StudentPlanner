@@ -1,7 +1,6 @@
 package com.studentplanner.studentplanner;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -14,21 +13,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 import com.studentplanner.studentplanner.activities.LoginActivity;
-import com.studentplanner.studentplanner.addActivities.AddClassesActivity;
-import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
-import com.studentplanner.studentplanner.fragments.CalendarFragment;
-import com.studentplanner.studentplanner.fragments.CourseworkFragment;
 import com.studentplanner.studentplanner.fragments.ReminderFragment;
-import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.models.Student;
 import com.studentplanner.studentplanner.utils.AccountPreferences;
 import com.studentplanner.studentplanner.utils.FragmentHandler;
 import com.studentplanner.studentplanner.utils.Helper;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.List;
-import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
@@ -54,12 +43,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         isLoggedIn();
         setupNavDrawer(savedInstanceState);
         showStudentDetails();
-
-
-
-
-
-
     }
 
     private void isLoggedIn() {
@@ -97,8 +80,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new CourseworkFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_coursework);
+                    new ReminderFragment()).commit();
+            navigationView.setCheckedItem(R.id.nav_reminder);
 
         }
 

@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,8 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -30,9 +27,9 @@ import com.studentplanner.studentplanner.adapters.ModuleAdapter;
 import com.studentplanner.studentplanner.addActivities.AddModuleActivity;
 import com.studentplanner.studentplanner.databinding.FragmentModuleBinding;
 import com.studentplanner.studentplanner.models.Module;
+import com.studentplanner.studentplanner.models.Search;
 import com.studentplanner.studentplanner.utils.Helper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -45,13 +42,14 @@ public class ModuleFragment extends Fragment {
     private List<Module> list;
     private FragmentModuleBinding binding;
     private DatabaseHelper db;
+    private List<Module> ALL_MODULES;
 
 
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
 
-       if (result.getResultCode() == RESULT_OK){
-           getModule();
-       }
+        if (result.getResultCode() == RESULT_OK) {
+            getModule();
+        }
 
     });
 
@@ -72,6 +70,7 @@ public class ModuleFragment extends Fragment {
         binding.fabAdd.setOnClickListener(v -> startForResult.launch(new Intent(getActivity(), AddModuleActivity.class)));
         recyclerView = binding.recyclerView;
         db = DatabaseHelper.getInstance(context);
+        ALL_MODULES = db.getModules();
         Helper.getIntentMessage(context, activity.getIntent().getExtras());
         getModule();
 
@@ -79,9 +78,7 @@ public class ModuleFragment extends Fragment {
     }
 
 
-
-
-    private void getModule(){
+    private void getModule() {
         list = db.getModules();
         buildRecyclerView();
     }
@@ -139,22 +136,15 @@ public class ModuleFragment extends Fragment {
     }
 
 
+
     private void filter(String text) {
-        List<Module> filteredList = new ArrayList<>();
-
-        for (Module module : list) {
-            String moduleFullName = module.getModuleDetails().toLowerCase().trim();
-            String t = text.toLowerCase().trim();
-            if (moduleFullName.contains(t)) {
-                filteredList.add(module);
-            }
-        }
-
+        List<Module> filteredList = (List<Module>) Search.genericSearch(ALL_MODULES, text);
         if (filteredList.isEmpty()) {
             Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
         } else {
             adapter.filterList(filteredList);
         }
+
     }
 
 

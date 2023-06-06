@@ -47,7 +47,7 @@ public class CourseworkAdapter extends RecyclerView.Adapter<CourseworkAdapter.Vi
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    public void filterCourseworkList(List<Coursework> filteredList) {
+    public void filterList(List<Coursework> filteredList) {
         courseworkList = filteredList;
         notifyDataSetChanged();
     }

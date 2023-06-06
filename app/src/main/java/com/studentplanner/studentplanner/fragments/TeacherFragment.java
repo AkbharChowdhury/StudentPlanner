@@ -24,13 +24,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.adapters.TeacherAdapter;
-import com.studentplanner.studentplanner.addActivities.AddModuleActivity;
 import com.studentplanner.studentplanner.addActivities.AddTeacherActivity;
 import com.studentplanner.studentplanner.databinding.FragmentTeacherBinding;
+import com.studentplanner.studentplanner.models.Search;
 import com.studentplanner.studentplanner.models.Teacher;
 import com.studentplanner.studentplanner.utils.Helper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -43,10 +42,12 @@ public class TeacherFragment extends Fragment {
     private List<Teacher> list;
     private FragmentTeacherBinding binding;
     private DatabaseHelper db;
+    private List<Teacher> ALL_TEACHERS;
+
 
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
 
-        if (result.getResultCode() == RESULT_OK){
+        if (result.getResultCode() == RESULT_OK) {
             getTeachers();
 
 
@@ -72,12 +73,14 @@ public class TeacherFragment extends Fragment {
         recyclerView = binding.recyclerView;
 
         db = DatabaseHelper.getInstance(context);
+        ALL_TEACHERS  = db.getTeachers();
         Helper.getIntentMessage(context, activity.getIntent().getExtras());
         getTeachers();
 
         return binding.getRoot();
     }
-    private void getTeachers(){
+
+    private void getTeachers() {
         list = db.getTeachers();
         buildRecyclerView();
     }
@@ -135,22 +138,15 @@ public class TeacherFragment extends Fragment {
     }
 
 
+
     private void filter(String text) {
-        List<Teacher> filteredList = new ArrayList<>();
-
-        for (Teacher teacher : list) {
-            String name = teacher.getName().toLowerCase().trim();
-            String t = text.toLowerCase().trim();
-            if (name.contains(t)) {
-                filteredList.add(teacher);
-            }
-        }
-
+        List<Teacher> filteredList = (List<Teacher>) Search.genericSearch(ALL_TEACHERS, text);
         if (filteredList.isEmpty()) {
             Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
         } else {
             adapter.filterList(filteredList);
         }
+
     }
 
 
