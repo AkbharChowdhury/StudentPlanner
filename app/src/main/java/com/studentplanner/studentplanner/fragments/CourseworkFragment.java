@@ -150,7 +150,7 @@ public class CourseworkFragment extends Fragment {
 
                 search.setPriority(txtPriority.getAdapter().getItem(position).toString());
                 List<Coursework> filteredList = search.filterResults();
-
+                checkEmptyResults(filteredList);
                 adapter.filterList(filteredList);
 
 
@@ -171,14 +171,17 @@ public class CourseworkFragment extends Fragment {
 
                 if (position == 0) {
                     search.setDefaultStatus(true);
+                    List<Coursework> filteredList = search.filterResults();
+                    checkEmptyResults(filteredList);
                     adapter.filterList(search.filterResults());
                     return;
                 }
                 search.setDefaultStatus(false);
                 boolean isCompleted = txtCompletionStatus.getAdapter().getItem(position).toString().equalsIgnoreCase("Completed");
-                Helper.longToastMessage(context, String.valueOf(isCompleted));
                 search.setCompleted(isCompleted);
-                adapter.filterList(search.filterResults());
+                List<Coursework> filteredList = search.filterResults();
+                checkEmptyResults(filteredList);
+                adapter.filterList(filteredList);
 
             }
 
@@ -301,11 +304,15 @@ public class CourseworkFragment extends Fragment {
         checkEmptyResults(filteredList);
         adapter.filterList(filteredList);
 
+
     }
     private void checkEmptyResults(List<Coursework> filteredList){
         if (filteredList.isEmpty()) {
             Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
+            binding.emptyImage.setVisibility(View.VISIBLE);
+            binding.emptyText.setVisibility(View.VISIBLE);
         }
+
 
     }
 
