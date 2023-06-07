@@ -1,12 +1,9 @@
 package com.studentplanner.studentplanner.models;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.studentplanner.studentplanner.R;
-import com.studentplanner.studentplanner.utils.Helper;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -36,7 +33,7 @@ public class SearchCoursework {
 
     public SearchCoursework(Context context, List<Coursework> ALL_COURSEWORK) {
         this.ALL_COURSEWORK = ALL_COURSEWORK;
-        filterPriority = !priority.equals(context.getResources().getString(R.string.any_priority)) ?c -> c.getPriority().toLowerCase().contains(priority.toLowerCase()) : p -> true;
+        filterPriority = !priority.equals(context.getResources().getString(R.string.any_priority)) ? c -> c.getPriority().toLowerCase().contains(priority.toLowerCase()) : p -> true;
 
     }
 

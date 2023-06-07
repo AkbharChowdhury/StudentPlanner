@@ -207,38 +207,9 @@ public class CourseworkFragment extends Fragment {
     }
 
     private void getCoursework() {
-
-        Coursework coursework = new Coursework(
-                11,
-                "A really long title that needs to be trimmed otherwise it could be very messy to read",
-                "create java GUI",
-                "High",
-                LocalDate.now().plusDays(3).toString(),
-                LocalTime.now().plusHours(1).plusMinutes(33).toString()
-
-
-        );
-        Coursework coursework2 = new Coursework(
-                8,
-                "lorem",
-                "test",
-                "Low",
-                LocalDate.now().plusDays(5).toString(),
-                LocalTime.now().plusHours(1).plusMinutes(22).toString()
-
-
-
-        );
-//        coursework2.setCompleted(true);
-//        coursework2.setCompleted(true);
-
         list = db.getCoursework();
-        list.add(coursework);
-//        list.add(coursework2);
         search = new SearchCoursework(context, list);
-
         buildRecyclerView();
-
     }
 
 
@@ -251,7 +222,7 @@ public class CourseworkFragment extends Fragment {
     }
 
     private void buildRecyclerView() {
-        if (list.size() > 0) {
+        if (!list.isEmpty()) {
             adapter = new CourseworkAdapter(list, context, startForResult);
             LinearLayoutManager manager = new LinearLayoutManager(context);
 
@@ -262,8 +233,7 @@ public class CourseworkFragment extends Fragment {
             return;
         }
 
-        binding.emptyImage.setVisibility(View.VISIBLE);
-        binding.emptyText.setVisibility(View.VISIBLE);
+        showEmptyResults();
 
 
     }
@@ -273,7 +243,7 @@ public class CourseworkFragment extends Fragment {
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
 
 
-        if (list.size() > 0) {
+        if (!list.isEmpty()) {
             activity.getMenuInflater().inflate(R.menu.search_menu, menu);
 
             MenuItem searchItem = menu.findItem(R.id.actionSearch);
@@ -309,10 +279,15 @@ public class CourseworkFragment extends Fragment {
     private void checkEmptyResults(List<Coursework> filteredList){
         if (filteredList.isEmpty()) {
             Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
-            binding.emptyImage.setVisibility(View.VISIBLE);
-            binding.emptyText.setVisibility(View.VISIBLE);
+            showEmptyResults();
+
         }
 
+
+    }
+    private void showEmptyResults(){
+        binding.emptyImage.setVisibility(View.VISIBLE);
+        binding.emptyText.setVisibility(View.VISIBLE);
 
     }
 

@@ -90,7 +90,7 @@ public class ReminderFragment extends Fragment {
 
 
     private void buildRecyclerView() {
-        if (list.size() > 0) {
+        if (!list.isEmpty()) {
             adapter = new CourseworkAdapter(list, context, startForResult);
             LinearLayoutManager manager = new LinearLayoutManager(context);
             recyclerView.setHasFixedSize(true);
@@ -110,7 +110,7 @@ public class ReminderFragment extends Fragment {
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
 
 
-        if (list.size() > 0) {
+        if (!list.isEmpty()) {
             activity.getMenuInflater().inflate(R.menu.search_menu, menu);
 
             MenuItem searchItem = menu.findItem(R.id.actionSearch);

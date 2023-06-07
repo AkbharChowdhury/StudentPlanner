@@ -135,7 +135,7 @@ public class CalendarFragment extends Fragment implements OnItemListener {
     private void getClassDetails() {
 
         List<Classes> classList = db.getClasses();
-        if (classList.size() > 0) {
+        if (!classList.isEmpty()) {
             for (Classes myClass : classList) {
                 int semesterID = myClass.getSemesterID();
                 Semester semester = db.getSelectedSemester(semesterID);
