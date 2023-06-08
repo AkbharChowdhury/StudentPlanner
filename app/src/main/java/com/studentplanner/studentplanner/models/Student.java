@@ -1,11 +1,22 @@
 
 package com.studentplanner.studentplanner.models;
 
+import android.widget.EditText;
+
 import com.google.android.material.textfield.TextInputLayout;
 
 public final class Student extends User {
 
     private TextInputLayout txtPhone;
+    private EditText txtUserPhone;
+
+    public EditText getTxtUserPhone() {
+        return txtUserPhone;
+    }
+
+    public void setTxtUserPhone(EditText txtUserPhone) {
+        this.txtUserPhone = txtUserPhone;
+    }
 
     private TextInputLayout txtPassword;
 

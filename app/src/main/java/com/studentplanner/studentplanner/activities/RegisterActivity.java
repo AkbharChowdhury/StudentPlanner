@@ -1,8 +1,10 @@
 package com.studentplanner.studentplanner.activities;
 
+import static com.studentplanner.studentplanner.utils.Helper.setEditTextMaxLength;
+
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -10,19 +12,25 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.textfield.TextInputLayout;
+import com.hbb20.CountryCodePicker;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
+import com.studentplanner.studentplanner.databinding.ActivityRegisterBinding;
 import com.studentplanner.studentplanner.models.Student;
 import com.studentplanner.studentplanner.utils.AlertDialogFragment;
 import com.studentplanner.studentplanner.utils.Helper;
 import com.studentplanner.studentplanner.utils.PasswordValidator;
 import com.studentplanner.studentplanner.utils.Validation;
 
+import java.text.MessageFormat;
+
 public class RegisterActivity extends AppCompatActivity {
     private TextInputLayout txtFirstName;
     private TextInputLayout txtLastName;
     private TextInputLayout txtEmail;
-    private TextInputLayout txtPhone;
+    //    private TextInputLayout txtPhone;
+    private EditText txtPhone;
+
     private TextInputLayout txtPassword;
     private DatabaseHelper db;
     private Context context;
@@ -30,12 +38,16 @@ public class RegisterActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private MaterialCheckBox terms;
     private AlertDialogFragment alertDialogFragment;
+    private ActivityRegisterBinding binding;
+    private CountryCodePicker countryCodePicker;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        binding = ActivityRegisterBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         context = getApplicationContext();
 
         db = DatabaseHelper.getInstance(context);
@@ -44,18 +56,17 @@ public class RegisterActivity extends AppCompatActivity {
         findTextFields();
 
 
-        terms = findViewById(R.id.checkbox_terms_conditions);
-        findViewById(R.id.btn_terms_conditions).setOnClickListener(v -> alertDialogFragment.showTermsAndConditions());
+        terms = binding.checkboxTermsConditions;
+        binding.btnTermsConditions.setOnClickListener(v -> alertDialogFragment.showTermsAndConditions());
 
 
+        binding.btnRegister.setOnClickListener(v -> {
 
-        findViewById(R.id.btn_register).setOnClickListener(v -> {
 
             Student student = new Student(txtFirstName, txtLastName, txtEmail, txtPassword);
-            student.setTxtPhone(txtPhone);
-            Log.d("OO", String.valueOf(form.validateRegisterForm(student)));
+            student.setTxtUserPhone(txtPhone);
             if (form.validateRegisterForm(student)) {
-                if (!terms.isChecked()){
+                if (!terms.isChecked()) {
                     alertDialogFragment.showTermsPolicyError();
                     return;
                 }
@@ -72,26 +83,36 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void findTextFields() {
-        progressBar = findViewById(R.id.progressBar);
-        txtFirstName = findViewById(R.id.txtFirstname);
-        txtLastName = findViewById(R.id.txtLastname);
-        txtEmail = findViewById(R.id.txtEmail);
-        txtPhone = findViewById(R.id.txtPhone);
-        txtPassword = findViewById(R.id.txtPassword);
+        progressBar = binding.progressBar;
+        txtFirstName = binding.txtFirstname;
+        txtLastName = binding.txtLastname;
+        txtEmail = binding.txtEmail;
+        txtPhone = binding.txtPhone;
+        txtPassword = binding.txtPassword;
+        countryCodePicker = binding.ccp;
+        countryCodePicker.setAutoDetectedCountry(true);
 
-        findViewById(R.id.txtPasswordText).setOnKeyListener((v, keyCode, event) -> {
+        binding.txtPasswordText.setOnKeyListener((v, keyCode, event) -> {
             String password = txtPassword.getEditText().getText().toString();
             updatePasswordStrengthView(password);
             return false;
         });
+        txtPhone.setOnKeyListener((v, keyCode, event) -> {
+            String phone = txtPhone.getText().toString();
+            final int phoneLength = phone.startsWith("0") ? 11 : 10;
+            setEditTextMaxLength(txtPhone, phoneLength);
+            return false;
+        });
+
     }
+
 
     private Student getStudentDetails() {
         return new Student(
                 Helper.trimStr(txtFirstName),
                 Helper.trimStr(txtLastName),
                 Helper.trimStr(txtEmail),
-                Helper.trimStr(txtPhone),
+                MessageFormat.format("{0}{1}", countryCodePicker.getSelectedCountryCodeWithPlus(), txtPhone.getText().toString()),
                 Helper.trimStr(txtPassword, false)
         );
 
@@ -100,7 +121,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void updatePasswordStrengthView(String password) {
         int strength = 0;
-        TextView strengthView = findViewById(R.id.password_strength);
+        TextView strengthView = binding.lblPasswordStrength;
         if (TextView.VISIBLE != strengthView.getVisibility()) return;
         if (PasswordValidator.is8Chars(password)) strength++;
         if (PasswordValidator.containsSpecialChar(password)) strength++;

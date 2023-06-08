@@ -207,4 +207,6 @@
     <string name="not_completed">Not Completed</string>
     <string name="any_priority">Any Priority</string>
     <string name="max_length_error">You have reached the max length!</string>
+    <string name="phone_error">%s Must be at least %d characters!</string>
+
 </resources>

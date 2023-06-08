@@ -3,6 +3,7 @@ package com.studentplanner.studentplanner.utils;
 import android.content.Context;
 import android.util.Patterns;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
@@ -14,6 +15,8 @@ import com.studentplanner.studentplanner.models.Student;
 import com.studentplanner.studentplanner.models.Teacher;
 import com.studentplanner.studentplanner.tables.StudentTable;
 import com.studentplanner.studentplanner.tables.TeacherTable;
+
+import org.apache.commons.text.WordUtils;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -192,14 +195,15 @@ public final class Validation {
         List<Boolean> errors = new ArrayList<>();
         setAdditionalCheck = true;
         TextInputLayout txtPassword = student.getTxtPassword();
-        TextInputLayout txtPhone = student.getTxtPhone();
+//        TextInputLayout txtPhone = student.getTxtPhone();
+        EditText txtPhone = student.getTxtUserPhone();
 
         errors.add(isValidName(student.getTxtFirstName(), StudentTable.COLUMN_FIRSTNAME));
         errors.add(isValidName(student.getTxtLastName(), StudentTable.COLUMN_LASTNAME));
         errors.add(isValidEmail(student.getTxtEmail()));
         errors.add(isValidPassword(txtPassword));
         errors.add(isPassword8Chars(txtPassword));
-        if (!txtPhone.getEditText().getText().toString().isEmpty()){
+        if (!txtPhone.getText().toString().isEmpty()){
             errors.add(isValidPhone(txtPhone));
 
         }
@@ -224,21 +228,23 @@ public final class Validation {
         textField.setError(null);
         return true;
     }
+    private String phoneLength(final int length){
+        return String.format(Locale.ENGLISH, context.getString(R.string.phone_error), WordUtils.capitalize(StudentTable.COLUMN_PHONE), length);
 
-    private boolean isValidPhone(TextInputLayout textField) {
+    }
+    private boolean isValidPhone(EditText textField) {
 
-        String phone = Helper.trimStr(textField);
+        String phone = textField.getText().toString();
         List<String> phoneErrors = new ArrayList<>();
 
-
-        int PHONE_MIN_LENGTH = 11;
-        if (!isMinLength(phone, PHONE_MIN_LENGTH)) {
-            phoneErrors.add(String.format(Locale.ENGLISH, "Phone number must be %d digits", PHONE_MIN_LENGTH));
+        if (phone.startsWith("0") && phone.length() < 11){
+            phoneErrors.add(phoneLength(11));
         }
-        if (!phone.startsWith("0")) {
-            phoneErrors.add("Phone number must start with 0");
-
+        if (!phone.startsWith("0") && phone.length() < 10){
+            phoneErrors.add(phoneLength(10));
         }
+
+
         if (phoneErrors.size() > 0) {
             textField.setError(null);
 
@@ -257,6 +263,39 @@ public final class Validation {
         textField.setError(null);
         return true;
     }
+
+//    private boolean isValidPhone(TextInputLayout textField) {
+//
+//        String phone = Helper.trimStr(textField);
+//        List<String> phoneErrors = new ArrayList<>();
+//
+//
+//        int PHONE_MIN_LENGTH = 11;
+//        if (!isMinLength(phone, PHONE_MIN_LENGTH)) {
+//            phoneErrors.add(String.format(Locale.ENGLISH, "Phone number must be %d digits", PHONE_MIN_LENGTH));
+//        }
+//        if (!phone.startsWith("0")) {
+//            phoneErrors.add("Phone number must start with 0");
+//
+//        }
+//        if (phoneErrors.size() > 0) {
+//            textField.setError(null);
+//
+//            StringBuilder sb = new StringBuilder();
+//            for (String error : phoneErrors) {
+//                sb.append(error).append("\n");
+//            }
+//            String errorMessages = sb.toString();
+//            if (!errorMessages.isEmpty()) {
+//                textField.setError(errorMessages);
+//
+//            }
+//            return false;
+//        }
+//
+//        textField.setError(null);
+//        return true;
+//    }
 
 
     private String getPasswordMinLengthError(String fieldName, int minLength) {

@@ -104,25 +104,105 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txtPhone"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp">
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:id="@+id/txtPhone"-->
+<!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="16dp">-->
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/phone"
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:hint="@string/phone"-->
+<!--                android:inputType="phone"-->
+<!--                android:maxLength="11"-->
+<!--                android:maxLines="1">-->
+
+<!--            </com.google.android.material.textfield.TextInputEditText>-->
+
+
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+        <com.hbb20.CountryCodePicker
+            android:id="@+id/ccp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            app:ccp_showNameCode="true"
+            app:ccp_textSize="16dp" />
+
+
+
+            <EditText
+                android:id="@+id/txtPhone"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:hint="phone"
                 android:inputType="phone"
                 android:maxLength="11"
-                android:maxLines="1">
+                android:textSize="16sp"
 
-            </com.google.android.material.textfield.TextInputEditText>
+                />
+        </LinearLayout>
 
 
-        </com.google.android.material.textfield.TextInputLayout>
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:weightSum="3">-->
+
+<!--            <com.hbb20.CountryCodePicker-->
+<!--                android:id="@+id/ccp"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_gravity="start"-->
+<!--                android:layout_weight="1"-->
+<!--                app:ccp_showNameCode="true"-->
+<!--                app:ccp_textSize="16dp" />-->
+
+
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/txtPhone"-->
+<!--                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="2"-->
+
+<!--                android:layout_marginTop="16dp">-->
+
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    android:id="@+id/phoneEditText"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:textSize="16sp"-->
+<!--                    android:layout_weight="2"-->
+<!--                    android:hint="@string/phone"-->
+<!--                    android:inputType="phone"-->
+
+<!--                    android:maxLength="11"-->
+<!--                    android:maxLines="1">-->
+
+<!--                </com.google.android.material.textfield.TextInputEditText>-->
+
+
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+<!--        </LinearLayout>-->
+
+
+
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -165,7 +245,7 @@
                 android:gravity="center_horizontal"
                 android:text="@string/weak"
                 android:textColor="@color/black"
-                android:id="@+id/password_strength" />
+                android:id="@+id/lblPassword_strength" />
 
 
         </com.google.android.material.textfield.TextInputLayout>
