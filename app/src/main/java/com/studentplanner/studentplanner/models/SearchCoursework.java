@@ -15,6 +15,7 @@ public class SearchCoursework {
     private String title = "";
     private String priority = "";
     private boolean isCompleted = false;
+    private final String DEFAULT_PRIORITY;
 
     /**
      * specifies if the default completion status is selected (Any Completion).
@@ -23,12 +24,14 @@ public class SearchCoursework {
 
     private final Predicate<Coursework> filterTitle = c -> c.getTitle().toLowerCase().contains(title.toLowerCase());
 
-    private  Predicate<Coursework> filterPriority;
-
 
     public SearchCoursework(Context context, List<Coursework> ALL_COURSEWORK) {
         this.ALL_COURSEWORK = ALL_COURSEWORK;
-        filterPriority = !priority.equals(context.getResources().getString(R.string.any_priority)) ? c -> c.getPriority().toLowerCase().contains(priority.toLowerCase()) : p -> true;
+        DEFAULT_PRIORITY = context.getResources().getString(R.string.any_priority);
+
+    }
+    private Predicate<Coursework> filterPriorityStatus(){
+        return !priority.equals(DEFAULT_PRIORITY) ? c -> c.getPriority().toLowerCase().contains(priority.toLowerCase()) : p -> true;
 
     }
 
@@ -61,11 +64,10 @@ public class SearchCoursework {
 
 
     public List<Coursework> filterResults() {
-        filterPriority = !priority.equals("Any Priority") ? c -> c.getPriority().toLowerCase().contains(priority.toLowerCase()) : p -> true;
 
         return ALL_COURSEWORK.stream()
                 .filter(filterTitle)
-                .filter(filterPriority)
+                .filter(filterPriorityStatus())
                 .filter(this::filterCompletionStatus)
                 .collect(Collectors.toList());
     }
