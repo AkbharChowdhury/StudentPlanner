@@ -16,11 +16,6 @@ public class SearchCoursework {
     private String priority = "";
     private boolean isCompleted = false;
 
-    public void setDefaultStatus(boolean defaultStatus) {
-        isDefaultStatus = defaultStatus;
-    }
-
-
     /**
      * specifies if the default completion status is selected (Any Completion).
      */
@@ -28,7 +23,7 @@ public class SearchCoursework {
 
     private final Predicate<Coursework> filterTitle = c -> c.getTitle().toLowerCase().contains(title.toLowerCase());
 
-    private final Predicate<Coursework> filterPriority;
+    private  Predicate<Coursework> filterPriority;
 
 
     public SearchCoursework(Context context, List<Coursework> ALL_COURSEWORK) {
@@ -52,17 +47,22 @@ public class SearchCoursework {
     public void setPriority(String priority) {
         this.priority = priority;
     }
+    public void setDefaultStatus(boolean defaultStatus) {
+        isDefaultStatus = defaultStatus;
+    }
 
 
     public void setCompleted(boolean completed) {
         isCompleted = completed;
     }
-    private  boolean filterCompletionStatus(Coursework c){
+    private boolean filterCompletionStatus(Coursework c){
         return isDefaultStatus || c.isCompleted() == isCompleted;
     }
 
 
     public List<Coursework> filterResults() {
+        filterPriority = !priority.equals("Any Priority") ? c -> c.getPriority().toLowerCase().contains(priority.toLowerCase()) : p -> true;
+
         return ALL_COURSEWORK.stream()
                 .filter(filterTitle)
                 .filter(filterPriority)
