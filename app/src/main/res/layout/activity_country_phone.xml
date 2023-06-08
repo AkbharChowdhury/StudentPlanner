@@ -16,7 +16,7 @@
 
         <com.hbb20.CountryCodePicker
             android:id="@+id/ccp"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
@@ -26,12 +26,10 @@
 
         <EditText
             android:id="@+id/edit_text"
-
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:hint="phone"
-            android:text="2323"
             android:inputType="phone"
             android:maxLength="9"
             android:textSize="16sp"
