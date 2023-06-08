@@ -43,9 +43,12 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp">
+            android:layout_marginTop="16dp"
+            app:counterEnabled="true"
+            app:counterMaxLength="100">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/titleTextInputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/title"
@@ -133,8 +136,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:hint="@string/deadline_time"
-            app:startIconDrawable="@drawable/baseline_access_time_24"
-            >
+            app:startIconDrawable="@drawable/baseline_access_time_24">
 
             <AutoCompleteTextView
                 android:id="@+id/txtDeadlineTime"

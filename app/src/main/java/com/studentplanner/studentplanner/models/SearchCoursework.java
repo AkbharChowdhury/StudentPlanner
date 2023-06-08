@@ -30,7 +30,8 @@ public class SearchCoursework {
         DEFAULT_PRIORITY = context.getResources().getString(R.string.any_priority);
 
     }
-    private Predicate<Coursework> filterPriorityStatus(){
+
+    private Predicate<Coursework> filterPriority() {
         return !priority.equals(DEFAULT_PRIORITY) ? c -> c.getPriority().toLowerCase().contains(priority.toLowerCase()) : p -> true;
 
     }
@@ -50,6 +51,7 @@ public class SearchCoursework {
     public void setPriority(String priority) {
         this.priority = priority;
     }
+
     public void setDefaultStatus(boolean defaultStatus) {
         isDefaultStatus = defaultStatus;
     }
@@ -58,7 +60,8 @@ public class SearchCoursework {
     public void setCompleted(boolean completed) {
         isCompleted = completed;
     }
-    private boolean filterCompletionStatus(Coursework c){
+
+    private boolean filterStatus(Coursework c) {
         return isDefaultStatus || c.isCompleted() == isCompleted;
     }
 
@@ -67,8 +70,8 @@ public class SearchCoursework {
 
         return ALL_COURSEWORK.stream()
                 .filter(filterTitle)
-                .filter(filterPriorityStatus())
-                .filter(this::filterCompletionStatus)
+                .filter(filterPriority())
+                .filter(this::filterStatus)
                 .collect(Collectors.toList());
     }
 

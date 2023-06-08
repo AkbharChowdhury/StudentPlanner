@@ -13,6 +13,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 import com.studentplanner.studentplanner.activities.LoginActivity;
+import com.studentplanner.studentplanner.addActivities.AddClassesActivity;
+import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
 import com.studentplanner.studentplanner.fragments.CourseworkFragment;
 import com.studentplanner.studentplanner.fragments.ReminderFragment;
 import com.studentplanner.studentplanner.models.Student;
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         isLoggedIn();
         setupNavDrawer(savedInstanceState);
         showStudentDetails();
+        Helper.goToActivity(this, AddCourseworkActivity.class);
     }
 
     private void isLoggedIn() {

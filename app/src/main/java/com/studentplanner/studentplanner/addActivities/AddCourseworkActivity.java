@@ -5,9 +5,13 @@ import static com.studentplanner.studentplanner.utils.Helper.deadlineSetup;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
@@ -88,6 +92,11 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
         }
         setupDatePicker();
         getModulesList();
+
+        binding.titleTextInputEditText.setOnKeyListener((v, keyCode, event) -> {
+            Helper.characterCounter(txtTitle, getApplicationContext());
+            return false;
+        });
 
 
         binding.btnAddCoursework.setOnClickListener(v -> {

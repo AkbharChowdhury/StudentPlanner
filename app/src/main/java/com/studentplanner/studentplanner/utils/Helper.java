@@ -28,9 +28,11 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.ValueRange;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -354,6 +356,7 @@ public final class Helper {
         String teachers = db.getTeachersForSelectedModuleID(moduleID).toString();
         return removeFirstAndLastChar(teachers);
     }
+
     private static String removeFirstAndLastChar(String s) {
         return s.substring(1, s.length() - 1);
     }
@@ -417,5 +420,30 @@ public final class Helper {
         final int length = 36;
         return StringUtils.left(str, length) + (str.length() >= length ? ellipses : "");
     }
+
+    public static void characterCounter(TextInputLayout textField, Context context) {
+        final int maxLength = textField.getCounterMaxLength();
+        int length = Helper.trimStr(textField).length();
+
+        final int greenLength = maxLength / 4;
+        final int warningLength = maxLength / 2;
+
+        textField.setBoxStrokeColor(context.getColor(R.color.black));
+
+        if (ValueRange.of(greenLength, warningLength).isValidIntValue(length)) {
+            textField.setBoxStrokeColor(context.getColor(R.color.dark_green));
+            return;
+
+        }
+
+        if (ValueRange.of(warningLength, maxLength).isValidIntValue(length)) {
+            textField.setBoxStrokeColor(context.getColor(R.color.dark_yellow));
+            textField.setError(length == maxLength ? context.getString(R.string.max_length_error) : null);
+
+        }
+
+
+    }
+
 
 }
