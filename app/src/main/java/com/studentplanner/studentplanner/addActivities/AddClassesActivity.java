@@ -16,6 +16,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.databinding.ActivityAddClassesBinding;
+import com.studentplanner.studentplanner.databinding.ActivityCountryPhoneBinding;
 import com.studentplanner.studentplanner.enums.TimePickerType;
 import com.studentplanner.studentplanner.models.Classes;
 import com.studentplanner.studentplanner.models.CustomTimePicker;
@@ -54,6 +55,7 @@ public class AddClassesActivity extends AppCompatActivity implements TimePickerD
     private TextInputLayout txtModuleError;
     private TextInputLayout txtClassTypeError;
     private ActivityAddClassesBinding binding;
+
 
     private BoundTimePickerDialog startTimePicker;
     private BoundTimePickerDialog endTimePicker;

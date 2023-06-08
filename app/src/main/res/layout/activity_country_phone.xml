@@ -24,8 +24,40 @@
             app:ccp_showNameCode="true"
             app:ccp_textSize="16dp" />
 
+        <EditText
+            android:id="@+id/edit_text"
+
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:hint="phone"
+            android:text="2323"
+            android:inputType="phone"
+            android:maxLength="9"
+            android:textSize="16sp"
+
+            />
+
 
     </LinearLayout>
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:text="get phone number"
+        />
+    <TextView
+        android:id="@+id/getPhoneNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="phone"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:gravity="center"
+        android:textSize="40sp"
+        />
 
 
 </LinearLayout>
