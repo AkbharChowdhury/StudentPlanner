@@ -164,8 +164,6 @@
     </string-array>
 
 
-
-
     <string-array name="type_array">
         <item>Lecture</item>
         <item>Tutorial</item>
