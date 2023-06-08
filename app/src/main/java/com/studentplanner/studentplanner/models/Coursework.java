@@ -4,9 +4,8 @@ import android.widget.AutoCompleteTextView;
 
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
+import java.time.LocalDate;
+import java.util.Comparator;
 
 public class Coursework {
     private int courseworkID;
@@ -24,8 +23,6 @@ public class Coursework {
     private AutoCompleteTextView txtDeadline;
     private AutoCompleteTextView txtDeadlineTime;
     private TextInputLayout txtDeadlineTimeError;
-
-//    private static final Predicate<Coursework> filterTitle = c -> c.getTitle().toLowerCase().contains(title.toLowerCase());
 
 
     public TextInputLayout getTxtDeadlineError() {
@@ -156,15 +153,8 @@ public class Coursework {
 
     }
 
-    public static Predicate<Coursework> filterTitle(String title) {
-        return c -> c.getTitle().toLowerCase().contains(title.toLowerCase());
+    public static Comparator<Coursework> sortDeadlineAsc = Comparator.comparing(c -> LocalDate.parse(c.getDeadline()));
 
-    }
-
-    public static Predicate<Coursework> filterPriority(String priority) {
-        return c -> c.getPriority().toLowerCase().contains(priority.toLowerCase());
-
-    }
 
     public int getCourseworkID() {
         return courseworkID;

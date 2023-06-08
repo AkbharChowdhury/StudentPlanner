@@ -104,9 +104,6 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-
-
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtPhone"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -120,9 +117,7 @@
                 android:hint="@string/phone"
                 android:inputType="phone"
                 android:maxLength="11"
-                android:maxLines="1"
-
-                >
+                android:maxLines="1">
 
             </com.google.android.material.textfield.TextInputEditText>
 

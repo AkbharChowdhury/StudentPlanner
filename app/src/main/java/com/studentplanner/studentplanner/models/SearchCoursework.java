@@ -4,11 +4,13 @@ import android.content.Context;
 
 import com.studentplanner.studentplanner.R;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class SearchCoursework {
+
 
     private final List<Coursework> ALL_COURSEWORK;
 
@@ -26,7 +28,9 @@ public class SearchCoursework {
 
 
     public SearchCoursework(Context context, List<Coursework> ALL_COURSEWORK) {
+
         this.ALL_COURSEWORK = ALL_COURSEWORK;
+
         DEFAULT_PRIORITY = context.getResources().getString(R.string.any_priority);
 
     }

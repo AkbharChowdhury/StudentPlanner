@@ -1,6 +1,9 @@
 package com.studentplanner.studentplanner;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -21,6 +24,8 @@ import com.studentplanner.studentplanner.models.Student;
 import com.studentplanner.studentplanner.utils.AccountPreferences;
 import com.studentplanner.studentplanner.utils.FragmentHandler;
 import com.studentplanner.studentplanner.utils.Helper;
+
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
@@ -46,7 +51,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         isLoggedIn();
         setupNavDrawer(savedInstanceState);
         showStudentDetails();
-        Helper.goToActivity(this, AddCourseworkActivity.class);
+
+//        TelephonyManager tm = (TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
+//        String countryCodeValue = tm.getNetworkCountryIso();
+//        String s = getApplicationContext().getResources().getConfiguration().locale.getDisplayCountry();
+
+        TelephonyManager tm = (TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
+        String countryCodeValue = tm.getNetworkCountryIso();
+        Log.d("CODE", countryCodeValue);
     }
 
     private void isLoggedIn() {

@@ -33,8 +33,6 @@ import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.models.SearchCoursework;
 import com.studentplanner.studentplanner.utils.Helper;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Deque;
@@ -46,7 +44,6 @@ public class CourseworkFragment extends Fragment {
     private SearchCoursework search;
     private Spinner txtPriority;
     private Spinner txtCompletionStatus;
-
 
 
     private Context context;
@@ -70,7 +67,7 @@ public class CourseworkFragment extends Fragment {
 
     }
 
-    private void setCompletionDropdown(){
+    private void setCompletionDropdown() {
 
 
         txtCompletionStatus.setAdapter(new ArrayAdapter<String>(
@@ -139,9 +136,8 @@ public class CourseworkFragment extends Fragment {
         setPriorityDropdown();
         setCompletionDropdown();
 
-        txtPriority.setSelection(0,false);
-        txtCompletionStatus.setSelection(0,false);
-
+        txtPriority.setSelection(0, false);
+        txtCompletionStatus.setSelection(0, false);
 
 
         txtPriority.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -161,8 +157,6 @@ public class CourseworkFragment extends Fragment {
 
             }
         });
-
-
 
 
         txtCompletionStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -185,9 +179,6 @@ public class CourseworkFragment extends Fragment {
 
             }
 
-
-
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -208,6 +199,8 @@ public class CourseworkFragment extends Fragment {
 
     private void getCoursework() {
         list = db.getCoursework();
+        list.sort(Coursework.sortDeadlineAsc);
+
         search = new SearchCoursework(context, list);
         buildRecyclerView();
     }
@@ -276,7 +269,8 @@ public class CourseworkFragment extends Fragment {
 
 
     }
-    private void checkEmptyResults(List<Coursework> filteredList){
+
+    private void checkEmptyResults(List<Coursework> filteredList) {
         if (filteredList.isEmpty()) {
             Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
             showEmptyResults();
@@ -285,7 +279,8 @@ public class CourseworkFragment extends Fragment {
 
 
     }
-    private void showEmptyResults(){
+
+    private void showEmptyResults() {
         binding.emptyImage.setVisibility(View.VISIBLE);
         binding.emptyText.setVisibility(View.VISIBLE);
 
