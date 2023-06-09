@@ -64,10 +64,9 @@
             android:theme="@style/AppTheme.ActionPar" />
         <activity
             android:name=".activities.RegisterActivity"
+            android:label="@string/register"
+            android:theme="@style/AppTheme.ActionPar"
             android:exported="true" />
-        <activity
-            android:name=".activities.LoginActivity"
-            android:exported="false" />
         <activity
             android:name=".editActivities.EditModuleActivity"
             android:exported="false"

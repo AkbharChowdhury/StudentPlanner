@@ -13,19 +13,13 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.navigation.NavigationView;
-import com.studentplanner.studentplanner.activities.LoginActivity;
-import com.studentplanner.studentplanner.addActivities.AddClassesActivity;
-import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
 import com.studentplanner.studentplanner.fragments.CourseworkFragment;
-import com.studentplanner.studentplanner.fragments.ReminderFragment;
 import com.studentplanner.studentplanner.models.Student;
 import com.studentplanner.studentplanner.utils.AccountPreferences;
 import com.studentplanner.studentplanner.utils.FragmentHandler;
-import com.studentplanner.studentplanner.utils.Helper;
-
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
@@ -48,7 +42,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         db = DatabaseHelper.getInstance(this);
         studentID = AccountPreferences.getStudentID(this);
-        isLoggedIn();
+
+
         setupNavDrawer(savedInstanceState);
         showStudentDetails();
 
@@ -56,15 +51,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        String countryCodeValue = tm.getNetworkCountryIso();
 //        String s = getApplicationContext().getResources().getConfiguration().locale.getDisplayCountry();
 
-        TelephonyManager tm = (TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
+        TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
         String countryCodeValue = tm.getNetworkCountryIso();
         Log.d("CODE", countryCodeValue);
     }
 
-    private void isLoggedIn() {
-        if (db.getStudentEmail(studentID).isEmpty()) {
-            Helper.goToActivity(this, LoginActivity.class);
-        }
+
+    private void openFragment(Fragment fragment){
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                fragment).commit();
     }
 
 
@@ -95,26 +90,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new CourseworkFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_coursework);
 
+
+            if (AccountPreferences.getStudentID(this) == 0) {
+                openFragment(new LoginFragment());
+                return;
+            }
+            openFragment(new CourseworkFragment());
+            navigationView.setCheckedItem(R.id.nav_coursework);
         }
 
     }
 
-    private void logout() {
-        AccountPreferences.logout(this);
-        Helper.goToActivity(this, LoginActivity.class);
-    }
 
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.nav_logout) logout();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FragmentHandler().getSelectedFragment(item)).commit();
+        if (item.getItemId() == R.id.nav_logout){
+            AccountPreferences.logout(this);
+            openFragment(new LoginFragment());
 
+        } else {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FragmentHandler().getSelectedFragment(item)).commit();
+
+
+        }
         drawer.closeDrawer(GravityCompat.START);
+
+
         return true;
     }
 

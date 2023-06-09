@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
+import com.studentplanner.studentplanner.LoginFragment;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.models.ModuleTeacher;
 import com.studentplanner.studentplanner.models.Teacher;
@@ -67,6 +68,7 @@ public final class Helper {
         activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragmentToOpen).addToBackStack(null).commit();
     }
 
+
     public static void toastMessage(Context context, String message) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
@@ -99,11 +101,12 @@ public final class Helper {
     }
 
 
-    public static void setRedirectMessage(Activity currentActivity, Class<? extends Activity> activityPageToOpen, String message) {
-        Intent intent = new Intent(currentActivity, activityPageToOpen);
-        intent.putExtra(INTENT_MESSAGE, message);
-        currentActivity.startActivity(intent);
-    }
+//    public static void setRedirectMessage(Activity currentActivity, Class<? extends Activity> activityPageToOpen, String message) {
+//        Intent intent = new Intent(currentActivity, activityPageToOpen);
+//        intent.putExtra(INTENT_MESSAGE, message);
+//        currentActivity.startActivity(intent);
+//    }
+
 
 
     public static void getIntentMessage(Context context, Bundle extras) {
@@ -444,7 +447,6 @@ public final class Helper {
             textField.setError(length == maxLength ? context.getString(R.string.max_length_error) : null);
 
         }
-
 
     }
 

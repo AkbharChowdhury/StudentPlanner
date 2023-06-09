@@ -4,16 +4,19 @@ import static com.studentplanner.studentplanner.utils.Helper.setEditTextMaxLengt
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.textfield.TextInputLayout;
 import com.hbb20.CountryCodePicker;
 import com.studentplanner.studentplanner.DatabaseHelper;
+import com.studentplanner.studentplanner.LoginFragment;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.databinding.ActivityRegisterBinding;
 import com.studentplanner.studentplanner.models.Student;
@@ -46,6 +49,8 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         context = getApplicationContext();
@@ -72,7 +77,8 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 if (db.registerUser(getStudentDetails())) {
-                    Helper.setRedirectMessage(this, LoginActivity.class, getString(R.string.account_created));
+                    Helper.longToastMessage(this, getString(R.string.account_created));
+                    finish();
                     return;
                 }
                 Helper.longToastMessage(context, getString(R.string.create_account_error));
@@ -130,6 +136,12 @@ public class RegisterActivity extends AppCompatActivity {
         if (PasswordValidator.containsNumber(password)) strength++;
         new PasswordValidator(context, progressBar).getProgressBarStatus(strength, strengthView);
 
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if (item.getItemId() == android.R.id.home) finish();
+        return true;
     }
 
 

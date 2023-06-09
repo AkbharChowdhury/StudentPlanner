@@ -45,11 +45,16 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.LinearGradient;
+import android.preference.PreferenceManager;
+import android.util.Log;
 
 public final class AccountPreferences {
 
     private static final String LOGIN_SHARED_PREF = "LoginDetails";
+
     private static final String STUDENT_ID = "StudentID";
+
 
     private AccountPreferences() {
 
@@ -61,6 +66,7 @@ public final class AccountPreferences {
         SharedPreferences.Editor editor = loginSharedPref.edit();
         editor.putInt(STUDENT_ID, studentID);
         editor.apply();
+
     }
 
     public static int getStudentID(Context context) {
@@ -69,11 +75,10 @@ public final class AccountPreferences {
     }
 
     public static void logout(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(STUDENT_ID, 0);
-        editor.apply();
+        context.deleteSharedPreferences(LOGIN_SHARED_PREF);
+
     }
+
 
 
 }
