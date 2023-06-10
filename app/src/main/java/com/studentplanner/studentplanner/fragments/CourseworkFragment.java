@@ -261,7 +261,6 @@ public class CourseworkFragment extends Fragment {
 
     private void filterTitle(String title) {
         search.setTitle(title);
-
         List<Coursework> filteredList = search.filterResults();
 
         checkEmptyResults(filteredList);

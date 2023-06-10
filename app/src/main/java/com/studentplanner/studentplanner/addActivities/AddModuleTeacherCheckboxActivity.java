@@ -114,6 +114,10 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
                     setResult(RESULT_OK);
                     finish();
 
+//                     Helper.longToastMessage(this,"Module Added");
+//                    setResult(RESULT_OK);
+//                    finish();
+
                 }
 
             }

@@ -15,8 +15,6 @@ import com.studentplanner.studentplanner.fragments.TeacherFragment;
 
 public final class FragmentHandler {
 
-
-
     public Fragment getSelectedFragment(MenuItem item){
         Fragment selectedFragment = null;
         int id = item.getItemId();
@@ -27,8 +25,6 @@ public final class FragmentHandler {
         if (id == R.id.nav_calendar) selectedFragment = new CalendarFragment();//
         if (id == R.id.nav_coursework) selectedFragment = new CourseworkFragment();
         if (id == R.id.nav_module) selectedFragment = new ModuleFragment();
-
-
         return selectedFragment;
     }
 

@@ -158,6 +158,11 @@ public class ModuleTeacherFragment extends Fragment {
 //        }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getModuleTeacher();
+    }
 
     @Override
     public void onDestroyView() {

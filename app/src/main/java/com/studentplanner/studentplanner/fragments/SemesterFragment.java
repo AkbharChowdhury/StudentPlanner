@@ -27,7 +27,9 @@ import com.studentplanner.studentplanner.adapters.SemesterAdapter;
 import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
 import com.studentplanner.studentplanner.addActivities.AddSemesterActivity;
 import com.studentplanner.studentplanner.databinding.FragmentSemesterBinding;
+import com.studentplanner.studentplanner.models.Search;
 import com.studentplanner.studentplanner.models.Semester;
+import com.studentplanner.studentplanner.models.Teacher;
 import com.studentplanner.studentplanner.utils.Helper;
 
 import java.util.ArrayList;
@@ -41,6 +43,8 @@ public class SemesterFragment extends Fragment {
     private RecyclerView recyclerView;
     private SemesterAdapter adapter;
     private List<Semester> list;
+    private List<Semester> ALL_SEMESTERS;
+
     private FragmentSemesterBinding binding;
     private DatabaseHelper db;
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -70,6 +74,8 @@ public class SemesterFragment extends Fragment {
 
 
         db = DatabaseHelper.getInstance(context);
+        ALL_SEMESTERS  = db.getSemester();
+
         Helper.getIntentMessage(context, activity.getIntent().getExtras());
         getSemester();
 
@@ -135,17 +141,8 @@ public class SemesterFragment extends Fragment {
         }
     }
 
-
     private void filter(String text) {
-        List<Semester> filteredList = new ArrayList<>();
-
-        for (Semester semester : list) {
-            String name = semester.getName().toLowerCase();
-            if (name.contains(text.toLowerCase())) {
-                filteredList.add(semester);
-            }
-        }
-
+        List<Semester> filteredList = (List<Semester>) Search.genericSearch(ALL_SEMESTERS, text);
         if (filteredList.isEmpty()) {
             Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
         } else {

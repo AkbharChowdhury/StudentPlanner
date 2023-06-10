@@ -12,9 +12,7 @@ public final class Search {
 
     public  static <T> List<?> genericSearch(List<T> data, String text){
 
-        if (data instanceof ArrayList){
-
-            if (isType((List<Module>) data, ListType.MODULE)){
+            if (isType(data, ListType.MODULE)){
                 List<Module> list = (List<Module>) data;
                 return list.stream()
                         .filter(m -> m.getModuleName().toLowerCase().contains(text.toLowerCase()))
@@ -22,7 +20,7 @@ public final class Search {
 
             }
 
-            if (isType((List<Teacher>) data, ListType.TEACHER)){
+            if (isType(data, ListType.TEACHER)){
                 List<Teacher> list = (List<Teacher>) data;
                 return list.stream()
                         .filter(t -> t.getName().toLowerCase().trim().contains(text.toLowerCase()))
@@ -31,7 +29,7 @@ public final class Search {
             }
 
 
-            if (isType((List<Coursework>) data, ListType.COURSEWORK)){
+            if (isType(data, ListType.COURSEWORK)){
                 List<Coursework> list = (List<Coursework>) data;
                 return list.stream()
                         .filter(c -> c.getTitle().toLowerCase().trim().contains(text.toLowerCase()))
@@ -39,21 +37,30 @@ public final class Search {
             }
 
 
-        }
+
+            if (isType(data, ListType.SEMESTER)){
+                List<Semester> list = (List<Semester>) data;
+                return list.stream()
+                        .filter(s -> s.getName().toLowerCase().trim().contains(text.toLowerCase()))
+                        .collect(Collectors.toList());
+            }
+
+
+
 
         return new ArrayList<>();
     }
 
 
-    private static  boolean isModule(List rhsList) {
-
-        if(rhsList != null && !rhsList.isEmpty()) {
-
-
-            return rhsList.get(0) instanceof Module;
-        }
-        return false;
-    }
+//    private static  boolean isModule(List rhsList) {
+//
+//        if(rhsList != null && !rhsList.isEmpty()) {
+//
+//
+//            return rhsList.get(0) instanceof Module;
+//        }
+//        return false;
+//    }
 
 
 

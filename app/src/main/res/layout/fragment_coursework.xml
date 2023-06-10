@@ -46,51 +46,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emptyImage" />
 
-
-    <!--    <com.google.android.material.textfield.TextInputLayout-->
-
-    <!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_margin="16dp"-->
-    <!--        android:hint="@string/priority"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent">-->
-
-    <!--        <AutoCompleteTextView-->
-    <!--            android:id="@+id/txtPriority"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:inputType="none"-->
-
-    <!--            />-->
-
-    <!--    </com.google.android.material.textfield.TextInputLayout>-->
-
-    <!--    <com.google.android.material.textfield.TextInputLayout-->
-    <!--        android:id="@+id/textInputLayout"-->
-
-    <!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_margin="16dp"-->
-    <!--        android:hint="@string/priority"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent">-->
-
-    <!--        <AutoCompleteTextView-->
-    <!--            android:id="@+id/txtPriority"-->
-
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:inputType="none"-->
-
-    <!--            />-->
-
-    <!--    </com.google.android.material.textfield.TextInputLayout>-->
-
     <androidx.recyclerview.widget.RecyclerView
 
         android:id="@+id/recyclerView"

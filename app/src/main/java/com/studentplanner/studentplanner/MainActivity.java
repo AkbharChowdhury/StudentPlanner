@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.navigation.NavigationView;
 import com.studentplanner.studentplanner.fragments.CourseworkFragment;
+import com.studentplanner.studentplanner.fragments.ReminderFragment;
 import com.studentplanner.studentplanner.models.Student;
 import com.studentplanner.studentplanner.utils.AccountPreferences;
 import com.studentplanner.studentplanner.utils.FragmentHandler;
@@ -109,15 +110,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (item.getItemId() == R.id.nav_logout){
             AccountPreferences.logout(this);
             openFragment(new LoginFragment());
-
         } else {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FragmentHandler().getSelectedFragment(item)).commit();
-
-
+            openFragment(new FragmentHandler().getSelectedFragment(item));
         }
         drawer.closeDrawer(GravityCompat.START);
-
-
         return true;
     }
 

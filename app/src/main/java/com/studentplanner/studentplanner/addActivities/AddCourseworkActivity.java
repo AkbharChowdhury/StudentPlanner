@@ -41,7 +41,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class AddCourseworkActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
-    private final CustomTimePicker deadlineCustomTimePicker = new CustomTimePicker(LocalTime.now().plusHours(1).getHour(), LocalTime.now().getMinute());
+    private final CustomTimePicker deadlineCustomTimePicker = new CustomTimePicker(LocalTime.now().getHour(), LocalTime.now().getMinute());
 
     private AutoCompleteTextView txtPriority;
     private AutoCompleteTextView txtModules;
