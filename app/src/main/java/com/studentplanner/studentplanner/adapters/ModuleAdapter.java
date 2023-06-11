@@ -17,9 +17,6 @@ import com.studentplanner.studentplanner.viewholders.ModuleViewHolder;
 
 import java.util.List;
 
-
-
-
 public class ModuleAdapter extends RecyclerView.Adapter<ModuleViewHolder> {
 
     private List<Module> moduleList;
@@ -50,9 +47,6 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleViewHolder> {
         Module model = moduleList.get(position);
         holder.showDetails(model);
         holder.getLayout().setOnClickListener(v -> startForResult.launch(intent(position)));
-
-
-
     }
 
     private Intent intent(int position){

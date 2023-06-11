@@ -38,8 +38,5 @@ public class ModuleViewHolder extends RecyclerView.ViewHolder {
         tvModuleCode.setText(model.getModuleCode());
 
     }
-    public void click(){
-
-    }
 
 }
