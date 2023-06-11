@@ -1,5 +1,6 @@
 package com.studentplanner.studentplanner.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
@@ -16,10 +16,10 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.studentplanner.studentplanner.DatabaseHelper;
+import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.databinding.EventRowBinding;
 import com.studentplanner.studentplanner.editActivities.EditClassesActivity;
 import com.studentplanner.studentplanner.editActivities.EditCourseworkActivity;
-import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.enums.EventType;
 import com.studentplanner.studentplanner.enums.Status;
 import com.studentplanner.studentplanner.models.ClassRow;
@@ -39,11 +39,9 @@ import java.util.List;
 
 public class EventAdapter extends ArrayAdapter<Event> {
 
-
-
     private final Context context;
     private DatabaseHelper db;
-    private  final ActivityResultLauncher<Intent> startForResult;
+    private final ActivityResultLauncher<Intent> startForResult;
 
     public EventAdapter(@NonNull Context context, List<Event> events, ActivityResultLauncher<Intent> startForResult) {
         super(context, 0, events);
@@ -52,20 +50,16 @@ public class EventAdapter extends ArrayAdapter<Event> {
         this.startForResult = startForResult;
     }
 
+
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
         Event event = getItem(position);
+        @SuppressLint("ViewHolder")
+        EventRowBinding binding = EventRowBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
 
-        EventRowBinding binding = EventRowBinding.inflate(LayoutInflater.from(context), parent,false);
-        binding.getRoot();
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.event_row, parent, false);
-        }
-
-        final DatabaseHelper db = DatabaseHelper.getInstance(context);
-
-        convertView.setOnClickListener(v -> {
+        binding.mainLayout.setOnClickListener(v -> {
             final int ID = event.getId();
             switch (event.getEventType()) {
                 case COURSEWORK:
@@ -79,18 +73,18 @@ public class EventAdapter extends ArrayAdapter<Event> {
             }
         });
 
-        ImageView classesIcon = convertView.findViewById(R.id.event_icon_classes);
-        ImageView courseworkIcon = convertView.findViewById(R.id.event_icon_coursework);
+        ImageView classesIcon = binding.eventIconClasses;
+        ImageView courseworkIcon = binding.eventIconCoursework;
         int eventIcon = getEventIcon(event.getEventType());
         classesIcon.setImageResource(eventIcon);
         courseworkIcon.setImageResource(eventIcon);
 
-        ConstraintLayout classLayout  = convertView.findViewById(R.id.mainLayoutClasses);
-        ConstraintLayout courseworkLayout  = convertView.findViewById(R.id.mainLayoutCoursework);
+        ConstraintLayout classLayout = binding.mainLayoutClasses;
+        ConstraintLayout courseworkLayout = binding.mainLayoutCoursework;
 
 
-        CourseworkRow courseworkRow = new CourseworkRow(convertView);
-        ClassRow classRow = new ClassRow(convertView);
+        CourseworkRow courseworkRow = new CourseworkRow(binding);
+        ClassRow classRow = new ClassRow(binding);
 
         switch (event.getEventType()) {
             case COURSEWORK:
@@ -103,23 +97,25 @@ public class EventAdapter extends ArrayAdapter<Event> {
 
                 break;
         }
-        return convertView;
+
+
+        return binding.getRoot();
     }
 
-    private void getClassInfo(Classes classes, ClassRow row){
+    private void getClassInfo(Classes classes, ClassRow row) {
 
         int moduleID = classes.getModuleID();
 
-        List<ModuleTeacher> moduleTeacherList  = db.getModuleTeachers();
+        List<ModuleTeacher> moduleTeacherList = db.getModuleTeachers();
         row.lblType.setText(classes.getClassType());
         String teachers = Helper.moduleIDExistsInModuleTeacher(moduleTeacherList, classes.getModuleID())
                 ? Helper.getSnippet(Helper.getTeachersForSelectedModule(context, moduleID), 35)
-                : "No teacher assigned";
+                : context.getString(R.string.no_teacher_assigned);
 
         row.lblTeachers.setText(teachers);
-        Module m = db.getSelectedModule(moduleID);
-        row.lblClassTitle.setText(m.getModuleName());
-        String room = classes.getRoom().isEmpty()? "No room assigned" : classes.getRoom();
+        Module module = db.getSelectedModule(moduleID);
+        row.lblClassTitle.setText(module.getModuleName());
+        String room = classes.getRoom().isEmpty() ? context.getString(R.string.no_room_assigned) : classes.getRoom();
         row.lblRoom.setText(room);
         row.lblStartTime.setText(Helper.formatTimeShort(classes.getStartTime()));
         row.lblEndTime.setText(Helper.formatTimeShort(classes.getEndTime()));
@@ -127,11 +123,11 @@ public class EventAdapter extends ArrayAdapter<Event> {
     }
 
 
-    private void getCourseworkDetails(Coursework coursework, CourseworkRow row){
+    private void getCourseworkDetails(Coursework coursework, CourseworkRow row) {
         String priorityLevel = coursework.getPriority();
         Module module = db.getSelectedModule(coursework.getModuleID());
         String moduleDetails = module.getModuleDetails();
-        row.title.setText(Helper.getSnippet(WordUtils.capitalizeFully(coursework.getTitle()) , 20));
+        row.title.setText(Helper.getSnippet(WordUtils.capitalizeFully(coursework.getTitle()), 20));
 
         row.lblModule.setText(moduleDetails);
         row.priority.setText(priorityLevel);
@@ -139,10 +135,9 @@ public class EventAdapter extends ArrayAdapter<Event> {
         row.time.setText(Helper.formatTimeShort(coursework.getDeadlineTime()));
 
         row.completionStatus.setText(coursework.isCompleted() ? Status.COMPLETED.label : Status.NOT_COMPLETED.label);
-        row.completionStatus.setTextColor(coursework.isCompleted()? context.getColor(R.color.green) : Color.RED);
+        row.completionStatus.setTextColor(coursework.isCompleted() ? context.getColor(R.color.green) : Color.RED);
 
     }
-
 
 
     private Intent getCourseworkIntent(int id) {
@@ -156,6 +151,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
         intent.putExtra(ClassTable.COLUMN_ID, id);
         return intent;
     }
+
     private int getEventIcon(EventType eventType) {
         switch (eventType) {
             case COURSEWORK:

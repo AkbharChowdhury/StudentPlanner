@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.studentplanner.studentplanner.R;
+import com.studentplanner.studentplanner.databinding.EventRowBinding;
 
 public class ClassRow {
     public TextView lblTeachers;
@@ -13,12 +14,12 @@ public class ClassRow {
     public TextView lblEndTime;
     public TextView lblType;
 
-    public ClassRow(View convertView) {
-        lblTeachers = convertView.findViewById(R.id.tv_class_teachers);
-        lblClassTitle = convertView.findViewById(R.id.tv_class_title);
-        lblRoom = convertView.findViewById(R.id.tv_room);
-        lblStartTime = convertView.findViewById(R.id.tv_start_time);
-        lblEndTime = convertView.findViewById(R.id.tv_end_time);
-        lblType = convertView.findViewById(R.id.tv_class_type);
+    public ClassRow(EventRowBinding binding) {
+        lblTeachers = binding.tvClassTeachers;
+        lblClassTitle =  binding.tvClassTitle;
+        lblRoom = binding.tvRoom;
+        lblStartTime = binding.tvStartTime;
+        lblEndTime = binding.tvEndTime;
+        lblType =binding.tvClassType;
     }
 }

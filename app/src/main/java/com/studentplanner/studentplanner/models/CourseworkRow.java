@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.studentplanner.studentplanner.R;
+import com.studentplanner.studentplanner.databinding.EventRowBinding;
 
 public class CourseworkRow {
     public TextView title;
@@ -12,12 +13,12 @@ public class CourseworkRow {
     public TextView time;
     public TextView completionStatus;
 
-    public CourseworkRow(View convertView){
-        title = convertView.findViewById(R.id.tv_cw_title);
-        lblModule = convertView.findViewById(R.id.tv_cw_module);
-        priority = convertView.findViewById(R.id.tv_cw_priority);
-        time = convertView.findViewById(R.id.tv_cw_time);
-        completionStatus = convertView.findViewById(R.id.tv_cw_completed);
+    public CourseworkRow(EventRowBinding binding){
+        title = binding.tvCwTitle;
+        lblModule = binding.tvCwModule;
+        priority = binding.tvCwPriority;
+        time = binding.tvCwTime;
+        completionStatus = binding.tvCwCompleted;
 
     }
 }

@@ -111,6 +111,8 @@
 
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="no_room_assigned">No room assigned</string>
+    <string name="no_teacher_assigned">No teacher assigned</string>
 
     <string name="week_view">Week View</string>
 
