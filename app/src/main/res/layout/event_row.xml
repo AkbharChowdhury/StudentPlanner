@@ -45,7 +45,7 @@
             app:layout_constraintVertical_bias="0.448" />
 
         <ImageView
-            android:id="@+id/event_icon_classes"
+            android:id="@+id/ic_classes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -81,7 +81,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.18"
-            app:layout_constraintStart_toEndOf="@+id/event_icon_classes"
+            app:layout_constraintStart_toEndOf="@+id/ic_classes"
             app:layout_constraintTop_toBottomOf="@+id/tv_class_teachers" />
 
         <TextView
@@ -153,7 +153,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/event_icon_coursework"
+            android:id="@+id/icCoursework"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
