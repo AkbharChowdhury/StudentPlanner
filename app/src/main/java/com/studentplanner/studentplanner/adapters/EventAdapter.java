@@ -93,7 +93,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
                 break;
             case CLASSES:
                 courseworkLayout.setVisibility(View.GONE);
-                getClassInfo(event.getClasses(), classRow);
+                getClassDetails(event.getClasses(), classRow);
 
                 break;
         }
@@ -102,9 +102,9 @@ public class EventAdapter extends ArrayAdapter<Event> {
         return binding.getRoot();
     }
 
-    private void getClassInfo(Classes classes, ClassRow row) {
+    private void getClassDetails(final Classes classes, final ClassRow row) {
 
-        int moduleID = classes.getModuleID();
+        final int moduleID = classes.getModuleID();
 
         List<ModuleTeacher> moduleTeacherList = db.getModuleTeachers();
         row.lblType.setText(classes.getClassType());
