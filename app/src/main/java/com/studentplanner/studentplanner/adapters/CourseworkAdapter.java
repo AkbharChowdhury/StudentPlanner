@@ -21,21 +21,21 @@ import java.util.List;
 
 public class CourseworkAdapter extends RecyclerView.Adapter<CourseworkViewHolder> {
 
-    private List<Coursework> courseworkList;
+    private List<Coursework> list;
     private final Context context;
     private  final ActivityResultLauncher<Intent> startForResult;
 
 
 
-    public CourseworkAdapter(List<Coursework> courseworkList, Context context, ActivityResultLauncher<Intent> startForResult) {
-        this.courseworkList = courseworkList;
+    public CourseworkAdapter(List<Coursework> list, Context context, ActivityResultLauncher<Intent> startForResult) {
+        this.list = list;
         this.context = context;
         this.startForResult = startForResult;
     }
 
     @SuppressLint("NotifyDataSetChanged")
     public void filterList(List<Coursework> filteredList) {
-        courseworkList = filteredList;
+        list = filteredList;
         notifyDataSetChanged();
     }
 
@@ -47,23 +47,20 @@ public class CourseworkAdapter extends RecyclerView.Adapter<CourseworkViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull CourseworkViewHolder holder, int position) {
-        Coursework coursework = courseworkList.get(position);
-        holder.showDetails(coursework);
+        holder.showDetails(list.get(position));
         holder.getLayout().setOnClickListener(v -> startForResult.launch(intent(position)));
-
-
 
     }
 
     private Intent intent(int position){
         Intent intent = new Intent(context, EditCourseworkActivity.class);
-        intent.putExtra(CourseworkTable.COLUMN_ID, courseworkList.get(position).getCourseworkID());
+        intent.putExtra(CourseworkTable.COLUMN_ID, list.get(position).getCourseworkID());
         return intent;
     }
 
     @Override
     public int getItemCount() {
-        return courseworkList.size();
+        return list.size();
     }
 
 }

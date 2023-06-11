@@ -23,7 +23,7 @@ public class ModuleViewHolder extends RecyclerView.ViewHolder {
         tvModuleID = binding.tvModuleId;
         tvModuleName = binding.tvModuleName;
         tvModuleCode = binding.tvModuleCode;
-        layout = binding.moduleSearchLayout;
+        layout = binding.layout;
 
     }
 
@@ -31,11 +31,11 @@ public class ModuleViewHolder extends RecyclerView.ViewHolder {
         return layout;
     }
 
-    public void showDetails(Module model){
+    public void showDetails(Module module){
 
-        tvModuleID.setText(String.valueOf(model.getModuleID()));
-        tvModuleName.setText(model.getModuleName());
-        tvModuleCode.setText(model.getModuleCode());
+        tvModuleID.setText(String.valueOf(module.getModuleID()));
+        tvModuleName.setText(module.getModuleName());
+        tvModuleCode.setText(module.getModuleCode());
 
     }
 

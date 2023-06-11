@@ -1,94 +1,63 @@
 package com.studentplanner.studentplanner.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.studentplanner.studentplanner.DatabaseHelper;
+import com.studentplanner.studentplanner.databinding.TeacherRowBinding;
 import com.studentplanner.studentplanner.editActivities.EditCourseworkActivity;
-import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.models.Teacher;
 import com.studentplanner.studentplanner.tables.TeacherTable;
+import com.studentplanner.studentplanner.viewholders.TeacherViewHolder;
 
 import java.util.List;
 
-public class TeacherAdapter extends RecyclerView.Adapter<TeacherAdapter.ViewHolder> {
+public class TeacherAdapter extends RecyclerView.Adapter<TeacherViewHolder> {
 
-    private List<Teacher> teacherList;
+    private List<Teacher> list;
     private final Context context;
-    private final DatabaseHelper db;
     private  final ActivityResultLauncher<Intent> startForResult;
 
 
-
-    public TeacherAdapter(List<Teacher> teacherList, Context context, ActivityResultLauncher<Intent> startForResult) {
-        this.teacherList = teacherList;
+    public TeacherAdapter(List<Teacher> list, Context context, ActivityResultLauncher<Intent> startForResult) {
+        this.list = list;
         this.context = context;
         this.startForResult = startForResult;
-        db = DatabaseHelper.getInstance(context);
     }
 
     public void filterList(List<Teacher> filterlist) {
-        teacherList = filterlist;
+        list = filterlist;
         notifyDataSetChanged();
     }
 
     @NonNull
     @Override
-    public TeacherAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.teacher_row, parent, false);
-        return new ViewHolder(view);
+    public TeacherViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        return new TeacherViewHolder(TeacherRowBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TeacherAdapter.ViewHolder holder, int position) {
-        Teacher teacher = teacherList.get(position);
-
-        holder.tvTeacherId.setText(String.valueOf(teacher.getUserID()));
-        holder.tvTeacherName.setText(teacher.getName());
-
-
-        holder.layout.setOnClickListener(view -> startForResult.launch(intent(position)));
+    public void onBindViewHolder(@NonNull TeacherViewHolder holder, int position) {
+        holder.showDetails(list.get(position));
+        holder.getLayout().setOnClickListener(view -> startForResult.launch(intent(position)));
 
     }
 
     private Intent intent(int position) {
         Intent intent = new Intent(context, EditCourseworkActivity.class);
-        intent.putExtra(TeacherTable.COLUMN_ID, teacherList.get(position).getUserID());
+        intent.putExtra(TeacherTable.COLUMN_ID, list.get(position).getUserID());
         return intent;
     }
 
     @Override
     public int getItemCount() {
-        return teacherList.size();
+        return list.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView tvTeacherId;
-
-        private final TextView tvTeacherName;
-
-
-        private final CardView layout;
-
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            tvTeacherId = itemView.findViewById(R.id.tv_teacher_id);
-            tvTeacherName = itemView.findViewById(R.id.tv_teacher_name);
-
-            layout = itemView.findViewById(R.id.teacherSearchLayout);
-
-
-        }
-    }
 }

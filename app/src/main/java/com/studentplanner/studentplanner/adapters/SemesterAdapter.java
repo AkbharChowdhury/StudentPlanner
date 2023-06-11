@@ -1,99 +1,66 @@
 package com.studentplanner.studentplanner.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.studentplanner.studentplanner.databinding.SemesterRowBinding;
 import com.studentplanner.studentplanner.editActivities.EditSemesterActivity;
-import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.models.Semester;
 import com.studentplanner.studentplanner.tables.SemesterTable;
-import com.studentplanner.studentplanner.utils.Helper;
+import com.studentplanner.studentplanner.viewholders.SemesterViewHolder;
 
-import org.apache.commons.text.WordUtils;
-
-import java.text.MessageFormat;
 import java.util.List;
 
-public class SemesterAdapter extends RecyclerView.Adapter<SemesterAdapter.ViewHolder> {
+public class SemesterAdapter extends RecyclerView.Adapter<SemesterViewHolder> {
 
-    private List<Semester> semesterList;
+    private List<Semester> list;
     private final Context context;
     private  final ActivityResultLauncher<Intent> startForResult;
 
 
 
-    public SemesterAdapter(List<Semester> semesterList, Context context, ActivityResultLauncher<Intent> startForResult) {
-        this.semesterList = semesterList;
+    public SemesterAdapter(List<Semester> list, Context context, ActivityResultLauncher<Intent> startForResult) {
+        this.list = list;
         this.context = context;
         this.startForResult = startForResult;
     }
 
     public void filterList(List<Semester> filterlist) {
-        semesterList = filterlist;
+        list = filterlist;
         notifyDataSetChanged();
     }
 
     @NonNull
     @Override
-    public SemesterAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // below line is to inflate our layout.
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.semester_row, parent, false);
-        return new ViewHolder(view);
+    public SemesterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        return new SemesterViewHolder(SemesterRowBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SemesterAdapter.ViewHolder holder, int position) {
-        Semester model = semesterList.get(position);
-        String dateMessage = MessageFormat.format("From {0} to {1}",
-                Helper.formatDateShort1(model.getStart().toString()),
-                Helper.formatDate(model.getEnd().toString())
-        );
+    public void onBindViewHolder(@NonNull SemesterViewHolder holder, int position) {
 
-        holder.tvSemesterID.setText(String.valueOf(model.getSemesterID()));
-        holder.tvSemesterName.setText(WordUtils.capitalizeFully(model.getName()));
-        holder.tvDateDescription.setText(dateMessage);
-        holder.layout.setOnClickListener(v -> startForResult.launch(intent(position)));
+        holder.showDetails(list.get(position));
+        holder.getLayout().setOnClickListener(v -> startForResult.launch(intent(position)));
 
     }
 
     private Intent intent(int position){
         Intent intent = new Intent(context, EditSemesterActivity.class);
-        intent.putExtra(SemesterTable.COLUMN_ID, semesterList.get(position).getSemesterID());
+        intent.putExtra(SemesterTable.COLUMN_ID, list.get(position).getSemesterID());
         return intent;
     }
 
     @Override
     public int getItemCount() {
-        return semesterList.size();
+        return list.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView tvSemesterID;
-
-        private final TextView tvSemesterName;
-        private final TextView tvDateDescription;
-
-        private final CardView layout;
-
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            tvSemesterID = itemView.findViewById(R.id.tv_semester_id);
-            tvSemesterName = itemView.findViewById(R.id.tv_semester_name);
-            tvDateDescription = itemView.findViewById(R.id.tv_date_description);
-            layout = itemView.findViewById(R.id.semesterLayout);
-
-
-        }
-    }
 }

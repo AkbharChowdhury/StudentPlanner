@@ -33,8 +33,8 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
     private final TextView tvDeadline;
     private final TextView tvPriority;
     private final TextView tvTimeLeft;
-    private final TextView  tvCourseworkModule;
-    private final TextView  tvCourseworkCompleted;
+    private final TextView tvCourseworkModule;
+    private final TextView tvCourseworkCompleted;
 
     private final CardView layout;
 
@@ -49,16 +49,15 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
         tvCourseworkDescription = binding.tvCourseworkDesc;
         tvDeadline = binding.tvCourseworkDeadline;
         tvPriority = binding.tvCourseworkPriority;
-        tvTimeLeft =binding.tvTimeLeft;
+        tvTimeLeft = binding.tvTimeLeft;
         tvCourseworkModule = binding.tvCourseworkModule;
         tvCourseworkCompleted = binding.tvCourseworkCompleted;
-        layout = binding.courseworkSearchLayout;
+        layout = binding.layout;
         context = binding.getRoot().getContext();
     }
 
 
-
-    public void showDetails(Coursework coursework){
+    public void showDetails(Coursework coursework) {
         Module module = DatabaseHelper.getInstance(context).getSelectedModule(coursework.getModuleID());
         LocalDate deadline = LocalDate.parse(coursework.getDeadline());
 
@@ -67,7 +66,7 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
 
         tvCourseworkTitle.setText(Helper.getSnippet(title));
         tvCourseworkDescription.setText(coursework.getDescription());
-        tvDeadline.setText(String.format(Locale.ENGLISH,"%s, %s",
+        tvDeadline.setText(String.format(Locale.ENGLISH, "%s, %s",
                 Helper.formatDate(coursework.getDeadline()),
                 Helper.formatTime(coursework.getDeadlineTime())
         ));
@@ -78,7 +77,7 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
         tvTimeLeft.setText(Helper.calcDeadlineDate(deadline, coursework.isCompleted()));
 
         tvCourseworkCompleted.setText(coursework.isCompleted() ? Status.COMPLETED.label : Status.NOT_COMPLETED.label);
-        tvCourseworkCompleted.setTextColor(coursework.isCompleted()? context.getColor(R.color.green) : Color.RED);
+        tvCourseworkCompleted.setTextColor(coursework.isCompleted() ? context.getColor(R.color.green) : Color.RED);
 
         tvTimeLeft.setTextColor(Helper.getPriorityColour(coursework.getPriority(), context));
 

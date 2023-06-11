@@ -19,19 +19,19 @@ import java.util.List;
 
 public class ModuleAdapter extends RecyclerView.Adapter<ModuleViewHolder> {
 
-    private List<Module> moduleList;
+    private List<Module> list;
     private final Context context;
     private  final ActivityResultLauncher<Intent> startForResult;
 
-    public ModuleAdapter(List<Module> moduleList, Context context, ActivityResultLauncher<Intent> startForResult) {
-        this.moduleList = moduleList;
+    public ModuleAdapter(List<Module> list, Context context, ActivityResultLauncher<Intent> startForResult) {
+        this.list = list;
         this.context = context;
         this.startForResult = startForResult;
     }
 
 
     public void filterList(List<Module> filterlist) {
-        moduleList = filterlist;
+        list = filterlist;
         notifyDataSetChanged();
     }
 
@@ -44,19 +44,18 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ModuleViewHolder holder, int position) {
-        Module model = moduleList.get(position);
-        holder.showDetails(model);
+        holder.showDetails(list.get(position));
         holder.getLayout().setOnClickListener(v -> startForResult.launch(intent(position)));
     }
 
     private Intent intent(int position){
         Intent intent = new Intent(context, EditModuleActivity.class);
-        intent.putExtra(ModuleTable.COLUMN_ID, moduleList.get(position).getModuleID());
+        intent.putExtra(ModuleTable.COLUMN_ID, list.get(position).getModuleID());
         return intent;
     }
 
     @Override
     public int getItemCount() {
-        return moduleList.size();
+        return list.size();
     }
 }
