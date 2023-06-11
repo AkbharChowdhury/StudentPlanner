@@ -3,7 +3,6 @@ package com.studentplanner.studentplanner.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +22,10 @@ import com.studentplanner.studentplanner.editActivities.EditCourseworkActivity;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.enums.EventType;
 import com.studentplanner.studentplanner.enums.Status;
+import com.studentplanner.studentplanner.models.ClassRow;
 import com.studentplanner.studentplanner.models.Classes;
 import com.studentplanner.studentplanner.models.Coursework;
+import com.studentplanner.studentplanner.models.CourseworkRow;
 import com.studentplanner.studentplanner.models.Event;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.ModuleTeacher;
@@ -35,15 +36,19 @@ import com.studentplanner.studentplanner.utils.Helper;
 import org.apache.commons.text.WordUtils;
 
 import java.util.List;
-import java.util.Locale;
 
 public class EventAdapter extends ArrayAdapter<Event> {
+
+
+
     private final Context context;
+    private DatabaseHelper db;
     private  final ActivityResultLauncher<Intent> startForResult;
 
     public EventAdapter(@NonNull Context context, List<Event> events, ActivityResultLauncher<Intent> startForResult) {
         super(context, 0, events);
         this.context = context;
+        this.db = DatabaseHelper.getInstance(context);
         this.startForResult = startForResult;
     }
 
@@ -79,66 +84,63 @@ public class EventAdapter extends ArrayAdapter<Event> {
         int eventIcon = getEventIcon(event.getEventType());
         classesIcon.setImageResource(eventIcon);
         courseworkIcon.setImageResource(eventIcon);
-        // class row
-        TextView lblTeachers = convertView.findViewById(R.id.tv_class_teachers);
-        TextView lblClassTitle = convertView.findViewById(R.id.tv_class_title);
-        TextView lblRoom = convertView.findViewById(R.id.tv_room);
-        TextView lblStartTime = convertView.findViewById(R.id.tv_start_time);
-        TextView lblEndTime = convertView.findViewById(R.id.tv_end_time);
-        TextView lblType = convertView.findViewById(R.id.tv_class_type);
-        ConstraintLayout classRow  = convertView.findViewById(R.id.mainLayoutClasses);
+
+        ConstraintLayout classLayout  = convertView.findViewById(R.id.mainLayoutClasses);
+        ConstraintLayout courseworkLayout  = convertView.findViewById(R.id.mainLayoutCoursework);
 
 
-        // coursework row
-        TextView title = convertView.findViewById(R.id.tv_cw_title);
-        TextView lblModule = convertView.findViewById(R.id.tv_cw_module);
-        TextView priority = convertView.findViewById(R.id.tv_cw_priority);
-        TextView time = convertView.findViewById(R.id.tv_cw_time);
-        TextView completionStatus = convertView.findViewById(R.id.tv_cw_completed);
-
+        CourseworkRow courseworkRow = new CourseworkRow(convertView);
+        ClassRow classRow = new ClassRow(convertView);
 
         switch (event.getEventType()) {
             case COURSEWORK:
-                classRow.setVisibility(View.GONE);
-
-
-                Coursework coursework = event.getCoursework();
-                String priorityLevel = coursework.getPriority();
-
-                Module module = DatabaseHelper.getInstance(context).getSelectedModule(coursework.getModuleID());
-                String moduleDetails = module.getModuleDetails();
-                title.setText(Helper.getSnippet(WordUtils.capitalizeFully(coursework.getTitle()) , 20));
-
-                lblModule.setText(moduleDetails);
-                priority.setText(priorityLevel);
-                priority.setTextColor(Helper.getPriorityColour(priorityLevel, context));
-                time.setText(Helper.formatTimeShort(coursework.getDeadlineTime()));
-
-                completionStatus.setText(coursework.isCompleted() ? Status.COMPLETED.label : Status.NOT_COMPLETED.label);
-                completionStatus.setTextColor(coursework.isCompleted()? context.getColor(R.color.green) : Color.RED);
+                classLayout.setVisibility(View.GONE);
+                getCourseworkDetails(event.getCoursework(), courseworkRow);
                 break;
             case CLASSES:
+                courseworkLayout.setVisibility(View.GONE);
+                getClassInfo(event.getClasses(), classRow);
 
-                convertView.findViewById(R.id.mainLayoutCoursework).setVisibility(View.GONE);
-                Classes classes = event.getClasses();
-                int moduleID = classes.getModuleID();
-
-                List<ModuleTeacher> moduleTeacherList  = db.getModuleTeachers();
-                lblType.setText(classes.getClassType());
-                String teachers = Helper.moduleIDExistsInModuleTeacher(moduleTeacherList, classes.getModuleID())
-                        ? Helper.getSnippet(Helper.getTeachersForSelectedModule(context, moduleID), 35)
-                        : "No teacher assigned";
-
-                lblTeachers.setText(teachers);
-                Module m = DatabaseHelper.getInstance(context).getSelectedModule(moduleID);
-                lblClassTitle.setText(m.getModuleName());
-                String room = classes.getRoom().isEmpty()? "No room assigned" : classes.getRoom();
-                lblRoom.setText(room);
-                lblStartTime.setText(Helper.formatTimeShort(classes.getStartTime()));
-                lblEndTime.setText(Helper.formatTimeShort(classes.getEndTime()));
                 break;
         }
         return convertView;
+    }
+
+    private void getClassInfo(Classes classes, ClassRow row){
+
+        int moduleID = classes.getModuleID();
+
+        List<ModuleTeacher> moduleTeacherList  = db.getModuleTeachers();
+        row.lblType.setText(classes.getClassType());
+        String teachers = Helper.moduleIDExistsInModuleTeacher(moduleTeacherList, classes.getModuleID())
+                ? Helper.getSnippet(Helper.getTeachersForSelectedModule(context, moduleID), 35)
+                : "No teacher assigned";
+
+        row.lblTeachers.setText(teachers);
+        Module m = db.getSelectedModule(moduleID);
+        row.lblClassTitle.setText(m.getModuleName());
+        String room = classes.getRoom().isEmpty()? "No room assigned" : classes.getRoom();
+        row.lblRoom.setText(room);
+        row.lblStartTime.setText(Helper.formatTimeShort(classes.getStartTime()));
+        row.lblEndTime.setText(Helper.formatTimeShort(classes.getEndTime()));
+
+    }
+
+
+    private void getCourseworkDetails(Coursework coursework, CourseworkRow row){
+        String priorityLevel = coursework.getPriority();
+        Module module = db.getSelectedModule(coursework.getModuleID());
+        String moduleDetails = module.getModuleDetails();
+        row.title.setText(Helper.getSnippet(WordUtils.capitalizeFully(coursework.getTitle()) , 20));
+
+        row.lblModule.setText(moduleDetails);
+        row.priority.setText(priorityLevel);
+        row.priority.setTextColor(Helper.getPriorityColour(priorityLevel, context));
+        row.time.setText(Helper.formatTimeShort(coursework.getDeadlineTime()));
+
+        row.completionStatus.setText(coursework.isCompleted() ? Status.COMPLETED.label : Status.NOT_COMPLETED.label);
+        row.completionStatus.setTextColor(coursework.isCompleted()? context.getColor(R.color.green) : Color.RED);
+
     }
 
 
