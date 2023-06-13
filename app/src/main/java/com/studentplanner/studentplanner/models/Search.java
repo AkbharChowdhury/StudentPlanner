@@ -2,6 +2,7 @@ package com.studentplanner.studentplanner.models;
 
 import android.util.Log;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,38 +41,22 @@ public final class Search {
 
             if (isType(data, ListType.SEMESTER)){
                 List<Semester> list = (List<Semester>) data;
+
+
                 return list.stream()
                         .filter(s -> s.getName().toLowerCase().trim().contains(text.toLowerCase()))
                         .collect(Collectors.toList());
             }
 
 
-
-
         return new ArrayList<>();
     }
 
 
-//    private static  boolean isModule(List rhsList) {
-//
-//        if(rhsList != null && !rhsList.isEmpty()) {
-//
-//
-//            return rhsList.get(0) instanceof Module;
-//        }
-//        return false;
-//    }
+    private static boolean isType(List list, String listType) {
 
-
-
-
-    private static boolean isType(List rhsList, String listType) {
-
-        if(rhsList != null && !rhsList.isEmpty()) {
-            String listDataType = rhsList.get(0).getClass().getSimpleName();
-            Log.d("DS", listDataType);
-
-
+        if(list != null && !list.isEmpty()) {
+            String listDataType = list.get(0).getClass().getSimpleName();
             return listDataType.equals(listType);
         }
         return false;
