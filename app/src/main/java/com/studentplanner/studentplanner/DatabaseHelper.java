@@ -224,6 +224,35 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    @SuppressLint("Range")
+    public boolean emailExists(String email, String excludedEmail) {
+        int studentID = AccountPreferences.getStudentID(context);
+        String[] columns = {TeacherTable.COLUMN_EMAIL, TeacherTable.COLUMN_STUDENT_ID};
+        String emailColumn = TeacherTable.COLUMN_EMAIL;
+        SQLiteDatabase db = getReadableDatabase();
+        String selection = emailColumn + " LIKE ?"
+                + " AND " + emailColumn
+                + " NOT LIKE ?"
+                + "AND " + ModuleTable.COLUMN_STUDENT_ID + "= ?";
+
+        String[] selectionArgs = {
+                email,
+                excludedEmail,
+                String.valueOf(studentID),
+
+        };
+        try (Cursor cursor = db.query(TeacherTable.TABLE_NAME, columns, selection, selectionArgs, null, null, null)) {
+
+            return cursor.getCount() > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+
+        }
+
+    }
+
 
     @SuppressLint("Range")
     public boolean isAuthorised(String email, String password) {

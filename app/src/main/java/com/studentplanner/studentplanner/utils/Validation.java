@@ -323,7 +323,36 @@ public final class Validation {
         }
         if (setAdditionalCheck) {
 
+
             if (db.columnExists(email, StudentTable.COLUMN_EMAIL, StudentTable.TABLE_NAME)) {
+                setError(textField, getEmailExistsError());
+                return false;
+            }
+        }
+
+        textField.setError(null);
+        return true;
+    }
+
+
+    private boolean isValidEmail(TextInputLayout textField, String excludedEmail) {
+
+        String email = Helper.trimStr(textField);
+        String fieldName = Helper.capitalise(StudentTable.COLUMN_EMAIL);
+
+        if (email.isEmpty()) {
+            setError(textField, getRequiredFieldError(fieldName));
+            return false;
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            setError(textField, getInvalidEmailError());
+            return false;
+        }
+        if (setAdditionalCheck) {
+
+
+            if (db.emailExists(email, excludedEmail)) {
                 setError(textField, getEmailExistsError());
                 return false;
             }
@@ -469,7 +498,15 @@ public final class Validation {
         errors.add(isValidName(teacher.getTxtLastName(), TeacherTable.COLUMN_LASTNAME));
         errors.add(isValidTeacherEmail(teacher.getTxtEmail()));
 
+        return !errors.contains(false);
 
+    }
+    public boolean validateEditTeacherForm(Teacher teacher, String excludedEmail) {
+        List<Boolean> errors = new ArrayList<>();
+        setAdditionalCheck = true;
+        errors.add(isValidName(teacher.getTxtFirstName(), TeacherTable.COLUMN_FIRSTNAME));
+        errors.add(isValidName(teacher.getTxtLastName(), TeacherTable.COLUMN_LASTNAME));
+        errors.add(isValidEmail(teacher.getTxtEmail(), excludedEmail));
         return !errors.contains(false);
 
     }

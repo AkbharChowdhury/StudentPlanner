@@ -35,6 +35,7 @@ public class EditTeacherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_teacher);
         binding = ActivityEditTeacherBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        setTitle(R.string.edit_teacher);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -47,7 +48,7 @@ public class EditTeacherActivity extends AppCompatActivity {
         binding.btnEditTeacher.setOnClickListener(v -> {
             Teacher teacher = new Teacher(txtFirstName, txtLastName, txtEmail);
 
-            if (form.validateAddTeacherForm(teacher)) {
+            if (form.validateEditTeacherForm(teacher, excludedEmail)) {
                 if (db.updateTeacher(getTeacherDetails())) {
                     Helper.longToastMessage(this,"Teacher Updated");
                     setResult(RESULT_OK);
