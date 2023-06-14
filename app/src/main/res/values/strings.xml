@@ -150,6 +150,8 @@
     <string name="no_teachers_assigned_to_module">There are no teachers assigned to a module</string>
 
     <string name="add_teacher">Add Teacher</string>
+    <string name="edit_teacher">Edit Teacher</string>
+
     <string name="done">Done</string>
 
     <string-array name="priority_array">

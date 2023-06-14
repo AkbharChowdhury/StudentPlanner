@@ -1,6 +1,5 @@
 package com.studentplanner.studentplanner.editActivities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
+import com.studentplanner.studentplanner.databinding.ActivityEditModuleBinding;
+import com.studentplanner.studentplanner.databinding.ActivityEditTeacherBinding;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.tables.ModuleTable;
 import com.studentplanner.studentplanner.utils.Helper;
@@ -23,6 +24,7 @@ public class EditModuleActivity extends AppCompatActivity {
     private TextInputLayout txtModuleName;
     private Validation form;
     private String excludedModuleCode;
+    private ActivityEditModuleBinding binding;
 
 
 
@@ -30,18 +32,21 @@ public class EditModuleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_module);
+
+        binding = ActivityEditModuleBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         db = DatabaseHelper.getInstance(this);
-        txtModuleCode = findViewById(R.id.txtModuleCodeEdit);
-        txtModuleName = findViewById(R.id.txtModuleNameEdit);
+        txtModuleCode = binding.txtModuleCode;
+        txtModuleName = binding.txtModuleName;
         form = new Validation(this, db);
 
         setupFields();
-        findViewById(R.id.btn_edit_module).setOnClickListener(v -> {
+        binding.btnEditModule.setOnClickListener(v -> {
             if (form.validateEditModuleForm(new Module(txtModuleCode, txtModuleName), excludedModuleCode)) {
                 if (db.updateModule(getModuleDetails())) {
-//                    Helper.setUpdatedStatus(true);
                     Helper.longToastMessage(this,"Module Updated");
                     setResult(RESULT_OK);
                     finish();

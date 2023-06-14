@@ -9,12 +9,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
-import com.studentplanner.studentplanner.fragments.TeacherFragment;
+import com.studentplanner.studentplanner.databinding.ActivityAddTeacherBinding;
+import com.studentplanner.studentplanner.databinding.ActivityEditTeacherBinding;
 import com.studentplanner.studentplanner.models.Teacher;
 import com.studentplanner.studentplanner.utils.Helper;
 import com.studentplanner.studentplanner.utils.Validation;
-
-import java.util.Locale;
 
 public class AddTeacherActivity extends AppCompatActivity {
     private DatabaseHelper db;
@@ -22,20 +21,24 @@ public class AddTeacherActivity extends AppCompatActivity {
     private TextInputLayout txtFirstName;
     private TextInputLayout txtLastName;
     private TextInputLayout txtEmail;
+    private ActivityAddTeacherBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_teacher);
+        binding = ActivityAddTeacherBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         db = DatabaseHelper.getInstance(this);
         form = new Validation(this, db);
-        txtFirstName = findViewById(R.id.txtFirstnameTeacher);
-        txtLastName = findViewById(R.id.txtLastnameTeacher);
-        txtEmail = findViewById(R.id.txtEmailTeacher);
+        txtFirstName = binding.txtFirstname;
+        txtLastName = binding.txtLastname;
+        txtEmail = binding.txtEmail;
 
-        findViewById(R.id.btn_add_teacher).setOnClickListener(v -> {
+        binding.btnAddTeacher.setOnClickListener(v -> {
             Teacher teacher = new Teacher(txtFirstName, txtLastName, txtEmail);
             if (form.validateAddTeacherForm(teacher)){
                 if (db.addTeacher(getTeacherDetails())){
@@ -53,7 +56,7 @@ public class AddTeacherActivity extends AppCompatActivity {
 
 
     private Teacher getTeacherDetails() {
-        return new Teacher(Helper.trimStr(txtFirstName), Helper.trimStr(txtLastName),Helper.trimStr(txtEmail) );
+        return new Teacher(Helper.trimStr(txtFirstName), Helper.trimStr(txtLastName), Helper.trimStr(txtEmail));
 
     }
     @Override

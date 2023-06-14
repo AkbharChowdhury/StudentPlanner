@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".addActivities.AddTeacherActivity">
+    tools:context=".editActivities.EditTeacherActivity">
 
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -11,14 +11,13 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingHorizontal="16dp"
-        tools:context=".addActivities.AddCourseworkActivity">
+        android:paddingHorizontal="16dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="12dp"
-            android:text="@string/add_teacher"
+            android:text="@string/edit_teacher"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textColor="@color/black" />
 
@@ -91,13 +90,13 @@
 
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_add_teacher"
+            android:id="@+id/btn_edit_teacher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="12dp"
             android:background="@color/lightBlue"
-            android:text="@string/add_teacher"
+            android:text="@string/edit_teacher"
             android:textAllCaps="false"
             android:textColor="@color/white">
 

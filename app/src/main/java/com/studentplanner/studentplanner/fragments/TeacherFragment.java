@@ -96,7 +96,7 @@ public class TeacherFragment extends Fragment {
 
     private void buildRecyclerView() {
         if (!list.isEmpty()) {
-            adapter = new TeacherAdapter(list, context, startForResult);
+            adapter = new TeacherAdapter(list, getContext(), startForResult);
             LinearLayoutManager manager = new LinearLayoutManager(context);
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(manager);

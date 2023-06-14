@@ -975,6 +975,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 null, null, null)) {
             if (cursor.moveToLast()) {
                 teacher = new Teacher(
+                        cursor.getInt(cursor.getColumnIndex(TeacherTable.COLUMN_ID)),
                         cursor.getString(cursor.getColumnIndex(TeacherTable.COLUMN_FIRSTNAME)),
                         cursor.getString(cursor.getColumnIndex(TeacherTable.COLUMN_LASTNAME)),
                         cursor.getString(cursor.getColumnIndex(TeacherTable.COLUMN_EMAIL)));
@@ -1019,6 +1020,25 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(ModuleTable.COLUMN_MODULE_NAME, module.getModuleName());
 
         long result = db.update(ModuleTable.TABLE_NAME, cv, ModuleTable.COLUMN_ID + "=?", new String[]{String.valueOf(module.getModuleID())});
+        return result != -1;
+
+
+    }
+
+
+    public boolean updateTeacher(Teacher teacher) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+
+        int studentID = AccountPreferences.getStudentID(context);
+
+        cv.put(TeacherTable.COLUMN_STUDENT_ID, studentID);
+        cv.put(TeacherTable.COLUMN_FIRSTNAME, teacher.getFirstname());
+        cv.put(TeacherTable.COLUMN_LASTNAME, teacher.getLastname());
+        cv.put(TeacherTable.COLUMN_EMAIL, teacher.getEmail());
+
+        long result = db.update(TeacherTable.TABLE_NAME, cv, TeacherTable.COLUMN_ID + "=?", new String[]{String.valueOf(teacher.getUserID())});
         return result != -1;
 
 

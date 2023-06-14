@@ -2,7 +2,9 @@ package com.studentplanner.studentplanner.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -11,8 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.studentplanner.studentplanner.databinding.TeacherRowBinding;
 import com.studentplanner.studentplanner.editActivities.EditCourseworkActivity;
+import com.studentplanner.studentplanner.editActivities.EditTeacherActivity;
 import com.studentplanner.studentplanner.models.Teacher;
 import com.studentplanner.studentplanner.tables.TeacherTable;
+import com.studentplanner.studentplanner.utils.Helper;
 import com.studentplanner.studentplanner.viewholders.TeacherViewHolder;
 
 import java.util.List;
@@ -45,15 +49,23 @@ public class TeacherAdapter extends RecyclerView.Adapter<TeacherViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull TeacherViewHolder holder, int position) {
         holder.showDetails(list.get(position));
+        int id = list.get(position).getUserID();
         holder.getLayout().setOnClickListener(view -> startForResult.launch(intent(position)));
+
 
     }
 
     private Intent intent(int position) {
-        Intent intent = new Intent(context, EditCourseworkActivity.class);
+        Intent intent = new Intent(context, EditTeacherActivity.class);
         intent.putExtra(TeacherTable.COLUMN_ID, list.get(position).getUserID());
         return intent;
     }
+
+//    private Intent intent(int id) {
+//        Intent intent = new Intent(context, EditTeacherActivity.class);
+//        intent.putExtra(TeacherTable.COLUMN_ID, 8);
+//        return intent;
+//    }
 
     @Override
     public int getItemCount() {
