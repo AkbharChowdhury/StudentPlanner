@@ -27,7 +27,6 @@ import com.studentplanner.studentplanner.adapters.TeacherAdapter;
 import com.studentplanner.studentplanner.addActivities.AddTeacherActivity;
 import com.studentplanner.studentplanner.databinding.FragmentTeacherBinding;
 import com.studentplanner.studentplanner.models.Search;
-import com.studentplanner.studentplanner.models.SearchText;
 import com.studentplanner.studentplanner.models.Teacher;
 import com.studentplanner.studentplanner.utils.Helper;
 
@@ -142,8 +141,7 @@ public class TeacherFragment extends Fragment {
 
 
     private void filter(String text) {
-        List<Teacher> filteredList = Search.getFilteredTeacherList(ALL_TEACHERS, text);
-//                (List<Teacher>) Search.genericSearch(ALL_TEACHERS, text);
+        List<Teacher> filteredList = (List<Teacher>) Search.textSearch(ALL_TEACHERS, text);
         if (filteredList.isEmpty()) {
             Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
         } else {

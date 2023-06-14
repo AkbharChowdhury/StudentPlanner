@@ -3,11 +3,12 @@ package com.studentplanner.studentplanner.models;
 import android.widget.AutoCompleteTextView;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.studentplanner.studentplanner.interfaces.Searchable;
 
 import java.time.LocalDate;
 import java.util.Comparator;
 
-public class Coursework extends SearchText {
+public class Coursework implements Searchable {
     private int courseworkID;
     private int moduleID;
     private String title;
@@ -150,7 +151,6 @@ public class Coursework extends SearchText {
         this.priority = priority;
         this.deadline = deadline;
         this.deadlineTime = deadlineTime;
-        super.setSearchText(title);
 
     }
 
@@ -197,5 +197,10 @@ public class Coursework extends SearchText {
                 ", deadline='" + deadline + '\'' +
                 ", deadlineTime='" + deadlineTime + '\'' +
                 '}';
+    }
+
+    @Override
+    public String searchText() {
+        return title;
     }
 }

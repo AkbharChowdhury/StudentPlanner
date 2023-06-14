@@ -4,12 +4,13 @@ import android.content.Context;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
+import com.studentplanner.studentplanner.interfaces.Searchable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class Module extends SearchText {
+public class Module implements Searchable {
     private int moduleID;
     private String moduleCode;
     private String moduleName;
@@ -51,7 +52,6 @@ public class Module extends SearchText {
         this.moduleID = moduleID;
         this.moduleCode = moduleCode;
         this.moduleName = moduleName;
-        super.setSearchText(getModuleDetails());
     }
 
     public String getModuleCode() {
@@ -107,5 +107,11 @@ public class Module extends SearchText {
                 "moduleCode='" + moduleCode + '\'' +
                 ", moduleName='" + moduleName + '\'' +
                 '}';
+    }
+
+
+    @Override
+    public String searchText() {
+        return getModuleDetails();
     }
 }

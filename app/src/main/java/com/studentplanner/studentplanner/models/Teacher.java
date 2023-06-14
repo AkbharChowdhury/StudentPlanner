@@ -4,12 +4,13 @@ import android.content.Context;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
+import com.studentplanner.studentplanner.interfaces.Searchable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class Teacher extends User {
+public class Teacher extends User implements Searchable {
     public Teacher(String firstname, String lastname, String email) {
         super(firstname, lastname, email);
     }
@@ -39,4 +40,8 @@ public class Teacher extends User {
 
     }
 
+    @Override
+    public String searchText() {
+        return getName();
+    }
 }

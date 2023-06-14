@@ -1,12 +1,13 @@
 package com.studentplanner.studentplanner.models;
 
+import com.studentplanner.studentplanner.interfaces.Searchable;
 import com.studentplanner.studentplanner.utils.Helper;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Semester extends  SearchText {
+public class Semester implements Searchable {
 
     private int semesterID;
     private String name;
@@ -25,7 +26,6 @@ public class Semester extends  SearchText {
         this.name = name;
         this.start = start;
         this.end = end;
-        super.setSearchText(name);
     }
 
     public String getName() {
@@ -69,5 +69,10 @@ public class Semester extends  SearchText {
                 ", start=" + start +
                 ", end=" + end +
                 '}';
+    }
+
+    @Override
+    public String searchText() {
+        return name;
     }
 }

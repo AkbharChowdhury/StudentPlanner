@@ -24,15 +24,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.adapters.SemesterAdapter;
-import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
 import com.studentplanner.studentplanner.addActivities.AddSemesterActivity;
 import com.studentplanner.studentplanner.databinding.FragmentSemesterBinding;
 import com.studentplanner.studentplanner.models.Search;
 import com.studentplanner.studentplanner.models.Semester;
-import com.studentplanner.studentplanner.models.Teacher;
 import com.studentplanner.studentplanner.utils.Helper;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
