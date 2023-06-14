@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class Teacher extends User{
+public class Teacher extends User {
     public Teacher(String firstname, String lastname, String email) {
         super(firstname, lastname, email);
     }

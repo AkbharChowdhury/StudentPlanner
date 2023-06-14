@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Semester {
+public class Semester extends  SearchText {
 
     private int semesterID;
     private String name;
@@ -25,6 +25,7 @@ public class Semester {
         this.name = name;
         this.start = start;
         this.end = end;
+        super.setSearchText(name);
     }
 
     public String getName() {

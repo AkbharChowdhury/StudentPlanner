@@ -33,6 +33,7 @@ import com.studentplanner.studentplanner.models.Teacher;
 import com.studentplanner.studentplanner.utils.Helper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -74,7 +75,7 @@ public class SemesterFragment extends Fragment {
 
 
         db = DatabaseHelper.getInstance(context);
-        ALL_SEMESTERS  = db.getSemester();
+        ALL_SEMESTERS  = Collections.unmodifiableList(db.getSemester());
 
         Helper.getIntentMessage(context, activity.getIntent().getExtras());
         getSemester();
@@ -142,7 +143,7 @@ public class SemesterFragment extends Fragment {
     }
 
     private void filter(String text) {
-        List<Semester> filteredList = (List<Semester>) Search.genericSearch(ALL_SEMESTERS, text);
+        List<Semester> filteredList = (List<Semester>) Search.textSearch(ALL_SEMESTERS, text);
         if (filteredList.isEmpty()) {
             Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
         } else {

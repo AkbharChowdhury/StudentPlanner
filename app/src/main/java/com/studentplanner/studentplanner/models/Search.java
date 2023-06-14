@@ -1,8 +1,5 @@
 package com.studentplanner.studentplanner.models;
 
-import android.util.Log;
-
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,16 +7,16 @@ import java.util.stream.Collectors;
 public final class Search {
 
 
+    public static List<? extends SearchText> textSearch(List<? extends SearchText> data, String text){
 
-    public  static <T> List<?> genericSearch(List<T> data, String text){
+        return data.stream()
+                .filter(p -> p.getSearchText().toLowerCase().trim().contains(text.toLowerCase()))
+                .collect(Collectors.toList());
+    }
 
-            if (isType(data, ListType.MODULE)){
-                List<Module> list = (List<Module>) data;
-                return list.stream()
-                        .filter(m -> m.getModuleName().toLowerCase().contains(text.toLowerCase()))
-                        .collect(Collectors.toList());
 
-            }
+
+    public static <T> List<?> genericSearch(List<T> data, String text){
 
             if (isType(data, ListType.TEACHER)){
                 List<Teacher> list = (List<Teacher>) data;
@@ -28,28 +25,13 @@ public final class Search {
                         .collect(Collectors.toList());
 
             }
-
-
-            if (isType(data, ListType.COURSEWORK)){
-                List<Coursework> list = (List<Coursework>) data;
-                return list.stream()
-                        .filter(c -> c.getTitle().toLowerCase().trim().contains(text.toLowerCase()))
-                        .collect(Collectors.toList());
-            }
-
-
-
-            if (isType(data, ListType.SEMESTER)){
-                List<Semester> list = (List<Semester>) data;
-
-
-                return list.stream()
-                        .filter(s -> s.getName().toLowerCase().trim().contains(text.toLowerCase()))
-                        .collect(Collectors.toList());
-            }
-
-
         return new ArrayList<>();
+    }
+    public static  List<Teacher> getFilteredTeacherList(List<Teacher> list,String text){
+        return list.stream()
+                .filter(t -> t.getName().toLowerCase().trim().contains(text.toLowerCase()))
+                .collect(Collectors.toList());
+
     }
 
 

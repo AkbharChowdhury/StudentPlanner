@@ -7,7 +7,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.time.LocalDate;
 import java.util.Comparator;
 
-public class Coursework {
+public class Coursework extends SearchText {
     private int courseworkID;
     private int moduleID;
     private String title;
@@ -150,10 +150,12 @@ public class Coursework {
         this.priority = priority;
         this.deadline = deadline;
         this.deadlineTime = deadlineTime;
+        super.setSearchText(title);
 
     }
 
     public static Comparator<Coursework> sortDeadlineAsc = Comparator.comparing(c -> LocalDate.parse(c.getDeadline()));
+    public static Comparator<Coursework> sortDeadlineDesc = (c1, c2) -> c2.getDeadline().compareTo(LocalDate.now().toString());
 
 
     public int getCourseworkID() {

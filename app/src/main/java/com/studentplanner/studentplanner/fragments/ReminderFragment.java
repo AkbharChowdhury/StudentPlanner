@@ -29,6 +29,7 @@ import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.models.Search;
 import com.studentplanner.studentplanner.utils.Helper;
 
+import java.util.Collections;
 import java.util.List;
 
 
@@ -76,7 +77,7 @@ public class ReminderFragment extends Fragment {
     }
     private void getReminders(){
         list = db.getUpComingCourseworkByMonth();
-        ALL_COURSEWORK_REMINDERS = db.getUpComingCourseworkByMonth();
+        ALL_COURSEWORK_REMINDERS = Collections.unmodifiableList(db.getUpComingCourseworkByMonth());
         buildRecyclerView();
     }
 
@@ -135,7 +136,7 @@ public class ReminderFragment extends Fragment {
 
 
     private void filter(String text) {
-        List<Coursework> filteredList = (List<Coursework>) Search.genericSearch(ALL_COURSEWORK_REMINDERS, text);
+        List<Coursework> filteredList = (List<Coursework>) Search.textSearch(ALL_COURSEWORK_REMINDERS, text);
         if (filteredList.isEmpty()) {
             Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
         } else {

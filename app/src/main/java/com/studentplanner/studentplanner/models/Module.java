@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class Module {
+public class Module extends SearchText {
     private int moduleID;
     private String moduleCode;
     private String moduleName;
@@ -51,6 +51,7 @@ public class Module {
         this.moduleID = moduleID;
         this.moduleCode = moduleCode;
         this.moduleName = moduleName;
+        super.setSearchText(getModuleDetails());
     }
 
     public String getModuleCode() {

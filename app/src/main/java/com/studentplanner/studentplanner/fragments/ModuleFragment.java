@@ -45,6 +45,7 @@ public class ModuleFragment extends Fragment {
     private List<Module> ALL_MODULES;
 
 
+
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
 
         if (result.getResultCode() == RESULT_OK) {
@@ -73,6 +74,10 @@ public class ModuleFragment extends Fragment {
         ALL_MODULES = db.getModules();
         Helper.getIntentMessage(context, activity.getIntent().getExtras());
         getModule();
+
+
+
+
 
         return binding.getRoot();
     }
@@ -138,7 +143,9 @@ public class ModuleFragment extends Fragment {
 
 
     private void filter(String text) {
-        List<Module> filteredList = (List<Module>) Search.genericSearch(ALL_MODULES, text);
+
+        List<Module> filteredList = (List<Module>) Search.textSearch(ALL_MODULES, text);
+
         if (filteredList.isEmpty()) {
             Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
         } else {

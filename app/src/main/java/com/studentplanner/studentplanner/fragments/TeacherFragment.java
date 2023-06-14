@@ -27,9 +27,11 @@ import com.studentplanner.studentplanner.adapters.TeacherAdapter;
 import com.studentplanner.studentplanner.addActivities.AddTeacherActivity;
 import com.studentplanner.studentplanner.databinding.FragmentTeacherBinding;
 import com.studentplanner.studentplanner.models.Search;
+import com.studentplanner.studentplanner.models.SearchText;
 import com.studentplanner.studentplanner.models.Teacher;
 import com.studentplanner.studentplanner.utils.Helper;
 
+import java.util.Collections;
 import java.util.List;
 
 
@@ -73,7 +75,7 @@ public class TeacherFragment extends Fragment {
         recyclerView = binding.recyclerView;
 
         db = DatabaseHelper.getInstance(context);
-        ALL_TEACHERS  = db.getTeachers();
+        ALL_TEACHERS = Collections.unmodifiableList(db.getTeachers());
         Helper.getIntentMessage(context, activity.getIntent().getExtras());
         getTeachers();
 
@@ -140,7 +142,8 @@ public class TeacherFragment extends Fragment {
 
 
     private void filter(String text) {
-        List<Teacher> filteredList = (List<Teacher>) Search.genericSearch(ALL_TEACHERS, text);
+        List<Teacher> filteredList = Search.getFilteredTeacherList(ALL_TEACHERS, text);
+//                (List<Teacher>) Search.genericSearch(ALL_TEACHERS, text);
         if (filteredList.isEmpty()) {
             Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
         } else {
