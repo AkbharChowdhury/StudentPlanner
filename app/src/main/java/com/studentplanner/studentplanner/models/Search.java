@@ -53,7 +53,7 @@ public final class Search {
     }
 
 
-    private static boolean isType(List list, String listType) {
+    private static boolean isType(List<?> list, String listType) {
 
         if(list != null && !list.isEmpty()) {
             String listDataType = list.get(0).getClass().getSimpleName();
