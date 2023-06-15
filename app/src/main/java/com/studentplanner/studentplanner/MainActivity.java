@@ -16,6 +16,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.navigation.NavigationView;
+import com.studentplanner.studentplanner.databinding.ActivityMainBinding;
+import com.studentplanner.studentplanner.databinding.NavHeaderBinding;
 import com.studentplanner.studentplanner.fragments.CalendarFragment;
 import com.studentplanner.studentplanner.fragments.CourseworkFragment;
 import com.studentplanner.studentplanner.fragments.ModuleFragment;
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawer;
     private DatabaseHelper db;
     private int studentID;
+    private NavHeaderBinding navHeaderBinding;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -44,39 +47,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        navHeaderBinding = NavHeaderBinding.inflate(getLayoutInflater());
+
         db = DatabaseHelper.getInstance(this);
         studentID = AccountPreferences.getStudentID(this);
 
-
         setupNavDrawer(savedInstanceState);
         showStudentDetails();
-
-//        TelephonyManager tm = (TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
-//        String countryCodeValue = tm.getNetworkCountryIso();
-//        String s = getApplicationContext().getResources().getConfiguration().locale.getDisplayCountry();
-
-        TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-        String countryCodeValue = tm.getNetworkCountryIso();
-        Log.d("CODE", countryCodeValue);
     }
 
 
-    private void openFragment(Fragment fragment){
+    private void openFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 fragment).commit();
     }
 
-
     private void showStudentDetails() {
         Student student = db.getUserFirstAndLastName(studentID);
         // show name
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        View header = navigationView.getHeaderView(0);
-        TextView user_dashboard = (TextView) header.findViewById(R.id.nav_username_label);
+        TextView user_dashboard = (TextView) navHeaderBinding.navUsernameLabel;
         user_dashboard.setText(student.getName());
         // show email
         String email = db.getStudentEmail(studentID);
-        TextView lblEmail = (TextView) header.findViewById(R.id.nav_email_label);
+        TextView lblEmail = (TextView) navHeaderBinding.navEmailLabel;
         lblEmail.setText(email);
     }
 
@@ -95,22 +88,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (savedInstanceState == null) {
 
-
             if (AccountPreferences.getStudentID(this) == 0) {
                 openFragment(new LoginFragment());
                 return;
             }
-            openFragment(new CourseworkFragment());
+            openFragment(new CalendarFragment());
             navigationView.setCheckedItem(R.id.nav_calendar);
         }
 
     }
 
-
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.nav_logout){
+        if (item.getItemId() == R.id.nav_logout) {
             AccountPreferences.logout(this);
             openFragment(new LoginFragment());
         } else {

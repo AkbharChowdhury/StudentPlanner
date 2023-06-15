@@ -11,9 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.studentplanner.studentplanner.databinding.CalendarCellBinding;
 import com.studentplanner.studentplanner.viewholders.CalendarViewHolder;
 import com.studentplanner.studentplanner.DatabaseHelper;
-import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.enums.EventType;
 import com.studentplanner.studentplanner.interfaces.OnItemListener;
 import com.studentplanner.studentplanner.models.Event;
@@ -25,6 +25,9 @@ import java.util.ArrayList;
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
     private final ArrayList<LocalDate> days;
     private final OnItemListener onItemListener;
+    private CalendarCellBinding binding;
+    private ImageView imgCoursework;
+    private ImageView imgClasses;
 
     public CalendarAdapter(ArrayList<LocalDate> days, OnItemListener onItemListener) {
         this.days = days;
@@ -34,9 +37,13 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
     @NonNull
     @Override
     public CalendarViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.calendar_cell, parent, false);
-        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+
+        binding = CalendarCellBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        imgCoursework = binding.imgCwIcon;
+        imgClasses = binding.imgClassesIcon;
+
+
+        ViewGroup.LayoutParams layoutParams = binding.getRoot().getLayoutParams();
         if (days.size() > 15) {
             //month view
             layoutParams.height = (int) (parent.getHeight() * 0.166666666);
@@ -45,15 +52,16 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
             layoutParams.height = parent.getHeight();
 
         }
-        return new CalendarViewHolder(view, onItemListener, days);
+        return new CalendarViewHolder(binding, onItemListener, days);
 
     }
 
     @Override
     public void onBindViewHolder(@NonNull CalendarViewHolder holder, int position) {
-
-        Context context = holder.parentView.getContext();
+        Context context = binding.getRoot().getContext();
         DatabaseHelper db = DatabaseHelper.getInstance(context);
+        TextView lblTotalCoursework = binding.lblCourseworkCounter;
+
         // selected date hover
         final LocalDate date = days.get(position);
         if (date == null) {
@@ -64,16 +72,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
         holder.dayOfMonth.setText(String.valueOf(date.getDayOfMonth()));
         if (date.equals(CalendarUtils.getSelectedDate())) {
             holder.parentView.setBackgroundColor(Color.LTGRAY);
-
         }
 
         for (Event event : Event.getEventsList()) {
-
             if (date.equals(event.getDate())) {
-
-                getEventIcon(event.getEventType(), holder);
-                TextView lblTotalCoursework = holder.parentView.findViewById(R.id.lblCourseworkCounter);
-
+                getEventIcon(event.getEventType());
                 if (event.getEventType() == EventType.COURSEWORK) {
                     lblTotalCoursework.setVisibility(View.VISIBLE);
                     int total = db.getCourseworkCountByDate(event.getDate());
@@ -87,16 +90,12 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
             }
 
         }
+
     }
 
-    private void getEventIcon(EventType eventType, CalendarViewHolder holder) {
-        ImageView imgCoursework = holder.parentView.findViewById(R.id.img_cw_icon);
-        ImageView imgClasses = holder.parentView.findViewById(R.id.img_classes_icon);
-
-
-
+    private void getEventIcon(EventType eventType) {
         switch (eventType) {
-            case COURSEWORK-> imgCoursework.setVisibility(View.VISIBLE);
+            case COURSEWORK -> imgCoursework.setVisibility(View.VISIBLE);
             case CLASSES -> imgClasses.setVisibility(View.VISIBLE);
         }
     }
