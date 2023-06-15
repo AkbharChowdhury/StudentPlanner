@@ -50,14 +50,8 @@ public class EventAdapter extends ArrayAdapter<Event> {
         binding.mainLayout.setOnClickListener(v -> {
             final int ID = event.getId();
             switch (event.getEventType()) {
-                case COURSEWORK:
-                    startForResult.launch(getCourseworkIntent(ID));
-                    break;
-
-                case CLASSES:
-                    startForResult.launch(getClassesIntent(ID));
-                    break;
-
+                case COURSEWORK -> startForResult.launch(getCourseworkIntent(ID));
+                case CLASSES -> startForResult.launch(getClassesIntent(ID));
             }
         });
 
@@ -74,15 +68,14 @@ public class EventAdapter extends ArrayAdapter<Event> {
         ClassRow classRow = new ClassRow(binding, context);
 
         switch (event.getEventType()) {
-            case COURSEWORK:
+            case COURSEWORK -> {
                 classLayout.setVisibility(View.GONE);
                 courseworkRow.setDetails(event.getCoursework());
-                break;
-            case CLASSES:
+            }
+            case CLASSES -> {
                 courseworkLayout.setVisibility(View.GONE);
                 classRow.setDetails(event.getClasses());
-
-                break;
+            }
         }
 
 
