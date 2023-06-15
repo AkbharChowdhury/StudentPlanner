@@ -93,14 +93,12 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
     private void getEventIcon(EventType eventType, CalendarViewHolder holder) {
         ImageView imgCoursework = holder.parentView.findViewById(R.id.img_cw_icon);
         ImageView imgClasses = holder.parentView.findViewById(R.id.img_classes_icon);
-        switch (eventType) {
-            case COURSEWORK:
-                imgCoursework.setVisibility(View.VISIBLE);
-                break;
-            case CLASSES:
-                imgClasses.setVisibility(View.VISIBLE);
-                break;
 
+
+
+        switch (eventType) {
+            case COURSEWORK-> imgCoursework.setVisibility(View.VISIBLE);
+            case CLASSES -> imgClasses.setVisibility(View.VISIBLE);
         }
     }
 

@@ -1,8 +1,5 @@
 package com.studentplanner.studentplanner.models;
 
-import static com.studentplanner.studentplanner.models.Coursework.sortDeadlineAsc;
-import static com.studentplanner.studentplanner.models.Coursework.sortDeadlineDesc;
-
 import android.content.Context;
 
 import com.studentplanner.studentplanner.R;
@@ -73,18 +70,13 @@ public class SearchCoursework {
     }
 
 
-    public List<Coursework> filterResults(boolean isLatest) {
+    public List<Coursework> filterResults() {
 
         return ALL_COURSEWORK.stream()
                 .filter(filterTitle)
                 .filter(filterPriority())
-                .filter(this::filterStatus).sorted(isLatest?  sortDeadlineDesc: sortDeadlineAsc).collect(Collectors.toList());
-
-//        return ALL_COURSEWORK.stream()
-//                .filter(filterTitle)
-//                .filter(filterPriority())
-//                .filter(this::filterStatus)
-//                .collect(Collectors.toList());
+                .filter(this::filterStatus)
+                .collect(Collectors.toList());
     }
 
 

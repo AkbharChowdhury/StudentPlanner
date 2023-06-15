@@ -2,7 +2,6 @@ package com.studentplanner.studentplanner.fragments;
 
 import static android.app.Activity.RESULT_OK;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.Spinner;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -26,7 +24,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.checkbox.MaterialCheckBox;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.adapters.CourseworkAdapter;
@@ -44,8 +41,6 @@ import java.util.List;
 
 
 public class CourseworkFragment extends Fragment {
-    private CheckBox checkBoxSort;
-
     private SearchCoursework search;
     private Spinner txtPriority;
     private Spinner txtCompletionStatus;
@@ -73,7 +68,13 @@ public class CourseworkFragment extends Fragment {
     }
 
     private void setCompletionDropdown() {
-        txtCompletionStatus.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, context.getResources().getStringArray(R.array.completion_array_search)));
+
+
+        txtCompletionStatus.setAdapter(new ArrayAdapter<String>(
+                getActivity(),
+                android.R.layout.simple_spinner_dropdown_item,
+                context.getResources().getStringArray(R.array.completion_array_search)
+        ));
 
     }
 
@@ -89,29 +90,49 @@ public class CourseworkFragment extends Fragment {
         ));
 
 
+//        txtPriority.setOnItemClickListener((parent, view, position, id) -> {
+//            search.setPriority(txtPriority.getAdapter().getItem(position).toString());
+//            search.filterResults();
+////            Helper.longToastMessage(context, txtPriority.getAdapter().getItem(position).toString());
+////            selectedModuleID = moduleList.get(position).getModuleID()
+//        });
+
+//        txtPriority.setSelection(priorityArray.indexOf(context.getString(R.string.any_priority)));
 
     }
+
+//    private void setPriorityDropdown(){
+//        Deque<String> deque = new LinkedList<>(Arrays.asList(context.getResources().getStringArray(R.array.priority_array)));
+//        deque.addFirst(context.getString(R.string.any_priority));
+//        List<String> priorityArray = new ArrayList<>(deque);
+//        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+//                getActivity(),
+//                android.R.layout.simple_spinner_dropdown_item,
+//                priorityArray
+//        );
+//        txtPriority.setAdapter(adapter);
+//        txtPriority.setOnItemClickListener((parent, view, position, id) -> {
+//            search.setPriority(txtPriority.getAdapter().getItem(position).toString());
+//            search.filterResults();
+////            Helper.longToastMessage(context, txtPriority.getAdapter().getItem(position).toString());
+////            selectedModuleID = moduleList.get(position).getModuleID()
+//        });
+//
+////        txtPriority.setSelection(priorityArray.indexOf(context.getString(R.string.any_priority)));
+//
+//    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         initFragment();
         binding = FragmentCourseworkBinding.inflate(inflater, container, false);
-        checkBoxSort = binding.chkSort;
-
-        checkBoxSort.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            list.sort(isChecked ? Coursework.sortDeadlineDesc : Coursework.sortDeadlineAsc);
-            adapter.notifyDataSetChanged();
-        });
-
-
         txtPriority = binding.txtPriority;
         txtCompletionStatus = binding.txtCompletionStatus;
-
         setPriorityDropdown();
         setCompletionDropdown();
 
@@ -124,9 +145,10 @@ public class CourseworkFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 search.setPriority(txtPriority.getAdapter().getItem(position).toString());
-                List<Coursework> filteredList = search.filterResults(checkBoxSort.isChecked());
+                List<Coursework> filteredList = search.filterResults();
                 checkEmptyResults(filteredList);
                 adapter.filterList(filteredList);
+
 
             }
 
@@ -143,15 +165,15 @@ public class CourseworkFragment extends Fragment {
 
                 if (position == 0) {
                     search.setDefaultStatus(true);
-                    List<Coursework> filteredList = search.filterResults(checkBoxSort.isChecked());
+                    List<Coursework> filteredList = search.filterResults();
                     checkEmptyResults(filteredList);
-                    adapter.filterList(search.filterResults(checkBoxSort.isChecked()));
+                    adapter.filterList(search.filterResults());
                     return;
                 }
                 search.setDefaultStatus(false);
                 boolean isCompleted = txtCompletionStatus.getAdapter().getItem(position).toString().equalsIgnoreCase("Completed");
                 search.setCompleted(isCompleted);
-                List<Coursework> filteredList = search.filterResults(checkBoxSort.isChecked());
+                List<Coursework> filteredList = search.filterResults();
                 checkEmptyResults(filteredList);
                 adapter.filterList(filteredList);
 
@@ -177,9 +199,7 @@ public class CourseworkFragment extends Fragment {
 
     private void getCoursework() {
         list = db.getCoursework();
-//        list.sort(Coursework.sortDeadlineAsc);
         list.sort(Coursework.sortDeadlineAsc);
-
 
         search = new SearchCoursework(context, list);
         buildRecyclerView();
@@ -241,7 +261,7 @@ public class CourseworkFragment extends Fragment {
 
     private void filterTitle(String title) {
         search.setTitle(title);
-        List<Coursework> filteredList = search.filterResults(checkBoxSort.isChecked());
+        List<Coursework> filteredList = search.filterResults();
 
         checkEmptyResults(filteredList);
         adapter.filterList(filteredList);
