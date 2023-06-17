@@ -57,6 +57,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
 
         ImageView classesIcon = binding.icClasses;
         ImageView courseworkIcon = binding.icCoursework;
+
         int eventIcon = getEventIcon(event.getEventType());
         classesIcon.setImageResource(eventIcon);
         courseworkIcon.setImageResource(eventIcon);

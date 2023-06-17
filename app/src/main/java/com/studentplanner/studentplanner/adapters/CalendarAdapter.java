@@ -39,6 +39,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
     public CalendarViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         binding = CalendarCellBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+
         imgCoursework = binding.imgCwIcon;
         imgClasses = binding.imgClassesIcon;
 
@@ -74,14 +75,14 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
             holder.parentView.setBackgroundColor(Color.LTGRAY);
         }
 
-        for (Event event : Event.getEventsList()) {
+        Event.getEventsList().forEach(event -> {
             if (date.equals(event.getDate())) {
                 getEventIcon(event.getEventType());
                 if (event.getEventType() == EventType.COURSEWORK) {
-                    lblTotalCoursework.setVisibility(View.VISIBLE);
-                    int total = db.getCourseworkCountByDate(event.getDate());
+                    final int total = db.getCourseworkCountByDate(event.getDate());
                     if (total > 1) {
                         // show number of coursework due on calendar date
+                        lblTotalCoursework.setVisibility(View.VISIBLE);
                         lblTotalCoursework.setText(String.valueOf(total));
                     }
 
@@ -89,7 +90,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
 
             }
 
-        }
+        });
 
     }
 
