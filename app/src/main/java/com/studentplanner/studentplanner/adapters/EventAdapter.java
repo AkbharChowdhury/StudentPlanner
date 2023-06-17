@@ -96,14 +96,10 @@ public class EventAdapter extends ArrayAdapter<Event> {
     }
 
     private int getEventIcon(EventType eventType) {
-        switch (eventType) {
-            case COURSEWORK:
-                return R.drawable.ic_coursework;
-            case CLASSES:
-                return R.drawable.ic_classes;
-            default:
-                throw new IllegalStateException("Unexpected value: " + eventType);
-        }
+        return switch (eventType) {
+            case COURSEWORK -> R.drawable.ic_coursework;
+            case CLASSES -> R.drawable.ic_classes;
+        };
     }
 }
 
