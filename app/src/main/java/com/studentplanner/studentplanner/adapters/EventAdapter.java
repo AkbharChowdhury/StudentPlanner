@@ -83,19 +83,19 @@ public class EventAdapter extends ArrayAdapter<Event> {
     }
 
 
-    private Intent getCourseworkIntent(int id) {
+    private Intent getCourseworkIntent(final int id) {
         Intent intent = new Intent(getContext(), EditCourseworkActivity.class);
         intent.putExtra(CourseworkTable.COLUMN_ID, id);
         return intent;
     }
 
-    private Intent getClassesIntent(int id) {
+    private Intent getClassesIntent(final int id) {
         Intent intent = new Intent(getContext(), EditClassesActivity.class);
         intent.putExtra(ClassTable.COLUMN_ID, id);
         return intent;
     }
 
-    private int getEventIcon(EventType eventType) {
+    private int getEventIcon(final EventType eventType) {
         return switch (eventType) {
             case COURSEWORK -> R.drawable.ic_coursework;
             case CLASSES -> R.drawable.ic_classes;
