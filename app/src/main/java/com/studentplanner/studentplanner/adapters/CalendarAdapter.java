@@ -41,10 +41,9 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
 
         binding = CalendarCellBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         db = DatabaseHelper.getInstance(binding.getRoot().getContext());
-
+        
         imgCoursework = binding.imgCwIcon;
         imgClasses = binding.imgClassesIcon;
-
 
         ViewGroup.LayoutParams layoutParams = binding.getRoot().getLayoutParams();
         if (days.size() > 15) {
@@ -83,9 +82,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
 
         Event.getEventsList().forEach(event -> {
             if (date.equals(event.getDate())) {
-
                 getEventIcon(event.getEventType());
-
                 if (event.getEventType() == EventType.COURSEWORK) {
                     showTotalCoursework(binding.lblCourseworkCounter, event.getDate());
                 }
