@@ -64,8 +64,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
             lblTotalCoursework.setVisibility(View.VISIBLE);
             lblTotalCoursework.setText(String.valueOf(total));
         }
-
-
     }
 
     @Override
