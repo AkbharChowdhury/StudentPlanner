@@ -41,7 +41,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
 
         binding = CalendarCellBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         db = DatabaseHelper.getInstance(binding.getRoot().getContext());
-        
+
         imgCoursework = binding.imgCwIcon;
         imgClasses = binding.imgClassesIcon;
 

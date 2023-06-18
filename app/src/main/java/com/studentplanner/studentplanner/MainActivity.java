@@ -1,11 +1,7 @@
 package com.studentplanner.studentplanner;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,13 +12,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.navigation.NavigationView;
-import com.studentplanner.studentplanner.databinding.ActivityMainBinding;
 import com.studentplanner.studentplanner.databinding.NavHeaderBinding;
-import com.studentplanner.studentplanner.fragments.CalendarFragment;
-import com.studentplanner.studentplanner.fragments.CourseworkFragment;
-import com.studentplanner.studentplanner.fragments.ModuleFragment;
 import com.studentplanner.studentplanner.fragments.ReminderFragment;
-import com.studentplanner.studentplanner.fragments.TeacherFragment;
 import com.studentplanner.studentplanner.models.Student;
 import com.studentplanner.studentplanner.utils.AccountPreferences;
 import com.studentplanner.studentplanner.utils.FragmentHandler;
@@ -65,11 +56,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void showStudentDetails() {
         Student student = db.getUserFirstAndLastName(studentID);
         // show name
-        TextView user_dashboard = (TextView) navHeaderBinding.navUsernameLabel;
+        TextView user_dashboard = navHeaderBinding.navUsernameLabel;
         user_dashboard.setText(student.getName());
         // show email
         String email = db.getStudentEmail(studentID);
-        TextView lblEmail = (TextView) navHeaderBinding.navEmailLabel;
+        TextView lblEmail = navHeaderBinding.navEmailLabel;
         lblEmail.setText(email);
     }
 
@@ -92,8 +83,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 openFragment(new LoginFragment());
                 return;
             }
-            openFragment(new CalendarFragment());
-            navigationView.setCheckedItem(R.id.nav_calendar);
+            openFragment(new ReminderFragment());
+            navigationView.setCheckedItem(R.id.nav_reminder);
         }
 
     }
