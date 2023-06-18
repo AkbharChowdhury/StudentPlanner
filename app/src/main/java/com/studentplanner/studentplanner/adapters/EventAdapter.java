@@ -37,7 +37,8 @@ public class EventAdapter extends ArrayAdapter<Event> {
         this.context = context;
         this.startForResult = startForResult;
     }
-    private void handleClick(Event event){
+
+    private void handleClick(Event event) {
         final int ID = event.getId();
         switch (event.getEventType()) {
             case COURSEWORK -> startForResult.launch(getCourseworkIntent(ID));
@@ -48,8 +49,8 @@ public class EventAdapter extends ArrayAdapter<Event> {
 
     @NonNull
     @Override
+    @SuppressLint("ViewHolder")
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-
         final Event event = getItem(position);
         EventRowBinding binding = EventRowBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         binding.mainLayout.setOnClickListener(v -> handleClick(event));
@@ -57,7 +58,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
         return binding.getRoot();
     }
 
-    private void showEventDetails(final Event event, final EventRowBinding binding) {
+    private void showEventDetails(final Event event, EventRowBinding binding) {
         final ImageView classesIcon = binding.icClasses;
         final ImageView courseworkIcon = binding.icCoursework;
 
