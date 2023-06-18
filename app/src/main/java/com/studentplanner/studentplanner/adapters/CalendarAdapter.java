@@ -23,6 +23,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
+    private DatabaseHelper db;
     private final ArrayList<LocalDate> days;
     private final OnItemListener onItemListener;
     private CalendarCellBinding binding;
@@ -56,20 +57,27 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
         return new CalendarViewHolder(binding, onItemListener, days);
 
     }
+    private void showTotalCoursework(final TextView lblTotalCoursework, final LocalDate date){
+        final int total = db.getCourseworkCountByDate(date);
+        if (total > 1) {
+            lblTotalCoursework.setVisibility(View.VISIBLE);
+            lblTotalCoursework.setText(String.valueOf(total));
+        }
+
+
+    }
 
     @Override
     public void onBindViewHolder(@NonNull CalendarViewHolder holder, int position) {
-        Context context = binding.getRoot().getContext();
-        DatabaseHelper db = DatabaseHelper.getInstance(context);
-        TextView lblTotalCoursework = binding.lblCourseworkCounter;
+        db = DatabaseHelper.getInstance(binding.getRoot().getContext());
 
         // selected date hover
         final LocalDate date = days.get(position);
         if (date == null) {
             holder.dayOfMonth.setText("");
             return;
-
         }
+
         holder.dayOfMonth.setText(String.valueOf(date.getDayOfMonth()));
         if (date.equals(CalendarUtils.getSelectedDate())) {
             holder.parentView.setBackgroundColor(Color.LTGRAY);
@@ -77,15 +85,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
 
         Event.getEventsList().forEach(event -> {
             if (date.equals(event.getDate())) {
-                getEventIcon(event.getEventType());
-                if (event.getEventType() == EventType.COURSEWORK) {
-                    final int total = db.getCourseworkCountByDate(event.getDate());
-                    if (total > 1) {
-                        // show number of coursework due on calendar date
-                        lblTotalCoursework.setVisibility(View.VISIBLE);
-                        lblTotalCoursework.setText(String.valueOf(total));
-                    }
 
+                getEventIcon(event.getEventType());
+
+                if (event.getEventType() == EventType.COURSEWORK) {
+                    showTotalCoursework(binding.lblCourseworkCounter, event.getDate());
                 }
 
             }
