@@ -40,6 +40,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
     public CalendarViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         binding = CalendarCellBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        db = DatabaseHelper.getInstance(binding.getRoot().getContext());
 
         imgCoursework = binding.imgCwIcon;
         imgClasses = binding.imgClassesIcon;
@@ -69,7 +70,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull CalendarViewHolder holder, int position) {
-        db = DatabaseHelper.getInstance(binding.getRoot().getContext());
 
         // selected date hover
         final LocalDate date = days.get(position);

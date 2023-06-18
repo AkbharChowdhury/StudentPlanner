@@ -37,36 +37,39 @@ public class EventAdapter extends ArrayAdapter<Event> {
         this.context = context;
         this.startForResult = startForResult;
     }
+    private void handleClick(Event event){
+        final int ID = event.getId();
+        switch (event.getEventType()) {
+            case COURSEWORK -> startForResult.launch(getCourseworkIntent(ID));
+            case CLASSES -> startForResult.launch(getClassesIntent(ID));
+        }
 
+    }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-        Event event = getItem(position);
-        @SuppressLint("ViewHolder")
+        final Event event = getItem(position);
         EventRowBinding binding = EventRowBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        binding.mainLayout.setOnClickListener(v -> handleClick(event));
+        showEventDetails(event, binding);
+        return binding.getRoot();
+    }
 
-        binding.mainLayout.setOnClickListener(v -> {
-            final int ID = event.getId();
-            switch (event.getEventType()) {
-                case COURSEWORK -> startForResult.launch(getCourseworkIntent(ID));
-                case CLASSES -> startForResult.launch(getClassesIntent(ID));
-            }
-        });
+    private void showEventDetails(final Event event, final EventRowBinding binding) {
+        final ImageView classesIcon = binding.icClasses;
+        final ImageView courseworkIcon = binding.icCoursework;
 
-        ImageView classesIcon = binding.icClasses;
-        ImageView courseworkIcon = binding.icCoursework;
-
-        int eventIcon = getEventIcon(event.getEventType());
+        final int eventIcon = getEventIcon(event.getEventType());
         classesIcon.setImageResource(eventIcon);
         courseworkIcon.setImageResource(eventIcon);
 
-        ConstraintLayout classLayout = binding.mainLayoutClasses;
-        ConstraintLayout courseworkLayout = binding.mainLayoutCoursework;
+        final ConstraintLayout classLayout = binding.mainLayoutClasses;
+        final ConstraintLayout courseworkLayout = binding.mainLayoutCoursework;
 
-        CourseworkRow courseworkRow = new CourseworkRow(binding, context);
-        ClassRow classRow = new ClassRow(binding, context);
+        final CourseworkRow courseworkRow = new CourseworkRow(binding, context);
+        final ClassRow classRow = new ClassRow(binding, context);
 
         switch (event.getEventType()) {
             case COURSEWORK -> {
@@ -79,8 +82,6 @@ public class EventAdapter extends ArrayAdapter<Event> {
             }
         }
 
-
-        return binding.getRoot();
     }
 
 
