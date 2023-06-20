@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.navigation.NavigationView;
 import com.studentplanner.studentplanner.databinding.NavHeaderBinding;
+import com.studentplanner.studentplanner.fragments.LoginFragment;
 import com.studentplanner.studentplanner.fragments.ReminderFragment;
 import com.studentplanner.studentplanner.models.Student;
 import com.studentplanner.studentplanner.utils.AccountPreferences;
@@ -54,14 +55,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void showStudentDetails() {
-        Student student = db.getUserFirstAndLastName(studentID);
-        // show name
-        TextView user_dashboard = navHeaderBinding.navUsernameLabel;
-        user_dashboard.setText(student.getName());
-        // show email
-        String email = db.getStudentEmail(studentID);
-        TextView lblEmail = navHeaderBinding.navEmailLabel;
-        lblEmail.setText(email);
+        final Student student = db.getUserFirstAndLastName(studentID);
+        navHeaderBinding.navUsernameLabel.setText(student.getName());
+        navHeaderBinding.navEmailLabel.setText(db.getStudentEmail(studentID));
+
     }
 
     private void setupNavDrawer(Bundle savedInstanceState) {

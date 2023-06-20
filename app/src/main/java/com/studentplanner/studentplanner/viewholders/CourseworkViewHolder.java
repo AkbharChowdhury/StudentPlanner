@@ -62,10 +62,10 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
         LocalDate deadline = LocalDate.parse(coursework.getDeadline());
 
         tvCourseworkID.setText(String.valueOf(coursework.getCourseworkID()));
-        String title = WordUtils.capitalizeFully(coursework.getTitle());
+        tvCourseworkTitle.setText(Helper.getSnippet(WordUtils.capitalizeFully(coursework.getTitle())));
 
-        tvCourseworkTitle.setText(Helper.getSnippet(title));
-        tvCourseworkDescription.setText(coursework.getDescription());
+        showDescription(coursework.getDescription());
+
         tvDeadline.setText(String.format(Locale.ENGLISH, "%s, %s",
                 Helper.formatDate(coursework.getDeadline()),
                 Helper.formatTime(coursework.getDeadlineTime())
@@ -81,5 +81,13 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
 
         tvTimeLeft.setTextColor(Helper.getPriorityColour(coursework.getPriority(), context));
 
+    }
+
+    private void showDescription(final String description) {
+        if (description.length() == 0){
+            tvCourseworkDescription.setVisibility(View.GONE);
+        } else {
+            tvCourseworkDescription.setText(description);
+        }
     }
 }

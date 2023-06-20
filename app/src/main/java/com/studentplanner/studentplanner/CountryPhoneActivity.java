@@ -31,6 +31,8 @@ public class CountryPhoneActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+
         setContentView(R.layout.activity_country_phone);
         setTitle(WordUtils.capitalizeFully("Country calling code"));
         binding = ActivityCountryPhoneBinding.inflate(getLayoutInflater());

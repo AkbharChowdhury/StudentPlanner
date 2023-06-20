@@ -1,4 +1,4 @@
-package com.studentplanner.studentplanner;
+package com.studentplanner.studentplanner.fragments;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,6 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.studentplanner.studentplanner.DatabaseHelper;
+import com.studentplanner.studentplanner.MainActivity;
+import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.activities.RegisterActivity;
 import com.studentplanner.studentplanner.databinding.FragmentLoginBinding;
 import com.studentplanner.studentplanner.utils.AccountPreferences;

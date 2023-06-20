@@ -16,7 +16,6 @@ import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.textfield.TextInputLayout;
 import com.hbb20.CountryCodePicker;
 import com.studentplanner.studentplanner.DatabaseHelper;
-import com.studentplanner.studentplanner.LoginFragment;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.databinding.ActivityRegisterBinding;
 import com.studentplanner.studentplanner.models.Student;
