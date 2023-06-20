@@ -298,13 +298,18 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         int studentID = AccountPreferences.getStudentID(context);
         SQLiteDatabase db = getReadableDatabase();
 
-        try (Cursor cursor = db.rawQuery("SELECT\n" +
-                "count(*) class_exists\n" +
-                "\n" +
-                "FROM classes c\n" +
-                "JOIN modules m ON m.module_id =  c.module_id\n" +
-                "WHERE m.student_id = ?" +
-                " AND c.module_id =? AND semester_id =? AND type = ?", new String[]{
+        try (Cursor cursor = db.rawQuery("""
+                                            SELECT
+                                              COUNT(*) class_exists
+                                            
+                                            FROM classes c
+                                            JOIN modules m
+                                              ON m.module_id = c.module_id
+                                            WHERE m.student_id = ?
+                                            AND c.module_id = ?
+                                            AND semester_id = ?
+                                            AND type = ?
+                                            """, new String[]{
                 String.valueOf(studentID),
                 String.valueOf(moduleID),
                 String.valueOf(semesterID),
@@ -633,11 +638,14 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         int studentID = AccountPreferences.getStudentID(context);
         List<Classes> classesList = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        final String SQL = "SELECT\n" +
-                "c.*" +
-                "FROM classes c " +
-                "JOIN modules m ON m.module_id = c.module_id\n" +
-                "WHERE m.student_id = ?";
+        final String SQL = """
+                            SELECT
+                              c.*
+                            FROM classes c
+                            JOIN modules m
+                              ON m.module_id = c.module_id
+                            WHERE m.student_id = ?
+                            """;
         try (Cursor cursor = db.rawQuery(SQL, new String[]{String.valueOf(studentID)});) {
             if (!isCursorEmpty(cursor)) {
                 while (cursor.moveToNext()) {
@@ -692,55 +700,26 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         return result != 0;
 
     }
-//    SELECT * from modules WHERE  module_id NOT IN (SELECT  module_id  FROM module_teacher)
-
-
-    @SuppressLint("Range")
-    public List<Module> getModuleClasses() {
-        int studentID = AccountPreferences.getStudentID(context);
-        List<Module> moduleList = new ArrayList<>();
-        SQLiteDatabase db = getReadableDatabase();
-        final String SQL = "SELECT  DISTINCT mt.module_id , m.module_code, m.module_name\n" +
-                " FROM module_teacher mt\n" +
-                "JOIN modules m ON mt.module_id = m.module_id\n" +
-                "JOIN students s ON s.student_id = m.student_id\n" +
-                "WHERE s.student_id =?";
-        try (Cursor cursor = db.rawQuery(SQL, new String[]{String.valueOf(studentID)});) {
-            if (!isCursorEmpty(cursor)) {
-                while (cursor.moveToNext()) {
-
-                    moduleList.add(new Module(
-
-                            cursor.getInt(cursor.getColumnIndex(ModuleTable.COLUMN_ID)),
-
-                            cursor.getString(cursor.getColumnIndex(ModuleTable.COLUMN_MODULE_C0DE)),
-                            cursor.getString(cursor.getColumnIndex(ModuleTable.COLUMN_MODULE_NAME))
-
-
-                    ));
-                }
-            }
-        } catch (Exception e) {
-            Log.d("ERROR", "There was an error fetching module classes");
-        }
-        return moduleList;
-    }
-
 
     @SuppressLint("Range")
     public List<Coursework> getCoursework() {
         int studentID = AccountPreferences.getStudentID(context);
         List<Coursework> courseworkList = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        final String SQL = "SELECT \n" +
-                "c.*,\n" +
-                "m.module_code,\n" +
-                "m.module_name,\n" +
-                "m.student_id\n" +
-                "FROM coursework c\n" +
-                "JOIN modules m ON m.module_id = c.module_id\n" +
-                "WHERE student_id = ?";
-        try (Cursor cursor = db.rawQuery(SQL, new String[]{String.valueOf(studentID)});) {
+
+        final String SQL = """
+                        SELECT
+                          c.*,
+                          m.module_code,
+                          m.module_name,
+                          m.student_id
+                        FROM coursework c
+                        JOIN modules m
+                          ON m.module_id = c.module_id
+                        WHERE student_id = ?
+                        """;
+
+        try (Cursor cursor = db.rawQuery(SQL, new String[]{String.valueOf(studentID)})) {
             if (!isCursorEmpty(cursor)) {
                 while (cursor.moveToNext()) {
                     Coursework coursework = new Coursework(
@@ -770,16 +749,19 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         int studentID = AccountPreferences.getStudentID(context);
         List<Coursework> courseworkList = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        final String SQL = "SELECT c.*,\n" +
-                "       m.module_code,\n" +
-                "       m.module_name,\n" +
-                "       m.student_id\n" +
-                "FROM coursework c\n" +
-                "    JOIN modules m\n" +
-                "        ON m.module_id = c.module_id\n" +
-                "WHERE student_id = ? " +
-                "      AND c.deadline\n" +
-                "      BETWEEN DATE('now', 'start of month') AND DATE('now', 'start of month', '+1 month', '-1 day')";
+        final String SQL = """
+                        SELECT c.*,
+                               m.module_code,
+                               m.module_name,
+                               m.student_id
+                        FROM coursework c
+                            JOIN modules m
+                                ON m.module_id = c.module_id
+                        WHERE student_id = ?
+                              AND c.deadline
+                              BETWEEN DATE('now', 'start of month') AND DATE('now', 'start of month', '+1 month', '-1 day')
+                        ORDER by c.deadline DESC
+                        """;
         try (Cursor cursor = db.rawQuery(SQL, new String[]{String.valueOf(studentID)});) {
             if (!isCursorEmpty(cursor)) {
                 while (cursor.moveToNext()) {
@@ -811,13 +793,16 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         int studentID = AccountPreferences.getStudentID(context);
         List<ModuleTeacher> list = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        final String SQL = "SELECT " +
-                " mt.module_id, " +
-                " group_concat(mt.teacher_id) teacher_id_list\n" +
-                " FROM module_teacher mt\n" +
-                "JOIN modules m ON m.module_id = mt.module_id\n" +
-                "WHERE student_id = ? " +
-                "GROUP BY  mt.module_id;";
+        final String SQL = """
+                            SELECT
+                              mt.module_id,
+                              group_concat(mt.teacher_id) teacher_id_list
+                            FROM module_teacher mt
+                            JOIN modules m
+                              ON m.module_id = mt.module_id
+                            WHERE student_id = ?
+                            GROUP BY mt.module_id
+                            """;
         try (Cursor cursor = db.rawQuery(SQL, new String[]{String.valueOf(studentID)});) {
             if (!isCursorEmpty(cursor)) {
 
@@ -837,18 +822,19 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         return list;
     }
 
-
-
-
     @SuppressLint("Range")
     public List<String> getTeachersForSelectedModuleID(int module) {
         List<String> list = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        final String SQL = "SELECT \n" +
-                "t.firstname, t.lastname\n" +
-                " FROM module_teacher  mt\n" +
-                " JOIN teachers t ON t.teacher_id = mt.teacher_id\n" +
-                " WHERE module_id = ?";
+        final String SQL = """
+                        SELECT
+                          t.firstname,
+                          t.lastname
+                        FROM module_teacher mt
+                        JOIN teachers t
+                          ON t.teacher_id = mt.teacher_id
+                        WHERE module_id = ?
+                        """;
         try (Cursor cursor = db.rawQuery(SQL, new String[]{String.valueOf(module)});) {
             if (!isCursorEmpty(cursor)) {
 

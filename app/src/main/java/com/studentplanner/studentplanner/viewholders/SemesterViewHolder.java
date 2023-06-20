@@ -37,7 +37,7 @@ public class SemesterViewHolder  extends RecyclerView.ViewHolder{
 
     public void showDetails(Semester semester){
         final String dateMessage = MessageFormat.format("From {0} to {1}",
-                Helper.formatDateShort1(semester.getStart().toString()),
+                Helper.formatDateShort(semester.getStart().toString()),
                 Helper.formatDate(semester.getEnd().toString())
         );
 

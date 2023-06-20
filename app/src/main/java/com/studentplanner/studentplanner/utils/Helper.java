@@ -159,11 +159,6 @@ public final class Helper {
         return DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).format(LocalDate.parse(date));
     }
 
-    public static String formatDateShort1(String date) {
-        return DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).format(LocalDate.parse(date));
-    }
-
-
     public static LocalDate formatDate(int year, int month, int day) {
         return LocalDate.of(year, ++month, day);
     }
@@ -176,14 +171,7 @@ public final class Helper {
     }
 
     public static String formatTimeShort(String time) {
-//        String timeColonPattern = "h:mm a";
-//        DateTimeFormatter timeColonFormatter = DateTimeFormatter.ofPattern(timeColonPattern);
-//        LocalTime colonTime = LocalTime.parse(time);
-//        return timeColonFormatter.format(colonTime);
-        String timePattern = "hh:mm a";
-        LocalTime localTime = LocalTime.parse(time);
-        DateTimeFormatter timeColonFormatter = DateTimeFormatter.ofPattern(timePattern);
-        return timeColonFormatter.format(localTime);
+        return DateTimeFormatter.ofPattern("hh:mm a").format(LocalTime.parse(time));
     }
 
     //link https://beginnersbook.com/2014/01/how-to-convert-12-hour-time-to-24-hour-date-in-java/
@@ -199,16 +187,11 @@ public final class Helper {
     }
 
     public static int getPriorityColour(String priority, Context c) {
-        switch (priority) {
-            case "Low":
-                return c.getColor(R.color.green);
-            case "Medium":
-                return c.getColor(R.color.orange);
-            default:
-                return c.getColor(R.color.red);
-
-
-        }
+        return switch (priority) {
+            case "Low" -> c.getColor(R.color.green);
+            case "Medium" -> c.getColor(R.color.orange);
+            default -> c.getColor(R.color.red);
+        };
     }
 
     private static ArrayList<Integer> isWeek() {
@@ -284,25 +267,25 @@ public final class Helper {
     }
 
 
-    public static String calcDeadlineDate(LocalDate deadline) {
-        LocalDate from = LocalDate.now();
-
-        Period period = Period.between(from, deadline);
-
-        StringBuilder s = new StringBuilder("in ");
-        if (period.getMonths() > 1) {
-            s.append(period.getMonths()).append(" months and ");
-        }
-
-
-        if (period.getDays() >= 1) {
-            s.append(period.getDays()).append(" days");
-        }
-        if (period.getDays() < 1) {
-            return "Due Today";
-        }
-        return s.toString();
-    }
+//    public static String calcDeadlineDate(LocalDate deadline) {
+//        LocalDate from = LocalDate.now();
+//
+//        Period period = Period.between(from, deadline);
+//
+//        StringBuilder s = new StringBuilder("in ");
+//        if (period.getMonths() > 1) {
+//            s.append(period.getMonths()).append(" months and ");
+//        }
+//
+//
+//        if (period.getDays() >= 1) {
+//            s.append(period.getDays()).append(" days");
+//        }
+//        if (period.getDays() < 1) {
+//            return "Due Today";
+//        }
+//        return s.toString();
+//    }
 
 
     public static String showFormattedDBTime(String time, Context context) {
