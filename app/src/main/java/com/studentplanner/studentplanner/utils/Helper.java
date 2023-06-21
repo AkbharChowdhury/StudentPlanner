@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -434,6 +435,10 @@ public final class Helper {
         InputFilter[] FilterArray = new InputFilter[1];
         FilterArray[0] = new InputFilter.LengthFilter(length);
         editText.setFilters(FilterArray);
+    }
+    public static String getSpinnerText(Spinner spinner, int position){
+        return spinner.getAdapter().getItem(position).toString();
+
     }
 
 

@@ -60,9 +60,6 @@ public class CalendarFragment extends Fragment implements OnItemListener {
     private DatabaseHelper db;
     private FragmentCalendarBinding binding;
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-        Log.d("TAG","called");
-
-
         if (result.getResultCode() == RESULT_OK){
             Event.getEventsList().clear();
             getEventsFromDB();
@@ -117,7 +114,6 @@ public class CalendarFragment extends Fragment implements OnItemListener {
 
     private void getEventsFromDB() {
         getCourseworkDetails();
-
         getClassDetails();
     }
 
@@ -220,21 +216,19 @@ public class CalendarFragment extends Fragment implements OnItemListener {
         if (id == R.id.add_coursework_action) {
             if (Validation.isPastDate(CalendarUtils.getSelectedDate().toString())) {
                 startForResult.launch(new Intent(getActivity(), AddCourseworkActivity.class));
-
                 return true;
             }
+
             // set deadline to selected calendar date
             startForResult.launch(courseworkIntent());
 
         }
         if (id == R.id.add_class_action) {
-
             startForResult.launch(new Intent(getActivity(), AddClassesActivity.class));
-
         }
+
         if (id == R.id.action_week_view) {
             startForResult.launch(new Intent(getActivity(), WeekViewActivity.class));
-
         }
 
         return super.onOptionsItemSelected(item);

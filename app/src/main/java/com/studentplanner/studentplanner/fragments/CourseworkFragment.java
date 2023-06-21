@@ -2,6 +2,8 @@ package com.studentplanner.studentplanner.fragments;
 
 import static android.app.Activity.RESULT_OK;
 
+import static com.studentplanner.studentplanner.utils.Helper.getSpinnerText;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -45,7 +47,6 @@ public class CourseworkFragment extends Fragment {
     private Spinner txtPriority;
     private Spinner txtCompletionStatus;
 
-
     private Context context;
     private Activity activity;
 
@@ -64,13 +65,11 @@ public class CourseworkFragment extends Fragment {
 
 
     public CourseworkFragment() {
-
     }
 
     private void setCompletionDropdown() {
 
-
-        txtCompletionStatus.setAdapter(new ArrayAdapter<String>(
+        txtCompletionStatus.setAdapter(new ArrayAdapter<>(
                 getActivity(),
                 android.R.layout.simple_spinner_dropdown_item,
                 context.getResources().getStringArray(R.array.completion_array_search)
@@ -122,13 +121,15 @@ public class CourseworkFragment extends Fragment {
 //
 //    }
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         initFragment();
         binding = FragmentCourseworkBinding.inflate(inflater, container, false);
         txtPriority = binding.txtPriority;
@@ -139,16 +140,13 @@ public class CourseworkFragment extends Fragment {
         txtPriority.setSelection(0, false);
         txtCompletionStatus.setSelection(0, false);
 
-
         txtPriority.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                search.setPriority(txtPriority.getAdapter().getItem(position).toString());
+                search.setPriority(getSpinnerText(txtPriority, position));
                 List<Coursework> filteredList = search.filterResults();
                 checkEmptyResults(filteredList);
                 adapter.filterList(filteredList);
-
 
             }
 
@@ -171,7 +169,7 @@ public class CourseworkFragment extends Fragment {
                     return;
                 }
                 search.setDefaultStatus(false);
-                boolean isCompleted = txtCompletionStatus.getAdapter().getItem(position).toString().equalsIgnoreCase("Completed");
+                boolean isCompleted = getString(R.string.completed).equalsIgnoreCase(getSpinnerText(txtCompletionStatus, position));
                 search.setCompleted(isCompleted);
                 List<Coursework> filteredList = search.filterResults();
                 checkEmptyResults(filteredList);
