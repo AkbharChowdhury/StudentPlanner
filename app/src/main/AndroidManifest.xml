@@ -17,10 +17,6 @@
             android:theme="@style/AppTheme.ActionPar"
             android:exported="false" />
         <activity
-            android:name=".CountryPhoneActivity"
-            android:exported="true"
-            android:theme="@style/AppTheme.ActionPar" />
-        <activity
             android:name=".addActivities.AddModuleTeacherCheckboxActivity"
             android:exported="true"
             android:label="@string/add_module_title"
