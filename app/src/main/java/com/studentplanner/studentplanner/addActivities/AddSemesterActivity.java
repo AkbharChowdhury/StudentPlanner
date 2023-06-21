@@ -54,13 +54,16 @@ public class AddSemesterActivity extends AppCompatActivity implements DatePicker
 
         binding.btnAddSemester.setOnClickListener(v -> {
 
-            if (form.validateSemesterForm(txtName)){
-                if (db.addSemester(getSemesterDetails())){
-                    Helper.longToastMessage(this,"Semester added");
-                    setResult(RESULT_OK);
-                    finish();
-                }
-            }
+//            if (form.validateSemesterForm(txtName)){
+//                if (db.addSemester(getSemesterDetails())){
+//                    Helper.longToastMessage(this,"Semester added");
+//                    setResult(RESULT_OK);
+//                    finish();
+//                }
+//            }
+
+
+
         });
 
 
