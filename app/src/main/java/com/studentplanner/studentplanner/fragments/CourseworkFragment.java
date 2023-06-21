@@ -88,40 +88,7 @@ public class CourseworkFragment extends Fragment {
                 priorityArray
         ));
 
-
-//        txtPriority.setOnItemClickListener((parent, view, position, id) -> {
-//            search.setPriority(txtPriority.getAdapter().getItem(position).toString());
-//            search.filterResults();
-////            Helper.longToastMessage(context, txtPriority.getAdapter().getItem(position).toString());
-////            selectedModuleID = moduleList.get(position).getModuleID()
-//        });
-
-//        txtPriority.setSelection(priorityArray.indexOf(context.getString(R.string.any_priority)));
-
     }
-
-//    private void setPriorityDropdown(){
-//        Deque<String> deque = new LinkedList<>(Arrays.asList(context.getResources().getStringArray(R.array.priority_array)));
-//        deque.addFirst(context.getString(R.string.any_priority));
-//        List<String> priorityArray = new ArrayList<>(deque);
-//        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-//                getActivity(),
-//                android.R.layout.simple_spinner_dropdown_item,
-//                priorityArray
-//        );
-//        txtPriority.setAdapter(adapter);
-//        txtPriority.setOnItemClickListener((parent, view, position, id) -> {
-//            search.setPriority(txtPriority.getAdapter().getItem(position).toString());
-//            search.filterResults();
-////            Helper.longToastMessage(context, txtPriority.getAdapter().getItem(position).toString());
-////            selectedModuleID = moduleList.get(position).getModuleID()
-//        });
-//
-////        txtPriority.setSelection(priorityArray.indexOf(context.getString(R.string.any_priority)));
-//
-//    }
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -132,6 +99,7 @@ public class CourseworkFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         initFragment();
         binding = FragmentCourseworkBinding.inflate(inflater, container, false);
+
         txtPriority = binding.txtPriority;
         txtCompletionStatus = binding.txtCompletionStatus;
         setPriorityDropdown();
@@ -140,6 +108,21 @@ public class CourseworkFragment extends Fragment {
         txtPriority.setSelection(0, false);
         txtCompletionStatus.setSelection(0, false);
 
+        prioritySpinnerChanged();
+        CompletionStatusSpinnerChanged();
+
+        binding.fabAdd.setOnClickListener(v -> startForResult.launch(new Intent(getActivity(), AddCourseworkActivity.class)));
+        recyclerView = binding.recyclerView;
+
+
+        db = DatabaseHelper.getInstance(context);
+        Helper.getIntentMessage(context, activity.getIntent().getExtras());
+        getCoursework();
+
+        return binding.getRoot();
+    }
+    private void prioritySpinnerChanged(){
+
         txtPriority.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -147,7 +130,6 @@ public class CourseworkFragment extends Fragment {
                 List<Coursework> filteredList = search.filterResults();
                 checkEmptyResults(filteredList);
                 adapter.filterList(filteredList);
-
             }
 
             @Override
@@ -155,8 +137,9 @@ public class CourseworkFragment extends Fragment {
 
             }
         });
+    }
 
-
+    private void CompletionStatusSpinnerChanged(){
         txtCompletionStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -182,17 +165,6 @@ public class CourseworkFragment extends Fragment {
 
             }
         });
-
-
-        binding.fabAdd.setOnClickListener(v -> startForResult.launch(new Intent(getActivity(), AddCourseworkActivity.class)));
-        recyclerView = binding.recyclerView;
-
-
-        db = DatabaseHelper.getInstance(context);
-        Helper.getIntentMessage(context, activity.getIntent().getExtras());
-        getCoursework();
-
-        return binding.getRoot();
     }
 
     private void getCoursework() {

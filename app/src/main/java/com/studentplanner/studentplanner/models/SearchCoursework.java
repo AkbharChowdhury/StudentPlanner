@@ -30,7 +30,6 @@ public class SearchCoursework {
     public SearchCoursework(Context context, List<Coursework> ALL_COURSEWORK) {
 
         this.ALL_COURSEWORK = ALL_COURSEWORK;
-
         DEFAULT_PRIORITY = context.getResources().getString(R.string.any_priority);
 
     }
@@ -71,7 +70,6 @@ public class SearchCoursework {
 
 
     public List<Coursework> filterResults() {
-
         return ALL_COURSEWORK.stream()
                 .filter(filterTitle)
                 .filter(filterPriority())

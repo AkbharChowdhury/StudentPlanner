@@ -30,6 +30,9 @@ import com.studentplanner.studentplanner.databinding.FragmentModuleTeacherBindin
 import com.studentplanner.studentplanner.models.ModuleTeacher;
 import com.studentplanner.studentplanner.utils.Helper;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.WordUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,7 +93,7 @@ public class ModuleTeacherFragment extends Fragment {
     private void initFragment() {
         context = getContext();
         activity = getActivity();
-        activity.setTitle(context.getString(R.string.my_teachers_modules));
+        activity.setTitle(WordUtils.capitalizeFully(context.getString(R.string.my_teachers_modules)));
         setHasOptionsMenu(true);
 
     }

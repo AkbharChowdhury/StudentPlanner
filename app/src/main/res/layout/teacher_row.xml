@@ -35,12 +35,12 @@
 
         <TextView
 
-            android:id="@+id/tv_teacher_modules_taught"
+            android:id="@+id/tv_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/imgTeacher"
             android:padding="5dp"
-            android:text="COMP1232"
+            android:text="example@gmail.com"
             android:textColor="@color/black" />
 
 
