@@ -53,13 +53,9 @@ public class AddSemesterActivity extends AppCompatActivity implements DatePicker
         setDefaultValues();
 
         binding.btnAddSemester.setOnClickListener(v -> {
-
-            String name = Helper.trimStr(txtSemesterName);
-            LocalDate start = LocalDate.parse(Helper.convertFUllDateToYYMMDD(txtStartDate.getEditableText().toString()));
-            LocalDate end = LocalDate.parse(Helper.convertFUllDateToYYMMDD(txtEndDate.getEditableText().toString()));
-
+            
             if (form.validateSemesterForm(txtSemesterName)){
-                if (db.addSemester(new Semester(name, start, end))){
+                if (db.addSemester(getSemesterDetails())){
                     Helper.longToastMessage(this,"Semester added");
                     setResult(RESULT_OK);
                     finish();
@@ -68,6 +64,13 @@ public class AddSemesterActivity extends AppCompatActivity implements DatePicker
             }
         });
 
+
+    }
+    private Semester getSemesterDetails(){
+        String name = Helper.trimStr(txtSemesterName);
+        LocalDate start = LocalDate.parse(Helper.convertFUllDateToYYMMDD(txtStartDate.getEditableText().toString()));
+        LocalDate end = LocalDate.parse(Helper.convertFUllDateToYYMMDD(txtEndDate.getEditableText().toString()));
+        return new Semester(name, start, end);
 
     }
 
