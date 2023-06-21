@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.fragments.ModuleTeacherFragment;
+import com.studentplanner.studentplanner.fragments.SemesterFragment;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.Teacher;
 import com.studentplanner.studentplanner.tables.ModuleTable;
@@ -111,12 +112,11 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
 
                 if(db.addModuleTeacher(teacherIDs, moduleID)){
                     Helper.longToastMessage(this, String.format(Locale.ENGLISH,"Teacher Added for %s", db.getSelectedModule(moduleID).getModuleDetails()));
+
+
+
                     setResult(RESULT_OK);
                     finish();
-
-//                     Helper.longToastMessage(this,"Module Added");
-//                    setResult(RESULT_OK);
-//                    finish();
 
                 }
 

@@ -13,9 +13,8 @@ import android.widget.*;
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
+import com.studentplanner.studentplanner.databinding.ActivityAddSemesterBinding;
 import com.studentplanner.studentplanner.enums.DatePickerType;
-import com.studentplanner.studentplanner.fragments.ReminderFragment;
-import com.studentplanner.studentplanner.fragments.SemesterFragment;
 import com.studentplanner.studentplanner.models.Semester;
 import com.studentplanner.studentplanner.utils.CalendarUtils;
 import com.studentplanner.studentplanner.utils.DatePickerFragment;
@@ -25,29 +24,37 @@ import com.studentplanner.studentplanner.utils.Validation;
 import java.time.LocalDate;
 
 public class AddSemesterActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+    private TextInputLayout txtSemesterName;
     private AutoCompleteTextView txtStartDate;
     private AutoCompleteTextView txtEndDate;
     private DatePickerType type;
     private DatePickerFragment datePickerStart;
     private DatePickerFragment datePickerEnd;
+    private ActivityAddSemesterBinding binding;
+    private DatabaseHelper db;
+    Validation form;
+
+
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_semester);
+        binding = ActivityAddSemesterBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        db = DatabaseHelper.getInstance(this);
+        form = new Validation(this);
 
         findTextFields();
         setUpDatePickers();
         setDefaultValues();
 
-        findViewById(R.id.btn_add_semester).setOnClickListener(v -> {
-            DatabaseHelper db = DatabaseHelper.getInstance(this);
-            Validation form = new Validation(this);
-            TextInputLayout txtSemesterName = findViewById(R.id.txtSemester);
+        binding.btnAddSemester.setOnClickListener(v -> {
 
-            String name = txtSemesterName.getEditText().getText().toString().trim();
+            String name = Helper.trimStr(txtSemesterName);
             LocalDate start = LocalDate.parse(Helper.convertFUllDateToYYMMDD(txtStartDate.getEditableText().toString()));
             LocalDate end = LocalDate.parse(Helper.convertFUllDateToYYMMDD(txtEndDate.getEditableText().toString()));
 
@@ -113,8 +120,9 @@ public class AddSemesterActivity extends AppCompatActivity implements DatePicker
 
 
     private void findTextFields() {
-        txtStartDate = findViewById(R.id.txtStartDate);
-        txtEndDate = findViewById(R.id.txtEndDate);
+        txtSemesterName = binding.txtSemesterName;
+        txtStartDate = binding.txtStartDate;
+        txtEndDate = binding.txtEndDate;
     }
 
     private void createDatePickerConstraint(DatePickerFragment datePickerStart) {
@@ -128,15 +136,10 @@ public class AddSemesterActivity extends AppCompatActivity implements DatePicker
     public void onDateSet(DatePicker d, int year, int month, int day) {
 
         LocalDate date = Helper.formatDate(year, month, day);
-        String YY_MM_DD_FORMAT = String.valueOf(date);
-        String formattedDate = Helper.formatDate(YY_MM_DD_FORMAT);
+        final String formattedDate = Helper.formatDate(String.valueOf(date));
         switch (type) {
-            case START_DATE:
-                txtStartDate.setText(formattedDate);
-                break;
-            case END_DATE:
-                txtEndDate.setText(formattedDate);
-                break;
+            case START_DATE -> txtStartDate.setText(formattedDate);
+            case END_DATE -> txtEndDate.setText(formattedDate);
         }
 
     }

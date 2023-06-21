@@ -23,7 +23,7 @@
             android:textColor="@color/black" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txtSemesterEdit"
+            android:id="@+id/txtSemesterName"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
 
 
             <AutoCompleteTextView
-                android:id="@+id/txtStartDateEdit"
+                android:id="@+id/txtStartDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"
@@ -71,7 +71,7 @@
 
 
             <AutoCompleteTextView
-                android:id="@+id/txtEndDateEdit"
+                android:id="@+id/txtEndDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"

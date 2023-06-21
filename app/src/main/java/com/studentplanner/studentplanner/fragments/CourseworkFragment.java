@@ -111,7 +111,17 @@ public class CourseworkFragment extends Fragment {
         prioritySpinnerChanged();
         CompletionStatusSpinnerChanged();
 
-        binding.fabAdd.setOnClickListener(v -> startForResult.launch(new Intent(getActivity(), AddCourseworkActivity.class)));
+//        binding.fabAdd.setOnClickListener(v -> startForResult.launch(new Intent(getActivity(), AddCourseworkActivity.class)));
+        binding.fabAdd.setOnClickListener(v -> {
+            Helper.longToastMessage(getContext(), "hello");
+            Helper.goToFragment(getActivity(), new SemesterFragment());
+//            SemesterFragment nextFrag= new SemesterFragment();
+//            getActivity().getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.fragment_container, nextFrag, "findThisFragment")
+//                    .addToBackStack(null)
+//                    .commit();
+        });
+
         recyclerView = binding.recyclerView;
 
 

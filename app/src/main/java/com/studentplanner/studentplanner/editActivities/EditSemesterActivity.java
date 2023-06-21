@@ -16,8 +16,8 @@ import android.widget.DatePicker;
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
+import com.studentplanner.studentplanner.databinding.ActivityEditSemesterBinding;
 import com.studentplanner.studentplanner.enums.DatePickerType;
-import com.studentplanner.studentplanner.fragments.SemesterFragment;
 import com.studentplanner.studentplanner.models.Semester;
 import com.studentplanner.studentplanner.tables.SemesterTable;
 import com.studentplanner.studentplanner.utils.CalendarUtils;
@@ -35,21 +35,22 @@ public class EditSemesterActivity extends AppCompatActivity  implements DatePick
     private DatePickerFragment datePickerStart;
     private DatePickerFragment datePickerEnd;
     private TextInputLayout txtName;
-    Validation form;
+    private Validation form;
+    private ActivityEditSemesterBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding = ActivityEditSemesterBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        setContentView(R.layout.activity_edit_semester);
         db = DatabaseHelper.getInstance(this);
         form = new Validation(this);
         findTextFields();
         setUpDatePickers();
         setupFields();
-
-        findViewById(R.id.btn_edit_semester).setOnClickListener(v -> {
+        binding.btnEditSemester.setOnClickListener(v -> {
 
             if (form.validateSemesterForm(txtName)){
                 if (db.updateSemester(getSemesterDetails())) {
@@ -115,9 +116,9 @@ public class EditSemesterActivity extends AppCompatActivity  implements DatePick
         return super.onOptionsItemSelected(item);
     }
     private void findTextFields() {
-        txtName =  findViewById(R.id.txtSemesterEdit);
-        txtStartDate = findViewById(R.id.txtStartDateEdit);
-        txtEndDate = findViewById(R.id.txtEndDateEdit);
+        txtName =  binding.txtSemesterName;
+        txtStartDate = binding.txtStartDate;
+        txtEndDate = binding.txtEndDate;
     }
     private void setUpDatePickers() {
         setStartDatePicker();

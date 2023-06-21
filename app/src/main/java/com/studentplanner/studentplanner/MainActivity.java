@@ -1,6 +1,7 @@
 package com.studentplanner.studentplanner;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -12,15 +13,18 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.navigation.NavigationView;
+import com.studentplanner.studentplanner.addActivities.AddSemesterActivity;
 import com.studentplanner.studentplanner.databinding.NavHeaderBinding;
 import com.studentplanner.studentplanner.fragments.CourseworkFragment;
 import com.studentplanner.studentplanner.fragments.LoginFragment;
 import com.studentplanner.studentplanner.fragments.ModuleTeacherFragment;
 import com.studentplanner.studentplanner.fragments.ReminderFragment;
+import com.studentplanner.studentplanner.fragments.SemesterFragment;
 import com.studentplanner.studentplanner.fragments.TeacherFragment;
 import com.studentplanner.studentplanner.models.Student;
 import com.studentplanner.studentplanner.utils.AccountPreferences;
 import com.studentplanner.studentplanner.utils.FragmentHandler;
+import com.studentplanner.studentplanner.utils.Helper;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
@@ -42,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        Helper.goToActivity(this, AddSemesterActivity.class);
         navHeaderBinding = NavHeaderBinding.inflate(getLayoutInflater());
 
         db = DatabaseHelper.getInstance(this);
@@ -83,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 openFragment(new LoginFragment());
                 return;
             }
-            openFragment(new ReminderFragment());
+            openFragment(new SemesterFragment());
             navigationView.setCheckedItem(R.id.nav_reminder);
         }
 

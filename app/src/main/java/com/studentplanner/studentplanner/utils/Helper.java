@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
+import com.studentplanner.studentplanner.fragments.SemesterFragment;
 import com.studentplanner.studentplanner.models.ModuleTeacher;
 import com.studentplanner.studentplanner.models.Teacher;
 
@@ -44,6 +45,7 @@ import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.WordUtils;
@@ -61,9 +63,12 @@ public final class Helper {
 
     }
 
-    public static void goToFragment(View view, Fragment fragmentToOpen) {
-        AppCompatActivity activity = (AppCompatActivity) view.getContext();
-        activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragmentToOpen).addToBackStack(null).commit();
+
+    public static void goToFragment(FragmentActivity activity, Fragment fragmentToOpen){
+        activity.getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, fragmentToOpen, "findThisFragment")
+                .addToBackStack(null)
+                .commit();
     }
 
 
@@ -440,6 +445,7 @@ public final class Helper {
         return spinner.getAdapter().getItem(position).toString();
 
     }
+
 
 
 }
