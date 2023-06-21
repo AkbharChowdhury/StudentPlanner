@@ -26,8 +26,6 @@ public class EditModuleActivity extends AppCompatActivity {
     private String excludedModuleCode;
     private ActivityEditModuleBinding binding;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -112,9 +112,6 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
 
                 if(db.addModuleTeacher(teacherIDs, moduleID)){
                     Helper.longToastMessage(this, String.format(Locale.ENGLISH,"Teacher Added for %s", db.getSelectedModule(moduleID).getModuleDetails()));
-
-
-
                     setResult(RESULT_OK);
                     finish();
 

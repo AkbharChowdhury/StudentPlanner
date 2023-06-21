@@ -14,7 +14,10 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.databinding.ActivityAddSemesterBinding;
+import com.studentplanner.studentplanner.databinding.ActivityMainBinding;
 import com.studentplanner.studentplanner.enums.DatePickerType;
+import com.studentplanner.studentplanner.fragments.LoginFragment;
+import com.studentplanner.studentplanner.fragments.TeacherFragment;
 import com.studentplanner.studentplanner.models.Semester;
 import com.studentplanner.studentplanner.utils.CalendarUtils;
 import com.studentplanner.studentplanner.utils.DatePickerFragment;
@@ -34,14 +37,9 @@ public class AddSemesterActivity extends AppCompatActivity implements DatePicker
     private DatabaseHelper db;
     Validation form;
 
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_semester);
         binding = ActivityAddSemesterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -53,14 +51,13 @@ public class AddSemesterActivity extends AppCompatActivity implements DatePicker
         setDefaultValues();
 
         binding.btnAddSemester.setOnClickListener(v -> {
-
-//            if (form.validateSemesterForm(txtName)){
-//                if (db.addSemester(getSemesterDetails())){
-//                    Helper.longToastMessage(this,"Semester added");
-//                    setResult(RESULT_OK);
-//                    finish();
-//                }
-//            }
+            if (form.validateSemesterForm(txtName)){
+                if (db.addSemester(getSemesterDetails())){
+                    Helper.longToastMessage(this,"Semester added");
+                    setResult(RESULT_OK);
+                    finish();
+                }
+            }
 
 
 
