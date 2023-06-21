@@ -24,7 +24,7 @@ import com.studentplanner.studentplanner.utils.Validation;
 import java.time.LocalDate;
 
 public class AddSemesterActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
-    private TextInputLayout txtSemesterName;
+    private TextInputLayout txtName;
     private AutoCompleteTextView txtStartDate;
     private AutoCompleteTextView txtEndDate;
     private DatePickerType type;
@@ -53,21 +53,20 @@ public class AddSemesterActivity extends AppCompatActivity implements DatePicker
         setDefaultValues();
 
         binding.btnAddSemester.setOnClickListener(v -> {
-            
-            if (form.validateSemesterForm(txtSemesterName)){
+
+            if (form.validateSemesterForm(txtName)){
                 if (db.addSemester(getSemesterDetails())){
                     Helper.longToastMessage(this,"Semester added");
                     setResult(RESULT_OK);
                     finish();
                 }
-
             }
         });
 
 
     }
     private Semester getSemesterDetails(){
-        String name = Helper.trimStr(txtSemesterName);
+        String name = Helper.trimStr(this.txtName);
         LocalDate start = LocalDate.parse(Helper.convertFUllDateToYYMMDD(txtStartDate.getEditableText().toString()));
         LocalDate end = LocalDate.parse(Helper.convertFUllDateToYYMMDD(txtEndDate.getEditableText().toString()));
         return new Semester(name, start, end);
@@ -123,7 +122,7 @@ public class AddSemesterActivity extends AppCompatActivity implements DatePicker
 
 
     private void findTextFields() {
-        txtSemesterName = binding.txtSemesterName;
+        txtName = binding.txtSemesterName;
         txtStartDate = binding.txtStartDate;
         txtEndDate = binding.txtEndDate;
     }
