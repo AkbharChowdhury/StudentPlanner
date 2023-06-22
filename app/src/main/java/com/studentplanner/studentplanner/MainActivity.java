@@ -49,9 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         setupNavDrawer(savedInstanceState);
         showStudentDetails();
-        List<Integer> list = db.getModuleTeachersFiltered("s");
 
-        Log.d("IIS", String.valueOf(list.size()));
 
 
     }
@@ -87,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 openFragment(new LoginFragment());
                 return;
             }
-            openFragment(new ModuleTeacherFragment());
+            openFragment(new ReminderFragment());
             navigationView.setCheckedItem(R.id.nav_reminder);
         }
 
