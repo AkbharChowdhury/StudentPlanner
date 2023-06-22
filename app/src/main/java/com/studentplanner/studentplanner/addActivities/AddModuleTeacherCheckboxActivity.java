@@ -1,6 +1,7 @@
 package com.studentplanner.studentplanner.addActivities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -12,6 +13,8 @@ import android.widget.Toast;
 
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
+import com.studentplanner.studentplanner.databinding.ActivityAddCourseworkBinding;
+import com.studentplanner.studentplanner.databinding.ActivityAddModuleTeacherCheckboxBinding;
 import com.studentplanner.studentplanner.fragments.ModuleTeacherFragment;
 import com.studentplanner.studentplanner.fragments.SemesterFragment;
 import com.studentplanner.studentplanner.models.Module;
@@ -27,12 +30,17 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
     private DatabaseHelper db;
     private ListView listView;
     private List<Teacher> teachers;
+    private ActivityAddModuleTeacherCheckboxBinding binding;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_module_teacher_checkbox);
+        binding = ActivityAddModuleTeacherCheckboxBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+
+
         db = DatabaseHelper.getInstance(this);
         teachers = db.getTeachers();
         setActivityTitle();
@@ -40,7 +48,7 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
         List<String> teacherNames = getTeacher();
         String[] myTeachers = Helper.convertArrayListStringToStringArray(teacherNames);
 
-        listView = findViewById(R.id.listview_data);
+        listView = binding.listviewData;
 
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
@@ -93,7 +101,6 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.checkbox_menu, menu);
-
         return true;
     }
 
@@ -102,15 +109,15 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.item_done) {
 
-            List<Integer> teacherIDs = getSelectedTeacherIDList();
-            if (teacherIDs.size() == 0) {
-                Toast.makeText(this, "Please select at least one teacher from the list", Toast.LENGTH_SHORT).show();
+            List<Integer> teacherIDList = getSelectedTeacherIDList();
+            if (teacherIDList.size() == 0) {
+                Helper.shortToastMessage(this, "Please select at least one teacher from the list");
 
             } else {
                 final String SELECTED_ID = ModuleTable.COLUMN_ID;
                 int moduleID = getIntent().getIntExtra(SELECTED_ID, 0);
 
-                if(db.addModuleTeacher(teacherIDs, moduleID)){
+                if(db.addModuleTeacher(teacherIDList, moduleID)){
                     Helper.longToastMessage(this, String.format(Locale.ENGLISH,"Teacher Added for %s", db.getSelectedModule(moduleID).getModuleDetails()));
                     setResult(RESULT_OK);
                     finish();

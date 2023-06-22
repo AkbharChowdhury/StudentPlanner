@@ -38,7 +38,7 @@ public class AddModuleActivity extends AppCompatActivity {
         txtModuleCode = binding.txtModuleCode;
         txtModuleName = binding.txtModuleName;
 
-        findViewById(R.id.btn_add_module).setOnClickListener(v -> {
+        binding.btnAddModule.setOnClickListener(v -> {
             if (form.validateAddModuleForm(new Module(txtModuleCode, txtModuleName))) {
                 if (db.addModule(getModuleDetails())) {
                     Helper.longToastMessage(this,"Module Added");

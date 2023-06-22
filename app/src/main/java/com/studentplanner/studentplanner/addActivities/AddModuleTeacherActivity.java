@@ -13,12 +13,15 @@ import android.widget.AutoCompleteTextView;
 
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
+import com.studentplanner.studentplanner.databinding.ActivityAddCourseworkBinding;
+import com.studentplanner.studentplanner.databinding.ActivityAddModuleTeacherBinding;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.tables.ModuleTable;
 
 import java.util.List;
 
 public class AddModuleTeacherActivity extends AppCompatActivity {
+    private ActivityAddModuleTeacherBinding binding;
     private AutoCompleteTextView txtModules;
     private DatabaseHelper db;
     List<Module> moduleList;
@@ -33,20 +36,21 @@ public class AddModuleTeacherActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_module_teacher);
+        binding = ActivityAddModuleTeacherBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         db = DatabaseHelper.getInstance(this);
         moduleList = db.getModuleClassesAdd();
-        txtModules = findViewById(R.id.txtModuleAddTeacher);
+        txtModules = binding.txtModuleAddTeacher;
 
         txtModules.setText(R.string.select_module);
         getModulesList();
 
     }
     private void getModulesList() {
-
-
         final List<String> items = Module.populateDropdown(moduleList);
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item, items);
         txtModules.setAdapter(adapter);

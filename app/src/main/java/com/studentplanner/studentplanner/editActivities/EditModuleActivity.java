@@ -86,7 +86,8 @@ public class EditModuleActivity extends AppCompatActivity {
 
         if (item.getItemId() == R.id.ic_delete){
             new AlertDialog.Builder(this)
-                    .setMessage("Doing so will delete all associated coursework and classes with this module").setCancelable(false)
+                    .setMessage("Doing so will delete all associated coursework and classes with this module")
+                    .setCancelable(false)
                     .setTitle("Are you sure you want to delete this module?")
                     .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
                         int id = getIntent().getIntExtra(ModuleTable.COLUMN_ID, 0);

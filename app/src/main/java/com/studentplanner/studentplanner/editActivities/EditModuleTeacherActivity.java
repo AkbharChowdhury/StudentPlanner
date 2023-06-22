@@ -1,6 +1,7 @@
 package com.studentplanner.studentplanner.editActivities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -130,7 +131,19 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
 
             List<Integer> teacherIDs = getSelectedTeacherIDList();
             if (teacherIDs.size() == 0) {
-                Toast.makeText(this, "Please select at least one teacher from the list", Toast.LENGTH_SHORT).show();
+                new AlertDialog.Builder(this)
+                        .setMessage("Doing so will delete all associated teachers this module")
+                        .setCancelable(false)
+                        .setTitle("Are you sure you want to remove all teachers from this module?")
+                        .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
+                            int moduleId = getIntent().getIntExtra(ModuleTable.COLUMN_ID, 0);
+                            if (db.deleteSelectedTeacherModules(moduleId)){
+                                Helper.longToastMessage(this,"All teachers removed from " + db.getSelectedModule(moduleId).getModuleDetails());
+                                setResult(RESULT_OK);
+                                finish();
+                            }
+                        })
+                        .setNegativeButton(getString(R.string.no), (dialog, which) -> dialog.cancel()).create().show();
 
             } else {
                 final String SELECTED_ID = ModuleTable.COLUMN_ID;
