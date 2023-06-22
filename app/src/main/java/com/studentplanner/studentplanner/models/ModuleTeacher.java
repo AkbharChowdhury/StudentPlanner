@@ -19,7 +19,7 @@ public class ModuleTeacher  {
     public int getModuleID() {
         return moduleID;
     }
-    
+
 
     public static List<ModuleTeacher> filterModuleTeachers(final List<ModuleTeacher> ALL, final List<Integer> moduleIdList){
         return ALL.stream()
