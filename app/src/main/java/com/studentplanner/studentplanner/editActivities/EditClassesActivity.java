@@ -252,17 +252,16 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
         String selectedTime = String.format(Locale.getDefault(), getString(R.string.time_format_database), selectedHour, selectedMinute);
         String formattedTime = Helper.formatTime(selectedTime);
         switch (type) {
-            case START_TIME:
+            case START_TIME -> {
                 startCustomTimePicker.setSelectedHour(selectedHour);
                 startCustomTimePicker.setSelectedMinute(selectedMinute);
                 txtStartTime.setText(formattedTime);
-                break;
-
-            case END_TIME:
+            }
+            case END_TIME -> {
                 endCustomTimePicker.setSelectedHour(selectedHour);
                 endCustomTimePicker.setSelectedMinute(selectedMinute);
                 txtEndTime.setText(formattedTime);
-                break;
+            }
         }
 
     }

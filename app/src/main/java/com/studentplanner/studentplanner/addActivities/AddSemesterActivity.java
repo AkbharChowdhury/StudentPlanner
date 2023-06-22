@@ -1,23 +1,20 @@
 package com.studentplanner.studentplanner.addActivities;
 
+import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.widget.AutoCompleteTextView;
+import android.widget.DatePicker;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
-
-import android.annotation.SuppressLint;
-import android.app.DatePickerDialog;
-import android.view.*;
-import android.widget.*;
-
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
-import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.databinding.ActivityAddSemesterBinding;
-import com.studentplanner.studentplanner.databinding.ActivityMainBinding;
 import com.studentplanner.studentplanner.enums.DatePickerType;
-import com.studentplanner.studentplanner.fragments.LoginFragment;
-import com.studentplanner.studentplanner.fragments.TeacherFragment;
 import com.studentplanner.studentplanner.models.Semester;
 import com.studentplanner.studentplanner.utils.CalendarUtils;
 import com.studentplanner.studentplanner.utils.DatePickerFragment;
