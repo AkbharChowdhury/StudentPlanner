@@ -24,16 +24,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.adapters.ModuleTeacherAdapter;
-import com.studentplanner.studentplanner.addActivities.AddModuleActivity;
 import com.studentplanner.studentplanner.addActivities.AddModuleTeacherActivity;
 import com.studentplanner.studentplanner.databinding.FragmentModuleTeacherBinding;
 import com.studentplanner.studentplanner.models.ModuleTeacher;
 import com.studentplanner.studentplanner.utils.Helper;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.WordUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -50,12 +47,11 @@ public class ModuleTeacherFragment extends Fragment {
 
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
 
-        if (result.getResultCode() == RESULT_OK){
+        if (result.getResultCode() == RESULT_OK) {
             getModuleTeacher();
         }
 
     });
-
 
 
     public ModuleTeacherFragment() {
@@ -70,6 +66,7 @@ public class ModuleTeacherFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         initFragment();
+
         binding = FragmentModuleTeacherBinding.inflate(inflater, container, false);
         recyclerView = binding.recyclerView;
 
@@ -82,12 +79,11 @@ public class ModuleTeacherFragment extends Fragment {
         getModuleTeacher();
         return binding.getRoot();
     }
-    private void getModuleTeacher(){
+
+    private void getModuleTeacher() {
         list = db.getModuleTeachers();
         buildRecyclerView();
     }
-
-
 
 
     private void initFragment() {
@@ -144,21 +140,15 @@ public class ModuleTeacherFragment extends Fragment {
 
 
     private void filter(String text) {
-        List<ModuleTeacher> filteredList = new ArrayList<>();
 
-//        for (M module : list) {
-//            String moduleFullName = module.getModuleDetails().toLowerCase().trim();
-//            String t = text.toLowerCase().trim();
-//            if (moduleFullName.contains(t)) {
-//                filteredList.add(module);
-//            }
-//        }
-//
-//        if (filteredList.isEmpty()) {
-//            Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
-//        } else {
-//            adapter.filterList(filteredList);
-//        }
+        final List<Integer> moduleIdList = db.getModuleTeachersFiltered(text);
+        final List<ModuleTeacher> filteredList = ModuleTeacher.filterModuleTeachers(db.getModuleTeachers(), moduleIdList);
+
+        if (filteredList.isEmpty()) {
+            Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
+        } else {
+            adapter.filterList(filteredList);
+        }
     }
 
     @Override

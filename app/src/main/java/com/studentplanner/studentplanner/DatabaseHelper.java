@@ -27,6 +27,7 @@ import com.studentplanner.studentplanner.utils.CalendarUtils;
 import com.studentplanner.studentplanner.utils.Encryption;
 import com.studentplanner.studentplanner.utils.Helper;
 
+import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -976,6 +977,50 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
         }
         return module;
+    }
+
+
+    @SuppressLint("Range")
+    public List<Integer> getModuleTeachersFiltered(String module) {
+        int studentID = AccountPreferences.getStudentID(context);
+        List<Integer> list = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        final String SQL = """
+                           SELECT
+                             DISTINCT mt.module_id,
+                             m.module_code || ' ' || m.module_name AS details
+                           FROM
+                             module_teacher mt
+                             JOIN modules m ON m.module_id = mt.module_id
+                           WHERE
+                             student_id = ?
+                             AND details LIKE ?
+                            """;
+        try (Cursor cursor = db.rawQuery(SQL, new String[]{
+                String.valueOf(studentID),
+                MessageFormat.format("%{0}%",module)
+        })) {
+            String s = "";
+
+            while (cursor.moveToNext()) {
+                int moduleID = cursor.getInt(cursor.getColumnIndex(ModuleTeacherTable.COLUMN_MODULE_ID));
+
+                list.add(moduleID);
+
+            }
+//            if (!isCursorEmpty(cursor)) {
+//
+//                while (cursor.moveToNext()) {
+//                    int moduleID = cursor.getInt(cursor.getColumnIndex(ModuleTeacherTable.COLUMN_MODULE_ID));
+//                    list.add(moduleID);
+//
+//                }
+//
+//            }
+        } catch (Exception e) {
+            Log.d("ERROR", "There was an error fetching modules");
+        }
+        return list;
     }
 
 

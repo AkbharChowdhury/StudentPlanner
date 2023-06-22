@@ -1,6 +1,7 @@
 package com.studentplanner.studentplanner;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -13,10 +14,13 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.navigation.NavigationView;
 import com.studentplanner.studentplanner.databinding.NavHeaderBinding;
 import com.studentplanner.studentplanner.fragments.LoginFragment;
+import com.studentplanner.studentplanner.fragments.ModuleTeacherFragment;
 import com.studentplanner.studentplanner.fragments.ReminderFragment;
 import com.studentplanner.studentplanner.models.Student;
 import com.studentplanner.studentplanner.utils.AccountPreferences;
 import com.studentplanner.studentplanner.utils.FragmentHandler;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
@@ -45,6 +49,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         setupNavDrawer(savedInstanceState);
         showStudentDetails();
+        List<Integer> list = db.getModuleTeachersFiltered("s");
+
+        Log.d("IIS", String.valueOf(list.size()));
+
+
     }
 
 
@@ -78,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 openFragment(new LoginFragment());
                 return;
             }
-            openFragment(new ReminderFragment());
+            openFragment(new ModuleTeacherFragment());
             navigationView.setCheckedItem(R.id.nav_reminder);
         }
 

@@ -1,12 +1,12 @@
 package com.studentplanner.studentplanner.models;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class ModuleTeacher {
-    private int moduleID;
+public class ModuleTeacher  {
+    private final int moduleID;
     private int teacherID;
-    private List<Integer> teacherIDList;
+    private final List<Integer> teacherIDList;
 
     public ModuleTeacher(int moduleID, List<Integer> teacherIDList) {
         this.moduleID = moduleID;
@@ -14,11 +14,6 @@ public class ModuleTeacher {
     }
 
 
-
-    public ModuleTeacher(int moduleID, int teacherID) {
-        this.moduleID = moduleID;
-        this.teacherID = teacherID;
-    }
 
 
     public List<Integer> getTeacherIDList() {
@@ -31,5 +26,15 @@ public class ModuleTeacher {
 
     public int getTeacherID() {
         return teacherID;
+    }
+
+
+
+
+
+    public static List<ModuleTeacher> filterModuleTeachers(final List<ModuleTeacher> ALL, final List<Integer> moduleIdList){
+        return ALL.stream()
+                .filter(p -> moduleIdList.contains(p.getModuleID()))
+                .collect(Collectors.toList());
     }
 }
