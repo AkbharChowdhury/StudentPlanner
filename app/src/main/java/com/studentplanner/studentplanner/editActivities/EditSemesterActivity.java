@@ -171,12 +171,8 @@ public class EditSemesterActivity extends AppCompatActivity  implements DatePick
         LocalDate date = Helper.formatDate(year, month, day);
         String formattedDate = Helper.formatDate(String.valueOf(date));
         switch (type) {
-            case START_DATE:
-                txtStartDate.setText(formattedDate);
-                break;
-            case END_DATE:
-                txtEndDate.setText(formattedDate);
-                break;
+            case START_DATE -> txtStartDate.setText(formattedDate);
+            case END_DATE -> txtEndDate.setText(formattedDate);
         }
 
     }
