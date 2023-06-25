@@ -9,7 +9,8 @@ public final class Search {
 
     public static List<? extends Searchable> textSearch(List<? extends Searchable> list, String text){
 
-        return list.stream()
+        return list
+                .stream()
                 .filter(p -> p.searchText().toLowerCase().trim().contains(text.toLowerCase()))
                 .collect(Collectors.toList());
     }
