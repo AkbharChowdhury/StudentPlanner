@@ -215,7 +215,7 @@ public class CalendarFragment extends Fragment implements OnItemListener {
 
         if (id == R.id.add_coursework_action) {
             if (Validation.isPastDate(CalendarUtils.getSelectedDate().toString())) {
-                startForResult.launch(new Intent(getActivity(), AddCourseworkActivity.class));
+                openActivity(AddCourseworkActivity.class);
                 return true;
             }
 
@@ -224,15 +224,18 @@ public class CalendarFragment extends Fragment implements OnItemListener {
 
         }
         if (id == R.id.add_class_action) {
-            startForResult.launch(new Intent(getActivity(), AddClassesActivity.class));
+            openActivity(AddClassesActivity.class);
         }
 
         if (id == R.id.action_week_view) {
-            startForResult.launch(new Intent(getActivity(), WeekViewActivity.class));
+            openActivity(WeekViewActivity.class);
         }
 
         return super.onOptionsItemSelected(item);
 
+    }
+    private void openActivity(Class<? extends Activity> activityPageToOpen){
+        startForResult.launch(new Intent(getActivity(), activityPageToOpen));
     }
 
     private Intent courseworkIntent() {

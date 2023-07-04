@@ -102,20 +102,11 @@ public class WeekViewActivity extends AppCompatActivity implements OnItemListene
     @Override
     protected void onResume() {
         super.onResume();
+        Helper.longToastMessage(this,"called");
         CalendarUtils.setEventAdapter(eventListView, this, startForResult);
 
     }
 
-
-
-
-    public void goBack(View view) {
-        CalendarUtils.setEventAdapter(eventListView, this, startForResult);
-        finish();
-
-
-
-    }
 
     public void todayAction(View view) {
         CalendarUtils.setSelectedDate(CalendarUtils.getCurrentDate());
@@ -180,4 +171,5 @@ public class WeekViewActivity extends AppCompatActivity implements OnItemListene
         CalendarUtils.setEventAdapter(eventListView, this, startForResult);
         finish();
     }
+
 }
