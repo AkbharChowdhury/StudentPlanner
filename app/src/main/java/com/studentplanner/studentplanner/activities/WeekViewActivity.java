@@ -77,8 +77,6 @@ public class WeekViewActivity extends AppCompatActivity implements OnItemListene
         calendarWeekRecyclerView.setLayoutManager(new GridLayoutManager(this, 7));
         calendarWeekRecyclerView.setAdapter(new CalendarAdapter(days, this));
         CalendarUtils.setEventAdapter(eventListView, this, startForResult);
-
-
     }
 
 

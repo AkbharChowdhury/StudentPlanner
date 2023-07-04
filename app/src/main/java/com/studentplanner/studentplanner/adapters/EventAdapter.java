@@ -63,6 +63,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
         final ImageView courseworkIcon = binding.icCoursework;
 
         final int eventIcon = getEventIcon(event.getEventType());
+
         classesIcon.setImageResource(eventIcon);
         courseworkIcon.setImageResource(eventIcon);
 
@@ -77,6 +78,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
                 classLayout.setVisibility(View.GONE);
                 courseworkRow.setDetails(event.getCoursework());
             }
+
             case CLASSES -> {
                 courseworkLayout.setVisibility(View.GONE);
                 classRow.setDetails(event.getClasses());
