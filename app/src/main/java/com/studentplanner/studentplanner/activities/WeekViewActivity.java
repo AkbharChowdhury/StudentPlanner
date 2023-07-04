@@ -15,7 +15,6 @@ import android.widget.TextView;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -27,24 +26,16 @@ import com.studentplanner.studentplanner.adapters.CalendarAdapter;
 import com.studentplanner.studentplanner.addActivities.AddClassesActivity;
 import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
 import com.studentplanner.studentplanner.databinding.ActivityWeekViewBinding;
-import com.studentplanner.studentplanner.enums.EventType;
-import com.studentplanner.studentplanner.fragments.CalendarFragment;
 import com.studentplanner.studentplanner.interfaces.OnItemListener;
-import com.studentplanner.studentplanner.models.Classes;
 import com.studentplanner.studentplanner.models.Event;
 import com.studentplanner.studentplanner.models.EventData;
-import com.studentplanner.studentplanner.models.Semester;
 import com.studentplanner.studentplanner.tables.CourseworkTable;
 import com.studentplanner.studentplanner.utils.CalendarUtils;
 import com.studentplanner.studentplanner.utils.Helper;
 import com.studentplanner.studentplanner.utils.Validation;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class WeekViewActivity extends AppCompatActivity implements OnItemListener {
@@ -53,10 +44,6 @@ public class WeekViewActivity extends AppCompatActivity implements OnItemListene
     private ListView eventListView;
     private ActivityWeekViewBinding binding;
     private EventData eventData;
-    private int code = 0;
-
-
-
 
 
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -113,9 +100,6 @@ public class WeekViewActivity extends AppCompatActivity implements OnItemListene
         CalendarUtils.setSelectedDate(date);
         setWeekView();
     }
-
-
-
 
     public void getEventsFromDB() {
         eventData.getCourseworkDetails();
