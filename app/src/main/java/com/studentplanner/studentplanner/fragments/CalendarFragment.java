@@ -60,7 +60,7 @@ public class CalendarFragment extends Fragment implements OnItemListener {
     private DatabaseHelper db;
     private FragmentCalendarBinding binding;
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-        if (result.getResultCode() == RESULT_OK){
+        if (result.getResultCode() == RESULT_OK) {
             Event.getEventsList().clear();
             getEventsFromDB();
             setMonthView();
@@ -146,7 +146,8 @@ public class CalendarFragment extends Fragment implements OnItemListener {
 
 
     }
-    private List<Event> populateClassData(long numOfDays, LocalDate startDate, Classes myClass){
+
+    private List<Event> populateClassData(long numOfDays, LocalDate startDate, Classes myClass) {
         List<Event> classes = new ArrayList<>();
 
         for (LocalDate date : CalendarUtils.getRecurringEvents(numOfDays, startDate)) {
@@ -170,9 +171,6 @@ public class CalendarFragment extends Fragment implements OnItemListener {
         }
         return classes;
     }
-
-
-
 
 
     private void getCourseworkDetails() {
@@ -234,7 +232,8 @@ public class CalendarFragment extends Fragment implements OnItemListener {
         return super.onOptionsItemSelected(item);
 
     }
-    private void openActivity(Class<? extends Activity> activityPageToOpen){
+
+    private void openActivity(Class<? extends Activity> activityPageToOpen) {
         startForResult.launch(new Intent(getActivity(), activityPageToOpen));
     }
 
@@ -243,8 +242,6 @@ public class CalendarFragment extends Fragment implements OnItemListener {
         intent.putExtra(CourseworkTable.COLUMN_DEADLINE, Helper.formatDate(CalendarUtils.getSelectedDate().toString()));
         return intent;
     }
-
-
 
 
 }

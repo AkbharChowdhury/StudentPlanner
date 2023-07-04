@@ -53,7 +53,6 @@ public class WeekViewActivity extends AppCompatActivity implements OnItemListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_week_view);
         setTitle(getApplication().getResources().getString(R.string.week_view_calendar));
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
