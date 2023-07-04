@@ -252,7 +252,10 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home) finish();
+        if (item.getItemId() == android.R.id.home) {
+            setResult(RESULT_OK);
+            finish();
+        }
 
         if (item.getItemId() == R.id.ic_delete){
             new AlertDialog.Builder(this)

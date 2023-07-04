@@ -37,6 +37,7 @@ import com.studentplanner.studentplanner.enums.EventType;
 import com.studentplanner.studentplanner.interfaces.OnItemListener;
 import com.studentplanner.studentplanner.models.Classes;
 import com.studentplanner.studentplanner.models.Event;
+import com.studentplanner.studentplanner.models.EventData;
 import com.studentplanner.studentplanner.models.Semester;
 import com.studentplanner.studentplanner.tables.CourseworkTable;
 import com.studentplanner.studentplanner.utils.CalendarUtils;
@@ -57,14 +58,14 @@ public class CalendarFragment extends Fragment implements OnItemListener {
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
     private ListView eventListView;
-    private DatabaseHelper db;
     private FragmentCalendarBinding binding;
+    private EventData eventData;
+
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
         if (result.getResultCode() == RESULT_OK) {
             Event.getEventsList().clear();
             getEventsFromDB();
             setMonthView();
-
         }
 
     });
@@ -93,7 +94,7 @@ public class CalendarFragment extends Fragment implements OnItemListener {
 
         initFragment();
         binding = FragmentCalendarBinding.inflate(inflater, container, false);
-        db = DatabaseHelper.getInstance(context);
+        eventData = new EventData(DatabaseHelper.getInstance(context));
         initWidgets();
         binding.btNextMonthAction.setOnClickListener(v -> nextMonthAction());
         binding.btnPreviousMonthAction.setOnClickListener(v -> previousMonthAction());
@@ -112,9 +113,9 @@ public class CalendarFragment extends Fragment implements OnItemListener {
         setMonthView();
     }
 
-    private void getEventsFromDB() {
-        getCourseworkDetails();
-        getClassDetails();
+    public void getEventsFromDB() {
+        eventData.getCourseworkDetails();
+        eventData.getClassDetails();
     }
 
     public void previousMonthAction() {
@@ -127,56 +128,6 @@ public class CalendarFragment extends Fragment implements OnItemListener {
         setMonthView();
     }
 
-
-    private void getClassDetails() {
-
-        List<Classes> classList = db.getClasses();
-        if (!classList.isEmpty()) {
-            for (Classes myClass : classList) {
-                int semesterID = myClass.getSemesterID();
-                Semester semester = db.getSelectedSemester(semesterID);
-
-                LocalDate startDate = semester.getStart();
-                LocalDate endDate = semester.getEnd();
-                long numOfDays = ChronoUnit.DAYS.between(startDate, endDate);
-                Event.getEventsList().addAll(populateClassData(numOfDays, startDate, myClass));
-
-            }
-        }
-
-
-    }
-
-    private List<Event> populateClassData(long numOfDays, LocalDate startDate, Classes myClass) {
-        List<Event> classes = new ArrayList<>();
-
-        for (LocalDate date : CalendarUtils.getRecurringEvents(numOfDays, startDate)) {
-            if (date.getDayOfWeek() == DayOfWeek.of(myClass.getDow())) {
-                int semesterID = myClass.getSemesterID();
-                Semester semester = db.getSelectedSemester(semesterID);
-
-                Event classEvent = new Event(
-                        date,
-                        LocalTime.parse(myClass.getStartTime()),
-                        LocalTime.parse(myClass.getEndTime()),
-                        EventType.CLASSES,
-                        semester.getStart(),
-                        semester.getEnd(),
-                        myClass.getDow()
-                );
-                classEvent.setId(myClass.getClassID());
-                classEvent.setClasses(myClass);
-                classes.add(classEvent);
-            }
-        }
-        return classes;
-    }
-
-
-    private void getCourseworkDetails() {
-        List<Event> courseworkEvent = Event.getCourseworkDetails(db);
-        Event.getEventsList().addAll(courseworkEvent);
-    }
 
     private void initWidgets() {
 
