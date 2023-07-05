@@ -117,8 +117,7 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
         setTimePicker();
         courseworkImage.setOnClickListener(v -> openFilesApp());
 
-
-
+        
         txtDeadlineTime.setText(Helper.showFormattedDBTime(LocalTime.now().plusHours(1).toString(), this));
 
         Dropdown.getStringArray(txtPriority, this, R.array.priority_array);
@@ -138,10 +137,9 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
 
 
         binding.btnAddCoursework.setOnClickListener(v -> {
-
             if (form.validateAddCourseworkForm(getCourseworkErrorFields())) {
                 if (db.addCoursework(getCourseworkDetails())) {
-                    Helper.longToastMessage(this,"Coursework Added");
+                    Helper.longToastMessage(this, getString(R.string.coursework_added));
                     setResult(RESULT_OK);
                     finish();
                 }

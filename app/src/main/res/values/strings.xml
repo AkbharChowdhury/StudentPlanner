@@ -112,6 +112,8 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="select_image">Select Image</string>
+    <string name="coursework_added">Coursework Added</string>
+
 
     <!--    "Select Image"-->
     <string name="permissions_rationale">StudentPlanner needs permission to access files app to attach files to coursework</string>
