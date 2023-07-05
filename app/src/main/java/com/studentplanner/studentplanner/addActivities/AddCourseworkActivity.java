@@ -300,10 +300,6 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
 
     });
 
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -327,7 +323,6 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
         setTimePicker();
         courseworkImage.setOnClickListener(v -> openFilesApp());
 
-//        courseworkImage.setOnClickListener(v -> openImageGallery());
         txtDeadlineTime.setText(Helper.showFormattedDBTime(LocalTime.now().plusHours(1).toString(), this));
 
         Dropdown.getStringArray(txtPriority, this, R.array.priority_array);
@@ -397,11 +392,6 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
         imageActivityResultLauncher.launch(intent);
     }
 
-
-
-
-
-
     private Coursework getCourseworkErrorFields(){
         TextInputLayout txtModuleError = binding.txtModuleError;
         TextInputLayout errorPriority = binding.txtPriorityError;
@@ -416,7 +406,6 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
     private Coursework getCourseworkDetails() {
 
         final Coursework coursework = new Coursework(
-
                 selectedModuleID,
                 Helper.trimStr(txtTitle),
                 Helper.trimStr(txtDescription),
