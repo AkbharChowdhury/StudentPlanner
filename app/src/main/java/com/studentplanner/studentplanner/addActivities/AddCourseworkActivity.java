@@ -175,13 +175,13 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
         if (EasyPermissions.hasPermissions(this, perms)) {
             openImageGallery();
         } else {
-            Helper.longToastMessage(this,"hello");
             EasyPermissions.requestPermissions(this, getString(R.string.permissions_rationale), STORAGE_PERMISSION_CODE, perms);
 
         }
 
 
     }
+
 
     private void openImageGallery() {
         Intent intent = new Intent();

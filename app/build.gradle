@@ -4,12 +4,25 @@ plugins {
 
 android {
     namespace 'com.studentplanner.studentplanner'
-    compileSdk 33
+//    compileSdk 33
+//
+//    defaultConfig {
+//        applicationId "com.studentplanner.studentplanner"
+//        minSdk 26
+//        targetSdk 33
+//        versionCode 1
+//        versionName "1.0"
+//
+//        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+//    }
+
+
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.studentplanner.studentplanner"
         minSdk 26
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
