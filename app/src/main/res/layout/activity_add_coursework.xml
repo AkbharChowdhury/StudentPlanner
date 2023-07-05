@@ -149,6 +149,19 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
+
+
+
+
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:src="@drawable/ic_placeholder_image"
+            android:background="@drawable/round_outline"
+            />
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_add_coursework"
             android:layout_width="match_parent"
@@ -161,6 +174,15 @@
             android:textColor="@color/white">
 
         </androidx.appcompat.widget.AppCompatButton>
+
+<!--        <ImageView-->
+<!--            android:id="@+id/imageView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:srcCompat="@drawable/placeholder_image" />-->
+
+
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </ScrollView>

@@ -45,6 +45,9 @@ dependencies {
     // country call picker
     implementation 'com.hbb20:ccp:2.7.2'
 
+    // easy permissions
+    implementation 'pub.devrel:easypermissions:3.0.0'
+
 
 
 }

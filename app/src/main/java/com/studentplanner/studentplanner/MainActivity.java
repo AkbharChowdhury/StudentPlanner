@@ -11,6 +11,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.navigation.NavigationView;
+import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
 import com.studentplanner.studentplanner.databinding.ActivityMainBinding;
 import com.studentplanner.studentplanner.databinding.NavHeaderBinding;
 import com.studentplanner.studentplanner.fragments.CourseworkFragment;
@@ -18,6 +19,7 @@ import com.studentplanner.studentplanner.fragments.LoginFragment;
 import com.studentplanner.studentplanner.models.Student;
 import com.studentplanner.studentplanner.utils.AccountPreferences;
 import com.studentplanner.studentplanner.utils.FragmentHandler;
+import com.studentplanner.studentplanner.utils.Helper;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private int studentID;
     private NavHeaderBinding navHeaderBinding;
     private ActivityMainBinding binding;
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -49,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         setupNavDrawer(savedInstanceState);
         showStudentDetails();
+
+        Helper.goToActivity(this, AddCourseworkActivity.class);
 
 
     }
