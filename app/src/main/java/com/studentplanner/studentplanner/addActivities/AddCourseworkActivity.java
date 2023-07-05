@@ -121,7 +121,7 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
         setTimePicker();
         courseworkImage.setOnClickListener(v -> openFilesApp());
 
-
+//        courseworkImage.setOnClickListener(v -> openImageGallery());
         txtDeadlineTime.setText(Helper.showFormattedDBTime(LocalTime.now().plusHours(1).toString(), this));
 
         Dropdown.getStringArray(txtPriority, this, R.array.priority_array);
@@ -175,6 +175,7 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
         if (EasyPermissions.hasPermissions(this, perms)) {
             openImageGallery();
         } else {
+            Helper.longToastMessage(this,"hello");
             EasyPermissions.requestPermissions(this, getString(R.string.permissions_rationale), STORAGE_PERMISSION_CODE, perms);
 
         }
@@ -241,9 +242,6 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
     @Override
     public void onDateSet(DatePicker d, int year, int month, int day) {
         LocalDate selectedDate = Helper.formatDate(year, month, day);
-
-
-
         txtDeadline.setText(Helper.formatDate(String.valueOf(selectedDate)));
     }
 

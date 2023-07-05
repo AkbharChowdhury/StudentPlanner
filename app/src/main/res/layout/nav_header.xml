@@ -14,7 +14,7 @@
         android:src="@drawable/round_person_outline_24" />
 
     <TextView
-        android:id="@+id/nav_username_label"
+        android:id="@+id/nav_name_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"

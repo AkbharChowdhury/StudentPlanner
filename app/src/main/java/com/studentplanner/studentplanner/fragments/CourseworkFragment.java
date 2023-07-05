@@ -67,8 +67,8 @@ public class CourseworkFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        getCoursework();
-        adapter.notifyDataSetChanged();
+//        getCoursework();
+//        adapter.notifyDataSetChanged();
 
 
     }

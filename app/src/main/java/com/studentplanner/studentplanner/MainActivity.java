@@ -2,6 +2,9 @@ package com.studentplanner.studentplanner;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -14,8 +17,10 @@ import com.google.android.material.navigation.NavigationView;
 import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
 import com.studentplanner.studentplanner.databinding.ActivityMainBinding;
 import com.studentplanner.studentplanner.databinding.NavHeaderBinding;
+import com.studentplanner.studentplanner.fragments.CalendarFragment;
 import com.studentplanner.studentplanner.fragments.CourseworkFragment;
 import com.studentplanner.studentplanner.fragments.LoginFragment;
+import com.studentplanner.studentplanner.fragments.ReminderFragment;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.Student;
 import com.studentplanner.studentplanner.utils.AccountPreferences;
@@ -26,7 +31,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawer;
     private DatabaseHelper db;
     private int studentID;
-    private NavHeaderBinding navHeaderBinding;
     private ActivityMainBinding binding;
 
 
@@ -44,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-        navHeaderBinding = NavHeaderBinding.inflate(getLayoutInflater());
+//        navHeaderBinding = NavHeaderBinding.inflate(getLayoutInflater());
 
         setContentView(binding.getRoot());
 
@@ -67,10 +71,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void showStudentDetails() {
-        final Student student = db.getUserFirstAndLastName(studentID);
-        navHeaderBinding.navUsernameLabel.setText(student.getName());
+        NavHeaderBinding navHeaderBinding = NavHeaderBinding.bind(binding.navView.getHeaderView(0));
+        navHeaderBinding.navNameLabel.setText(db.getUserFirstAndLastName(studentID).getName());
         navHeaderBinding.navEmailLabel.setText(db.getStudentEmail(studentID));
-
     }
 
     private void setupNavDrawer(Bundle savedInstanceState) {
@@ -91,8 +94,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 openFragment(new LoginFragment());
                 return;
             }
-//            openFragment(new ReminderFragment());
             openFragment(new CourseworkFragment());
+//            openFragment(new CourseworkFragment());
 
             navigationView.setCheckedItem(R.id.nav_reminder);
         }
