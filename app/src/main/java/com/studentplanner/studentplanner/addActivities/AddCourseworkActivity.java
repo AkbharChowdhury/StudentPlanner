@@ -2,9 +2,11 @@ package com.studentplanner.studentplanner.addActivities;
 
 import static com.studentplanner.studentplanner.utils.Helper.deadlineSetup;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,7 +43,13 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Locale;
 
-public class AddCourseworkActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
+
+public class AddCourseworkActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener,  EasyPermissions.PermissionCallbacks {
+    private final int STORAGE_PERMISSION_CODE = 1;
+
     private final CustomTimePicker deadlineCustomTimePicker = new CustomTimePicker(LocalTime.now().getHour(), LocalTime.now().getMinute());
 
     private AutoCompleteTextView txtPriority;
@@ -61,11 +70,12 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_coursework);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         binding = ActivityAddCourseworkBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        binding.imgCoursework.setOnClickListener(v -> openFilesApp());
 
         db = DatabaseHelper.getInstance(this);
         form = new Validation(this);
@@ -115,6 +125,23 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
 
 
     }
+
+    @AfterPermissionGranted(STORAGE_PERMISSION_CODE)
+    private void openFilesApp() {
+        String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE};
+        if (EasyPermissions.hasPermissions(this, perms)) {
+            Toast.makeText(this, "Opening storage", Toast.LENGTH_SHORT).show();
+
+        } else {
+            EasyPermissions.requestPermissions(this, "StudentPlanner needs permission to access files app to attach files to coursework", STORAGE_PERMISSION_CODE, perms);
+
+        }
+
+
+    }
+
+
+
     private Coursework getCourseworkErrorFields(){
         TextInputLayout txtModuleError = binding.txtModuleError;
         TextInputLayout errorPriority = binding.txtPriorityError;
@@ -205,5 +232,32 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
         if (item.getItemId() == android.R.id.home) finish();
         return true;
     }
+    
 
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+//        Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+//        if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
+//
+//        }
+    }
 }

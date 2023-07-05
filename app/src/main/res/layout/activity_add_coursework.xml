@@ -155,7 +155,7 @@
 
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/imgCoursework"
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:src="@drawable/ic_placeholder_image"
