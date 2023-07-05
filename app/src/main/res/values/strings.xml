@@ -191,11 +191,13 @@
     <string name="nav_modules">Modules</string>
     <string name="nav_title_profile">Profile</string>
     <string name="nav_logout">Logout</string>
-    <string name="placeholder_date">Wed 24</string>
-    <string name="placeholder_description">cw description</string>
+    <string name="placeholder_date">Wednesday, May 25 2023, 6:28PM</string>
     <string name="placeholder_priority">High</string>
-    <string name="placeholder_module">COMP152 Test</string>
+    <string name="placeholder_module">COMP1611 Project Management</string>
     <string name="placeholder_completion_status">Completed</string>
+    <string name="placeholder_coursework_title">Hiking App</string>
+    <string name="placeholder_coursework_description">Create hiking app</string>
+
     <string name="placeholder_duration">in 5 days</string>
     <string name="add_module_teacher_description">Please select a module from the list below which will show your list of teachers in the next page.</string>
     <string name="add_module_teacher">Add Module teacher</string>
@@ -212,5 +214,7 @@
     <string name="any_priority">Any Priority</string>
     <string name="max_length_error">You have reached the max length!</string>
     <string name="phone_error">%s Must be at least %d characters!</string>
+    <string name="placeholder_time_left">in 5 days</string>
+    <string name="placeholder_coursework_id">ID 2</string>
 
 </resources>

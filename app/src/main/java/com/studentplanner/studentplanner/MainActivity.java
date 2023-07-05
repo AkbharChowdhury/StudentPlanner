@@ -1,7 +1,6 @@
 package com.studentplanner.studentplanner;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -14,23 +13,18 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.navigation.NavigationView;
 import com.studentplanner.studentplanner.databinding.ActivityMainBinding;
 import com.studentplanner.studentplanner.databinding.NavHeaderBinding;
-import com.studentplanner.studentplanner.fragments.CalendarFragment;
 import com.studentplanner.studentplanner.fragments.CourseworkFragment;
 import com.studentplanner.studentplanner.fragments.LoginFragment;
-import com.studentplanner.studentplanner.fragments.ModuleTeacherFragment;
-import com.studentplanner.studentplanner.fragments.ReminderFragment;
 import com.studentplanner.studentplanner.models.Student;
 import com.studentplanner.studentplanner.utils.AccountPreferences;
 import com.studentplanner.studentplanner.utils.FragmentHandler;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     private DatabaseHelper db;
     private int studentID;
     private NavHeaderBinding navHeaderBinding;
-    private ActivityMainBinding activityMainBinding;
+    private ActivityMainBinding binding;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -45,10 +39,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
         navHeaderBinding = NavHeaderBinding.inflate(getLayoutInflater());
 
-        setContentView(activityMainBinding.getRoot());
+        setContentView(binding.getRoot());
 
         db = DatabaseHelper.getInstance(this);
         studentID = AccountPreferences.getStudentID(this);
@@ -57,13 +51,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         showStudentDetails();
 
 
-
     }
 
 
     private void openFragment(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                fragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
     }
 
     private void showStudentDetails() {
@@ -74,11 +66,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void setupNavDrawer(Bundle savedInstanceState) {
-        androidx.appcompat.widget.Toolbar toolbar = activityMainBinding.toolbar;
+        androidx.appcompat.widget.Toolbar toolbar = binding.toolbar;
         setSupportActionBar(toolbar);
 
-        drawer = activityMainBinding.drawerLayout;
-        NavigationView navigationView = activityMainBinding.navView;
+        drawer = binding.drawerLayout;
+        NavigationView navigationView = binding.navView;
         navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,

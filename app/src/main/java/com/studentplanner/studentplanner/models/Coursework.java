@@ -25,6 +25,15 @@ public class Coursework implements Searchable {
     private AutoCompleteTextView txtDeadlineTime;
     private TextInputLayout txtDeadlineTimeError;
 
+    private byte image;
+
+    public byte getImage() {
+        return image;
+    }
+
+    public void setImage(byte image) {
+        this.image = image;
+    }
 
     public TextInputLayout getTxtDeadlineError() {
         return txtDeadlineError;

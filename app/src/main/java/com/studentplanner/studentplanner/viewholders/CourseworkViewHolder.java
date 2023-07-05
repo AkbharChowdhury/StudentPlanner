@@ -3,6 +3,7 @@ package com.studentplanner.studentplanner.viewholders;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,6 +36,8 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
     private final TextView tvTimeLeft;
     private final TextView tvCourseworkModule;
     private final TextView tvCourseworkCompleted;
+    public final ImageView tvImage;
+
 
     private final CardView layout;
 
@@ -52,6 +55,7 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
         tvTimeLeft = binding.tvTimeLeft;
         tvCourseworkModule = binding.tvCourseworkModule;
         tvCourseworkCompleted = binding.tvCourseworkCompleted;
+        tvImage = binding.tvCourseworkImage;
         layout = binding.layout;
         context = binding.getRoot().getContext();
     }

@@ -132,7 +132,6 @@ public class EditSemesterActivity extends AppCompatActivity  implements DatePick
                 type = DatePickerType.START_DATE;
                 datePickerStart = new DatePickerFragment();
                 datePickerStart.show(getSupportFragmentManager(), "datePickerStart");
-                datePickerStart.setMinDateToToday();
                 datePickerStart.setConstrainEndDate();
                 createDatePickerConstraint(datePickerStart);
                 CalendarUtils.setSelectedDate(datePickerStart, txtStartDate);
