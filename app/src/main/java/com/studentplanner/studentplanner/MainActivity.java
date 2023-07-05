@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-//        navHeaderBinding = NavHeaderBinding.inflate(getLayoutInflater());
 
         setContentView(binding.getRoot());
 
