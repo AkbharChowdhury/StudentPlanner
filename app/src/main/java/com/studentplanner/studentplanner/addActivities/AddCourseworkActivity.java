@@ -27,6 +27,7 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -81,6 +82,7 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
                 try {
                     imageToStore = MediaStore.Images.Media.getBitmap(getContentResolver(), result.getData().getData());
                     courseworkImage.setImageBitmap(imageToStore);
+                    binding.btnRemovePicture.setVisibility(View.VISIBLE);
 
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -93,6 +95,9 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
     });
 
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,7 +105,6 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
 
         binding = ActivityAddCourseworkBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
 
         db = DatabaseHelper.getInstance(this);
         form = new Validation(this);
@@ -136,19 +140,32 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
         });
 
 
-        binding.btnAddCoursework.setOnClickListener(v -> {
-            if (form.validateAddCourseworkForm(getCourseworkErrorFields())) {
-                if (db.addCoursework(getCourseworkDetails())) {
-                    Helper.longToastMessage(this, getString(R.string.coursework_added));
-                    setResult(RESULT_OK);
-                    finish();
-                }
+        binding.btnAddCoursework.setOnClickListener(v -> handleAddButton());
+        binding.btnRemovePicture.setOnClickListener(v -> handleRemoveClick());
 
+
+    }
+    private void handleAddButton(){
+        if (form.validateAddCourseworkForm(getCourseworkErrorFields())) {
+            if (db.addCoursework(getCourseworkDetails())) {
+                setResult(RESULT_OK);
+                Helper.longToastMessage(this, getString(R.string.coursework_added));
+                finish();
             }
 
+        }
+    }
 
-        });
+    private void  handleRemoveClick(){
+        new AlertDialog.Builder(this)
+                .setTitle("Are you sure you want to delete this this image?")
+                .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
+                    imageToStore = null;
+                    courseworkImage.setImageResource(R.drawable.ic_placeholder_image);
+                    binding.btnRemovePicture.setVisibility(View.GONE);
 
+                })
+                .setNegativeButton(getString(R.string.no), (dialog, which) -> dialog.cancel()).create().show();
 
     }
 

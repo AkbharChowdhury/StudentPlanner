@@ -94,7 +94,7 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
         final byte[] image = coursework.getByteImage();
 
         if (image !=null){
-            tvImage.setImageBitmap( ImageHandler.decodeBitmapByteArray(image));
+            tvImage.setImageBitmap(ImageHandler.decodeBitmapByteArray(image));
             return;
         }
 

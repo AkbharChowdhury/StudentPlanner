@@ -59,10 +59,19 @@ public class CourseworkFragment extends Fragment {
 
         if (result.getResultCode() == RESULT_OK) {
             getCoursework();
+            adapter.notifyDataSetChanged();
         }
 
     });
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getCoursework();
+        adapter.notifyDataSetChanged();
+
+
+    }
 
     public CourseworkFragment() {
     }
@@ -190,7 +199,6 @@ public class CourseworkFragment extends Fragment {
 
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(manager);
-
             recyclerView.setAdapter(adapter);
             return;
         }
