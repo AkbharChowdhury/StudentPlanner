@@ -387,6 +387,7 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
     @Override
     public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
 //        Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+        openImageGallery();
 
     }
 
