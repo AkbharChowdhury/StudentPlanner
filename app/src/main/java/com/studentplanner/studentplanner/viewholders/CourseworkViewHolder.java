@@ -86,20 +86,16 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
 
         tvTimeLeft.setTextColor(Helper.getPriorityColour(coursework.getPriority(), context));
 
-        showImage(coursework);
+        ImageHandler.showImage(coursework.getByteImage(), tvImage);
+
 
     }
 
-    private void showImage(Coursework coursework) {
-        final byte[] image = coursework.getByteImage();
 
-        if (image !=null){
-            tvImage.setImageBitmap(ImageHandler.decodeBitmapByteArray(image));
-            return;
-        }
 
-        tvImage.setVisibility(View.GONE);
-    }
+
+
+
 
     private void showDescription(final String description) {
         if (description.length() == 0){

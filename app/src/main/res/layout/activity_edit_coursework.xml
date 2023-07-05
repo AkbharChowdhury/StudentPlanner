@@ -164,6 +164,30 @@
         </com.google.android.material.checkbox.MaterialCheckBox>
 
 
+
+
+        <ImageView
+            android:id="@+id/imgCoursework"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@drawable/round_outline"
+            android:src="@drawable/ic_placeholder_image" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_remove_picture"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="12dp"
+            android:text="Remove Image"
+            android:textAllCaps="false"
+            android:textColor="@color/red"
+            android:visibility="gone"
+            >
+
+        </androidx.appcompat.widget.AppCompatButton>
+
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_edit_coursework"
             android:layout_width="match_parent"

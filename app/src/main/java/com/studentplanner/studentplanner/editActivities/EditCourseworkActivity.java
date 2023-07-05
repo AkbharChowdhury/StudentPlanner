@@ -2,21 +2,31 @@ package com.studentplanner.studentplanner.editActivities;
 
 import static com.studentplanner.studentplanner.utils.Helper.deadlineSetup;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.TimePicker;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.textfield.TextInputLayout;
@@ -25,6 +35,7 @@ import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.databinding.ActivityEditCourseworkBinding;
 import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.models.CustomTimePicker;
+import com.studentplanner.studentplanner.models.ImageHandler;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.tables.CourseworkTable;
 import com.studentplanner.studentplanner.utils.BoundTimePickerDialog;
@@ -34,12 +45,17 @@ import com.studentplanner.studentplanner.utils.Dropdown;
 import com.studentplanner.studentplanner.utils.Helper;
 import com.studentplanner.studentplanner.utils.Validation;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Locale;
 
-public class EditCourseworkActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
+
+public class EditCourseworkActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, EasyPermissions.PermissionCallbacks {
+    private final int STORAGE_PERMISSION_CODE = 1;
 
     private CustomTimePicker deadlineCustomTimePicker;
 
@@ -58,10 +74,31 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
 
     private ActivityEditCourseworkBinding binding;
     private BoundTimePickerDialog deadlineTimePicker;
+    private ImageView courseworkImage;
+    private Bitmap imageToStore;
+    private boolean deleteImage = false;
 
 
 
+    private final ActivityResultLauncher<Intent> imageActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        if (result.getResultCode() == RESULT_OK) {
+            if (result.getData() != null) {
+                try {
+                    imageToStore = MediaStore.Images.Media.getBitmap(getContentResolver(), result.getData().getData());
+                    courseworkImage.setImageBitmap(imageToStore);
+                    binding.btnRemovePicture.setVisibility(View.VISIBLE);
+                    deleteImage = false;
 
+
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+
+        }
+
+    });
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,13 +124,16 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
         binding.btnEditCoursework.setOnClickListener(v -> {
 
             if (form.validateEditCourseworkForm(getCourseworkErrorFields())){
-                if (db.updateCoursework(getCourseworkDetails())) {
+                if (db.updateCoursework(getCourseworkDetails(), deleteImage)) {
                     Helper.longToastMessage(this,"Coursework Updated");
                     setResult(RESULT_OK);
                     finish();
                 }
             }
         });
+        binding.btnRemovePicture.setOnClickListener(v -> handleRemoveClick());
+        courseworkImage.setOnClickListener(v -> openFilesApp());
+
 
     }
 
@@ -119,6 +159,7 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
         Dropdown.getStringArray(txtPriority, this,R.array.priority_array );
         txtDeadlineError = binding.txtDeadlineError;
         checkBoxCompleted = binding.checkboxEditCoursework;
+        courseworkImage = binding.imgCoursework;
 
 
 
@@ -140,15 +181,30 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
             checkBoxCompleted.setChecked(coursework.isCompleted());
 
 
+
             LocalTime deadlineTime = LocalTime.parse(coursework.getDeadlineTime());
 
             deadlineCustomTimePicker = new CustomTimePicker(deadlineTime.getHour(), deadlineTime.getMinute());
+
+            showCourseworkImage(coursework.getByteImage());
+
+
 
 
 
 
         }
 
+    }
+
+    private void showCourseworkImage(byte[] image) {
+        if (image!=null){
+            courseworkImage.setImageBitmap(ImageHandler.decodeBitmapByteArray(image));
+            binding.btnRemovePicture.setVisibility(View.VISIBLE);
+
+        } else {
+            courseworkImage.setImageResource(R.drawable.ic_placeholder_image);
+        }
     }
 
 
@@ -240,6 +296,13 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
                 Helper.convertFormattedTimeToDBFormat(txtDeadlineTime.getText().toString())
 
         );
+
+        if (imageToStore!=null){
+            coursework.setImage(imageToStore);
+
+
+        }
+
         coursework.setCompleted(checkBoxCompleted.isChecked());
         return coursework;
     }
@@ -276,4 +339,69 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+
+    private void handleRemoveClick(){
+        new AlertDialog.Builder(this)
+                .setTitle("Are you sure you want to delete this this image?")
+                .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
+                    imageToStore = null;
+                    deleteImage = true;
+                    courseworkImage.setImageResource(R.drawable.ic_placeholder_image);
+                    binding.btnRemovePicture.setVisibility(View.GONE);
+
+                })
+                .setNegativeButton(getString(R.string.no), (dialog, which) -> dialog.cancel()).create().show();
+
+    }
+
+
+
+
+
+
+    @AfterPermissionGranted(STORAGE_PERMISSION_CODE)
+    private void openFilesApp() {
+        String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE};
+        if (EasyPermissions.hasPermissions(this, perms)) {
+            openImageGallery();
+        } else {
+            EasyPermissions.requestPermissions(this, getString(R.string.permissions_rationale), STORAGE_PERMISSION_CODE, perms);
+
+        }
+
+
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+//        Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+
+    }
+
+    private void openImageGallery() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent = Intent.createChooser(intent,getString(R.string.select_image));
+        imageActivityResultLauncher.launch(intent);
+    }
+
+
+
+
+
+
+
 }

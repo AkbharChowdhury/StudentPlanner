@@ -739,9 +739,8 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                             cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DEADLINE)),
                             cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DEADLINE_TIME))
                     );
-                    byte[] image = cursor.getBlob(cursor.getColumnIndex(CourseworkTable.COLUMN_IMAGE));
-                    coursework.setImage(image);
-
+                    byte[] img = cursor.getBlob(cursor.getColumnIndex(CourseworkTable.COLUMN_IMAGE));
+                    coursework.setImage(img);
                     coursework.setCompleted(cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_COMPLETED)).equalsIgnoreCase("Yes"));
                     courseworkList.add(coursework);
 
@@ -883,6 +882,9 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                         cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DEADLINE_TIME))
 
                 );
+                // lks
+                coursework.setImage(cursor.getBlob(cursor.getColumnIndex(CourseworkTable.COLUMN_IMAGE)));
+
                 coursework.setCompleted(cursor.getString(
                                 cursor.getColumnIndex(CourseworkTable.COLUMN_COMPLETED))
                         .equalsIgnoreCase("Yes"));
@@ -1127,7 +1129,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public boolean updateCoursework(Coursework coursework) {
+    public boolean updateCoursework(Coursework coursework, boolean deleteImage) {
 
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -1139,6 +1141,17 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(CourseworkTable.COLUMN_DEADLINE, coursework.getDeadline());
         cv.put(CourseworkTable.COLUMN_DEADLINE_TIME, coursework.getDeadlineTime());
         cv.put(CourseworkTable.COLUMN_COMPLETED, coursework.isCompleted() ? "Yes" : "No");
+
+        if (deleteImage){
+            cv.putNull(CourseworkTable.COLUMN_IMAGE);
+
+        } else {
+            if (coursework.getImage()!=null){
+                cv.put(CourseworkTable.COLUMN_IMAGE, ImageHandler.getBitmapAsByteArray(coursework.getImage()));
+            }
+
+        }
+
 
         long result = db.update(CourseworkTable.TABLE_NAME, cv, CourseworkTable.COLUMN_ID + "=?", new String[]{String.valueOf(coursework.getCourseworkID())});
         return result != -1;

@@ -55,7 +55,7 @@ import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
-public class AddCourseworkActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener,  EasyPermissions.PermissionCallbacks {
+public class AddCourseworkActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, EasyPermissions.PermissionCallbacks {
     private final int STORAGE_PERMISSION_CODE = 1;
 
     private final CustomTimePicker deadlineCustomTimePicker = new CustomTimePicker(LocalTime.now().getHour(), LocalTime.now().getMinute());
@@ -173,7 +173,6 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
     private void openFilesApp() {
         String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE};
         if (EasyPermissions.hasPermissions(this, perms)) {
-//            Toast.makeText(this, "Opening storage", Toast.LENGTH_SHORT).show();
             openImageGallery();
         } else {
             EasyPermissions.requestPermissions(this, getString(R.string.permissions_rationale), STORAGE_PERMISSION_CODE, perms);
@@ -323,8 +322,5 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-//        if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
-//
-//        }
     }
 }
