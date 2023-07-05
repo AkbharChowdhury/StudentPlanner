@@ -130,7 +130,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public void createCourseworkTable(SQLiteDatabase db) {
+    private void createCourseworkTable(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + CourseworkTable.TABLE_NAME + " ("
                 + CourseworkTable.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + CourseworkTable.COLUMN_MODULE_ID + " INTEGER NOT NULL,"
@@ -140,12 +140,18 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 + CourseworkTable.COLUMN_DEADLINE + " TEXT NOT NULL, "
                 + CourseworkTable.COLUMN_DEADLINE_TIME + " TEXT NOT NULL, "
                 + CourseworkTable.COLUMN_COMPLETED + " TEXT NOT NULL DEFAULT 'No', "
+                + CourseworkTable.COLUMN_IMAGE + " BLOB, "
                 + "FOREIGN KEY (" + CourseworkTable.COLUMN_MODULE_ID + ") REFERENCES " + ModuleTable.TABLE_NAME + "(" + ModuleTable.COLUMN_ID + ") ON UPDATE CASCADE ON DELETE CASCADE "
                 +
                 ")"
         );
 
     }
+
+
+
+
+
 
     private void createTeacherTable(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TeacherTable.TABLE_NAME + " ("

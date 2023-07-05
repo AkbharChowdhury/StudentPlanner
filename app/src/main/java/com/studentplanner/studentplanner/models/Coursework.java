@@ -1,5 +1,6 @@
 package com.studentplanner.studentplanner.models;
 
+import android.graphics.Bitmap;
 import android.widget.AutoCompleteTextView;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -25,13 +26,14 @@ public class Coursework implements Searchable {
     private AutoCompleteTextView txtDeadlineTime;
     private TextInputLayout txtDeadlineTimeError;
 
-    private byte image;
 
-    public byte getImage() {
+    private Bitmap image;
+
+    public Bitmap getImage() {
         return image;
     }
 
-    public void setImage(byte image) {
+    public void setImage(Bitmap image) {
         this.image = image;
     }
 

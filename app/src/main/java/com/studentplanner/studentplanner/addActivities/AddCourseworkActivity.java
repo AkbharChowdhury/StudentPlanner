@@ -7,8 +7,11 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -17,9 +20,12 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -38,6 +44,7 @@ import com.studentplanner.studentplanner.utils.Dropdown;
 import com.studentplanner.studentplanner.utils.Helper;
 import com.studentplanner.studentplanner.utils.Validation;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -65,6 +72,25 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
     private BoundTimePickerDialog deadlineTimePicker;
     private Validation form;
     private ActivityAddCourseworkBinding binding;
+    private ImageView courseworkImage;
+    private Bitmap imageToStore;
+
+    private final ActivityResultLauncher<Intent> imageActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        if (result.getResultCode() == RESULT_OK) {
+            if (result.getData() != null) {
+                try {
+                    imageToStore = MediaStore.Images.Media.getBitmap(getContentResolver(), result.getData().getData());
+                    courseworkImage.setImageBitmap(imageToStore);
+
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+
+        }
+
+    });
 
 
     @Override
@@ -75,7 +101,6 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
         binding = ActivityAddCourseworkBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.imgCoursework.setOnClickListener(v -> openFilesApp());
 
         db = DatabaseHelper.getInstance(this);
         form = new Validation(this);
@@ -88,7 +113,10 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
         txtPriority.setText(SELECT_PRIORITY);
         txtTitle = binding.txtTitle;
         txtDescription = binding.txtDescription;
+        courseworkImage =  binding.imgCoursework;
         setTimePicker();
+        courseworkImage.setOnClickListener(v -> openFilesApp());
+
 
 
         txtDeadlineTime.setText(Helper.showFormattedDBTime(LocalTime.now().plusHours(1).toString(), this));
@@ -130,15 +158,26 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
     private void openFilesApp() {
         String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE};
         if (EasyPermissions.hasPermissions(this, perms)) {
-            Toast.makeText(this, "Opening storage", Toast.LENGTH_SHORT).show();
-
+//            Toast.makeText(this, "Opening storage", Toast.LENGTH_SHORT).show();
+            openImageGallery();
         } else {
-            EasyPermissions.requestPermissions(this, "StudentPlanner needs permission to access files app to attach files to coursework", STORAGE_PERMISSION_CODE, perms);
+            EasyPermissions.requestPermissions(this, getString(R.string.permissions_rationale), STORAGE_PERMISSION_CODE, perms);
 
         }
 
 
     }
+
+    private void openImageGallery() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent = Intent.createChooser(intent,getString(R.string.select_image));
+        imageActivityResultLauncher.launch(intent);
+    }
+
+
+
 
 
 
@@ -232,7 +271,12 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
         if (item.getItemId() == android.R.id.home) finish();
         return true;
     }
-    
+
+
+
+
+
+
 
 
     @Override
