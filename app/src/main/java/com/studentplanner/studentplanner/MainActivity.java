@@ -16,6 +16,7 @@ import com.studentplanner.studentplanner.databinding.ActivityMainBinding;
 import com.studentplanner.studentplanner.databinding.NavHeaderBinding;
 import com.studentplanner.studentplanner.fragments.CourseworkFragment;
 import com.studentplanner.studentplanner.fragments.LoginFragment;
+import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.Student;
 import com.studentplanner.studentplanner.utils.AccountPreferences;
 import com.studentplanner.studentplanner.utils.FragmentHandler;
@@ -49,11 +50,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         db = DatabaseHelper.getInstance(this);
         studentID = AccountPreferences.getStudentID(this);
+//        Module.addDefaultModules(this);
 
         setupNavDrawer(savedInstanceState);
         showStudentDetails();
 
-        Helper.goToActivity(this, AddCourseworkActivity.class);
+
+//        Helper.goToActivity(this, AddCourseworkActivity.class);
 
 
     }

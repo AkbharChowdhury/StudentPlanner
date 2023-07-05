@@ -6,10 +6,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.studentplanner.studentplanner.models.Classes;
 import com.studentplanner.studentplanner.models.Coursework;
+import com.studentplanner.studentplanner.models.ImageHandler;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.ModuleTeacher;
 import com.studentplanner.studentplanner.models.Semester;
@@ -70,9 +72,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + DATABASE_NAME);
-
-        Log.v(getClass().getName(), DATABASE_NAME + " database upgrade to version " +
-                newVersion + " - old data lost");
+        Log.v(getClass().getName(), MessageFormat.format("{0} database upgrade to version {1}  - old data lost", DATABASE_NAME, newVersion));
         onCreate(db);
     }
 
@@ -111,8 +111,8 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 + StudentTable.COLUMN_EMAIL + " TEXT NOT NULL UNIQUE,"
                 + StudentTable.COLUMN_PHONE + " TEXT,"
                 + StudentTable.COLUMN_PASSWORD + " TEXT NOT NULL,"
-                + StudentTable.COLUMN_REGISTERED_DATE + " TEXT NOT NULL" +
-                ")"
+                + StudentTable.COLUMN_REGISTERED_DATE + " TEXT NOT NULL"
+                + ");"
         );
 
     }
@@ -124,8 +124,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 + ModuleTable.COLUMN_MODULE_C0DE + " TEXT NOT NULL,"
                 + ModuleTable.COLUMN_MODULE_NAME + " TEXT NOT NULL, "
                 + "FOREIGN KEY (" + ModuleTable.COLUMN_STUDENT_ID + ") REFERENCES " + StudentTable.TABLE_NAME + "(" + StudentTable.COLUMN_ID + ") ON UPDATE CASCADE ON DELETE CASCADE "
-                +
-                ")"
+                + ");"
         );
 
     }
@@ -142,8 +141,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 + CourseworkTable.COLUMN_COMPLETED + " TEXT NOT NULL DEFAULT 'No', "
                 + CourseworkTable.COLUMN_IMAGE + " BLOB, "
                 + "FOREIGN KEY (" + CourseworkTable.COLUMN_MODULE_ID + ") REFERENCES " + ModuleTable.TABLE_NAME + "(" + ModuleTable.COLUMN_ID + ") ON UPDATE CASCADE ON DELETE CASCADE "
-                +
-                ")"
+                + ");"
         );
 
     }
@@ -161,7 +159,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 + TeacherTable.COLUMN_LASTNAME + " TEXT NOT NULL,"
                 + TeacherTable.COLUMN_EMAIL + " TEXT NOT NULL UNIQUE,"
                 + "FOREIGN KEY (" + TeacherTable.COLUMN_STUDENT_ID + ") REFERENCES " + StudentTable.TABLE_NAME + "(" + StudentTable.COLUMN_ID + ") ON UPDATE CASCADE ON DELETE CASCADE"
-                + ")"
+                + ");"
         );
 
     }
@@ -174,8 +172,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 + "PRIMARY KEY(" + ModuleTeacherTable.COLUMN_TEACHER_ID + ", " + ModuleTeacherTable.COLUMN_MODULE_ID + "),"
                 + "FOREIGN KEY (" + ModuleTeacherTable.COLUMN_TEACHER_ID + ") REFERENCES " + TeacherTable.TABLE_NAME + "(" + TeacherTable.COLUMN_ID + ") ON UPDATE CASCADE ON DELETE CASCADE,"
                 + "FOREIGN KEY (" + ModuleTeacherTable.COLUMN_MODULE_ID + ") REFERENCES " + ModuleTable.TABLE_NAME + "(" + ModuleTable.COLUMN_ID + ") ON UPDATE CASCADE ON DELETE CASCADE"
-
-                + ")"
+                + ");"
         );
 
     }
@@ -189,8 +186,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 + SemesterTable.COLUMN_START_DATE + " TEXT NOT NULL, "
                 + SemesterTable.COLUMN_END_DATE + " TEXT NOT NULL, "
                 + "FOREIGN KEY (" + SemesterTable.COLUMN_STUDENT_ID + ") REFERENCES " + StudentTable.TABLE_NAME + "(" + StudentTable.COLUMN_ID + ") ON UPDATE CASCADE ON DELETE CASCADE "
-                +
-                ")"
+                + ");"
         );
 
     }
@@ -208,7 +204,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 + ClassTable.COLUMN_TYPE + " TEXT NOT NULL, "
                 + "FOREIGN KEY (" + ClassTable.COLUMN_MODULE_ID + ") REFERENCES " + ModuleTable.TABLE_NAME + "(" + ModuleTable.COLUMN_ID + ") ON UPDATE CASCADE ON DELETE CASCADE, "
                 + "FOREIGN KEY (" + ClassTable.COLUMN_SEMESTER_ID + ") REFERENCES " + SemesterTable.TABLE_NAME + "(" + SemesterTable.COLUMN_ID + ") ON UPDATE CASCADE ON DELETE CASCADE "
-
                 + ")"
         );
 
@@ -495,6 +490,12 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(CourseworkTable.COLUMN_DEADLINE, coursework.getDeadline());
         cv.put(CourseworkTable.COLUMN_DEADLINE_TIME, coursework.getDeadlineTime());
 
+        if (coursework.getImage()!=null){
+            cv.put(CourseworkTable.COLUMN_IMAGE, ImageHandler.getBitmapAsByteArray(coursework.getImage()));
+
+        }
+
+
         long result = db.insert(CourseworkTable.TABLE_NAME, null, cv);
         return result != -1;
 
@@ -737,8 +738,10 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                             cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_PRIORITY)),
                             cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DEADLINE)),
                             cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DEADLINE_TIME))
-
                     );
+                    byte[] image = cursor.getBlob(cursor.getColumnIndex(CourseworkTable.COLUMN_IMAGE));
+                    coursework.setImage(image);
+
                     coursework.setCompleted(cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_COMPLETED)).equalsIgnoreCase("Yes"));
                     courseworkList.add(coursework);
 

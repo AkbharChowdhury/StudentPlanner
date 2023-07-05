@@ -28,13 +28,21 @@ public class Coursework implements Searchable {
 
 
     private Bitmap image;
+    private byte[] byteImage;
+
 
     public Bitmap getImage() {
         return image;
     }
+    public byte[] getByteImage() {
+        return byteImage;
+    }
 
     public void setImage(Bitmap image) {
         this.image = image;
+    }
+    public void setImage(byte[] image) {
+        this.byteImage = image;
     }
 
     public TextInputLayout getTxtDeadlineError() {

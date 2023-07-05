@@ -117,7 +117,7 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
         setTimePicker();
         courseworkImage.setOnClickListener(v -> openFilesApp());
 
-        
+
         txtDeadlineTime.setText(Helper.showFormattedDBTime(LocalTime.now().plusHours(1).toString(), this));
 
         Dropdown.getStringArray(txtPriority, this, R.array.priority_array);
@@ -192,7 +192,7 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
 
     private Coursework getCourseworkDetails() {
 
-        return new Coursework(
+        final Coursework coursework = new Coursework(
 
                 selectedModuleID,
                 Helper.trimStr(txtTitle),
@@ -202,6 +202,14 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
                 Helper.convertFormattedTimeToDBFormat(txtDeadlineTime.getText().toString())
 
         );
+
+        if (imageToStore!=null){
+            coursework.setImage(imageToStore);
+        }
+
+        return coursework;
+
+
     }
 
     private void getModulesList() {

@@ -15,6 +15,7 @@ import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.databinding.CourseworkRowBinding;
 import com.studentplanner.studentplanner.enums.Status;
 import com.studentplanner.studentplanner.models.Coursework;
+import com.studentplanner.studentplanner.models.ImageHandler;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.utils.Helper;
 
@@ -36,7 +37,7 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
     private final TextView tvTimeLeft;
     private final TextView tvCourseworkModule;
     private final TextView tvCourseworkCompleted;
-    public final ImageView tvImage;
+    private final ImageView tvImage;
 
 
     private final CardView layout;
@@ -85,6 +86,19 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
 
         tvTimeLeft.setTextColor(Helper.getPriorityColour(coursework.getPriority(), context));
 
+        showImage(coursework);
+
+    }
+
+    private void showImage(Coursework coursework) {
+        final byte[] image = coursework.getByteImage();
+
+        if (image !=null){
+            tvImage.setImageBitmap( ImageHandler.decodeBitmapByteArray(image));
+            return;
+        }
+
+        tvImage.setVisibility(View.GONE);
     }
 
     private void showDescription(final String description) {
