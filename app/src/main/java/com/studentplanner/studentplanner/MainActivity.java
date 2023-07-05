@@ -12,8 +12,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.navigation.NavigationView;
+import com.studentplanner.studentplanner.databinding.ActivityMainBinding;
 import com.studentplanner.studentplanner.databinding.NavHeaderBinding;
 import com.studentplanner.studentplanner.fragments.CalendarFragment;
+import com.studentplanner.studentplanner.fragments.CourseworkFragment;
 import com.studentplanner.studentplanner.fragments.LoginFragment;
 import com.studentplanner.studentplanner.fragments.ModuleTeacherFragment;
 import com.studentplanner.studentplanner.fragments.ReminderFragment;
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DatabaseHelper db;
     private int studentID;
     private NavHeaderBinding navHeaderBinding;
+    private ActivityMainBinding activityMainBinding;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -42,8 +45,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         navHeaderBinding = NavHeaderBinding.inflate(getLayoutInflater());
+
+        setContentView(activityMainBinding.getRoot());
 
         db = DatabaseHelper.getInstance(this);
         studentID = AccountPreferences.getStudentID(this);
@@ -69,11 +74,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void setupNavDrawer(Bundle savedInstanceState) {
-        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        androidx.appcompat.widget.Toolbar toolbar = activityMainBinding.toolbar;
         setSupportActionBar(toolbar);
 
-        drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        drawer = activityMainBinding.drawerLayout;
+        NavigationView navigationView = activityMainBinding.navView;
         navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -87,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return;
             }
 //            openFragment(new ReminderFragment());
-            openFragment(new CalendarFragment());
+            openFragment(new CourseworkFragment());
 
             navigationView.setCheckedItem(R.id.nav_reminder);
         }
