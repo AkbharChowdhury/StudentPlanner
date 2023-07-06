@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -25,8 +24,6 @@ public class CourseworkAdapter extends RecyclerView.Adapter<CourseworkViewHolder
     private List<Coursework> list;
     private final Context context;
     private  final ActivityResultLauncher<Intent> startForResult;
-
-
 
     public CourseworkAdapter(List<Coursework> list, Context context, ActivityResultLauncher<Intent> startForResult) {
         this.list = list;
@@ -49,16 +46,7 @@ public class CourseworkAdapter extends RecyclerView.Adapter<CourseworkViewHolder
     @Override
     public void onBindViewHolder(@NonNull CourseworkViewHolder holder, int position) {
 
-//        if (position == 0){
-//            holder.tvImage.setVisibility(View.GONE);
-//
-//        } else{
-//            holder.showDetails(list.get(position));
-//
-//
-//        }
         holder.showDetails(list.get(position));
-
         holder.getLayout().setOnClickListener(v -> startForResult.launch(intent(position)));
 
     }
