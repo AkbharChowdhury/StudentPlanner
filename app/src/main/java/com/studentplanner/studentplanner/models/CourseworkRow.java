@@ -43,7 +43,7 @@ public class CourseworkRow {
         time.setText(Helper.formatTimeShort(coursework.getDeadlineTime()));
 
         completionStatus.setText(coursework.isCompleted() ? Status.COMPLETED.label : Status.NOT_COMPLETED.label);
-        completionStatus.setTextColor(coursework.isCompleted() ? context.getColor(R.color.green) : Color.RED);
+        completionStatus.setTextColor(coursework.isCompleted() ? context.getColor(R.color.dark_green) : Color.RED);
 
     }
 }

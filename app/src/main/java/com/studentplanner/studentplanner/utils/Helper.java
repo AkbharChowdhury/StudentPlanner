@@ -192,7 +192,7 @@ public final class Helper {
 
     public static int getPriorityColour(String priority, Context c) {
         return switch (priority) {
-            case "Low" -> c.getColor(R.color.green);
+            case "Low" -> c.getColor(R.color.dark_green);
             case "Medium" -> c.getColor(R.color.orange);
             default -> c.getColor(R.color.red);
         };

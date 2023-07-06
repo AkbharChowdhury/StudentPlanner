@@ -72,7 +72,7 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
         tvPriority.setTextColor(Helper.getPriorityColour(coursework.getPriority(), context));
         tvCourseworkModule.setText(module.getModuleDetails());
         tvCourseworkCompleted.setText(coursework.isCompleted() ? Status.COMPLETED.label : Status.NOT_COMPLETED.label);
-        tvCourseworkCompleted.setTextColor(coursework.isCompleted() ? context.getColor(R.color.green) : Color.RED);
+        tvCourseworkCompleted.setTextColor(coursework.isCompleted() ? context.getColor(R.color.dark_green) : Color.RED);
 
         showTimeLeft(deadline, coursework);
         ImageHandler.showImage(coursework.getByteImage(), tvImage);
