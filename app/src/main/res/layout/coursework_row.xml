@@ -100,7 +100,7 @@
                     android:layout_marginEnd="4dp"
 
                     android:text="@string/placeholder_time_left"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     />
 
 

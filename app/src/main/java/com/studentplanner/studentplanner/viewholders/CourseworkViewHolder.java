@@ -27,9 +27,7 @@ import java.util.Locale;
 
 public class CourseworkViewHolder extends RecyclerView.ViewHolder {
     private final Context context;
-
     private final TextView tvCourseworkID;
-
     private final TextView tvCourseworkTitle;
     private final TextView tvCourseworkDescription;
     private final TextView tvDeadline;
@@ -38,8 +36,6 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
     private final TextView tvCourseworkModule;
     private final TextView tvCourseworkCompleted;
     private final ImageView tvImage;
-
-
     private final CardView layout;
 
     public CardView getLayout() {
@@ -71,30 +67,30 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
 
         showDescription(coursework.getDescription());
 
-        tvDeadline.setText(String.format(Locale.ENGLISH, "%s, %s",
-                Helper.formatDate(coursework.getDeadline()),
-                Helper.formatTime(coursework.getDeadlineTime())
-        ));
+        tvDeadline.setText(showDeadlineDetails(coursework));
         tvPriority.setText(coursework.getPriority());
         tvPriority.setTextColor(Helper.getPriorityColour(coursework.getPriority(), context));
-        tvCourseworkModule.setText(String.format("%s %s", module.getModuleCode(), module.getModuleName()));
-
-        tvTimeLeft.setText(Helper.calcDeadlineDate(deadline, coursework.isCompleted()));
-
+        tvCourseworkModule.setText(module.getModuleDetails());
         tvCourseworkCompleted.setText(coursework.isCompleted() ? Status.COMPLETED.label : Status.NOT_COMPLETED.label);
         tvCourseworkCompleted.setTextColor(coursework.isCompleted() ? context.getColor(R.color.green) : Color.RED);
 
-        tvTimeLeft.setTextColor(Helper.getPriorityColour(coursework.getPriority(), context));
-
+        showTimeLeft(deadline, coursework);
         ImageHandler.showImage(coursework.getByteImage(), tvImage);
 
 
     }
 
 
+    private void showTimeLeft(LocalDate deadline, Coursework coursework) {
 
-
-
+        final String timeLeft = Helper.calcDeadlineDate(deadline, coursework.isCompleted());
+        if (!timeLeft.isBlank()){
+            tvTimeLeft.setText(timeLeft);
+            tvTimeLeft.setTextColor(Helper.getPriorityColour(coursework.getPriority(), context));
+            return;
+        }
+        tvTimeLeft.setVisibility(View.GONE);
+    }
 
 
     private void showDescription(final String description) {
@@ -103,5 +99,13 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
         } else {
             tvCourseworkDescription.setText(description);
         }
+    }
+
+    private String showDeadlineDetails(Coursework coursework){
+        return String.format(Locale.ENGLISH, "%s, %s",
+                Helper.formatDate(coursework.getDeadline()),
+                Helper.formatTime(coursework.getDeadlineTime())
+        );
+
     }
 }

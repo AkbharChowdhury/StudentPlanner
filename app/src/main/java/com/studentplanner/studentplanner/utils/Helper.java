@@ -58,6 +58,7 @@ public final class Helper {
     private Helper() {
     }
 
+
     public static void goToActivity(Activity currentActivity, Class<? extends Activity> activityPageToOpen) {
         currentActivity.startActivity(new Intent(currentActivity, activityPageToOpen));
 

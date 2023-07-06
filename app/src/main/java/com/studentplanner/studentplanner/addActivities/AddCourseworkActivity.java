@@ -510,7 +510,7 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
 //            new AppSettingsDialog.Builder(this).build().show();
 
-            
+
         }
 
 
