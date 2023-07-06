@@ -274,7 +274,7 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
     private TextInputLayout txtTitle;
     private TextInputLayout txtDescription;
     private int selectedModuleID;
-    final String SELECT_PRIORITY = "Select Priority";
+//    final String SELECT_PRIORITY = "Select Priority";
     private DatabaseHelper db;
     private BoundTimePickerDialog deadlineTimePicker;
     private Validation form;
@@ -316,7 +316,7 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
         txtDeadlineTime = binding.txtDeadlineTime;
         txtModules = binding.txtModule;
         txtModules.setText(R.string.select_module);
-        txtPriority.setText(SELECT_PRIORITY);
+        txtPriority.setText(getString(R.string.select_priority));
         txtTitle = binding.txtTitle;
         txtDescription = binding.txtDescription;
         courseworkImage =  binding.imgCoursework;
@@ -507,14 +507,11 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
 
     @Override
     public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
-//        Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
-//        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
 //            new AppSettingsDialog.Builder(this).build().show();
-//        }
-        openImageGallery();
 
-//        EasyPermissions.requestPermissions(AddCourseworkActivity.this,"s",requestCode, String.valueOf(perms));
-//        EasyPermissions.requestPermissions(AddCourseworkActivity.this, getString(R.string.permissions_rationale), STORAGE_PERMISSION_CODE, perms);
+            
+        }
 
 
     }
