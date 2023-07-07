@@ -372,7 +372,7 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
 
     @AfterPermissionGranted(STORAGE_PERMISSION_CODE)
     private void openFilesApp() {
-        String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE};
+        String[] perms = {Manifest.permission.CAMERA};
         if (EasyPermissions.hasPermissions(this, perms)) {
             openImageGallery();
         } else {
@@ -489,11 +489,6 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
 
 
 
-
-
-
-
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -508,8 +503,7 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
     @Override
     public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-//            new AppSettingsDialog.Builder(this).build().show();
-
+            new AppSettingsDialog.Builder(this).build().show();
 
         }
 
