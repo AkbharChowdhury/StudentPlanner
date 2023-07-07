@@ -5,13 +5,10 @@ import android.graphics.BitmapFactory;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.studentplanner.studentplanner.R;
-
 import java.io.ByteArrayOutputStream;
 
 public class ImageHandler {
     private ImageHandler(){
-
     }
     public static byte[] getBitmapAsByteArray(Bitmap bitmap) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -24,18 +21,8 @@ public class ImageHandler {
     public static void showImage(final byte[] image, ImageView imageView){
         if (image !=null){
             imageView.setImageBitmap(ImageHandler.decodeBitmapByteArray(image));
-            return;
+            imageView.setVisibility(View.VISIBLE);
         }
-        imageView.setVisibility(View.GONE);
-
     }
 
-
-    public static void showImageOrShowDefault(final byte[] image, ImageView imageView){
-        if (image !=null){
-            imageView.setImageBitmap(ImageHandler.decodeBitmapByteArray(image));
-        }
-        imageView.setImageResource(R.drawable.ic_placeholder_image);
-
-    }
 }

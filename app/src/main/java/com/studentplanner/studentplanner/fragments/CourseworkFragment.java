@@ -58,7 +58,9 @@ public class CourseworkFragment extends Fragment {
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
 
         if (result.getResultCode() == RESULT_OK) {
-            getCoursework();
+//            getCoursework();
+            list = db.getCoursework();
+            list.sort(Coursework.sortDeadlineAsc);
             adapter.notifyDataSetChanged();
         }
 
