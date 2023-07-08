@@ -6,7 +6,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.studentplanner.studentplanner.models.Classes;
@@ -34,7 +33,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public final class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -42,10 +40,9 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     private SQLiteDatabase db;
+    @SuppressLint("StaticFieldLeak")
     private static DatabaseHelper instance;
     private final Context context;
-
-//    private final Context context;
 
     public static synchronized DatabaseHelper getInstance(Context context) {
         if (instance == null) {
