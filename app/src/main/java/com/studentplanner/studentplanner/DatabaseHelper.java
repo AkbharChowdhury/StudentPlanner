@@ -1194,6 +1194,9 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+
+
+
     public boolean deleteRecord(String table, String idField, int id) {
         String whereClause = idField + "=?";
         String[] whereArgs = new String[]{String.valueOf(id)};

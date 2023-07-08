@@ -110,12 +110,12 @@
     <string name="delete_icon">Delete</string>
 
     <string name="yes">Yes</string>
+
     <string name="no">No</string>
     <string name="select_image">Select Image</string>
     <string name="coursework_added">Coursework Added</string>
 
 
-    <!--    "Select Image"-->
     <string name="permissions_rationale">StudentPlanner needs permission to access files app to attach files to coursework</string>
     <string name="no_room_assigned">No room assigned</string>
     <string name="no_teacher_assigned">No teacher assigned</string>
@@ -222,5 +222,5 @@
     <string name="phone_error">%s Must be at least %d characters!</string>
     <string name="placeholder_time_left">in 5 days</string>
     <string name="placeholder_coursework_id">ID 2</string>
-
+    <string name="module_added">Module Added</string>
 </resources>
