@@ -14,10 +14,4 @@ public final class CourseworkTable {
     public static final String COLUMN_DEADLINE_TIME = "deadline_time";
     public static final String COLUMN_COMPLETED = "completed";
     public static final String COLUMN_IMAGE = "image";
-
-
-
-
-
-
 }

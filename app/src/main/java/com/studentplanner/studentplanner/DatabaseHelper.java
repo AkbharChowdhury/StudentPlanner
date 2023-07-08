@@ -43,19 +43,20 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
     private SQLiteDatabase db;
     private static DatabaseHelper instance;
-    private static Context context;
+    private final Context context;
 
+//    private final Context context;
 
     public static synchronized DatabaseHelper getInstance(Context context) {
         if (instance == null) {
             instance = new DatabaseHelper(context);
-            DatabaseHelper.context = context;
         }
         return instance;
     }
 
     private DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
         // must be writable for queries to run from on create method
         db = getWritableDatabase();
     }
@@ -98,7 +99,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
         createSemesterTable(db);
         createClassesTable(db);
-
 
     }
 
@@ -145,11 +145,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         );
 
     }
-
-
-
-
-
 
     private void createTeacherTable(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TeacherTable.TABLE_NAME + " ("
@@ -418,10 +413,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 while (cursor.moveToNext()) {
                     student.setFirstname(cursor.getString(cursor.getColumnIndex(StudentTable.COLUMN_FIRSTNAME)));
                     student.setLastname(cursor.getString(cursor.getColumnIndex(StudentTable.COLUMN_LASTNAME)));
-
                 }
-
-                Log.d("Item", student.getFirstname() + "" + student.getLastname());
 
             }
 
@@ -882,11 +874,10 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                         cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DEADLINE_TIME))
 
                 );
-                // lks
                 coursework.setImage(cursor.getBlob(cursor.getColumnIndex(CourseworkTable.COLUMN_IMAGE)));
 
                 coursework.setCompleted(cursor.getString(
-                                cursor.getColumnIndex(CourseworkTable.COLUMN_COMPLETED))
+                        cursor.getColumnIndex(CourseworkTable.COLUMN_COMPLETED))
                         .equalsIgnoreCase("Yes"));
             }
         } catch (Exception e) {
@@ -1009,9 +1000,8 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                             """;
         try (Cursor cursor = db.rawQuery(SQL, new String[]{
                 String.valueOf(studentID),
-                MessageFormat.format("%{0}%",module)
+                MessageFormat.format("%{0}%", module)
         })) {
-            String s = "";
 
             while (cursor.moveToNext()) {
                 int moduleID = cursor.getInt(cursor.getColumnIndex(ModuleTeacherTable.COLUMN_MODULE_ID));
@@ -1019,15 +1009,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 list.add(moduleID);
 
             }
-//            if (!isCursorEmpty(cursor)) {
-//
-//                while (cursor.moveToNext()) {
-//                    int moduleID = cursor.getInt(cursor.getColumnIndex(ModuleTeacherTable.COLUMN_MODULE_ID));
-//                    list.add(moduleID);
-//
-//                }
-//
-//            }
+
         } catch (Exception e) {
             Log.d("ERROR", "There was an error fetching modules");
         }
@@ -1062,7 +1044,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
     @SuppressLint("Range")
     public Semester getSelectedSemester(int id) {
-        Semester semester = null;
         SQLiteDatabase db = getReadableDatabase();
         String selection = SemesterTable.COLUMN_ID + " = ?";
         String[] selectionArgs = {String.valueOf(id)};
@@ -1081,7 +1062,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
             return null;
 
         }
-        return semester;
+        return null;
     }
 
     public boolean updateModule(Module module) {
@@ -1100,8 +1081,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     public boolean updateTeacher(Teacher teacher) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
-
-
         int studentID = AccountPreferences.getStudentID(context);
 
         cv.put(TeacherTable.COLUMN_STUDENT_ID, studentID);
@@ -1124,8 +1103,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
         long result = db.update(SemesterTable.TABLE_NAME, cv, SemesterTable.COLUMN_ID + "=?", new String[]{String.valueOf(semester.getSemesterID())});
         return result != -1;
-
-
     }
 
 
@@ -1151,7 +1128,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
             }
 
         }
-
 
         long result = db.update(CourseworkTable.TABLE_NAME, cv, CourseworkTable.COLUMN_ID + "=?", new String[]{String.valueOf(coursework.getCourseworkID())});
         return result != -1;
@@ -1193,10 +1169,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         return result != -1;
 
     }
-
-
-
-
     public boolean deleteRecord(String table, String idField, int id) {
         String whereClause = idField + "=?";
         String[] whereArgs = new String[]{String.valueOf(id)};
@@ -1206,12 +1178,25 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
     public int getCourseworkCountByDate(LocalDate deadlineDate) {
 
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = getReadableDatabase();
         int count = 0;
+        final String SQL = """
+                           SELECT
+                             COUNT (deadline)
+                           FROM
+                             coursework c
+                           JOIN modules m ON m.module_id = c.module_id
+                           
+                           WHERE
+                             student_id = ?
+                           AND deadline = ?
+                            """;
 
         try (Cursor cursor = db.rawQuery(
-                "SELECT COUNT (deadline) FROM " + CourseworkTable.TABLE_NAME + " WHERE " + CourseworkTable.COLUMN_DEADLINE + "=?",
-                new String[]{deadlineDate.toString()}
+                SQL,
+                new String[]{
+                        String.valueOf(AccountPreferences.getStudentID(context)),
+                        deadlineDate.toString()}
         )) {
 
             if (cursor.getCount() > 0) {
@@ -1219,7 +1204,9 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 count = cursor.getInt(0);
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+
+           final String error =  MessageFormat.format("Error getting coursework count by date {0}", ex.getMessage());
+            Log.d("error", error);
         }
         return count;
 

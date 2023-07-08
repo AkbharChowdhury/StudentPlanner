@@ -51,12 +51,12 @@
         app:srcCompat="@drawable/ic_classes" />
 
     <TextView
+
         android:id="@+id/lblCourseworkCounter"
         android:layout_width="wrap_content"
         android:textStyle="bold"
         android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="10sp"
+        android:textSize="11sp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/img_cw_icon"
         app:layout_constraintStart_toEndOf="@+id/img_cw_icon" />

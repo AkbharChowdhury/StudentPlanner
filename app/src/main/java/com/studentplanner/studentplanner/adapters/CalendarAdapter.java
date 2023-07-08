@@ -57,7 +57,8 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
         return new CalendarViewHolder(binding, onItemListener, days);
 
     }
-    private void showTotalCoursework(final TextView lblTotalCoursework, final LocalDate date){
+
+    private void showTotalCoursework(final TextView lblTotalCoursework, final LocalDate date) {
         final int total = db.getCourseworkCountByDate(date);
         if (total > 1) {
             lblTotalCoursework.setVisibility(View.VISIBLE);
