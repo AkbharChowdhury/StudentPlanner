@@ -30,8 +30,8 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleViewHolder> {
     }
 
 
-    public void filterList(List<Module> filterlist) {
-        list = filterlist;
+    public void filterList(List<Module> filteredList) {
+        list = filteredList;
         notifyDataSetChanged();
     }
 

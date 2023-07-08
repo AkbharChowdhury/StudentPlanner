@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -58,10 +59,15 @@ public class CourseworkFragment extends Fragment {
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
 
         if (result.getResultCode() == RESULT_OK) {
+
+
+            Log.d("CAlled","YS");
 //            getCoursework();
+//            list = db.getCoursework();
+//            list.sort(Coursework.sortDeadlineAsc);
+//            adapter.notifyDataSetChanged();
             list = db.getCoursework();
-            list.sort(Coursework.sortDeadlineAsc);
-            adapter.notifyDataSetChanged();
+            buildRecyclerView();
         }
 
     });

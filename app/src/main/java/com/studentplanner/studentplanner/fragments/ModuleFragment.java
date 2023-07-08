@@ -44,14 +44,11 @@ public class ModuleFragment extends Fragment {
     private DatabaseHelper db;
     private List<Module> ALL_MODULES;
 
-
-
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
 
         if (result.getResultCode() == RESULT_OK) {
             getModule();
         }
-
     });
 
 
