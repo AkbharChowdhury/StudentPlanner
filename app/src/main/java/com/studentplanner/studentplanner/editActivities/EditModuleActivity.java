@@ -12,7 +12,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.databinding.ActivityEditModuleBinding;
-import com.studentplanner.studentplanner.databinding.ActivityEditTeacherBinding;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.tables.ModuleTable;
 import com.studentplanner.studentplanner.utils.Helper;
@@ -45,7 +44,7 @@ public class EditModuleActivity extends AppCompatActivity {
         binding.btnEditModule.setOnClickListener(v -> {
             if (form.validateEditModuleForm(new Module(txtModuleCode, txtModuleName), excludedModuleCode)) {
                 if (db.updateModule(getModuleDetails())) {
-                    Helper.longToastMessage(this,"Module Updated");
+                    Helper.longToastMessage(this,getString(R.string.module_updated));
                     setResult(RESULT_OK);
                     finish();
                 }
@@ -86,14 +85,13 @@ public class EditModuleActivity extends AppCompatActivity {
 
         if (item.getItemId() == R.id.ic_delete){
             new AlertDialog.Builder(this)
-                    .setMessage("Doing so will delete all associated coursework and classes with this module")
+                    .setMessage(getString(R.string.delete_module_message))
                     .setCancelable(false)
-                    .setTitle("Are you sure you want to delete this module?")
+                    .setTitle(getString(R.string.delete_module))
                     .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
                         int id = getIntent().getIntExtra(ModuleTable.COLUMN_ID, 0);
                         if (db.deleteRecord(ModuleTable.TABLE_NAME, ModuleTable.COLUMN_ID, id)){
-
-                            Helper.longToastMessage(this,"Module Deleted");
+                            Helper.longToastMessage(this,getString(R.string.module_deleted));
                             setResult(RESULT_OK);
                             finish();
                         }

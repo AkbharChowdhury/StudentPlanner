@@ -147,7 +147,7 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
 
     private void  handleRemoveClick(){
         new AlertDialog.Builder(this)
-                .setTitle("Are you sure you want to delete this this image?")
+                .setTitle(getString(R.string.delete_image_title))
                 .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
                     imageToStore = null;
                     courseworkImage.setImageResource(R.drawable.ic_placeholder_image);
@@ -292,10 +292,7 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
     public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
             new AppSettingsDialog.Builder(this).build().show();
-
         }
-
-
     }
 
     @Override

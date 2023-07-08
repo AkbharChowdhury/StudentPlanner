@@ -98,13 +98,14 @@ public class EditSemesterActivity extends AppCompatActivity  implements DatePick
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.ic_delete){
             new AlertDialog.Builder(this)
-                    .setMessage("Doing so will delete all associated classes with this semester").setCancelable(false)
-                    .setTitle("Are you sure you want to delete this semester?")
+                    .setMessage(getString(R.string.delete_semester_message))
+                    .setCancelable(false)
+                    .setTitle(getString(R.string.delete_semester_title))
                     .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
                         int id = getIntent().getIntExtra(SemesterTable.COLUMN_ID, 0);
                         if (db.deleteRecord(SemesterTable.TABLE_NAME, SemesterTable.COLUMN_ID, id)){
 
-                            Helper.longToastMessage(this,"Semester Deleted");
+                            Helper.longToastMessage(this,getString(R.string.delete_semester));
                             setResult(RESULT_OK);
                             finish();
                         }

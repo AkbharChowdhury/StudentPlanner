@@ -108,6 +108,8 @@
     <string name="select_end_time">Select End Time</string>
 
     <string name="delete_icon">Delete</string>
+    <string name="delete_coursework_title">Are you sure you want to delete this coursework?</string>
+    <string name="module_updated">Module Updated</string>
 
     <string name="yes">Yes</string>
 
@@ -223,4 +225,14 @@
     <string name="placeholder_time_left">in 5 days</string>
     <string name="placeholder_coursework_id">ID 2</string>
     <string name="module_added">Module Added</string>
+    <string name="delete_module">Are you sure you want to delete this module?</string>
+    <string name="delete_module_message">Doing so will delete all associated coursework and classes with this module</string>
+    <string name="module_deleted">Module Deleted</string>
+    <string name="delete_semester_message">Doing so will delete all associated classes with this semester</string>
+    <string name="delete_semester_title">Are you sure you want to delete this semester?</string>
+    <string name="delete_semester">Semester Deleted</string>
+    <string name="delete_coursework">Coursework Deleted</string>
+    <string name="delete_image_title">Are you sure you want to delete this this image?</string>
+
+
 </resources>

@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -26,7 +25,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
 
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.textfield.TextInputLayout;
@@ -52,6 +50,7 @@ import java.util.List;
 import java.util.Locale;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
 public class EditCourseworkActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, EasyPermissions.PermissionCallbacks {
@@ -79,7 +78,6 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
     private boolean deleteImage = false;
 
 
-
     private final ActivityResultLauncher<Intent> imageActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
         if (result.getResultCode() == RESULT_OK) {
             if (result.getData() != null) {
@@ -99,6 +97,7 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
         }
 
     });
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,9 +122,9 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
 
         binding.btnEditCoursework.setOnClickListener(v -> {
 
-            if (form.validateEditCourseworkForm(getCourseworkErrorFields())){
+            if (form.validateEditCourseworkForm(getCourseworkErrorFields())) {
                 if (db.updateCoursework(getCourseworkDetails(), deleteImage)) {
-                    Helper.longToastMessage(this,"Coursework Updated");
+                    Helper.longToastMessage(this, "Coursework Updated");
                     setResult(RESULT_OK);
                     finish();
                 }
@@ -133,11 +132,15 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
         });
         binding.btnRemovePicture.setOnClickListener(v -> handleRemoveClick());
         courseworkImage.setOnClickListener(v -> openFilesApp());
+        binding.titleTextInputEditText.setOnKeyListener((v, keyCode, event) -> {
+            Helper.characterCounter(txtTitle, getApplicationContext());
+            return false;
+        });
 
 
     }
 
-    private Coursework getCourseworkErrorFields(){
+    private Coursework getCourseworkErrorFields() {
         Coursework coursework = new Coursework();
 
         coursework.setTxtDeadlineTime(txtDeadlineTime);
@@ -156,11 +159,10 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
         txtTitle = binding.txtTitle;
         txtDescription = binding.txtDescription;
 
-        Dropdown.getStringArray(txtPriority, this,R.array.priority_array );
+        Dropdown.getStringArray(txtPriority, this, R.array.priority_array);
         txtDeadlineError = binding.txtDeadlineError;
         checkBoxCompleted = binding.checkboxEditCoursework;
         courseworkImage = binding.imgCoursework;
-
 
 
     }
@@ -181,7 +183,6 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
             checkBoxCompleted.setChecked(coursework.isCompleted());
 
 
-
             LocalTime deadlineTime = LocalTime.parse(coursework.getDeadlineTime());
 
             deadlineCustomTimePicker = new CustomTimePicker(deadlineTime.getHour(), deadlineTime.getMinute());
@@ -189,16 +190,12 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
             showCourseworkImage(coursework.getByteImage());
 
 
-
-
-
-
         }
 
     }
 
     private void showCourseworkImage(byte[] image) {
-        if (image!=null){
+        if (image != null) {
             courseworkImage.setImageBitmap(ImageHandler.decodeBitmapByteArray(image));
             binding.btnRemovePicture.setVisibility(View.VISIBLE);
 
@@ -222,7 +219,6 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
     }
 
 
-
     @Override
     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
         deadlineCustomTimePicker.setSelectedHour(selectedHour);
@@ -239,28 +235,16 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
         txtDeadline.setText(Helper.formatDate(String.valueOf(date)));
     }
 
-//
-//    @SuppressLint("ClickableViewAccessibility")
-//    private void setTimePicker() {
-//        txtDeadlineTime.setOnTouchListener((view, motionEvent) -> {
-//            if (motionEvent.getAction() == MotionEvent.ACTION_UP){
-//                new TimePickerFragment().show(getSupportFragmentManager(), "timePicker");
-//            }
-//
-//
-//            return false;
-//        });
-//    }
 
     @SuppressLint("ClickableViewAccessibility")
     private void setTimePicker() {
         txtDeadlineTime.setOnTouchListener((view, motionEvent) -> {
             if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                 deadlineTimePicker = new BoundTimePickerDialog(this, this, deadlineCustomTimePicker.getSelectedHour(), deadlineCustomTimePicker.getSelectedMinute());
-                String deadlineDate  = Helper.convertFUllDateToYYMMDD(Helper.trimStr(txtDeadline));
+                String deadlineDate = Helper.convertFUllDateToYYMMDD(Helper.trimStr(txtDeadline));
                 LocalDate deadline = LocalDate.parse(deadlineDate);
                 LocalDate today = CalendarUtils.getCurrentDate();
-                LocalDate date = deadline.isEqual(today)? today: deadline;
+                LocalDate date = deadline.isEqual(today) ? today : deadline;
                 deadlineSetup(deadlineTimePicker, date);
                 deadlineTimePicker.show();
             }
@@ -292,7 +276,7 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
 
         );
 
-        if (imageToStore!=null){
+        if (imageToStore != null) {
             coursework.setImage(imageToStore);
 
 
@@ -315,14 +299,14 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
             finish();
         }
 
-        if (item.getItemId() == R.id.ic_delete){
+        if (item.getItemId() == R.id.ic_delete) {
             new AlertDialog.Builder(this)
                     .setMessage("You can't undo this").setCancelable(false)
-                    .setTitle("Are you sure you want to delete this coursework?")
+                    .setTitle(getString(R.string.delete_coursework_title))
                     .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
                         int id = getIntent().getIntExtra(CourseworkTable.COLUMN_ID, 0);
-                        if (db.deleteRecord(CourseworkTable.TABLE_NAME, CourseworkTable.COLUMN_ID, id)){
-                            Helper.longToastMessage(this,"Coursework Deleted");
+                        if (db.deleteRecord(CourseworkTable.TABLE_NAME, CourseworkTable.COLUMN_ID, id)) {
+                            Helper.longToastMessage(this, getString(R.string.delete_coursework));
                             setResult(RESULT_OK);
                             finish();
                         }
@@ -336,10 +320,9 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
     }
 
 
-
-    private void handleRemoveClick(){
+    private void handleRemoveClick() {
         new AlertDialog.Builder(this)
-                .setTitle("Are you sure you want to delete this this image?")
+                .setTitle(getString(R.string.delete_image_title))
                 .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
                     imageToStore = null;
                     deleteImage = true;
@@ -350,10 +333,6 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
                 .setNegativeButton(getString(R.string.no), (dialog, which) -> dialog.cancel()).create().show();
 
     }
-
-
-
-
 
 
     @AfterPermissionGranted(STORAGE_PERMISSION_CODE)
@@ -368,6 +347,7 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
 
 
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -381,23 +361,18 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
 
     @Override
     public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
-//        Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
-        openImageGallery();
-
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            new AppSettingsDialog.Builder(this).build().show();
+        }
     }
 
     private void openImageGallery() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        intent = Intent.createChooser(intent,getString(R.string.select_image));
+        intent = Intent.createChooser(intent, getString(R.string.select_image));
         imageActivityResultLauncher.launch(intent);
     }
-
-
-
-
-
 
 
 }
