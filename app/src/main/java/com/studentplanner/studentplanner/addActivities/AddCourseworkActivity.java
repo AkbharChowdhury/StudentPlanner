@@ -137,8 +137,8 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
     private void handleAddButton(){
         if (form.validateAddCourseworkForm(getCourseworkErrorFields())) {
             if (db.addCoursework(getCourseworkDetails())) {
-                setResult(RESULT_OK);
                 Helper.longToastMessage(this, getString(R.string.coursework_added));
+                setResult(RESULT_OK);
                 finish();
             }
 

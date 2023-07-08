@@ -57,18 +57,12 @@ public class CourseworkFragment extends Fragment {
     private DatabaseHelper db;
     private FragmentCourseworkBinding binding;
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-
-     getCoursework();
+        if (result.getResultCode() == RESULT_OK) {
+            getCoursework();
+        }
 
     });
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        getCoursework();
-
-
-    }
 
     public CourseworkFragment() {
     }

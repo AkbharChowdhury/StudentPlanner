@@ -278,8 +278,6 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
 
         if (imageToStore != null) {
             coursework.setImage(imageToStore);
-
-
         }
 
         coursework.setCompleted(checkBoxCompleted.isChecked());
