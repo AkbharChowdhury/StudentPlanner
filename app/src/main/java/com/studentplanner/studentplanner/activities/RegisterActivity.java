@@ -30,9 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputLayout txtFirstName;
     private TextInputLayout txtLastName;
     private TextInputLayout txtEmail;
-    //    private TextInputLayout txtPhone;
     private EditText txtPhone;
-
     private TextInputLayout txtPassword;
     private DatabaseHelper db;
     private Context context;
@@ -62,8 +60,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         terms = binding.checkboxTermsConditions;
         binding.btnTermsConditions.setOnClickListener(v -> alertDialogFragment.showTermsAndConditions());
-
-
         binding.btnRegister.setOnClickListener(v -> {
 
 
@@ -75,7 +71,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                if (db.registerUser(getStudentDetails())) {
+                if (db.registerStudent(getStudentDetails())) {
                     Helper.longToastMessage(this, getString(R.string.account_created));
                     finish();
                     return;

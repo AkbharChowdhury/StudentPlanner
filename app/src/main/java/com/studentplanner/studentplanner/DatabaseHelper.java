@@ -424,7 +424,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean registerUser(Student student) {
+    public boolean registerStudent(Student student) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(StudentTable.COLUMN_FIRSTNAME, student.getFirstname());
