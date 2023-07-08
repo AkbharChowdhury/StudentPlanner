@@ -171,7 +171,6 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
 
     }
 
-
     private void openImageGallery() {
         Intent intent = new Intent();
         intent.setType("image/*");

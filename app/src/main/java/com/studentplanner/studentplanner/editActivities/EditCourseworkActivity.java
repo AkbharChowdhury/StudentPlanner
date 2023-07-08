@@ -335,7 +335,7 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
 
     @AfterPermissionGranted(STORAGE_PERMISSION_CODE)
     private void openFilesApp() {
-        String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE};
+        String[] perms = {Manifest.permission.CAMERA};
         if (EasyPermissions.hasPermissions(this, perms)) {
             openImageGallery();
         } else {
