@@ -72,10 +72,6 @@ public class ModuleFragment extends Fragment {
         Helper.getIntentMessage(context, activity.getIntent().getExtras());
         getModule();
 
-
-
-
-
         return binding.getRoot();
     }
 

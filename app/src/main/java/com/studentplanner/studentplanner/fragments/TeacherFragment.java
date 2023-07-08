@@ -50,8 +50,6 @@ public class TeacherFragment extends Fragment {
 
         if (result.getResultCode() == RESULT_OK) {
             getTeachers();
-
-
         }
 
     });
@@ -107,7 +105,6 @@ public class TeacherFragment extends Fragment {
 
         binding.emptyImage.setVisibility(View.VISIBLE);
         binding.emptyText.setVisibility(View.VISIBLE);
-
 
     }
 
