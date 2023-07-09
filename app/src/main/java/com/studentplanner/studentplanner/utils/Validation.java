@@ -195,7 +195,6 @@ public final class Validation {
         List<Boolean> errors = new ArrayList<>();
         setAdditionalCheck = true;
         TextInputLayout txtPassword = student.getTxtPassword();
-//        TextInputLayout txtPhone = student.getTxtPhone();
         EditText txtPhone = student.getTxtUserPhone();
 
         errors.add(isValidName(student.getTxtFirstName(), StudentTable.COLUMN_FIRSTNAME));
@@ -263,41 +262,6 @@ public final class Validation {
         textField.setError(null);
         return true;
     }
-
-//    private boolean isValidPhone(TextInputLayout textField) {
-//
-//        String phone = Helper.trimStr(textField);
-//        List<String> phoneErrors = new ArrayList<>();
-//
-//
-//        int PHONE_MIN_LENGTH = 11;
-//        if (!isMinLength(phone, PHONE_MIN_LENGTH)) {
-//            phoneErrors.add(String.format(Locale.ENGLISH, "Phone number must be %d digits", PHONE_MIN_LENGTH));
-//        }
-//        if (!phone.startsWith("0")) {
-//            phoneErrors.add("Phone number must start with 0");
-//
-//        }
-//        if (phoneErrors.size() > 0) {
-//            textField.setError(null);
-//
-//            StringBuilder sb = new StringBuilder();
-//            for (String error : phoneErrors) {
-//                sb.append(error).append("\n");
-//            }
-//            String errorMessages = sb.toString();
-//            if (!errorMessages.isEmpty()) {
-//                textField.setError(errorMessages);
-//
-//            }
-//            return false;
-//        }
-//
-//        textField.setError(null);
-//        return true;
-//    }
-
-
     private String getPasswordMinLengthError(String fieldName, int minLength) {
         return String.format(context.getString(R.string.password_min_error), fieldName, minLength);
     }

@@ -27,61 +27,60 @@ public final class PasswordValidator {
     }
 
     public static boolean containsSpecialChar(String password) {
-//        Link: https://www.geeksforgeeks.org/check-if-a-string-contains-uppercase-lowercase-special-characters-and-numeric-values/
         return Pattern.compile("^(?=.*[-+_!@=/#$%^&*., ?{}]).+$").matcher(password).find();
     }
 
     public static boolean containsNumber(String password) {
-//        Link: https://www.geeksforgeeks.org/check-if-a-string-contains-uppercase-lowercase-special-characters-and-numeric-values/
         return password.matches(".*[0-9].*");
     }
 
 
     public void getProgressBarStatus(int strength, TextView strengthView) {
         switch (strength) {
-            case 1:
+            case 1 -> {
+                final int COLOUR = context.getColor(R.color.orange);
                 progressBar.setProgress(20);
                 strengthView.setText(context.getString(R.string.weak));
-                strengthView.setTextColor(context.getColor(R.color.orange));
-                setProgressbarColour(context.getColor(R.color.orange));
-                break;
-            case 2:
+                strengthView.setTextColor(COLOUR);
+                setProgressbarColour(COLOUR);
+            }
+            case 2 -> {
+                final int COLOUR = context.getColor(R.color.dark_blue);
+
                 progressBar.setProgress(40);
                 strengthView.setText(context.getString(R.string.average));
-                strengthView.setTextColor(context.getColor(R.color.dark_blue));
-                setProgressbarColour(context.getColor(R.color.dark_blue));
-                break;
-            case 3:
+                strengthView.setTextColor(COLOUR);
+                setProgressbarColour(COLOUR);
+            }
+            case 3 -> {
+                final int COLOUR = context.getColor(R.color.green);
+
                 progressBar.setProgress(60);
                 strengthView.setText(context.getString(R.string.good));
-                strengthView.setTextColor(context.getColor(R.color.green));
-                setProgressbarColour(context.getColor(R.color.green));
-                break;
+                strengthView.setTextColor(COLOUR);
+                setProgressbarColour(COLOUR);
+            }
+            case 4 -> {
+                final int COLOUR = context.getColor(R.color.dark_yellow);
 
-
-            case 4:
                 progressBar.setProgress(80);
                 strengthView.setText(context.getString(R.string.excellent));
-                strengthView.setTextColor(context.getColor(R.color.dark_yellow));
-                setProgressbarColour(context.getColor(R.color.dark_yellow));
-                break;
+                strengthView.setTextColor(COLOUR);
+                setProgressbarColour(COLOUR);
+            }
+            case 5 -> {
+                final int COLOUR = context.getColor(R.color.black);
 
-            case 5:
                 progressBar.setProgress(100);
                 strengthView.setText(context.getString(R.string.strong));
-                strengthView.setTextColor(context.getColor(R.color.black));
-                setProgressbarColour(context.getColor(R.color.black));
-                break;
-            default:
+                strengthView.setTextColor(COLOUR);
+                setProgressbarColour(COLOUR);
+            }
+            default -> {
                 progressBar.setProgress(0);
                 strengthView.setText("");
-
+            }
         }
-    }
-
-    private void setProgressbarColour(String selectedColour) {
-        progressBar.getProgressDrawable().setColorFilter(
-                Color.parseColor(selectedColour), android.graphics.PorterDuff.Mode.SRC_IN);
     }
 
     private void setProgressbarColour(int selectedColour) {
