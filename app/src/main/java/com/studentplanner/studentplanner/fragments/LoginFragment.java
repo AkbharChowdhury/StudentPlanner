@@ -84,4 +84,9 @@ public class LoginFragment extends Fragment {
         AccountPreferences.setLoginShredPref(context, db.getStudentID(email));
         Helper.goToActivity(getActivity(), MainActivity.class);
     }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 }

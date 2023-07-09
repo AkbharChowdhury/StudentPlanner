@@ -1,20 +1,18 @@
 package com.studentplanner.studentplanner.utils;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.content.res.ColorStateList;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.studentplanner.studentplanner.R;
+
+import java.util.regex.Pattern;
 
 
 public final class PasswordValidator {
-    private Context context;
-    private ProgressBar progressBar;
+    private final Context context;
+    private final ProgressBar progressBar;
 
     public PasswordValidator(Context context, ProgressBar progressBar) {
         this.context = context;
@@ -83,14 +81,15 @@ public final class PasswordValidator {
         }
     }
 
-    private void setProgressbarColour(int selectedColour) {
-        progressBar.getProgressDrawable().setColorFilter(
-                selectedColour, android.graphics.PorterDuff.Mode.SRC_IN);
+    private void setProgressbarColour(final int selectedColour) {
+        progressBar.setProgressTintList(ColorStateList.valueOf(selectedColour));
+
+
     }
-    public static boolean containsUpperCase(String password){
+    public static boolean containsUpperCase(final String password){
         return !password.equals(password.toLowerCase());
     }
-    public static boolean containsLowerCase(String password){
+    public static boolean containsLowerCase(final String password){
         return !password.equals(password.toUpperCase());
     }
 

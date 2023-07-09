@@ -194,5 +194,11 @@ public class CalendarFragment extends Fragment implements OnItemListener {
         return intent;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
 
 }

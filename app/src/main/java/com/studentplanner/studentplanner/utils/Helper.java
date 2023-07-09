@@ -271,27 +271,6 @@ public final class Helper {
     }
 
 
-//    public static String calcDeadlineDate(LocalDate deadline) {
-//        LocalDate from = LocalDate.now();
-//
-//        Period period = Period.between(from, deadline);
-//
-//        StringBuilder s = new StringBuilder("in ");
-//        if (period.getMonths() > 1) {
-//            s.append(period.getMonths()).append(" months and ");
-//        }
-//
-//
-//        if (period.getDays() >= 1) {
-//            s.append(period.getDays()).append(" days");
-//        }
-//        if (period.getDays() < 1) {
-//            return "Due Today";
-//        }
-//        return s.toString();
-//    }
-
-
     public static String showFormattedDBTime(String time, Context context) {
         LocalTime t = LocalTime.parse(time);
         String selectedTime = String.format(Locale.getDefault(), context.getString(R.string.time_format_database), t.getHour(), t.getMinute());
@@ -312,7 +291,7 @@ public final class Helper {
     }
 
     public static String[] convertArrayListStringToStringArray(List<String> list) {
-        return list.toArray(new String[list.size()]);
+        return list.toArray(new String[0]);
 
     }
 
@@ -446,7 +425,4 @@ public final class Helper {
         return spinner.getAdapter().getItem(position).toString();
 
     }
-
-
-
 }

@@ -1,19 +1,17 @@
 package com.studentplanner.studentplanner.editActivities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
-import com.studentplanner.studentplanner.fragments.ModuleTeacherFragment;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.Teacher;
 import com.studentplanner.studentplanner.tables.ModuleTable;
@@ -21,7 +19,6 @@ import com.studentplanner.studentplanner.utils.Helper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 
 public class EditModuleTeacherActivity extends AppCompatActivity {
@@ -112,15 +109,13 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
         return selectedTeacherIds;
     }
 
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.checkbox_menu, menu);
 
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -132,13 +127,13 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
             List<Integer> teacherIDs = getSelectedTeacherIDList();
             if (teacherIDs.size() == 0) {
                 new AlertDialog.Builder(this)
-                        .setMessage("Doing so will delete all associated teachers this module")
+                        .setMessage( getString(R.string.delete_module_teacher_message))
                         .setCancelable(false)
-                        .setTitle("Are you sure you want to remove all teachers from this module?")
+                        .setTitle(getString(R.string.delete_module_teacher_title))
                         .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
                             int moduleId = getIntent().getIntExtra(ModuleTable.COLUMN_ID, 0);
                             if (db.deleteSelectedTeacherModules(moduleId)){
-                                Helper.longToastMessage(this,"All teachers removed from " + db.getSelectedModule(moduleId).getModuleDetails());
+                                Helper.longToastMessage(this, teacherRemoved(moduleId));
                                 setResult(RESULT_OK);
                                 finish();
                             }
@@ -150,7 +145,7 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
                 int moduleID = getIntent().getIntExtra(SELECTED_ID, 0);
 
                 if(db.updateModuleTeacher(teacherIDs, moduleID)){
-                    Helper.longToastMessage(this, String.format(Locale.ENGLISH,"Teacher updated for %s", db.getSelectedModule(moduleID).getModuleDetails()));
+                    Helper.longToastMessage(this, teacherUpdated(moduleID));
                     setResult(RESULT_OK);
                     finish();
 
@@ -163,4 +158,14 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
 
     }
+
+    private String teacherRemoved(int moduleId){
+        return "All teachers removed from " + db.getSelectedModule(moduleId).getModuleDetails();
+
+    }
+    private String teacherUpdated(int moduleId){
+        return "Teacher updated for " + db.getSelectedModule(moduleId).getModuleDetails();
+
+    }
+
 }

@@ -238,6 +238,8 @@
     <string name="delete_teacher_title">Are you sure you want to delete this teacher?</string>
     <string name="teacher_deleted">Teacher Deleted</string>
     <string name="class_updated">Class Updated</string>
+    <string name="delete_module_teacher_title">Are you sure you want to remove all teachers from this module?</string>
+    <string name="delete_module_teacher_message">Doing so will delete all associated teachers this module</string>
 
 
 </resources>
