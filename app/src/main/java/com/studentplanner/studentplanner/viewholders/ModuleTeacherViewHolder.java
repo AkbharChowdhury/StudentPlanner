@@ -14,12 +14,12 @@ import com.studentplanner.studentplanner.models.ModuleTeacher;
 import com.studentplanner.studentplanner.utils.Helper;
 
 public class ModuleTeacherViewHolder extends RecyclerView.ViewHolder{
-    private final Context context;
     private final TextView tvModuleId;
 
     private final TextView tvModule;
     private final TextView tvTeachers;
     private final CardView layout;
+    private final DatabaseHelper db;
 
     public CardView getLayout() {
         return layout;
@@ -31,10 +31,9 @@ public class ModuleTeacherViewHolder extends RecyclerView.ViewHolder{
         tvModule = binding.tvModule;
         tvTeachers = binding.tvModulesTeachers;
         layout = binding.layout;
-        context = binding.getRoot().getContext();
+        db = DatabaseHelper.getInstance(binding.getRoot().getContext());
     }
     public void showDetails(ModuleTeacher model, int position){
-        DatabaseHelper db = DatabaseHelper.getInstance(context);
         Module module = db.getSelectedModule(model.getModuleID());
         String teachers = Helper.getModuleTeachersList(position, db);
         tvModuleId.setText(String.valueOf(model.getModuleID()));

@@ -4,24 +4,13 @@ plugins {
 
 android {
     namespace 'com.studentplanner.studentplanner'
-//    compileSdk 33
-//
-//    defaultConfig {
-//        applicationId "com.studentplanner.studentplanner"
-//        minSdk 26
-//        targetSdk 33
-//        versionCode 1
-//        versionName "1.0"
-//
-//        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-//    }
 
 
     compileSdk 34
 
     defaultConfig {
         applicationId "com.studentplanner.studentplanner"
-        minSdk 33
+        minSdk 34
         targetSdk 34
         versionCode 1
         versionName "1.0"
@@ -36,8 +25,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_15
-        targetCompatibility JavaVersion.VERSION_15
+        sourceCompatibility JavaVersion.VERSION_16
+        targetCompatibility JavaVersion.VERSION_16
 
     }
     viewBinding {

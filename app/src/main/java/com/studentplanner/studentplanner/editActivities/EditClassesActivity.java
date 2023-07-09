@@ -64,7 +64,7 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
         setContentView(binding.getRoot());
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//
+
         db = DatabaseHelper.getInstance(this);
 
         findFields();
@@ -76,7 +76,7 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
         binding.btnEditClass.setOnClickListener(v -> {
 
             if (db.updateClass(getClassDetails())) {
-                Helper.longToastMessage(this,"Class Updated");
+                Helper.longToastMessage(this, getString(R.string.class_updated));
                 setResult(RESULT_OK);
                 finish();
             }
@@ -88,12 +88,9 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
     }
 
 
-
     private void setUpTimePickers() {
         setStartTimePicker();
         setEndTimePicker();
-
-
     }
 
     private Classes getClassDetails() {

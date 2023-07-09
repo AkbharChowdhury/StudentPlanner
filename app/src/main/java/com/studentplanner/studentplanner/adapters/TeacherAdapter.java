@@ -29,8 +29,8 @@ public class TeacherAdapter extends RecyclerView.Adapter<TeacherViewHolder> {
         this.startForResult = startForResult;
     }
 
-    public void filterList(List<Teacher> filterlist) {
-        list = filterlist;
+    public void filterList(List<Teacher> filteredList) {
+        list = filteredList;
         notifyDataSetChanged();
     }
 

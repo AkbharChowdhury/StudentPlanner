@@ -11,7 +11,6 @@ import com.studentplanner.studentplanner.models.Module;
 
 public class ModuleViewHolder extends RecyclerView.ViewHolder {
     private final TextView tvModuleID;
-
     private final TextView tvModuleCode;
     private final TextView tvModuleName;
 

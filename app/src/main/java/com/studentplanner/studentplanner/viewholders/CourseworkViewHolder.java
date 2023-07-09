@@ -26,7 +26,6 @@ import java.util.Locale;
 
 
 public class CourseworkViewHolder extends RecyclerView.ViewHolder {
-    private final Context context;
     private final TextView tvCourseworkID;
     private final TextView tvCourseworkTitle;
     private final TextView tvCourseworkDescription;
@@ -37,6 +36,8 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
     private final TextView tvCourseworkCompleted;
     private final ImageView tvImage;
     private final CardView layout;
+    private final DatabaseHelper db;
+    private final Context context;
 
     public CardView getLayout() {
         return layout;
@@ -52,14 +53,17 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
         tvTimeLeft = binding.tvTimeLeft;
         tvCourseworkModule = binding.tvCourseworkModule;
         tvCourseworkCompleted = binding.tvCourseworkCompleted;
+
         tvImage = binding.tvCourseworkImage;
         layout = binding.layout;
+
         context = binding.getRoot().getContext();
+        db = DatabaseHelper.getInstance(context);
     }
 
 
     public void showDetails(Coursework coursework) {
-        Module module = DatabaseHelper.getInstance(context).getSelectedModule(coursework.getModuleID());
+        Module module = db.getSelectedModule(coursework.getModuleID());
         LocalDate deadline = LocalDate.parse(coursework.getDeadline());
 
         tvCourseworkID.setText(String.valueOf(coursework.getCourseworkID()));

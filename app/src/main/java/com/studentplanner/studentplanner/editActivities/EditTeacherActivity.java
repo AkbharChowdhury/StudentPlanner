@@ -50,7 +50,7 @@ public class EditTeacherActivity extends AppCompatActivity {
 
             if (form.validateEditTeacherForm(teacher, excludedEmail)) {
                 if (db.updateTeacher(getTeacherDetails())) {
-                    Helper.longToastMessage(this,"Teacher Updated");
+                    Helper.longToastMessage(this,getString(R.string.teacher_updated));
                     setResult(RESULT_OK);
                     finish();
                 }
@@ -103,13 +103,12 @@ public class EditTeacherActivity extends AppCompatActivity {
 
         if (item.getItemId() == R.id.ic_delete){
             new AlertDialog.Builder(this)
-                    .setMessage("Doing so will delete all associated modules taught by this teacher").setCancelable(false)
-                    .setTitle("Are you sure you want to delete this teacher?")
+                    .setMessage(getString(R.string.delete_teacher_message)).setCancelable(false)
+                    .setTitle(getString(R.string.delete_teacher_title))
                     .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
                         int id = getIntent().getIntExtra(TeacherTable.COLUMN_ID, 0);
                         if (db.deleteRecord(TeacherTable.TABLE_NAME, TeacherTable.COLUMN_ID, id)){
-
-                            Helper.longToastMessage(this,"Teacher Deleted");
+                            Helper.longToastMessage(this,getString(R.string.teacher_deleted));
                             setResult(RESULT_OK);
                             finish();
                         }

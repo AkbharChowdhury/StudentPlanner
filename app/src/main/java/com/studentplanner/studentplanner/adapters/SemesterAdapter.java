@@ -23,16 +23,14 @@ public class SemesterAdapter extends RecyclerView.Adapter<SemesterViewHolder> {
     private final Context context;
     private  final ActivityResultLauncher<Intent> startForResult;
 
-
-
     public SemesterAdapter(List<Semester> list, Context context, ActivityResultLauncher<Intent> startForResult) {
         this.list = list;
         this.context = context;
         this.startForResult = startForResult;
     }
 
-    public void filterList(List<Semester> filterlist) {
-        list = filterlist;
+    public void filterList(List<Semester> filteredList) {
+        list = filteredList;
         notifyDataSetChanged();
     }
 

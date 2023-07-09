@@ -78,7 +78,7 @@ public class EditSemesterActivity extends AppCompatActivity  implements DatePick
         final String SELECTED_ID = SemesterTable.COLUMN_ID;
         if (getIntent().hasExtra(SELECTED_ID)) {
 
-            int id = getIntent().getIntExtra(SELECTED_ID, 0);
+            final int id = getIntent().getIntExtra(SELECTED_ID, 0);
             Semester semester = db.getSelectedSemester(id);
             txtName.getEditText().setText(semester.getName());
             txtStartDate.setText(Helper.formatDate(semester.getStart().toString()));
@@ -102,7 +102,7 @@ public class EditSemesterActivity extends AppCompatActivity  implements DatePick
                     .setCancelable(false)
                     .setTitle(getString(R.string.delete_semester_title))
                     .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
-                        int id = getIntent().getIntExtra(SemesterTable.COLUMN_ID, 0);
+                        final int id = getIntent().getIntExtra(SemesterTable.COLUMN_ID, 0);
                         if (db.deleteRecord(SemesterTable.TABLE_NAME, SemesterTable.COLUMN_ID, id)){
 
                             Helper.longToastMessage(this,getString(R.string.delete_semester));
@@ -153,7 +153,6 @@ public class EditSemesterActivity extends AppCompatActivity  implements DatePick
                 createDatePickerConstraint(datePickerEnd);
                 CalendarUtils.setSelectedDate(datePickerEnd, txtEndDate);
 
-
             }
             return false;
         });
@@ -176,9 +175,4 @@ public class EditSemesterActivity extends AppCompatActivity  implements DatePick
         }
 
     }
-
-
-
-
-
 }

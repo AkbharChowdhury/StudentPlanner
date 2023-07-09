@@ -19,6 +19,7 @@ import com.studentplanner.studentplanner.editActivities.EditModuleTeacherActivit
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.ModuleTeacher;
+import com.studentplanner.studentplanner.models.Semester;
 import com.studentplanner.studentplanner.tables.ModuleTable;
 import com.studentplanner.studentplanner.utils.Helper;
 import com.studentplanner.studentplanner.viewholders.ModuleTeacherViewHolder;
@@ -41,8 +42,8 @@ public class ModuleTeacherAdapter extends RecyclerView.Adapter<ModuleTeacherView
         db = DatabaseHelper.getInstance(context);
     }
 
-    public void filterList(List<ModuleTeacher> filterlist) {
-        list = filterlist;
+    public void filterList(List<ModuleTeacher> filteredList) {
+        list = filteredList;
         notifyDataSetChanged();
     }
 
@@ -53,8 +54,6 @@ public class ModuleTeacherAdapter extends RecyclerView.Adapter<ModuleTeacherView
         return new ModuleTeacherViewHolder(ModuleTeacherRowBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
 
     }
-
-
 
     @Override
     public void onBindViewHolder(@NonNull ModuleTeacherViewHolder holder, int position) {

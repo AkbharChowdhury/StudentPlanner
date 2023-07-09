@@ -16,7 +16,6 @@ import java.text.MessageFormat;
 
 public class SemesterViewHolder  extends RecyclerView.ViewHolder{
     private final TextView tvSemesterID;
-
     private final TextView tvSemesterName;
     private final TextView tvDateDescription;
 
@@ -27,8 +26,6 @@ public class SemesterViewHolder  extends RecyclerView.ViewHolder{
         tvSemesterName = binding.tvSemesterName;
         tvDateDescription = binding.tvDateDescription;
         layout = binding.layout;
-
-
     }
 
     public CardView getLayout() {
@@ -36,14 +33,15 @@ public class SemesterViewHolder  extends RecyclerView.ViewHolder{
     }
 
     public void showDetails(Semester semester){
-        final String dateMessage = MessageFormat.format("From {0} to {1}",
+        tvSemesterID.setText(String.valueOf(semester.getSemesterID()));
+        tvSemesterName.setText(WordUtils.capitalizeFully(semester.getName()));
+        tvDateDescription.setText(getDateMessage(semester));
+    }
+    private String getDateMessage(Semester semester){
+        return MessageFormat.format("From {0} to {1}",
                 Helper.formatDateShort(semester.getStart().toString()),
                 Helper.formatDate(semester.getEnd().toString())
         );
-
-        tvSemesterID.setText(String.valueOf(semester.getSemesterID()));
-        tvSemesterName.setText(WordUtils.capitalizeFully(semester.getName()));
-        tvDateDescription.setText(dateMessage);
     }
 
 
