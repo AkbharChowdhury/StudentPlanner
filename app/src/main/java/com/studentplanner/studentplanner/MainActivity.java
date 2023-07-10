@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             openFragment(new FragmentHandler().getSelectedFragment(item));
         }
+
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
