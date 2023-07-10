@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.navigation.NavigationView;
 import com.studentplanner.studentplanner.databinding.ActivityMainBinding;
 import com.studentplanner.studentplanner.databinding.NavHeaderBinding;
-import com.studentplanner.studentplanner.fragments.CourseworkFragment;
 import com.studentplanner.studentplanner.fragments.LoginFragment;
 import com.studentplanner.studentplanner.fragments.ReminderFragment;
 import com.studentplanner.studentplanner.utils.AccountPreferences;
@@ -24,7 +23,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DatabaseHelper db;
     private int studentID;
     private ActivityMainBinding binding;
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -46,12 +44,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         db = DatabaseHelper.getInstance(this);
         studentID = AccountPreferences.getStudentID(this);
 //        Module.addDefaultModules(this);
-
         setupNavDrawer(savedInstanceState);
         showStudentDetails();
 
 //        Helper.goToActivity(this, AddCourseworkActivity.class);
-
 
     }
 
@@ -103,7 +99,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 
     @Override
     public void onBackPressed() {
