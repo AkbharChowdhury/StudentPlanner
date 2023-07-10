@@ -73,7 +73,10 @@ public class ReminderFragment extends Fragment {
         emptyData = new EmptyData(binding.emptyImage, binding.emptyText);
         db = DatabaseHelper.getInstance(context);
 
-        Helper.getIntentMessage(context, activity.getIntent().getExtras());
+        if (!db.getUpComingCourseworkByMonth().isEmpty()){
+            binding.emptyText.setText(getString(R.string.no_coursework_found));
+        }
+
         getReminders();
 
         return binding.getRoot();
@@ -104,7 +107,7 @@ public class ReminderFragment extends Fragment {
         }
 
         emptyData.emptyResultStatus(true);
-        
+
 
 
     }
