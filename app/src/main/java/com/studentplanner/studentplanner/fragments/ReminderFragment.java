@@ -27,6 +27,8 @@ import com.studentplanner.studentplanner.adapters.CourseworkAdapter;
 import com.studentplanner.studentplanner.databinding.FragmentReminderBinding;
 import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.models.Search;
+import com.studentplanner.studentplanner.models.Semester;
+import com.studentplanner.studentplanner.utils.EmptyData;
 import com.studentplanner.studentplanner.utils.Helper;
 
 import java.util.Collections;
@@ -36,6 +38,7 @@ import java.util.List;
 public class ReminderFragment extends Fragment {
     private Context context;
     private Activity activity;
+    private EmptyData emptyData;
 
     private RecyclerView recyclerView;
     private CourseworkAdapter adapter;
@@ -67,7 +70,7 @@ public class ReminderFragment extends Fragment {
         initFragment();
         binding = FragmentReminderBinding.inflate(inflater, container, false);
         recyclerView = binding.recyclerView;
-
+        emptyData = new EmptyData(binding.emptyImage, binding.emptyText);
         db = DatabaseHelper.getInstance(context);
 
         Helper.getIntentMessage(context, activity.getIntent().getExtras());
@@ -100,8 +103,8 @@ public class ReminderFragment extends Fragment {
             return;
         }
 
-        binding.emptyImage.setVisibility(View.VISIBLE);
-        binding.emptyText.setVisibility(View.VISIBLE);
+        emptyData.emptyResultStatus(true);
+        
 
 
     }
@@ -136,14 +139,19 @@ public class ReminderFragment extends Fragment {
 
 
     private void filter(String text) {
-        List<Coursework> filteredList = (List<Coursework>) Search.textSearch(ALL_COURSEWORK_REMINDERS, text);
-        if (filteredList.isEmpty()) {
-            Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
-        } else {
-            adapter.filterList(filteredList);
-        }
 
+        List<Coursework> filteredList = (List<Coursework>) Search.textSearch(ALL_COURSEWORK_REMINDERS, text);
+
+        if (filteredList.isEmpty()) {
+            adapter.filterList(filteredList);
+            Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
+            emptyData.emptyResultStatus(true);
+            return;
+        }
+        adapter.filterList(filteredList);
+        emptyData.emptyResultStatus(false);
     }
+
 
 
 
