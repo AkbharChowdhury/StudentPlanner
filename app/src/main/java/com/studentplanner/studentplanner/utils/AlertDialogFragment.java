@@ -22,8 +22,6 @@ public class AlertDialogFragment {
                 .show();
     }
 
-
-
     public void showTermsAndConditions(){
 
         final String title = WordUtils.capitalizeFully(context.getString(R.string.terms_and_conditions_title));
@@ -36,9 +34,4 @@ public class AlertDialogFragment {
                 .create()
                 .show();
     }
-
-
-
-
-
 }
