@@ -52,8 +52,9 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class AddCourseworkActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, EasyPermissions.PermissionCallbacks {
     private final int STORAGE_PERMISSION_CODE = 1;
+    private final LocalTime DEFAULT_DEADLINE_TIME = LocalTime.now().plusHours(1);
 
-    private final CustomTimePicker deadlineCustomTimePicker = new CustomTimePicker(LocalTime.now().getHour(), LocalTime.now().getMinute());
+    private final CustomTimePicker deadlineCustomTimePicker = new CustomTimePicker(DEFAULT_DEADLINE_TIME.getHour(), DEFAULT_DEADLINE_TIME.getMinute());
 
     private AutoCompleteTextView txtPriority;
     private AutoCompleteTextView txtModules;
@@ -152,10 +153,8 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
                     imageToStore = null;
                     courseworkImage.setImageResource(R.drawable.ic_placeholder_image);
                     binding.btnRemovePicture.setVisibility(View.GONE);
-
                 })
                 .setNegativeButton(getString(R.string.no), (dialog, which) -> dialog.cancel()).create().show();
-
     }
 
     @AfterPermissionGranted(STORAGE_PERMISSION_CODE)
@@ -262,7 +261,7 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
         deadlineCustomTimePicker.setSelectedHour(selectedHour);
         deadlineCustomTimePicker.setSelectedMinute(selectedMinute);
-        String selectedTime = String.format(Locale.getDefault(), getString(R.string.time_format_database), selectedHour, selectedMinute);
+        final String selectedTime = String.format(Locale.getDefault(), getString(R.string.time_format_database), selectedHour, selectedMinute);
         txtDeadlineTime.setText(Helper.formatTime(selectedTime));
 
     }
