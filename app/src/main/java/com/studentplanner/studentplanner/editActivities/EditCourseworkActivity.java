@@ -8,6 +8,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.ImageDecoder;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.Menu;
@@ -82,7 +83,7 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
         if (result.getResultCode() == RESULT_OK) {
             if (result.getData() != null) {
                 try {
-                    imageToStore = MediaStore.Images.Media.getBitmap(getContentResolver(), result.getData().getData());
+                    imageToStore = ImageDecoder.decodeBitmap(ImageDecoder.createSource(this.getContentResolver(), result.getData().getData()));
                     courseworkImage.setImageBitmap(imageToStore);
                     binding.btnRemovePicture.setVisibility(View.VISIBLE);
                     deleteImage = false;
