@@ -57,10 +57,7 @@ public class CourseworkFragment extends Fragment {
 
     private EmptyData emptyData;
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-
-        list = db.getCoursework();
-        list.sort(Coursework.sortDeadlineAsc);
-        adapter.notifyDataSetChanged();
+        getCoursework();
 
     });
 
@@ -198,9 +195,6 @@ public class CourseworkFragment extends Fragment {
         }
 
         emptyData.emptyResultStatus(true);
-
-
-
     }
 
 

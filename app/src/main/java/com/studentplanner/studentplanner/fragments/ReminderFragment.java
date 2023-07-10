@@ -27,7 +27,6 @@ import com.studentplanner.studentplanner.adapters.CourseworkAdapter;
 import com.studentplanner.studentplanner.databinding.FragmentReminderBinding;
 import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.models.Search;
-import com.studentplanner.studentplanner.models.Semester;
 import com.studentplanner.studentplanner.utils.EmptyData;
 import com.studentplanner.studentplanner.utils.Helper;
 
@@ -47,7 +46,6 @@ public class ReminderFragment extends Fragment {
     private DatabaseHelper db;
     private List<Coursework> ALL_COURSEWORK_REMINDERS;
 
-
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
         if (result.getResultCode() == RESULT_OK){
             getReminders();
@@ -55,9 +53,7 @@ public class ReminderFragment extends Fragment {
 
     });
 
-
     public ReminderFragment() {
-
     }
 
     @Override
@@ -78,7 +74,6 @@ public class ReminderFragment extends Fragment {
         }
 
         getReminders();
-
         return binding.getRoot();
     }
     private void getReminders(){
@@ -92,7 +87,6 @@ public class ReminderFragment extends Fragment {
         activity = getActivity();
         activity.setTitle(Helper.getReminderTitle());
         setHasOptionsMenu(true);
-
     }
 
 
@@ -105,11 +99,7 @@ public class ReminderFragment extends Fragment {
             recyclerView.setAdapter(adapter);
             return;
         }
-
         emptyData.emptyResultStatus(true);
-
-
-
     }
 
 
@@ -144,7 +134,6 @@ public class ReminderFragment extends Fragment {
     private void filter(String text) {
 
         List<Coursework> filteredList = (List<Coursework>) Search.textSearch(ALL_COURSEWORK_REMINDERS, text);
-
         if (filteredList.isEmpty()) {
             adapter.filterList(filteredList);
             Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
@@ -154,10 +143,6 @@ public class ReminderFragment extends Fragment {
         adapter.filterList(filteredList);
         emptyData.emptyResultStatus(false);
     }
-
-
-
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();

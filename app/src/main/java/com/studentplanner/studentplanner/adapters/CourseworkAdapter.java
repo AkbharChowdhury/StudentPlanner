@@ -23,7 +23,7 @@ public class CourseworkAdapter extends RecyclerView.Adapter<CourseworkViewHolder
 
     private List<Coursework> list;
     private final Context context;
-    private  final ActivityResultLauncher<Intent> startForResult;
+    private final ActivityResultLauncher<Intent> startForResult;
 
     public CourseworkAdapter(List<Coursework> list, Context context, ActivityResultLauncher<Intent> startForResult) {
         this.list = list;
