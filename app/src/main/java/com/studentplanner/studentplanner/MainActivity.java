@@ -15,6 +15,7 @@ import com.studentplanner.studentplanner.databinding.ActivityMainBinding;
 import com.studentplanner.studentplanner.databinding.NavHeaderBinding;
 import com.studentplanner.studentplanner.fragments.CourseworkFragment;
 import com.studentplanner.studentplanner.fragments.LoginFragment;
+import com.studentplanner.studentplanner.fragments.ReminderFragment;
 import com.studentplanner.studentplanner.utils.AccountPreferences;
 import com.studentplanner.studentplanner.utils.FragmentHandler;
 
@@ -79,13 +80,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         if (savedInstanceState == null) {
+
             if (AccountPreferences.getStudentID(this) == 0) {
                 openFragment(new LoginFragment());
                 return;
             }
-            openFragment(new CourseworkFragment());
 
-            navigationView.setCheckedItem(R.id.nav_coursework);
+            openFragment(new ReminderFragment());
+            navigationView.setCheckedItem(R.id.nav_reminder);
         }
 
     }
