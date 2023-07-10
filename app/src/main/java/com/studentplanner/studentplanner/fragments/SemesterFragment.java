@@ -28,6 +28,8 @@ import com.studentplanner.studentplanner.addActivities.AddSemesterActivity;
 import com.studentplanner.studentplanner.databinding.FragmentSemesterBinding;
 import com.studentplanner.studentplanner.models.Search;
 import com.studentplanner.studentplanner.models.Semester;
+import com.studentplanner.studentplanner.models.Teacher;
+import com.studentplanner.studentplanner.utils.EmptyData;
 import com.studentplanner.studentplanner.utils.Helper;
 
 import java.util.Collections;
@@ -42,6 +44,7 @@ public class SemesterFragment extends Fragment {
     private SemesterAdapter adapter;
     private List<Semester> list;
     private List<Semester> ALL_SEMESTERS;
+    private EmptyData emptyData;
 
     private FragmentSemesterBinding binding;
     private DatabaseHelper db;
@@ -70,7 +73,7 @@ public class SemesterFragment extends Fragment {
         recyclerView = binding.recyclerView;
         binding.fabAdd.setOnClickListener(v -> startForResult.launch(new Intent(getActivity(), AddSemesterActivity.class)));
 
-
+        emptyData = new EmptyData(binding.emptyImage, binding.emptyText);
         db = DatabaseHelper.getInstance(context);
         ALL_SEMESTERS  = Collections.unmodifiableList(db.getSemester());
 
@@ -106,8 +109,7 @@ public class SemesterFragment extends Fragment {
             return;
         }
 
-        binding.emptyImage.setVisibility(View.VISIBLE);
-        binding.emptyText.setVisibility(View.VISIBLE);
+       emptyData.emptyResultStatus(true);
 
 
     }
@@ -139,13 +141,21 @@ public class SemesterFragment extends Fragment {
         }
     }
 
+
+
+
     private void filter(String text) {
+
         List<Semester> filteredList = (List<Semester>) Search.textSearch(ALL_SEMESTERS, text);
+
         if (filteredList.isEmpty()) {
-            Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
-        } else {
             adapter.filterList(filteredList);
+            Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
+            emptyData.emptyResultStatus(true);
+            return;
         }
+        adapter.filterList(filteredList);
+        emptyData.emptyResultStatus(false);
     }
 
 

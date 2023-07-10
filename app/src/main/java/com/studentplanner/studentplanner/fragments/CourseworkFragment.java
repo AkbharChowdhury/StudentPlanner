@@ -1,14 +1,11 @@
 package com.studentplanner.studentplanner.fragments;
 
-import static android.app.Activity.RESULT_OK;
-
 import static com.studentplanner.studentplanner.utils.Helper.getSpinnerText;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,6 +32,7 @@ import com.studentplanner.studentplanner.databinding.FragmentCourseworkBinding;
 import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.models.SearchCoursework;
 import com.studentplanner.studentplanner.utils.Helper;
+import com.studentplanner.studentplanner.utils.EmptyData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,10 +54,13 @@ public class CourseworkFragment extends Fragment {
     private List<Coursework> list;
     private DatabaseHelper db;
     private FragmentCourseworkBinding binding;
+
+    private EmptyData emptyData;
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-        if (result.getResultCode() == RESULT_OK) {
-            getCoursework();
-        }
+
+        list = db.getCoursework();
+        list.sort(Coursework.sortDeadlineAsc);
+        adapter.notifyDataSetChanged();
 
     });
 
@@ -115,6 +116,8 @@ public class CourseworkFragment extends Fragment {
         recyclerView = binding.recyclerView;
 
         db = DatabaseHelper.getInstance(context);
+
+        emptyData = new EmptyData(binding.emptyImage, binding.emptyText);
         getCoursework();
 
         return binding.getRoot();
@@ -184,6 +187,7 @@ public class CourseworkFragment extends Fragment {
 
     private void buildRecyclerView() {
         if (!list.isEmpty()) {
+
             adapter = new CourseworkAdapter(list, context, startForResult);
             LinearLayoutManager manager = new LinearLayoutManager(context);
 
@@ -193,7 +197,8 @@ public class CourseworkFragment extends Fragment {
             return;
         }
 
-        showEmptyResults();
+        emptyData.emptyResultStatus(true);
+
 
 
     }
@@ -239,16 +244,13 @@ public class CourseworkFragment extends Fragment {
     private void checkEmptyResults(List<Coursework> filteredList) {
         if (filteredList.isEmpty()) {
             Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
-            showEmptyResults();
+            emptyData.emptyResultStatus(true);
+            return;
 
         }
+        emptyData.emptyResultStatus(false);
 
 
-    }
-
-    private void showEmptyResults() {
-        binding.emptyImage.setVisibility(View.VISIBLE);
-        binding.emptyText.setVisibility(View.VISIBLE);
 
     }
 

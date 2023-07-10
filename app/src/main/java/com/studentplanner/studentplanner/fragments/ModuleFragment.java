@@ -26,8 +26,10 @@ import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.adapters.ModuleAdapter;
 import com.studentplanner.studentplanner.addActivities.AddModuleActivity;
 import com.studentplanner.studentplanner.databinding.FragmentModuleBinding;
+
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.Search;
+import com.studentplanner.studentplanner.utils.EmptyData;
 import com.studentplanner.studentplanner.utils.Helper;
 
 import java.util.List;
@@ -43,6 +45,8 @@ public class ModuleFragment extends Fragment {
     private FragmentModuleBinding binding;
     private DatabaseHelper db;
     private List<Module> ALL_MODULES;
+    private EmptyData emptyData;
+
 
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
 
@@ -69,6 +73,8 @@ public class ModuleFragment extends Fragment {
         recyclerView = binding.recyclerView;
         db = DatabaseHelper.getInstance(context);
         ALL_MODULES = db.getModules();
+
+        emptyData = new EmptyData(binding.emptyImage, binding.emptyText);
         Helper.getIntentMessage(context, activity.getIntent().getExtras());
         getModule();
 
@@ -100,8 +106,7 @@ public class ModuleFragment extends Fragment {
             return;
         }
 
-        binding.emptyImage.setVisibility(View.VISIBLE);
-        binding.emptyText.setVisibility(View.VISIBLE);
+        emptyData.emptyResultStatus(true);
 
 
     }
@@ -134,17 +139,18 @@ public class ModuleFragment extends Fragment {
     }
 
 
-
     private void filter(String text) {
 
         List<Module> filteredList = (List<Module>) Search.textSearch(ALL_MODULES, text);
 
         if (filteredList.isEmpty()) {
-            Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
-        } else {
             adapter.filterList(filteredList);
+            Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
+            emptyData.emptyResultStatus(true);
+            return;
         }
-
+        adapter.filterList(filteredList);
+        emptyData.emptyResultStatus(false);
     }
 
 

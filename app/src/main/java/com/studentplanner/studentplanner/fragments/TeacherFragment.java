@@ -26,8 +26,10 @@ import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.adapters.TeacherAdapter;
 import com.studentplanner.studentplanner.addActivities.AddTeacherActivity;
 import com.studentplanner.studentplanner.databinding.FragmentTeacherBinding;
+import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.Search;
 import com.studentplanner.studentplanner.models.Teacher;
+import com.studentplanner.studentplanner.utils.EmptyData;
 import com.studentplanner.studentplanner.utils.Helper;
 
 import java.util.Collections;
@@ -37,6 +39,7 @@ import java.util.List;
 public class TeacherFragment extends Fragment {
     private Context context;
     private Activity activity;
+    private EmptyData emptyData;
 
     private RecyclerView recyclerView;
     private TeacherAdapter adapter;
@@ -70,6 +73,7 @@ public class TeacherFragment extends Fragment {
         binding = FragmentTeacherBinding.inflate(inflater, container, false);
         binding.fabAdd.setOnClickListener(v -> startForResult.launch(new Intent(getActivity(), AddTeacherActivity.class)));
         recyclerView = binding.recyclerView;
+        emptyData = new EmptyData(binding.emptyImage, binding.emptyText);
 
         db = DatabaseHelper.getInstance(context);
         ALL_TEACHERS = Collections.unmodifiableList(db.getTeachers());
@@ -103,8 +107,8 @@ public class TeacherFragment extends Fragment {
             return;
         }
 
-        binding.emptyImage.setVisibility(View.VISIBLE);
-        binding.emptyText.setVisibility(View.VISIBLE);
+        emptyData.emptyResultStatus(true);
+
 
     }
 
@@ -137,14 +141,19 @@ public class TeacherFragment extends Fragment {
 
 
 
-    private void filter(String text) {
-        List<Teacher> filteredList = (List<Teacher>) Search.textSearch(ALL_TEACHERS, text);
-        if (filteredList.isEmpty()) {
-            Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
-        } else {
-            adapter.filterList(filteredList);
-        }
 
+    private void filter(String text) {
+
+        List<Teacher> filteredList = (List<Teacher>) Search.textSearch(ALL_TEACHERS, text);
+
+        if (filteredList.isEmpty()) {
+            adapter.filterList(filteredList);
+            Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
+            emptyData.emptyResultStatus(true);
+            return;
+        }
+        adapter.filterList(filteredList);
+        emptyData.emptyResultStatus(false);
     }
 
 
