@@ -26,8 +26,8 @@ public class AlertDialogFragment {
 
     public void showTermsAndConditions(){
 
-        String title = WordUtils.capitalizeFully(context.getString(R.string.terms_and_conditions_title));
-        String message = readStream(context.getResources().openRawResource(R.raw.policy));
+        final String title = WordUtils.capitalizeFully(context.getString(R.string.terms_and_conditions_title));
+        final String message = readStream(context.getResources().openRawResource(R.raw.policy));
 
         new AlertDialog.Builder(context)
                 .setTitle(title)
