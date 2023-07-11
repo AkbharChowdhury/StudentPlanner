@@ -240,6 +240,7 @@
     <string name="class_updated">Class Updated</string>
     <string name="delete_module_teacher_title">Are you sure you want to remove all teachers from this module?</string>
     <string name="delete_module_teacher_message">Doing so will delete all associated teachers this module</string>
+    <string name="enter_email">Enter email</string>
 
 
 </resources>

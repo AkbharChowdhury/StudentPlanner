@@ -728,8 +728,8 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                             cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DEADLINE)),
                             cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DEADLINE_TIME))
                     );
-                    byte[] img = cursor.getBlob(cursor.getColumnIndex(CourseworkTable.COLUMN_IMAGE));
-                    coursework.setImage(img);
+                    byte[] image = cursor.getBlob(cursor.getColumnIndex(CourseworkTable.COLUMN_IMAGE));
+                    coursework.setImage(image);
                     coursework.setCompleted(cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_COMPLETED)).equalsIgnoreCase("Yes"));
                     courseworkList.add(coursework);
 
@@ -773,7 +773,14 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                             cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DEADLINE_TIME))
 
                     );
+
+
+
+
                     coursework.setCompleted(cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_COMPLETED)).equalsIgnoreCase("Yes"));
+                    byte[] image = cursor.getBlob(cursor.getColumnIndex(CourseworkTable.COLUMN_IMAGE));
+                    coursework.setImage(image);
+
                     courseworkList.add(coursework);
 
                 }
