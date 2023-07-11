@@ -16,6 +16,7 @@ import com.studentplanner.studentplanner.databinding.NavHeaderBinding;
 import com.studentplanner.studentplanner.fragments.LoginFragment;
 import com.studentplanner.studentplanner.fragments.ModuleFragment;
 import com.studentplanner.studentplanner.fragments.ReminderFragment;
+import com.studentplanner.studentplanner.fragments.TeacherFragment;
 import com.studentplanner.studentplanner.utils.AccountPreferences;
 import com.studentplanner.studentplanner.utils.FragmentHandler;
 
@@ -83,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return;
             }
 
-            openFragment(new ModuleFragment());
+            openFragment(new TeacherFragment());
             navigationView.setCheckedItem(R.id.nav_module);
         }
 

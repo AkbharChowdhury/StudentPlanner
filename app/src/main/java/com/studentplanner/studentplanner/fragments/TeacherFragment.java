@@ -34,6 +34,7 @@ import com.studentplanner.studentplanner.utils.Helper;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class TeacherFragment extends Fragment {
@@ -144,7 +145,11 @@ public class TeacherFragment extends Fragment {
 
     private void filter(String text) {
 
+
+
         List<Teacher> filteredList = (List<Teacher>) Search.textSearch(ALL_TEACHERS, text);
+
+//        List<Teacher> filteredList = db.getTeachers().stream().filter(teacher -> teacher.searchText().toLowerCase().contains(text.toLowerCase())).collect(Collectors.toList());
 
         if (filteredList.isEmpty()) {
             adapter.filterList(filteredList);
