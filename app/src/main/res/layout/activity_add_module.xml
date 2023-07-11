@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/module_code"
                 android:inputType="textPersonName"
-                android:maxLength="30"
+                android:maxLength="100"
                 android:maxLines="1">
 
             </com.google.android.material.textfield.TextInputEditText>
@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/module_name"
                 android:inputType="textPersonName"
-                android:maxLength="30"
+                android:maxLength="100"
                 android:maxLines="1">
 
             </com.google.android.material.textfield.TextInputEditText>
