@@ -7,17 +7,14 @@ import java.util.stream.Collectors;
 
 public final class Search {
 
-    public static List<? extends Searchable> textSearch(List<? extends Searchable> list, String text){
+    public static List<? extends Searchable> textSearch(final List<? extends Searchable> list, final String text){
 
         return list
                 .stream()
-                .filter(p -> p.searchText().toLowerCase().trim().contains(text.toLowerCase()))
+//                .filter(p -> text.trim().contains(p.searchText()))
+                .filter(p-> p.searchText().trim().contains(text.toLowerCase().trim()))
                 .collect(Collectors.toList());
     }
-
-
-
-
 
 
 

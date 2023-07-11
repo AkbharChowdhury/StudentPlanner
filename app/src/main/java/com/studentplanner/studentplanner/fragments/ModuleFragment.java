@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -77,6 +78,14 @@ public class ModuleFragment extends Fragment {
         emptyData = new EmptyData(binding.emptyImage, binding.emptyText);
         Helper.getIntentMessage(context, activity.getIntent().getExtras());
         getModule();
+
+
+
+        List<Module> filteredList1 = (List<Module>) Search.textSearch(db.getModules(), "mobile");
+        StringBuilder s = new StringBuilder("Results");
+        filteredList1.forEach(s::append);
+
+        Log.d("MY_DATA", s.toString());
 
         return binding.getRoot();
     }

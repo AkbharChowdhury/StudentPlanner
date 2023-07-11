@@ -27,6 +27,7 @@ import com.studentplanner.studentplanner.adapters.ModuleTeacherAdapter;
 import com.studentplanner.studentplanner.addActivities.AddModuleTeacherActivity;
 import com.studentplanner.studentplanner.databinding.FragmentModuleTeacherBinding;
 import com.studentplanner.studentplanner.models.ModuleTeacher;
+import com.studentplanner.studentplanner.utils.EmptyData;
 import com.studentplanner.studentplanner.utils.Helper;
 
 import org.apache.commons.text.WordUtils;
@@ -44,6 +45,7 @@ public class ModuleTeacherFragment extends Fragment {
     private FragmentModuleTeacherBinding binding;
     private DatabaseHelper db;
 
+    private EmptyData emptyData;
 
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
 
@@ -71,6 +73,7 @@ public class ModuleTeacherFragment extends Fragment {
         recyclerView = binding.recyclerView;
 
         binding.fabAdd.setOnClickListener(v -> startForResult.launch(new Intent(getActivity(), AddModuleTeacherActivity.class)));
+        emptyData = new EmptyData(binding.emptyImage, binding.emptyText);
 
 
         db = DatabaseHelper.getInstance(context);
@@ -105,8 +108,8 @@ public class ModuleTeacherFragment extends Fragment {
             return;
         }
 
-        binding.emptyImage.setVisibility(View.VISIBLE);
-        binding.emptyText.setVisibility(View.VISIBLE);
+        emptyData.emptyResultStatus(true);
+
 
 
     }
@@ -146,8 +149,12 @@ public class ModuleTeacherFragment extends Fragment {
 
         if (filteredList.isEmpty()) {
             Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
+            emptyData.emptyResultStatus(true);
+
         } else {
             adapter.filterList(filteredList);
+            emptyData.emptyResultStatus(false);
+
         }
     }
 

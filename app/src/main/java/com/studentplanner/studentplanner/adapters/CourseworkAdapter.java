@@ -48,7 +48,6 @@ public class CourseworkAdapter extends RecyclerView.Adapter<CourseworkViewHolder
 
         holder.showDetails(list.get(position));
         holder.getLayout().setOnClickListener(v -> startForResult.launch(intent(position)));
-
     }
 
     private Intent intent(int position){
