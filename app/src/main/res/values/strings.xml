@@ -241,6 +241,9 @@
     <string name="delete_module_teacher_title">Are you sure you want to remove all teachers from this module?</string>
     <string name="delete_module_teacher_message">Doing so will delete all associated teachers this module</string>
     <string name="enter_email">Enter email</string>
+    <string name="time_error">This time should be now or a future time!</string>
+    <string name="date_error">this date should be today or a future date!</string>
+    <string name="module_exists">\"This module code already exists!\"</string>
 
 
 </resources>

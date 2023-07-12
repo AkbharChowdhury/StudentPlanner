@@ -110,8 +110,7 @@ public final class Validation {
 
         LocalDate today = LocalDate.now();
         if (date.isEqual(today) && time.isBefore(LocalTime.now())){
-            txtTimeError.setError("this time should be now or a future time!");
-            Helper.longToastMessage(context, "time error");
+            txtTimeError.setError(context.getString(R.string.time_error));
             return true;
 
         }
@@ -153,7 +152,7 @@ public final class Validation {
 
     public boolean isPastDate(AutoCompleteTextView txtDate, TextInputLayout txtDateError) {
         if (isPastDate(Helper.convertFUllDateToYYMMDD(Helper.trimStr(txtDate)))) {
-            txtDateError.setError("this date should be today or a future date!");
+            txtDateError.setError(context.getString(R.string.date_error));
             return true;
         }
         txtDateError.setError(null);
@@ -163,7 +162,7 @@ public final class Validation {
 
     public boolean moduleCodeExists(TextInputLayout txtModuleCode, String excludedCode) {
         if (db.moduleCodeExists(Helper.trimStr(txtModuleCode), excludedCode)) {
-            txtModuleCode.setError("This module code already exists");
+            txtModuleCode.setError(context.getString(R.string.module_exists));
             return true;
         }
 
@@ -235,11 +234,11 @@ public final class Validation {
 
         String phone = textField.getText().toString();
         List<String> phoneErrors = new ArrayList<>();
-
-        if (phone.startsWith("0") && phone.length() < 11){
+        final String ZERO = "0";
+        if (phone.startsWith(ZERO) && phone.length() < 11){
             phoneErrors.add(phoneLength(11));
         }
-        if (!phone.startsWith("0") && phone.length() < 10){
+        if (!phone.startsWith(ZERO) && phone.length() < 10){
             phoneErrors.add(phoneLength(10));
         }
 
@@ -248,9 +247,8 @@ public final class Validation {
             textField.setError(null);
 
             StringBuilder sb = new StringBuilder();
-            for (String error : phoneErrors) {
-                sb.append(error).append("\n");
-            }
+            phoneErrors.forEach(error ->  sb.append(error).append("\n"));
+
             String errorMessages = sb.toString();
             if (!errorMessages.isEmpty()) {
                 textField.setError(errorMessages);
@@ -286,7 +284,6 @@ public final class Validation {
             return false;
         }
         if (setAdditionalCheck) {
-
 
             if (db.columnExists(email, StudentTable.COLUMN_EMAIL, StudentTable.TABLE_NAME)) {
                 setError(textField, getEmailExistsError());
@@ -437,20 +434,6 @@ public final class Validation {
         }
         textField.setError(null);
         return false;
-
-
-    }
-
-    // use for edit form fields
-    public boolean isDropDownEmpty(TextInputLayout textField, String errorMessage, int selectedID) {
-        if (selectedID == 0) {
-            textField.setError(errorMessage);
-            return true;
-        }
-        textField.setError(null);
-        return false;
-
-
     }
 
 

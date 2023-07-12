@@ -4,9 +4,9 @@
     <item
         android:id="@+id/action_week_view"
         android:icon="@drawable/ic_week_view"
-        app:showAsAction="always"
-        android:title="@string/week_view" />
-    
+        android:title="@string/week_view"
+        app:showAsAction="always" />
+
     <item
         android:id="@+id/action_more"
         android:icon="@drawable/ic_add"
@@ -17,11 +17,11 @@
             <item
                 android:id="@+id/add_coursework_action"
                 android:icon="@drawable/ic_coursework_lg"
-                android:title="@string/add_coursework"/>
+                android:title="@string/add_coursework" />
             <item
                 android:id="@+id/add_class_action"
                 android:icon="@drawable/ic_classes_lg"
-                android:title="@string/add_class"/>
+                android:title="@string/add_class" />
         </menu>
     </item>
 </menu>
