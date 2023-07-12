@@ -86,7 +86,9 @@ public class CalendarFragment extends Fragment implements OnItemListener {
         initFragment();
         binding = FragmentCalendarBinding.inflate(inflater, container, false);
         eventData = new EventData(DatabaseHelper.getInstance(context));
+
         initWidgets();
+
         binding.btNextMonthAction.setOnClickListener(v -> nextMonthAction());
         binding.btnPreviousMonthAction.setOnClickListener(v -> previousMonthAction());
         binding.btnTodayAction.setOnClickListener(v -> resetToCurrentDate());
