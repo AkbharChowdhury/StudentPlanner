@@ -1,5 +1,8 @@
 package com.studentplanner.studentplanner.models;
 
+import static com.studentplanner.studentplanner.utils.CompletionStatus.COMPLETED;
+import static com.studentplanner.studentplanner.utils.CompletionStatus.NOT_COMPLETED;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.widget.TextView;
@@ -7,7 +10,6 @@ import android.widget.TextView;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.databinding.EventRowBinding;
-import com.studentplanner.studentplanner.enums.Status;
 import com.studentplanner.studentplanner.utils.Helper;
 
 import org.apache.commons.text.WordUtils;
@@ -41,7 +43,7 @@ public class CourseworkRow {
         priority.setTextColor(Helper.getPriorityColour(priorityLevel, context));
         time.setText(Helper.formatTimeShort(coursework.getDeadlineTime()));
 
-        completionStatus.setText(coursework.isCompleted() ? Status.COMPLETED.label : Status.NOT_COMPLETED.label);
+        completionStatus.setText(coursework.isCompleted() ? COMPLETED : NOT_COMPLETED);
         completionStatus.setTextColor(coursework.isCompleted() ? context.getColor(R.color.dark_green) : Color.RED);
 
     }

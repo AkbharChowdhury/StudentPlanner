@@ -1,5 +1,8 @@
 package com.studentplanner.studentplanner.viewholders;
 
+import static com.studentplanner.studentplanner.utils.CompletionStatus.COMPLETED;
+import static com.studentplanner.studentplanner.utils.CompletionStatus.NOT_COMPLETED;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
@@ -13,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.databinding.CourseworkRowBinding;
-import com.studentplanner.studentplanner.enums.Status;
 import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.models.ImageHandler;
 import com.studentplanner.studentplanner.models.Module;
@@ -75,7 +77,7 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
         tvPriority.setText(coursework.getPriority());
         tvPriority.setTextColor(Helper.getPriorityColour(coursework.getPriority(), context));
         tvCourseworkModule.setText(module.getModuleDetails());
-        tvCourseworkCompleted.setText(coursework.isCompleted() ? Status.COMPLETED.label : Status.NOT_COMPLETED.label);
+        tvCourseworkCompleted.setText(coursework.isCompleted() ? COMPLETED : NOT_COMPLETED);
         tvCourseworkCompleted.setTextColor(coursework.isCompleted() ? context.getColor(R.color.dark_green) : Color.RED);
 
         showTimeLeft(deadline, coursework);

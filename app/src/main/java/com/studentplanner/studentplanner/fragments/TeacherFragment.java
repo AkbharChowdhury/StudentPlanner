@@ -106,8 +106,6 @@ public class TeacherFragment extends Fragment {
         }
 
         emptyData.emptyResultStatus(true);
-
-
     }
 
 
