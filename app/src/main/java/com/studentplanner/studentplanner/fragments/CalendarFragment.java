@@ -182,7 +182,7 @@ public class CalendarFragment extends Fragment implements OnItemListener {
     }
 
     private Intent courseworkIntent() {
-        Intent intent = new Intent(activity, AddCourseworkActivity.class);
+        Intent intent = new Intent(getActivity(), AddCourseworkActivity.class);
         intent.putExtra(CourseworkTable.COLUMN_DEADLINE, Helper.formatDate(CalendarUtils.getSelectedDate().toString()));
         return intent;
     }
