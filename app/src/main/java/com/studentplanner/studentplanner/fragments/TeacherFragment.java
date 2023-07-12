@@ -26,12 +26,15 @@ import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.adapters.TeacherAdapter;
 import com.studentplanner.studentplanner.addActivities.AddTeacherActivity;
 import com.studentplanner.studentplanner.databinding.FragmentTeacherBinding;
+import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.models.Search;
 import com.studentplanner.studentplanner.models.Teacher;
 import com.studentplanner.studentplanner.utils.EmptyData;
 import com.studentplanner.studentplanner.utils.Helper;
 
+import java.time.LocalDate;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -83,6 +86,8 @@ public class TeacherFragment extends Fragment {
 
     private void getTeachers() {
         list = db.getTeachers();
+        Comparator<Teacher> sort = Comparator.comparing(t -> t.getLastname());
+        list.sort(sort);
         buildRecyclerView();
     }
 
