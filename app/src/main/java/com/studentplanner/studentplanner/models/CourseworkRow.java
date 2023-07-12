@@ -29,8 +29,6 @@ public class CourseworkRow {
         time = binding.tvCwTime;
         completionStatus = binding.tvCwCompleted;
         this.context = context;
-
-
     }
     public void setDetails(Coursework coursework){
         String priorityLevel = coursework.getPriority();
