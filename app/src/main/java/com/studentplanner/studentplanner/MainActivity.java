@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return;
             }
 
-            openFragment(new CalendarFragment());
+            openFragment(new TeacherFragment());
             navigationView.setCheckedItem(R.id.nav_reminder);
         }
 

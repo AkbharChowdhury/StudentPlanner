@@ -56,7 +56,6 @@ public class TeacherFragment extends Fragment {
 
     });
 
-
     public TeacherFragment() {
 
     }
@@ -70,13 +69,19 @@ public class TeacherFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         initFragment();
         binding = FragmentTeacherBinding.inflate(inflater, container, false);
-        binding.fabAdd.setOnClickListener(v -> startForResult.launch(new Intent(getActivity(), AddTeacherActivity.class)));
+//        binding.fabAdd.setOnClickListener(v -> startForResult.launch(new Intent(getActivity(), AddTeacherActivity.class)));
+        binding.fabAdd.setOnClickListener(v ->{
+            ModuleFragment nextFrag = new ModuleFragment();
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, nextFrag, "findThisFragment")
+                    .addToBackStack(null)
+                    .commit();
+        });
         recyclerView = binding.recyclerView;
         emptyData = new EmptyData(binding.emptyImage, binding.emptyText);
 
         db = DatabaseHelper.getInstance(context);
         ALL_TEACHERS = Collections.unmodifiableList(db.getTeachers());
-        Helper.getIntentMessage(context, activity.getIntent().getExtras());
         getTeachers();
 
         return binding.getRoot();
@@ -143,11 +148,7 @@ public class TeacherFragment extends Fragment {
 
     private void filter(String text) {
 
-
-
         List<Teacher> filteredList = (List<Teacher>) Search.textSearch(ALL_TEACHERS, text);
-
-//        List<Teacher> filteredList = db.getTeachers().stream().filter(teacher -> teacher.searchText().toLowerCase().contains(text.toLowerCase())).collect(Collectors.toList());
 
         if (filteredList.isEmpty()) {
             adapter.filterList(filteredList);
