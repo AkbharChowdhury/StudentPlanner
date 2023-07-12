@@ -81,7 +81,7 @@ public class CalendarFragment extends Fragment implements OnItemListener {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         initFragment();
         binding = FragmentCalendarBinding.inflate(inflater, container, false);
