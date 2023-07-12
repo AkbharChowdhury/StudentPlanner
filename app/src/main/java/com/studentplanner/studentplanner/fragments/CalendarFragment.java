@@ -46,7 +46,6 @@ import java.util.ArrayList;
 public class CalendarFragment extends Fragment implements OnItemListener {
     private Activity activity;
     private Context context;
-
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
     private ListView eventListView;
