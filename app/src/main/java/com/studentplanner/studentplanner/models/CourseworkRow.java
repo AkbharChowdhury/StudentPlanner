@@ -37,7 +37,7 @@ public class CourseworkRow {
         String moduleDetails = module.getModuleDetails();
         title.setText(Helper.getSnippet(WordUtils.capitalizeFully(coursework.getTitle()), 20));
 
-        lblModule.setText(moduleDetails);
+        lblModule.setText(Helper.getSnippet(moduleDetails, 30));
         priority.setText(priorityLevel);
         priority.setTextColor(Helper.getPriorityColour(priorityLevel, context));
         time.setText(Helper.formatTimeShort(coursework.getDeadlineTime()));
