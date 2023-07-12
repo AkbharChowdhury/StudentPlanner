@@ -69,14 +69,8 @@ public class TeacherFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         initFragment();
         binding = FragmentTeacherBinding.inflate(inflater, container, false);
-//        binding.fabAdd.setOnClickListener(v -> startForResult.launch(new Intent(getActivity(), AddTeacherActivity.class)));
-        binding.fabAdd.setOnClickListener(v ->{
-            ModuleFragment nextFrag = new ModuleFragment();
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, nextFrag, "findThisFragment")
-                    .addToBackStack(null)
-                    .commit();
-        });
+        binding.fabAdd.setOnClickListener(v -> startForResult.launch(new Intent(getActivity(), AddTeacherActivity.class)));
+
         recyclerView = binding.recyclerView;
         emptyData = new EmptyData(binding.emptyImage, binding.emptyText);
 
