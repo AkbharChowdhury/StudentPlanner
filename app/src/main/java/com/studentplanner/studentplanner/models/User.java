@@ -58,8 +58,6 @@ public abstract class User {
         return firstname;
     }
 
-
-
     public User setLastname(String lastname) {
         this.lastname = lastname;
         return this;

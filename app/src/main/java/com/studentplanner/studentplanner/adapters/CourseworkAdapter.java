@@ -35,6 +35,7 @@ public class CourseworkAdapter extends RecyclerView.Adapter<CourseworkViewHolder
     public void filterList(List<Coursework> filteredList) {
         list = filteredList;
         notifyDataSetChanged();
+
     }
 
     @NonNull

@@ -26,7 +26,6 @@ import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.adapters.TeacherAdapter;
 import com.studentplanner.studentplanner.addActivities.AddTeacherActivity;
 import com.studentplanner.studentplanner.databinding.FragmentTeacherBinding;
-import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.Search;
 import com.studentplanner.studentplanner.models.Teacher;
 import com.studentplanner.studentplanner.utils.EmptyData;
@@ -34,7 +33,6 @@ import com.studentplanner.studentplanner.utils.Helper;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 public class TeacherFragment extends Fragment {
@@ -69,7 +67,7 @@ public class TeacherFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         initFragment();
         binding = FragmentTeacherBinding.inflate(inflater, container, false);
         binding.fabAdd.setOnClickListener(v -> startForResult.launch(new Intent(getActivity(), AddTeacherActivity.class)));
