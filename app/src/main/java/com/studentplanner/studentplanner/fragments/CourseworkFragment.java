@@ -1,11 +1,13 @@
 package com.studentplanner.studentplanner.fragments;
 
+import static android.app.Activity.RESULT_OK;
 import static com.studentplanner.studentplanner.utils.Helper.getSpinnerText;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -57,10 +59,17 @@ public class CourseworkFragment extends Fragment {
 
     private EmptyData emptyData;
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-        getCoursework();
+        if (result.getResultCode() == RESULT_OK) getCoursework();
+
 
     });
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (Helper.changeStatus) getCoursework();
+
+    }
 
     public CourseworkFragment() {
     }
@@ -168,7 +177,6 @@ public class CourseworkFragment extends Fragment {
     private void getCoursework() {
         list = db.getCoursework();
         list.sort(Coursework.sortDeadlineAsc);
-
         search = new SearchCoursework(context, list);
         buildRecyclerView();
     }

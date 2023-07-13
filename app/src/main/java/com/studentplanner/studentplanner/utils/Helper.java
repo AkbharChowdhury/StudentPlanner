@@ -53,6 +53,7 @@ import org.apache.commons.text.WordUtils;
 public final class Helper {
     private static final String INTENT_MESSAGE = "message";
     private static final String ellipses = "...";
+    public static boolean changeStatus = false;
 
 
     private Helper() {

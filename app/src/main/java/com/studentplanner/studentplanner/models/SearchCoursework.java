@@ -2,6 +2,7 @@ package com.studentplanner.studentplanner.models;
 
 import android.content.Context;
 
+import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 
 import java.util.Collections;
@@ -18,6 +19,7 @@ public class SearchCoursework {
     private String priority = "";
     private boolean isCompleted = false;
     private final String DEFAULT_PRIORITY;
+    private static SearchCoursework instance;
 
     /**
      * specifies if the default completion status is selected (Any Completion).
@@ -26,7 +28,12 @@ public class SearchCoursework {
 
     private final Predicate<Coursework> filterTitle = c -> c.getTitle().toLowerCase().contains(title.toLowerCase());
 
-
+//    public static synchronized SearchCoursework getInstance(Context context, List<Coursework> ALL_COURSEWORK) {
+//        if (instance == null) {
+//            instance = new SearchCoursework(context, ALL_COURSEWORK);
+//        }
+//        return instance;
+//    }
     public SearchCoursework(Context context, List<Coursework> ALL_COURSEWORK) {
 
         this.ALL_COURSEWORK = Collections.unmodifiableList(ALL_COURSEWORK);

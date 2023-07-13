@@ -125,7 +125,7 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
 
             if (form.validateEditCourseworkForm(getCourseworkErrorFields())) {
                 if (db.updateCoursework(getCourseworkDetails(), deleteImage)) {
-                    Helper.longToastMessage(this, "Coursework Updated");
+                    Helper.longToastMessage(this, getString(R.string.coursework_updated));
                     setResult(RESULT_OK);
                     finish();
                 }
