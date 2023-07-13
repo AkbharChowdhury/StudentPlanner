@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -48,13 +49,12 @@ public class SemesterFragment extends Fragment {
 
     private FragmentSemesterBinding binding;
     private DatabaseHelper db;
-    private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-
+    private void activityResult(ActivityResult result){
         if (result.getResultCode() == RESULT_OK){
             getSemester();
         }
-
-    });
+    }
+    private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this::activityResult);
 
 
     public SemesterFragment() {

@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -58,11 +59,12 @@ public class CourseworkFragment extends Fragment {
     private FragmentCourseworkBinding binding;
 
     private EmptyData emptyData;
-    private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-        if (result.getResultCode() == RESULT_OK) getCoursework();
-
-
-    });
+    private void activityResult(ActivityResult result){
+        if (result.getResultCode() == RESULT_OK){
+            getCoursework();
+        }
+    }
+    private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this::activityResult);
 
     @Override
     public void onResume() {

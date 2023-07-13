@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -45,13 +46,13 @@ public class ReminderFragment extends Fragment {
     private FragmentReminderBinding binding;
     private DatabaseHelper db;
     private List<Coursework> ALL_COURSEWORK_REMINDERS;
-
-    private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+    private void activityResult(ActivityResult result){
         if (result.getResultCode() == RESULT_OK){
             getReminders();
         }
+    }
 
-    });
+    private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this::activityResult);
 
     public ReminderFragment() {
     }

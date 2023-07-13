@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -47,13 +48,13 @@ public class ModuleTeacherFragment extends Fragment {
 
     private EmptyData emptyData;
 
-    private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-
-        if (result.getResultCode() == RESULT_OK) {
+    private void activityResult(ActivityResult result){
+        if (result.getResultCode() == RESULT_OK){
             getModuleTeacher();
         }
+    }
 
-    });
+    private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this::activityResult);
 
 
     public ModuleTeacherFragment() {
