@@ -19,6 +19,8 @@ import com.studentplanner.studentplanner.utils.Helper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 
 public class EditModuleTeacherActivity extends AppCompatActivity {
@@ -58,18 +60,11 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
 
         ArrayList<Integer> editedTeacherIDs = db.getModuleTeacherByModuleID(moduleID);
         ArrayList<Integer> allTeacherIDs = getIdList(teachers);
-        for (int i = 0; i < teachers.size(); i++) {
-            if ((editedTeacherIDs.contains(allTeacherIDs.get(i)))) {
-                listView.setItemChecked(i, true);
-            }
-
-        }
+        IntStream.range(0, teachers.size()).forEach(i ->  listView.setItemChecked(i, editedTeacherIDs.contains(allTeacherIDs.get(i))));
     }
     private ArrayList<Integer> getIdList(List<Teacher> teachers) {
         ArrayList<Integer> idList = new ArrayList<>();
-        for (Teacher t : teachers) {
-            idList.add(t.getUserID());
-        }
+        teachers.forEach(t -> idList.add(t.getUserID()));
         return idList;
 
     }
@@ -90,21 +85,21 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
     private List<String> getTeacher() {
         List<Teacher> teachers = db.getTeachers();
         List<String> teacherArray = new ArrayList<>();
-        for (Teacher teacher : teachers) {
-            teacherArray.add(String.format("%s %s", teacher.getFirstname(), teacher.getLastname()));
-        }
+
+        teachers.forEach(t-> teacherArray.add(String.format("%s %s", t.getFirstname(), t.getLastname())));
         return teacherArray;
     }
     private List<Integer> getSelectedTeacherIDList() {
 
         List<Integer> selectedTeacherIds = new ArrayList<>();
         List<Teacher> teacherList = db.getTeachers();
-        for (int i = 0; i < listView.getCount(); i++) {
+        IntStream.range(0, listView.getCount()).forEach(i ->  {
             if (listView.isItemChecked(i)) {
                 selectedTeacherIds.add(teacherList.get(i).getUserID());
             }
+        });
 
-        }
+
 
         return selectedTeacherIds;
     }

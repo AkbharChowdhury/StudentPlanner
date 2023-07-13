@@ -192,7 +192,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 + ClassTable.COLUMN_DOW + " INTEGER NOT NULL, "
                 + ClassTable.COLUMN_START_TIME + " TEXT NOT NULL, "
                 + ClassTable.COLUMN_END_TIME + " TEXT NOT NULL, "
-                + ClassTable.COLUMN_ROOM + " TEXT NOT NULL, "
+                + ClassTable.COLUMN_ROOM + " TEXT, "
                 + ClassTable.COLUMN_TYPE + " TEXT NOT NULL, "
                 + "FOREIGN KEY (" + ClassTable.COLUMN_MODULE_ID + ") REFERENCES " + ModuleTable.TABLE_NAME + "(" + ModuleTable.COLUMN_ID + ") ON UPDATE CASCADE ON DELETE CASCADE, "
                 + "FOREIGN KEY (" + ClassTable.COLUMN_SEMESTER_ID + ") REFERENCES " + SemesterTable.TABLE_NAME + "(" + SemesterTable.COLUMN_ID + ") ON UPDATE CASCADE ON DELETE CASCADE "

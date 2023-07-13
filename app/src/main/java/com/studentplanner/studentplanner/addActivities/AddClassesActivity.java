@@ -97,7 +97,7 @@ public class AddClassesActivity extends AppCompatActivity implements TimePickerD
                 txtClassTypeError.setError(null);
 
                 if (db.addClass(getClassDetails())){
-                    Helper.longToastMessage(this,"Class added");
+                    Helper.longToastMessage(this, getString(R.string.class_added));
                     setResult(RESULT_OK);
                     finish();
                 }

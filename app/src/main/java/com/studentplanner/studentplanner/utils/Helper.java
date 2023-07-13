@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.InputFilter;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -14,7 +13,6 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
-import com.studentplanner.studentplanner.fragments.SemesterFragment;
 import com.studentplanner.studentplanner.models.ModuleTeacher;
 import com.studentplanner.studentplanner.models.Teacher;
 
@@ -43,7 +41,6 @@ import java.util.stream.Collectors;
 
 import android.content.Intent;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
@@ -313,7 +310,7 @@ public final class Helper {
         if (moduleTeacherList.size() > 0) {
             ModuleTeacher model = moduleTeacherList.get(position);
 
-            for (int teacherId : model.getTeacherIDList()) {
+            for (int teacherId : model.teacherIDList()) {
                 Teacher teacher = db.getSelectedTeacher(teacherId);
                 teachers.append(teacher.getName()).append(", ");
             }
@@ -336,7 +333,7 @@ public final class Helper {
 
     public static boolean moduleIDExistsInModuleTeacher(List<ModuleTeacher> moduleTeacherList, int moduleID) {
         for (ModuleTeacher moduleTeacher : moduleTeacherList) {
-            if (moduleTeacher.getModuleID() == moduleID) {
+            if (moduleTeacher.moduleID() == moduleID) {
                 return true;
             }
         }

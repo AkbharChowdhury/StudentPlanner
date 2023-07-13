@@ -1,22 +1,17 @@
 package com.studentplanner.studentplanner.addActivities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
-import com.studentplanner.studentplanner.databinding.ActivityAddCourseworkBinding;
 import com.studentplanner.studentplanner.databinding.ActivityAddModuleTeacherCheckboxBinding;
-import com.studentplanner.studentplanner.fragments.ModuleTeacherFragment;
-import com.studentplanner.studentplanner.fragments.SemesterFragment;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.Teacher;
 import com.studentplanner.studentplanner.tables.ModuleTable;
@@ -111,7 +106,7 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
 
             List<Integer> teacherIDList = getSelectedTeacherIDList();
             if (teacherIDList.size() == 0) {
-                Helper.shortToastMessage(this, "Please select at least one teacher from the list");
+                Helper.shortToastMessage(this, getString(R.string.select_teacher));
 
             } else {
                 final String SELECTED_ID = ModuleTable.COLUMN_ID;

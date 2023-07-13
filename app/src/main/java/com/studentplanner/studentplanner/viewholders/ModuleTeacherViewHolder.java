@@ -1,6 +1,5 @@
 package com.studentplanner.studentplanner.viewholders;
 
-import android.content.Context;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -34,9 +33,9 @@ public class ModuleTeacherViewHolder extends RecyclerView.ViewHolder{
         db = DatabaseHelper.getInstance(binding.getRoot().getContext());
     }
     public void showDetails(ModuleTeacher model, int position){
-        Module module = db.getSelectedModule(model.getModuleID());
+        Module module = db.getSelectedModule(model.moduleID());
         String teachers = Helper.getModuleTeachersList(position, db);
-        tvModuleId.setText(String.valueOf(model.getModuleID()));
+        tvModuleId.setText(String.valueOf(model.moduleID()));
         tvModule.setText(module.getModuleDetails());
         tvTeachers.setText(teachers);
     }
