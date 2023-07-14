@@ -84,7 +84,6 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
             if (listView.isItemChecked(i)) {
                 selectedTeacherIds.add(teacherList.get(i).getUserID());
             }
-
         }
 
         return selectedTeacherIds;

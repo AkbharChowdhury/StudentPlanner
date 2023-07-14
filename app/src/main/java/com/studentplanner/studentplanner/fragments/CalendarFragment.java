@@ -67,12 +67,9 @@ public class CalendarFragment extends Fragment implements OnItemListener {
     public CalendarFragment() {
     }
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     private void initFragment() {
@@ -106,7 +103,7 @@ public class CalendarFragment extends Fragment implements OnItemListener {
     private void showCalendarEventData(){
         ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtils.getSelectedDate());
         EventAdapter eventAdapter = new EventAdapter(context, dailyEvents, startForResult);
-        eventListView.setAdapter(eventAdapter);
+        binding.eventListView.setAdapter(eventAdapter);
         getEventsFromDB();
 
     }
@@ -134,7 +131,6 @@ public class CalendarFragment extends Fragment implements OnItemListener {
 
 
     private void initWidgets() {
-
         calendarRecyclerView = binding.calendarRecyclerView;
         monthYearText = binding.monthYearTV;
         eventListView = binding.eventListView;
