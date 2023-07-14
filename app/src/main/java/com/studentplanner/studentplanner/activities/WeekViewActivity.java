@@ -65,6 +65,7 @@ public class WeekViewActivity extends AppCompatActivity implements OnItemListene
         binding = ActivityWeekViewBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         initWidgets();
+
         setWeekView();
     }
 

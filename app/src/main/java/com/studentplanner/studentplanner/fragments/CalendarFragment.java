@@ -57,7 +57,6 @@ public class CalendarFragment extends Fragment implements OnItemListener {
         if (result.getResultCode() == RESULT_OK) {
             Event.getEventsList().clear();
             showCalendarEventData();
-//            getEventsFromDB();
             setMonthView();
         }
 
@@ -95,27 +94,22 @@ public class CalendarFragment extends Fragment implements OnItemListener {
         eventData = new EventData(DatabaseHelper.getInstance(context));
 
         initWidgets();
+        buttons();
+        showCalendarEventData();
 
+        return binding.getRoot();
+    }
+    private void buttons(){
         binding.btNextMonthAction.setOnClickListener(v -> nextMonthAction());
         binding.btnPreviousMonthAction.setOnClickListener(v -> previousMonthAction());
         binding.btnTodayAction.setOnClickListener(v -> resetToCurrentDate());
 
-//        ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtils.getSelectedDate());
-//        EventAdapter eventAdapter = new EventAdapter(context, dailyEvents, startForResult);
-//        eventListView.setAdapter(eventAdapter);
-//        getEventsFromDB();
-//
-//        resetToCurrentDate();
-        showCalendarEventData();
-
-        return binding.getRoot();
     }
     private void showCalendarEventData(){
         ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtils.getSelectedDate());
         EventAdapter eventAdapter = new EventAdapter(context, dailyEvents, startForResult);
         eventListView.setAdapter(eventAdapter);
         getEventsFromDB();
-
         resetToCurrentDate();
     }
 
