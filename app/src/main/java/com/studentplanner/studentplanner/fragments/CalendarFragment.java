@@ -8,7 +8,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,7 +20,6 @@ import android.widget.TextView;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,6 +42,8 @@ import com.studentplanner.studentplanner.utils.Validation;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class CalendarFragment extends Fragment implements OnItemListener {
     private Activity activity;
@@ -53,11 +53,12 @@ public class CalendarFragment extends Fragment implements OnItemListener {
     private ListView eventListView;
     private FragmentCalendarBinding binding;
     private EventData eventData;
+    private final LocalDate CURRENT_DATE = LocalDate.now();
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
         if (result.getResultCode() == RESULT_OK) {
             Event.getEventsList().clear();
             showCalendarEventData();
-            setMonthView();
+            setCalendarDate(CalendarUtils.getSelectedDate());
         }
 
     });
@@ -66,11 +67,7 @@ public class CalendarFragment extends Fragment implements OnItemListener {
     public CalendarFragment() {
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
 
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -96,13 +93,14 @@ public class CalendarFragment extends Fragment implements OnItemListener {
         initWidgets();
         buttons();
         showCalendarEventData();
+        setCalendarDate(CURRENT_DATE);
 
         return binding.getRoot();
     }
     private void buttons(){
         binding.btNextMonthAction.setOnClickListener(v -> nextMonthAction());
         binding.btnPreviousMonthAction.setOnClickListener(v -> previousMonthAction());
-        binding.btnTodayAction.setOnClickListener(v -> resetToCurrentDate());
+        binding.btnTodayAction.setOnClickListener(v -> setCalendarDate(CURRENT_DATE));
 
     }
     private void showCalendarEventData(){
@@ -110,16 +108,12 @@ public class CalendarFragment extends Fragment implements OnItemListener {
         EventAdapter eventAdapter = new EventAdapter(context, dailyEvents, startForResult);
         eventListView.setAdapter(eventAdapter);
         getEventsFromDB();
-        resetToCurrentDate();
+
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
 
-    private void resetToCurrentDate() {
-        CalendarUtils.setSelectedDate(CalendarUtils.getCurrentDate());
+    private void setCalendarDate(LocalDate date) {
+        CalendarUtils.setSelectedDate(date);
         setMonthView();
     }
 

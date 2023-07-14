@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.adapters.CalendarAdapter;
+import com.studentplanner.studentplanner.adapters.EventAdapter;
 import com.studentplanner.studentplanner.addActivities.AddClassesActivity;
 import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
 import com.studentplanner.studentplanner.databinding.ActivityWeekViewBinding;
@@ -49,7 +50,8 @@ public class WeekViewActivity extends AppCompatActivity implements OnItemListene
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
         if (result.getResultCode() == RESULT_OK) {
             Event.getEventsList().clear();
-            getEventsFromDB();
+//            getEventsFromDB();
+            showCalendarEventData();
             setWeekView();
         }
 
@@ -65,7 +67,6 @@ public class WeekViewActivity extends AppCompatActivity implements OnItemListene
         binding = ActivityWeekViewBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         initWidgets();
-
         setWeekView();
     }
 
@@ -106,6 +107,18 @@ public class WeekViewActivity extends AppCompatActivity implements OnItemListene
         eventData.getCourseworkDetails();
         eventData.getClassDetails();
     }
+
+
+
+
+    private void showCalendarEventData(){
+        ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtils.getSelectedDate());
+        EventAdapter eventAdapter = new EventAdapter(getApplicationContext(), dailyEvents, startForResult);
+        eventListView.setAdapter(eventAdapter);
+        getEventsFromDB();
+    }
+
+
 
 
     public void todayAction(View view) {
