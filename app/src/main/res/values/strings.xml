@@ -181,9 +181,6 @@
         <item>Tutorial</item>
         <item>Other</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -212,7 +209,7 @@
     <string name="class_exists_error">This class already exists!\n please try choosing a different class type or choose another module</string>
     <string name="john_smith">John Smith</string>
     <string name="mobile_application_dev">Mobile Application Dev</string>
-    <string name="room1">Room1</string>
+    <string name="room1">Room123</string>
     <string name="my_tutorial">My tutorial</string>
     <string name="m_hike_app">M-Hike App</string>
     <string name="comp1424_mobile_app_dev">COMP1424: Mobile App Dev</string>
@@ -232,7 +229,7 @@
     <string name="delete_semester_title">Are you sure you want to delete this semester?</string>
     <string name="delete_semester">Semester Deleted</string>
     <string name="delete_coursework">Coursework Deleted</string>
-    <string name="delete_image_title">Are you sure you want to delete this this image?</string>
+    <string name="delete_image_title">Are you sure you want to delete this image?</string>
     <string name="teacher_updated">Teacher Updated</string>
     <string name="delete_teacher_message">Doing so will delete all associated modules taught by this teacher</string>
     <string name="delete_teacher_title">Are you sure you want to delete this teacher?</string>
@@ -243,7 +240,7 @@
     <string name="enter_email">Enter email</string>
     <string name="time_error">This time should be now or a future time!</string>
     <string name="date_error">this date should be today or a future date!</string>
-    <string name="module_exists">\"This module code already exists!\"</string>
+    <string name="module_exists">This module code already exists!</string>
     <string name="coursework_updated">Coursework Updated</string>
     <string name="class_added">Class added</string>
     <string name="select_teacher">Please select at least one teacher from the list</string>

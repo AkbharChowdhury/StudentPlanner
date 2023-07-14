@@ -7,7 +7,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,8 +33,8 @@ import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
 import com.studentplanner.studentplanner.databinding.FragmentCourseworkBinding;
 import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.models.SearchCoursework;
-import com.studentplanner.studentplanner.utils.Helper;
 import com.studentplanner.studentplanner.utils.EmptyData;
+import com.studentplanner.studentplanner.utils.Helper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -69,7 +68,11 @@ public class CourseworkFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (Helper.changeStatus) getCoursework();
+        if (Helper.changeStatus){
+            getCoursework();
+            Helper.changeStatus = false;
+
+        }
 
     }
 

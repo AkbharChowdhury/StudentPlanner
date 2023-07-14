@@ -53,11 +53,11 @@ public class CalendarFragment extends Fragment implements OnItemListener {
     private EventData eventData;
 
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-        if (result.getResultCode() == RESULT_OK) {
-            Event.getEventsList().clear();
-            getEventsFromDB();
-            setMonthView();
-        }
+//        if (result.getResultCode() == RESULT_OK) {
+//            Event.getEventsList().clear();
+//            getEventsFromDB();
+//            setMonthView();
+//        }
 
     });
 
@@ -65,6 +65,16 @@ public class CalendarFragment extends Fragment implements OnItemListener {
     public CalendarFragment() {
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+//        if (Helper.changeStatus){
+//            Event.getEventsList().clear();
+//            getEventsFromDB();
+//            setMonthView();
+//            Helper.changeStatus = false;
+//        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -98,6 +108,7 @@ public class CalendarFragment extends Fragment implements OnItemListener {
         eventListView.setAdapter(eventAdapter);
         getEventsFromDB();
         resetToCurrentDate();
+
         return binding.getRoot();
     }
 

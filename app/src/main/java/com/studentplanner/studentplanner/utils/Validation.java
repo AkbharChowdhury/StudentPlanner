@@ -108,8 +108,7 @@ public final class Validation {
         LocalDate date = LocalDate.parse(Helper.convertFUllDateToYYMMDD(Helper.trimStr(txtDeadline)));
         LocalTime time = LocalTime.parse(Helper.convertFormattedTimeToDBFormat(txtDeadlineTime.getText().toString()));
 
-        LocalDate today = LocalDate.now();
-        if (date.isEqual(today) && time.isBefore(LocalTime.now())){
+        if (date.isEqual(LocalDate.now()) && time.isBefore(LocalTime.now())){
             txtTimeError.setError(context.getString(R.string.time_error));
             return true;
 
