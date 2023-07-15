@@ -91,13 +91,13 @@ public class CalendarFragment extends Fragment implements OnItemListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        clearEventStatus();
         initFragment();
         binding = FragmentCalendarBinding.inflate(inflater, container, false);
         eventData = new EventData(DatabaseHelper.getInstance(context));
 
         initWidgets();
         buttons();
+        clearEventStatus();
         showCalendarEventData();
         setCalendarDate(CURRENT_DATE);
 

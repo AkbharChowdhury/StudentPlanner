@@ -50,7 +50,6 @@ public class WeekViewActivity extends AppCompatActivity implements OnItemListene
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
         if (result.getResultCode() == RESULT_OK) {
             Event.getEventsList().clear();
-//            getEventsFromDB();
             showCalendarEventData();
             setWeekView();
         }
@@ -113,8 +112,7 @@ public class WeekViewActivity extends AppCompatActivity implements OnItemListene
 
     private void showCalendarEventData(){
         ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtils.getSelectedDate());
-        EventAdapter eventAdapter = new EventAdapter(getApplicationContext(), dailyEvents, startForResult);
-        eventListView.setAdapter(eventAdapter);
+        eventListView.setAdapter(new EventAdapter(getApplicationContext(), dailyEvents, startForResult));
         getEventsFromDB();
     }
 
