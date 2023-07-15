@@ -367,7 +367,7 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
 
     private void openImageGallery() {
         Intent intent = new Intent();
-        intent.setType("image/*");
+        intent.setType(ImageHandler.IMAGE_TYPE);
         intent.setAction(Intent.ACTION_GET_CONTENT);
         intent = Intent.createChooser(intent, getString(R.string.select_image));
         imageActivityResultLauncher.launch(intent);

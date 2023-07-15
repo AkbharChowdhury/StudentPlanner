@@ -32,6 +32,7 @@ import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.databinding.ActivityAddCourseworkBinding;
 import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.models.CustomTimePicker;
+import com.studentplanner.studentplanner.models.ImageHandler;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.tables.CourseworkTable;
 import com.studentplanner.studentplanner.utils.BoundTimePickerDialog;
@@ -176,7 +177,7 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
 
     private void openImageGallery() {
         Intent intent = new Intent();
-        intent.setType("image/*");
+        intent.setType(ImageHandler.IMAGE_TYPE);
         intent.setAction(Intent.ACTION_GET_CONTENT);
         intent = Intent.createChooser(intent,getString(R.string.select_image));
         imageActivityResultLauncher.launch(intent);
