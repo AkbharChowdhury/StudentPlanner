@@ -62,8 +62,8 @@ public class LoginFragment extends Fragment {
         form = new Validation(getContext());
 
         txtPassword = binding.txtPassword;
-//        txtEmail.getEditText().setText("tom@gmail.com");
-//        txtPassword.getEditText().setText("password");
+        txtEmail.getEditText().setText("tom@gmail.com");
+        txtPassword.getEditText().setText("password");
 
         binding.btnRegisterLink.setOnClickListener(v -> Helper.goToActivity(getActivity(), RegisterActivity.class));
         lblLoginError = binding.lblLoginError;
