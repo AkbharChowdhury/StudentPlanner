@@ -53,6 +53,7 @@ public class CalendarFragment extends Fragment implements OnItemListener {
     private ListView eventListView;
     private FragmentCalendarBinding binding;
     private EventData eventData;
+    EventAdapter eventAdapter;
     private final LocalDate CURRENT_DATE = LocalDate.now();
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
         if (result.getResultCode() == RESULT_OK) {
@@ -80,9 +81,17 @@ public class CalendarFragment extends Fragment implements OnItemListener {
 
     }
 
+    private void clearEventStatus(){
+        if (!Event.getEventsList().isEmpty()){
+            Event.getEventsList().clear();
+        }
+
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Event.getEventsList().clear();
+
+        clearEventStatus();
         initFragment();
         binding = FragmentCalendarBinding.inflate(inflater, container, false);
         eventData = new EventData(DatabaseHelper.getInstance(context));
@@ -102,10 +111,8 @@ public class CalendarFragment extends Fragment implements OnItemListener {
     }
     private void showCalendarEventData(){
         ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtils.getSelectedDate());
-        EventAdapter eventAdapter = new EventAdapter(context, dailyEvents, startForResult);
-        binding.eventListView.setAdapter(eventAdapter);
+        eventListView.setAdapter(new EventAdapter(context, dailyEvents, startForResult));
         getEventsFromDB();
-
     }
 
 
