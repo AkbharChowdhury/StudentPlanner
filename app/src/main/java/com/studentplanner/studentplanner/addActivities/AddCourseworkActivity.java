@@ -141,6 +141,7 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
             if (db.addCoursework(getCourseworkDetails())) {
                 Helper.changeStatus = true;
                 Helper.longToastMessage(this, getString(R.string.coursework_added));
+                setResult(RESULT_OK);
                 finish();
             }
 
