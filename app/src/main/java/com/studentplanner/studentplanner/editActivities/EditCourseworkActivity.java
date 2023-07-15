@@ -21,6 +21,7 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TimePicker;
 
+import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -78,8 +79,7 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
     private Bitmap imageToStore;
     private boolean deleteImage = false;
 
-
-    private final ActivityResultLauncher<Intent> imageActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+    private void activityResult(ActivityResult result){
         if (result.getResultCode() == RESULT_OK) {
             if (result.getData() != null) {
                 try {
@@ -96,8 +96,9 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
             }
 
         }
+    }
 
-    });
+    private final ActivityResultLauncher<Intent> imageActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this::activityResult);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -42,8 +43,6 @@ import com.studentplanner.studentplanner.utils.Validation;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Locale;
 
 public class CalendarFragment extends Fragment implements OnItemListener {
     private Activity activity;
@@ -53,16 +52,18 @@ public class CalendarFragment extends Fragment implements OnItemListener {
     private ListView eventListView;
     private FragmentCalendarBinding binding;
     private EventData eventData;
-    EventAdapter eventAdapter;
     private final LocalDate CURRENT_DATE = LocalDate.now();
-    private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+
+
+
+    private void activityResult(ActivityResult result){
         if (result.getResultCode() == RESULT_OK) {
             Event.getEventsList().clear();
             showCalendarEventData();
             setCalendarDate(CalendarUtils.getSelectedDate());
         }
-    });
-
+    }
+    private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this::activityResult);
 
     public CalendarFragment() {
     }
