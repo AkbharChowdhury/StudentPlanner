@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.ImageDecoder;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -122,17 +121,8 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
         setTimePicker();
 
 
-        binding.btnEditCoursework.setOnClickListener(v -> {
-
-            if (form.validateEditCourseworkForm(getCourseworkErrorFields())) {
-                if (db.updateCoursework(getCourseworkDetails(), deleteImage)) {
-                    Helper.longToastMessage(this, getString(R.string.coursework_updated));
-                    setResult(RESULT_OK);
-                    finish();
-                }
-            }
-        });
-        binding.btnRemovePicture.setOnClickListener(v -> handleRemoveClick());
+        binding.btnEditCoursework.setOnClickListener(v -> btnEditCoursework());
+        binding.btnRemovePicture.setOnClickListener(v -> btnRemovePicture());
         courseworkImage.setOnClickListener(v -> openFilesApp());
         binding.titleTextInputEditText.setOnKeyListener((v, keyCode, event) -> {
             Helper.characterCounter(txtTitle, getApplicationContext());
@@ -140,6 +130,15 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
         });
 
 
+    }
+    private void btnEditCoursework(){
+        if (form.validateEditCourseworkForm(getCourseworkErrorFields())) {
+            if (db.updateCoursework(getCourseworkDetails(), deleteImage)) {
+                Helper.longToastMessage(this, getString(R.string.coursework_updated));
+                setResult(RESULT_OK);
+                finish();
+            }
+        }
     }
 
     private Coursework getCourseworkErrorFields() {
@@ -320,7 +319,7 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
     }
 
 
-    private void handleRemoveClick() {
+    private void btnRemovePicture() {
         new AlertDialog.Builder(this)
                 .setTitle(getString(R.string.delete_image_title))
                 .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
