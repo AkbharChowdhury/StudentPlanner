@@ -57,11 +57,13 @@ public class CalendarFragment extends Fragment implements OnItemListener {
     private final LocalDate CURRENT_DATE = LocalDate.now();
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
         if (result.getResultCode() == RESULT_OK) {
-            Event.getEventsList().clear();
-            showCalendarEventData();
-            setCalendarDate(CalendarUtils.getSelectedDate());
+//            Event.getEventsList().clear();
+//            showCalendarEventData();
+//            setCalendarDate(CalendarUtils.getSelectedDate());
         }
-
+        Event.getEventsList().clear();
+        showCalendarEventData();
+        setCalendarDate(CalendarUtils.getSelectedDate());
     });
 
 
@@ -206,6 +208,4 @@ public class CalendarFragment extends Fragment implements OnItemListener {
         super.onDestroyView();
         binding = null;
     }
-
-
 }
