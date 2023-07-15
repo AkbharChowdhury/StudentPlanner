@@ -55,14 +55,14 @@ public class CalendarFragment extends Fragment implements OnItemListener {
     private final LocalDate CURRENT_DATE = LocalDate.now();
 
 
-
-    private void activityResult(ActivityResult result){
+    private void activityResult(ActivityResult result) {
         if (result.getResultCode() == RESULT_OK) {
             Event.getEventsList().clear();
             showCalendarEventData();
             setCalendarDate(CalendarUtils.getSelectedDate());
         }
     }
+
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this::activityResult);
 
     public CalendarFragment() {

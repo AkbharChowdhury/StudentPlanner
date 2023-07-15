@@ -1002,6 +1002,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                              student_id = ?
                              AND details LIKE ?
                             """;
+
         try (Cursor cursor = db.rawQuery(SQL, new String[]{
                 String.valueOf(studentID),
                 MessageFormat.format("%{0}%", module)

@@ -12,7 +12,26 @@ public abstract class User {
     private TextInputLayout txtFirstName;
     private TextInputLayout txtLastName;
     private TextInputLayout txtEmail;
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    private TextInputLayout txtPassword;
+
+    public TextInputLayout getTxtPassword() {
+        return txtPassword;
+    }
+
+    public void setTxtPassword(TextInputLayout txtPassword) {
+        this.txtPassword = txtPassword;
+    }
+
     public User(){}
+
+    public void setTxtEmail(TextInputLayout txtEmail) {
+        this.txtEmail = txtEmail;
+    }
 
     public User(TextInputLayout txtFirstName, TextInputLayout txLastName, TextInputLayout txtEmail) {
         this.txtFirstName = txtFirstName;

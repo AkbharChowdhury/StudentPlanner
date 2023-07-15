@@ -209,6 +209,15 @@ public final class Validation {
 
     }
 
+    public boolean validateLoginForm(Student student) {
+        List<Boolean> errors = new ArrayList<>();
+        setAdditionalCheck = false;
+        errors.add(isValidEmail(student.getTxtEmail()));
+//        errors.add(isValidPassword(student.getTxtPassword()));
+        return !errors.contains(false);
+
+    }
+
     private boolean isPassword8Chars(TextInputLayout textField) {
 
         String password = Helper.trimStr(textField);

@@ -11,6 +11,4 @@ public final class SemesterTable {
     public static final String COLUMN_START_DATE = "start_date";
     public static final String COLUMN_END_DATE = "end_date";
 
-
-
 }
