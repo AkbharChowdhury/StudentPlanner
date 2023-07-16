@@ -29,7 +29,9 @@ import com.studentplanner.studentplanner.addActivities.AddTeacherActivity;
 import com.studentplanner.studentplanner.databinding.FragmentTeacherBinding;
 import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.models.Search;
+import com.studentplanner.studentplanner.models.Semester;
 import com.studentplanner.studentplanner.models.Teacher;
+import com.studentplanner.studentplanner.models.User;
 import com.studentplanner.studentplanner.utils.EmptyData;
 import com.studentplanner.studentplanner.utils.Helper;
 
@@ -84,8 +86,8 @@ public class TeacherFragment extends Fragment {
     }
 
     private void getTeachers() {
-        list = db.getTeachers();
-        Comparator<Teacher> sort = Comparator.comparing(t -> t.getLastname());
+        list = getList();
+        Comparator<Teacher> sort = Comparator.comparing(User::getLastname);
         list.sort(sort);
         buildRecyclerView();
     }
@@ -141,10 +143,12 @@ public class TeacherFragment extends Fragment {
 
 
 
-
+    private List<Teacher> getList(){
+        return Collections.unmodifiableList(db.getTeachers());
+    }
     private void filter(String text) {
 
-        List<Teacher> filteredList = (List<Teacher>) Search.textSearch(ALL_TEACHERS, text);
+        List<Teacher> filteredList = (List<Teacher>) Search.textSearch(getList(), text);
 
         if (filteredList.isEmpty()) {
             adapter.filterList(filteredList);

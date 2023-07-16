@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,12 +27,12 @@ import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.adapters.ModuleAdapter;
 import com.studentplanner.studentplanner.addActivities.AddModuleActivity;
 import com.studentplanner.studentplanner.databinding.FragmentModuleBinding;
-
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.Search;
 import com.studentplanner.studentplanner.utils.EmptyData;
 import com.studentplanner.studentplanner.utils.Helper;
 
+import java.util.Collections;
 import java.util.List;
 
 
@@ -46,7 +45,6 @@ public class ModuleFragment extends Fragment {
     private List<Module> list;
     private FragmentModuleBinding binding;
     private DatabaseHelper db;
-    private List<Module> ALL_MODULES;
     private EmptyData emptyData;
 
     private void activityResult(ActivityResult result){
@@ -74,7 +72,6 @@ public class ModuleFragment extends Fragment {
         binding.fabAdd.setOnClickListener(v -> startForResult.launch(new Intent(getActivity(), AddModuleActivity.class)));
         recyclerView = binding.recyclerView;
         db = DatabaseHelper.getInstance(context);
-        ALL_MODULES = db.getModules();
 
         emptyData = new EmptyData(binding.emptyImage, binding.emptyText);
         Helper.getIntentMessage(context, activity.getIntent().getExtras());
@@ -85,7 +82,7 @@ public class ModuleFragment extends Fragment {
 
 
     private void getModule() {
-        list = db.getModules();
+        list = getList();
         buildRecyclerView();
     }
 
@@ -141,9 +138,14 @@ public class ModuleFragment extends Fragment {
     }
 
 
+
+    private List<Module> getList(){
+        return Collections.unmodifiableList(db.getModules());
+    }
+
     private void filter(String text) {
 
-        List<Module> filteredList = (List<Module>) Search.textSearch(ALL_MODULES, text);
+        List<Module> filteredList = (List<Module>) Search.textSearch(getList(), text);
 
         if (filteredList.isEmpty()) {
             adapter.filterList(filteredList);

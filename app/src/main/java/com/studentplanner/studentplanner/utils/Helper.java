@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
+import com.studentplanner.studentplanner.interfaces.Searchable;
 import com.studentplanner.studentplanner.models.ModuleTeacher;
 import com.studentplanner.studentplanner.models.Teacher;
 
@@ -33,6 +34,7 @@ import java.time.temporal.ChronoUnit;
 import java.time.temporal.ValueRange;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -54,6 +56,10 @@ public final class Helper {
 
 
     private Helper() {
+    }
+    public static List<? extends Searchable> freezeList(List<? extends Searchable> data){
+        return Collections.unmodifiableList(data);
+
     }
 
 

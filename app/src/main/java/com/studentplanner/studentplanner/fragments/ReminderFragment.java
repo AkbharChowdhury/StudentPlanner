@@ -26,6 +26,7 @@ import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.adapters.CourseworkAdapter;
 import com.studentplanner.studentplanner.databinding.FragmentReminderBinding;
+import com.studentplanner.studentplanner.interfaces.Searchable;
 import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.models.Search;
 import com.studentplanner.studentplanner.utils.EmptyData;
@@ -45,7 +46,6 @@ public class ReminderFragment extends Fragment {
     private List<Coursework> list;
     private FragmentReminderBinding binding;
     private DatabaseHelper db;
-    private List<Coursework> ALL_COURSEWORK_REMINDERS;
     private void activityResult(ActivityResult result){
         if (result.getResultCode() == RESULT_OK){
             getReminders();
@@ -78,10 +78,14 @@ public class ReminderFragment extends Fragment {
         return binding.getRoot();
     }
     private void getReminders(){
-        list = db.getUpComingCourseworkByMonth();
-        ALL_COURSEWORK_REMINDERS = Collections.unmodifiableList(db.getUpComingCourseworkByMonth());
+        list = getList();
         buildRecyclerView();
     }
+    private List<Coursework> getList(){
+        return Collections.unmodifiableList(db.getUpComingCourseworkByMonth());
+    }
+
+
 
     private void initFragment() {
         context = getContext();
@@ -134,7 +138,7 @@ public class ReminderFragment extends Fragment {
 
     private void filter(String text) {
 
-        List<Coursework> filteredList = (List<Coursework>) Search.textSearch(ALL_COURSEWORK_REMINDERS, text);
+        List<Coursework> filteredList = (List<Coursework>) Search.textSearch(getList(), text);
         if (filteredList.isEmpty()) {
             adapter.filterList(filteredList);
             Helper.shortToastMessage(context, context.getString(R.string.no_data_found));

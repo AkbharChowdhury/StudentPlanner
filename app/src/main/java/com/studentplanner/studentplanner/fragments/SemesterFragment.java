@@ -29,7 +29,6 @@ import com.studentplanner.studentplanner.addActivities.AddSemesterActivity;
 import com.studentplanner.studentplanner.databinding.FragmentSemesterBinding;
 import com.studentplanner.studentplanner.models.Search;
 import com.studentplanner.studentplanner.models.Semester;
-import com.studentplanner.studentplanner.models.Teacher;
 import com.studentplanner.studentplanner.utils.EmptyData;
 import com.studentplanner.studentplanner.utils.Helper;
 
@@ -44,7 +43,6 @@ public class SemesterFragment extends Fragment {
     private RecyclerView recyclerView;
     private SemesterAdapter adapter;
     private List<Semester> list;
-    private List<Semester> ALL_SEMESTERS;
     private EmptyData emptyData;
 
     private FragmentSemesterBinding binding;
@@ -55,7 +53,9 @@ public class SemesterFragment extends Fragment {
         }
     }
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this::activityResult);
-
+    private List<Semester> getList(){
+        return Collections.unmodifiableList(db.getSemester());
+    }
 
     public SemesterFragment() {
 
@@ -75,7 +75,6 @@ public class SemesterFragment extends Fragment {
 
         emptyData = new EmptyData(binding.emptyImage, binding.emptyText);
         db = DatabaseHelper.getInstance(context);
-        ALL_SEMESTERS  = Collections.unmodifiableList(db.getSemester());
 
         Helper.getIntentMessage(context, activity.getIntent().getExtras());
         getSemester();
@@ -91,7 +90,7 @@ public class SemesterFragment extends Fragment {
 
     }
     private void getSemester() {
-        list = db.getSemester();
+        list = getList();
         buildRecyclerView();
     }
 
@@ -146,7 +145,7 @@ public class SemesterFragment extends Fragment {
 
     private void filter(String text) {
 
-        List<Semester> filteredList = (List<Semester>) Search.textSearch(ALL_SEMESTERS, text);
+        List<Semester> filteredList = (List<Semester>) Search.textSearch(getList(), text);
 
         if (filteredList.isEmpty()) {
             adapter.filterList(filteredList);

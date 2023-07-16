@@ -33,6 +33,7 @@ import com.studentplanner.studentplanner.utils.Helper;
 
 import org.apache.commons.text.WordUtils;
 
+import java.util.Collections;
 import java.util.List;
 
 
@@ -87,6 +88,9 @@ public class ModuleTeacherFragment extends Fragment {
     private void getModuleTeacher() {
         list = db.getModuleTeachers();
         buildRecyclerView();
+    }
+    private List<ModuleTeacher> getList(){
+        return Collections.unmodifiableList(db.getModuleTeachers());
     }
 
 
