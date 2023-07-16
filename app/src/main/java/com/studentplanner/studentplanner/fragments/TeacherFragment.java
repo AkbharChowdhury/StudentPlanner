@@ -29,9 +29,7 @@ import com.studentplanner.studentplanner.addActivities.AddTeacherActivity;
 import com.studentplanner.studentplanner.databinding.FragmentTeacherBinding;
 import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.models.Search;
-import com.studentplanner.studentplanner.models.Semester;
 import com.studentplanner.studentplanner.models.Teacher;
-import com.studentplanner.studentplanner.models.User;
 import com.studentplanner.studentplanner.utils.EmptyData;
 import com.studentplanner.studentplanner.utils.Helper;
 
@@ -51,7 +49,6 @@ public class TeacherFragment extends Fragment {
     private List<Teacher> list;
     private FragmentTeacherBinding binding;
     private DatabaseHelper db;
-    private List<Teacher> ALL_TEACHERS;
     private void activityResult(ActivityResult result){
         if (result.getResultCode() == RESULT_OK){
             getTeachers();
@@ -79,15 +76,14 @@ public class TeacherFragment extends Fragment {
         emptyData = new EmptyData(binding.emptyImage, binding.emptyText);
 
         db = DatabaseHelper.getInstance(context);
-        ALL_TEACHERS = Collections.unmodifiableList(db.getTeachers());
         getTeachers();
 
         return binding.getRoot();
     }
 
     private void getTeachers() {
-        list = getList();
-        Comparator<Teacher> sort = Comparator.comparing(User::getLastname);
+        list = db.getTeachers();
+        Comparator<Teacher> sort = Comparator.comparing(t -> t.getLastname());
         list.sort(sort);
         buildRecyclerView();
     }
@@ -143,12 +139,10 @@ public class TeacherFragment extends Fragment {
 
 
 
-    private List<Teacher> getList(){
-        return Collections.unmodifiableList(db.getTeachers());
-    }
+
     private void filter(String text) {
 
-        List<Teacher> filteredList = (List<Teacher>) Search.textSearch(getList(), text);
+        List<Teacher> filteredList = (List<Teacher>) Search.textSearch(db.getTeachers(), text);
 
         if (filteredList.isEmpty()) {
             adapter.filterList(filteredList);
