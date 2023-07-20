@@ -100,12 +100,13 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
 
 
     private void showDescription(final String description) {
-        if (description.length() == 0) {
+        if (isBlank(description)) {
             tvCourseworkDescription.setVisibility(View.GONE);
-        } else {
-            tvCourseworkDescription.setVisibility(View.VISIBLE);
-            tvCourseworkDescription.setText(description);
+            return;
         }
+        tvCourseworkDescription.setVisibility(View.VISIBLE);
+        tvCourseworkDescription.setText(description);
+
     }
 
     private String showDeadlineDetails(Coursework coursework) {
@@ -113,6 +114,11 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
                 Helper.formatDate(coursework.getDeadline()),
                 Helper.formatTime(coursework.getDeadlineTime())
         );
+
+    }
+
+    private boolean isBlank(String str){
+        return str == null || str.isBlank();
 
     }
 }

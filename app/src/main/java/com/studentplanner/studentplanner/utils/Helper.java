@@ -57,10 +57,6 @@ public final class Helper {
 
     private Helper() {
     }
-    public static List<? extends Searchable> freezeList(List<? extends Searchable> data){
-        return Collections.unmodifiableList(data);
-
-    }
 
 
     public static void goToActivity(Activity currentActivity, Class<? extends Activity> activityPageToOpen) {
@@ -109,12 +105,6 @@ public final class Helper {
     }
 
 
-//    public static void setRedirectMessage(Activity currentActivity, Class<? extends Activity> activityPageToOpen, String message) {
-//        Intent intent = new Intent(currentActivity, activityPageToOpen);
-//        intent.putExtra(INTENT_MESSAGE, message);
-//        currentActivity.startActivity(intent);
-//    }
-
 
 
     public static void getIntentMessage(Context context, Bundle extras) {
@@ -131,10 +121,6 @@ public final class Helper {
         return DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).format(LocalDate.parse(date));
     }
 
-
-    public static String removeFirstAndLastCharacter(String str) {
-        return str.substring(1, str.length() - 1);
-    }
 
     public static String convertFUllDateToYYMMDD(String dateStr) {
         try {
