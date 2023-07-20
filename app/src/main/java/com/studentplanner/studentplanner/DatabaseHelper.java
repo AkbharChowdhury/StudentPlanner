@@ -39,10 +39,26 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "StudentPlanner.db";
     private static final int DATABASE_VERSION = 1;
 
-    private SQLiteDatabase db;
+    private final SQLiteDatabase db;
     @SuppressLint("StaticFieldLeak")
     private static DatabaseHelper instance;
     private final Context context;
+    private static final String ERROR_TAG = "ERROR";
+
+    private String getClassInstance() {
+        return DatabaseHelper.getInstance(context).getMethodName();
+    }
+
+    private String getMethodName() {
+        return Thread.currentThread().getStackTrace()[3].getMethodName();
+
+
+    }
+
+    private String getErrorMessage(Exception e) {
+        return MessageFormat.format("There was a problem in method: {0}\nError: \n{1}", getClassInstance(), e.getMessage());
+
+    }
 
     public static synchronized DatabaseHelper getInstance(Context context) {
         if (instance == null) {
@@ -212,7 +228,8 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
             int cursorCount = cursor.getCount();
             return cursorCount > 0;
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.d(ERROR_TAG, getErrorMessage(e));
+            Log.d(ERROR_TAG, getErrorMessage(e));
             return false;
         }
 
@@ -240,7 +257,8 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
             return cursor.getCount() > 0;
 
         } catch (Exception e) {
-            e.printStackTrace();
+            String s = Thread.currentThread().getStackTrace()[3].getMethodName();
+            Log.d(ERROR_TAG, getErrorMessage(e));
             return false;
 
         }
@@ -258,7 +276,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         try (Cursor cursor = db.query(StudentTable.TABLE_NAME, columns, selection, selectionArgs, null, null, null)) {
             return cursor.getCount() > 0;
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.d(ERROR_TAG, getErrorMessage(e));
             return false;
 
         }
@@ -279,7 +297,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
             return cursor.getCount() > 0;
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.d(ERROR_TAG, getErrorMessage(e));
             return false;
 
         }
@@ -293,17 +311,17 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
 
         try (Cursor cursor = db.rawQuery("""
-                                            SELECT
-                                              COUNT(*) class_exists
-                                            
-                                            FROM classes c
-                                            JOIN modules m
-                                              ON m.module_id = c.module_id
-                                            WHERE m.student_id = ?
-                                            AND c.module_id = ?
-                                            AND semester_id = ?
-                                            AND type = ?
-                                            """, new String[]{
+                SELECT
+                  COUNT(*) class_exists
+                                                            
+                FROM classes c
+                JOIN modules m
+                  ON m.module_id = c.module_id
+                WHERE m.student_id = ?
+                AND c.module_id = ?
+                AND semester_id = ?
+                AND type = ?
+                """, new String[]{
                 String.valueOf(studentID),
                 String.valueOf(moduleID),
                 String.valueOf(semesterID),
@@ -317,7 +335,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
             }
 
         } catch (Exception e) {
-            Log.d("ERROR", "There was an error finding if the class exists");
+            Log.d(ERROR_TAG, getErrorMessage(e));
         }
         return false;
 
@@ -344,7 +362,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
             return cursor.getCount() > 0;
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.d(ERROR_TAG, getErrorMessage(e));
             return false;
 
         }
@@ -365,7 +383,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.d(ERROR_TAG, getErrorMessage(e));
             return studentID;
 
         }
@@ -388,7 +406,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.d(ERROR_TAG, getErrorMessage(e));
             return email;
 
         }
@@ -416,7 +434,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.d(ERROR_TAG, getErrorMessage(e));
             return student;
 
         }
@@ -479,7 +497,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(CourseworkTable.COLUMN_DEADLINE, coursework.getDeadline());
         cv.put(CourseworkTable.COLUMN_DEADLINE_TIME, coursework.getDeadlineTime());
 
-        if (coursework.getImage()!=null){
+        if (coursework.getImage() != null) {
             cv.put(CourseworkTable.COLUMN_IMAGE, ImageHandler.getBitmapAsByteArray(coursework.getImage()));
 
         }
@@ -579,7 +597,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 }
             }
         } catch (Exception e) {
-            Log.d("ERROR", "There was an error fetching modules");
+            Log.d(ERROR_TAG, getErrorMessage(e));
         }
         return modules;
     }
@@ -598,7 +616,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 }
             }
         } catch (Exception e) {
-            Log.d("ERROR", "There was an error fetching modules");
+            Log.d(ERROR_TAG, getErrorMessage(e));
         }
         return teacherIds;
     }
@@ -624,7 +642,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 }
             }
         } catch (Exception e) {
-            Log.d("ERROR", "There was an error fetching modules");
+            Log.d(ERROR_TAG, getErrorMessage(e));
         }
         return teachers;
     }
@@ -636,13 +654,13 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         List<Classes> classesList = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
         final String SQL = """
-                            SELECT
-                              c.*
-                            FROM classes c
-                            JOIN modules m
-                              ON m.module_id = c.module_id
-                            WHERE m.student_id = ?
-                            """;
+                SELECT
+                  c.*
+                FROM classes c
+                JOIN modules m
+                  ON m.module_id = c.module_id
+                WHERE m.student_id = ?
+                """;
         try (Cursor cursor = db.rawQuery(SQL, new String[]{String.valueOf(studentID)});) {
             if (!isCursorEmpty(cursor)) {
                 while (cursor.moveToNext()) {
@@ -663,7 +681,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 }
             }
         } catch (Exception e) {
-            Log.d("ERROR", "There was an error fetching classes");
+            Log.d(ERROR_TAG, getErrorMessage(e));
         }
         return classesList;
     }
@@ -687,7 +705,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 }
             }
         } catch (Exception e) {
-            Log.d("ERROR", "There was an error fetching module classes");
+            Log.d(ERROR_TAG, getErrorMessage(e));
         }
         return list;
     }
@@ -705,16 +723,16 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
 
         final String SQL = """
-                        SELECT
-                          c.*,
-                          m.module_code,
-                          m.module_name,
-                          m.student_id
-                        FROM coursework c
-                        JOIN modules m
-                          ON m.module_id = c.module_id
-                        WHERE student_id = ?
-                        """;
+                SELECT
+                  c.*,
+                  m.module_code,
+                  m.module_name,
+                  m.student_id
+                FROM coursework c
+                JOIN modules m
+                  ON m.module_id = c.module_id
+                WHERE student_id = ?
+                """;
 
         try (Cursor cursor = db.rawQuery(SQL, new String[]{String.valueOf(studentID)})) {
             if (!isCursorEmpty(cursor)) {
@@ -737,7 +755,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
             }
         } catch (Exception e) {
-            Log.d("ERROR", "There was an error fetching coursework");
+            Log.d(ERROR_TAG, getErrorMessage(e));
         }
         return courseworkList;
     }
@@ -748,18 +766,18 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         List<Coursework> courseworkList = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
         final String SQL = """
-                        SELECT c.*,
-                               m.module_code,
-                               m.module_name,
-                               m.student_id
-                        FROM coursework c
-                            JOIN modules m
-                                ON m.module_id = c.module_id
-                        WHERE student_id = ?
-                              AND c.deadline
-                              BETWEEN DATE('now', 'start of month') AND DATE('now', 'start of month', '+1 month', '-1 day')
-                        ORDER by c.deadline DESC
-                        """;
+                SELECT c.*,
+                       m.module_code,
+                       m.module_name,
+                       m.student_id
+                FROM coursework c
+                    JOIN modules m
+                        ON m.module_id = c.module_id
+                WHERE student_id = ?
+                      AND c.deadline
+                      BETWEEN DATE('now', 'start of month') AND DATE('now', 'start of month', '+1 month', '-1 day')
+                ORDER by c.deadline DESC
+                """;
         try (Cursor cursor = db.rawQuery(SQL, new String[]{String.valueOf(studentID)});) {
             if (!isCursorEmpty(cursor)) {
                 while (cursor.moveToNext()) {
@@ -775,8 +793,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                     );
 
 
-
-
                     coursework.setCompleted(cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_COMPLETED)).equalsIgnoreCase("Yes"));
                     byte[] image = cursor.getBlob(cursor.getColumnIndex(CourseworkTable.COLUMN_IMAGE));
                     coursework.setImage(image);
@@ -787,7 +803,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
             }
         } catch (Exception e) {
-            Log.d("ERROR", "There was an error fetching modules");
+            Log.d(ERROR_TAG, getErrorMessage(e));
         }
         return courseworkList;
     }
@@ -799,15 +815,15 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         List<ModuleTeacher> list = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
         final String SQL = """
-                            SELECT
-                              mt.module_id,
-                              group_concat(mt.teacher_id) teacher_id_list
-                            FROM module_teacher mt
-                            JOIN modules m
-                              ON m.module_id = mt.module_id
-                            WHERE student_id = ?
-                            GROUP BY mt.module_id
-                            """;
+                SELECT
+                  mt.module_id,
+                  group_concat(mt.teacher_id) teacher_id_list
+                FROM module_teacher mt
+                JOIN modules m
+                  ON m.module_id = mt.module_id
+                WHERE student_id = ?
+                GROUP BY mt.module_id
+                """;
         try (Cursor cursor = db.rawQuery(SQL, new String[]{String.valueOf(studentID)});) {
             if (!isCursorEmpty(cursor)) {
 
@@ -822,7 +838,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
             }
         } catch (Exception e) {
-            Log.d("ERROR", "There was an error fetching modules");
+            Log.d(ERROR_TAG, getErrorMessage(e));
         }
         return list;
     }
@@ -832,14 +848,14 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         List<String> list = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
         final String SQL = """
-                        SELECT
-                          t.firstname,
-                          t.lastname
-                        FROM module_teacher mt
-                        JOIN teachers t
-                          ON t.teacher_id = mt.teacher_id
-                        WHERE module_id = ?
-                        """;
+                SELECT
+                  t.firstname,
+                  t.lastname
+                FROM module_teacher mt
+                JOIN teachers t
+                  ON t.teacher_id = mt.teacher_id
+                WHERE module_id = ?
+                """;
         try (Cursor cursor = db.rawQuery(SQL, new String[]{String.valueOf(module)});) {
             if (!isCursorEmpty(cursor)) {
 
@@ -853,7 +869,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
             }
         } catch (Exception e) {
-            Log.d("ERROR", "There was an error fetching modules");
+            Log.d(ERROR_TAG, getErrorMessage(e));
         }
         return list;
     }
@@ -881,11 +897,11 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 coursework.setImage(cursor.getBlob(cursor.getColumnIndex(CourseworkTable.COLUMN_IMAGE)));
 
                 coursework.setCompleted(cursor.getString(
-                        cursor.getColumnIndex(CourseworkTable.COLUMN_COMPLETED))
+                                cursor.getColumnIndex(CourseworkTable.COLUMN_COMPLETED))
                         .equalsIgnoreCase("Yes"));
             }
         } catch (Exception e) {
-            Log.d("ERROR", "There was an error fetching modules");
+            Log.d(ERROR_TAG, getErrorMessage(e));
             return null;
         }
         return coursework;
@@ -913,7 +929,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 );
             }
         } catch (Exception e) {
-            Log.d("ERROR", "There was an error fetching modules");
+            Log.d(ERROR_TAG, getErrorMessage(e));
             return null;
         }
         return null;
@@ -956,7 +972,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
             }
 
         } catch (Exception e) {
-            Log.d("ERROR", "There was an error fetching modules");
+            Log.d(ERROR_TAG, getErrorMessage(e));
 
         }
         return semesterList;
@@ -978,7 +994,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                         cursor.getString(cursor.getColumnIndex(ModuleTable.COLUMN_MODULE_NAME)));
             }
         } catch (Exception e) {
-            Log.d("ERROR", "There was an error fetching modules");
+            Log.d(ERROR_TAG, getErrorMessage(e));
             return null;
 
         }
@@ -992,16 +1008,16 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         List<Integer> list = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
         final String SQL = """
-                           SELECT
-                             DISTINCT mt.module_id,
-                             m.module_code || ' ' || m.module_name AS details
-                           FROM
-                             module_teacher mt
-                             JOIN modules m ON m.module_id = mt.module_id
-                           WHERE
-                             student_id = ?
-                             AND details LIKE ?
-                            """;
+                SELECT
+                  DISTINCT mt.module_id,
+                  m.module_code || ' ' || m.module_name AS details
+                FROM
+                  module_teacher mt
+                  JOIN modules m ON m.module_id = mt.module_id
+                WHERE
+                  student_id = ?
+                  AND details LIKE ?
+                 """;
 
         try (Cursor cursor = db.rawQuery(SQL, new String[]{
                 String.valueOf(studentID),
@@ -1016,7 +1032,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
             }
 
         } catch (Exception e) {
-            Log.d("ERROR", "There was an error fetching modules");
+            Log.d(ERROR_TAG, getErrorMessage(e));
         }
         return list;
     }
@@ -1039,7 +1055,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                         cursor.getString(cursor.getColumnIndex(TeacherTable.COLUMN_EMAIL)));
             }
         } catch (Exception e) {
-            Log.d("ERROR", "There was an error fetching teachers to modules");
+            Log.d(ERROR_TAG, getErrorMessage(e));
             return null;
 
         }
@@ -1063,7 +1079,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 );
             }
         } catch (Exception e) {
-            Log.d("ERROR", "There was an error fetching Semesters");
+            Log.d(ERROR_TAG, getErrorMessage(e));
             return null;
 
         }
@@ -1123,12 +1139,13 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(CourseworkTable.COLUMN_DEADLINE, coursework.getDeadline());
         cv.put(CourseworkTable.COLUMN_DEADLINE_TIME, coursework.getDeadlineTime());
         cv.put(CourseworkTable.COLUMN_COMPLETED, coursework.isCompleted() ? "Yes" : "No");
+//        deleteImage ? cv.putNull(CourseworkTable.COLUMN_IMAGE): cv.put(CourseworkTable.COLUMN_IMAGE, ImageHandler.getBitmapAsByteArray(coursework.getImage()));
 
-        if (deleteImage){
+        if (deleteImage) {
             cv.putNull(CourseworkTable.COLUMN_IMAGE);
 
         } else {
-            if (coursework.getImage()!=null){
+            if (coursework.getImage() != null) {
                 cv.put(CourseworkTable.COLUMN_IMAGE, ImageHandler.getBitmapAsByteArray(coursework.getImage()));
             }
 
@@ -1159,21 +1176,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean deleteAllModules() {
-        SQLiteDatabase db = getWritableDatabase();
-        int studentID = AccountPreferences.getStudentID(context);
-        long result = db.delete(ModuleTable.TABLE_NAME, ModuleTable.COLUMN_STUDENT_ID + "=?", new String[]{String.valueOf(studentID)});
-        return result != -1;
-
-    }
-
-    public boolean deleteAllTeachers() {
-        SQLiteDatabase db = getWritableDatabase();
-        int studentID = AccountPreferences.getStudentID(context);
-        long result = db.delete(TeacherTable.TABLE_NAME, TeacherTable.COLUMN_STUDENT_ID + "=?", new String[]{String.valueOf(studentID)});
-        return result != -1;
-
-    }
     public boolean deleteRecord(String table, String idField, int id) {
         String whereClause = idField + "=?";
         String[] whereArgs = new String[]{String.valueOf(id)};
@@ -1186,16 +1188,16 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         int count = 0;
         final String SQL = """
-                           SELECT
-                             COUNT (deadline)
-                           FROM
-                             coursework c
-                           JOIN modules m ON m.module_id = c.module_id
-                           
-                           WHERE
-                             student_id = ?
-                           AND deadline = ?
-                            """;
+                SELECT
+                  COUNT (deadline)
+                FROM
+                  coursework c
+                JOIN modules m ON m.module_id = c.module_id
+                                           
+                WHERE
+                  student_id = ?
+                AND deadline = ?
+                 """;
 
         try (Cursor cursor = db.rawQuery(
                 SQL,
@@ -1208,10 +1210,10 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 cursor.moveToFirst();
                 count = cursor.getInt(0);
             }
-        } catch (Exception ex) {
+        } catch (Exception e) {
 
-           final String error =  MessageFormat.format("Error getting coursework count by date {0}", ex.getMessage());
-            Log.d("error", error);
+            Log.d(ERROR_TAG, getErrorMessage(e));
+
         }
         return count;
 

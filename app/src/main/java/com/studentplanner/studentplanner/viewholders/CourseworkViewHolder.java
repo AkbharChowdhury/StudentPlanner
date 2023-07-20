@@ -103,6 +103,7 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
         if (description.length() == 0){
             tvCourseworkDescription.setVisibility(View.GONE);
         } else {
+            tvCourseworkDescription.setVisibility(View.VISIBLE);
             tvCourseworkDescription.setText(description);
         }
     }
