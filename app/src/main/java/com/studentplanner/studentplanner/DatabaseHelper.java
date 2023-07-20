@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.studentplanner.studentplanner.models.Classes;
@@ -1139,21 +1140,21 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(CourseworkTable.COLUMN_DEADLINE, coursework.getDeadline());
         cv.put(CourseworkTable.COLUMN_DEADLINE_TIME, coursework.getDeadlineTime());
         cv.put(CourseworkTable.COLUMN_COMPLETED, coursework.isCompleted() ? "Yes" : "No");
-//        deleteImage ? cv.putNull(CourseworkTable.COLUMN_IMAGE): cv.put(CourseworkTable.COLUMN_IMAGE, ImageHandler.getBitmapAsByteArray(coursework.getImage()));
-
-        if (deleteImage) {
-            cv.putNull(CourseworkTable.COLUMN_IMAGE);
-
-        } else {
-            if (coursework.getImage() != null) {
-                cv.put(CourseworkTable.COLUMN_IMAGE, ImageHandler.getBitmapAsByteArray(coursework.getImage()));
-            }
-
-        }
-
-        long result = db.update(CourseworkTable.TABLE_NAME, cv, CourseworkTable.COLUMN_ID + "=?", new String[]{String.valueOf(coursework.getCourseworkID())});
+        ContentValues values = deleteImage(cv, deleteImage, coursework.getImage());
+        long result = db.update(CourseworkTable.TABLE_NAME, values, CourseworkTable.COLUMN_ID + "=?", new String[]{String.valueOf(coursework.getCourseworkID())});
         return result != -1;
 
+
+    }
+    private ContentValues deleteImage(ContentValues cv, boolean deleteImage, Bitmap image){
+        if (deleteImage) {
+            cv.putNull(CourseworkTable.COLUMN_IMAGE);
+        } else {
+            if (image != null) {
+                cv.put(CourseworkTable.COLUMN_IMAGE, ImageHandler.getBitmapAsByteArray(image));
+            }
+        }
+        return cv;
 
     }
 

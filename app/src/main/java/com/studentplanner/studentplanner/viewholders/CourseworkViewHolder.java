@@ -90,7 +90,7 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
     private void showTimeLeft(LocalDate deadline, Coursework coursework) {
 
         final String timeLeft = Helper.calcDeadlineDate(deadline, coursework.isCompleted());
-        if (!timeLeft.isBlank()){
+        if (!timeLeft.isBlank()) {
             tvTimeLeft.setText(timeLeft);
             tvTimeLeft.setTextColor(Helper.getPriorityColour(coursework.getPriority(), context));
             return;
@@ -100,7 +100,7 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
 
 
     private void showDescription(final String description) {
-        if (description.length() == 0){
+        if (description.length() == 0) {
             tvCourseworkDescription.setVisibility(View.GONE);
         } else {
             tvCourseworkDescription.setVisibility(View.VISIBLE);
@@ -108,7 +108,7 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    private String showDeadlineDetails(Coursework coursework){
+    private String showDeadlineDetails(Coursework coursework) {
         return String.format(Locale.ENGLISH, "%s, %s",
                 Helper.formatDate(coursework.getDeadline()),
                 Helper.formatTime(coursework.getDeadlineTime())
