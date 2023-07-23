@@ -23,7 +23,10 @@ public class ImageHandler {
         if (image !=null){
             imageView.setImageBitmap(ImageHandler.decodeBitmapByteArray(image));
             imageView.setVisibility(View.VISIBLE);
+            return;
         }
+        imageView.setVisibility(View.GONE);
+
     }
 
 }
