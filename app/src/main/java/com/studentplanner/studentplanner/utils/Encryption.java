@@ -1,12 +1,10 @@
 package com.studentplanner.studentplanner.utils;
 
-import android.util.Log;
-
 public final class Encryption {
     private Encryption(){
 
     }
-    //https://www.geeksforgeeks.org/how-to-encrypt-and-decrypt-text-in-android-using-cryptography/
+    // https://www.geeksforgeeks.org/how-to-encrypt-and-decrypt-text-in-android-using-cryptography/
 
     public static String encode(String s) {
         // create a string to add in the initial

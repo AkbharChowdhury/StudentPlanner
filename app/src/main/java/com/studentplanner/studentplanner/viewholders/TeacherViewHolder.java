@@ -10,7 +10,7 @@ import com.studentplanner.studentplanner.databinding.TeacherRowBinding;
 import com.studentplanner.studentplanner.models.Teacher;
 
 public class TeacherViewHolder extends RecyclerView.ViewHolder {
-    private final TextView id;
+    private final TextView teacherID;
 
     private final TextView name;
     private final TextView email;
@@ -23,7 +23,7 @@ public class TeacherViewHolder extends RecyclerView.ViewHolder {
 
     public TeacherViewHolder(@NonNull TeacherRowBinding binding) {
         super(binding.getRoot());
-        id = binding.tvTeacherId;
+        teacherID = binding.tvTeacherId;
         name = binding.tvTeacherName;
         email = binding.tvEmail;
         layout = binding.layout;
@@ -31,7 +31,7 @@ public class TeacherViewHolder extends RecyclerView.ViewHolder {
 
     }
     public void showDetails(Teacher teacher){
-        id.setText(String.valueOf(teacher.getUserID()));
+        teacherID.setText(String.valueOf(teacher.getUserID()));
         name.setText(teacher.getName());
         email.setText(teacher.getEmail());
     }

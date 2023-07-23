@@ -15,16 +15,16 @@ import org.apache.commons.text.WordUtils;
 import java.text.MessageFormat;
 
 public class SemesterViewHolder  extends RecyclerView.ViewHolder{
-    private final TextView tvSemesterID;
-    private final TextView tvSemesterName;
-    private final TextView tvDateDescription;
+    private final TextView semesterID;
+    private final TextView name;
+    private final TextView description;
 
     private final CardView layout;
     public SemesterViewHolder(@NonNull SemesterRowBinding binding) {
         super(binding.getRoot());
-        tvSemesterID = binding.tvSemesterId;
-        tvSemesterName = binding.tvSemesterName;
-        tvDateDescription = binding.tvDateDescription;
+        semesterID = binding.tvSemesterId;
+        name = binding.tvSemesterName;
+        description = binding.tvDateDescription;
         layout = binding.layout;
     }
 
@@ -33,9 +33,9 @@ public class SemesterViewHolder  extends RecyclerView.ViewHolder{
     }
 
     public void showDetails(Semester semester){
-        tvSemesterID.setText(String.valueOf(semester.getSemesterID()));
-        tvSemesterName.setText(WordUtils.capitalizeFully(semester.getName()));
-        tvDateDescription.setText(getDateMessage(semester));
+        semesterID.setText(String.valueOf(semester.getSemesterID()));
+        name.setText(WordUtils.capitalizeFully(semester.getName()));
+        description.setText(getDateMessage(semester));
     }
     private String getDateMessage(Semester semester){
         return MessageFormat.format("From {0} to {1}",

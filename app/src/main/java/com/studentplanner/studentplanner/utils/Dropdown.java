@@ -4,14 +4,12 @@ import android.content.Context;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
-import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.Semester;
-import com.studentplanner.studentplanner.utils.CalendarUtils;
-import com.studentplanner.studentplanner.utils.Helper;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 public final class Dropdown {
     private Dropdown(){
@@ -50,13 +48,17 @@ public final class Dropdown {
 
     public static int setSelectedDay(String day) {
         List<String> days = CalendarUtils.getDays();
-        int num = 0;
+
         for (int i = 0; i < days.size(); i++) {
             if (days.get(i).equalsIgnoreCase(day)) {
-                num = i;
+                return i;
             }
         }
-        return num;
+        return 0;
+
+
+
+
     }
 
     public static int getSemesterID(int semesterID, List<Semester> semesterList) {
