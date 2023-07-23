@@ -46,18 +46,9 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     private final Context context;
     private static final String ERROR_TAG = "ERROR";
 
-    private String getClassInstance() {
-        return DatabaseHelper.getInstance(context).getMethodName();
-    }
-
-    private String getMethodName() {
-        return Thread.currentThread().getStackTrace()[3].getMethodName();
-
-
-    }
-
     private String getErrorMessage(Exception e) {
-        return MessageFormat.format("There was a problem in method: {0}\nError: \n{1}", getClassInstance(), e.getMessage());
+        String methodName = Thread.currentThread().getStackTrace()[3].getMethodName();
+        return MessageFormat.format("There was a problem in method: {0}\nError: \n{1}",methodName, e.getMessage());
 
     }
 
@@ -694,7 +685,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         int studentID = AccountPreferences.getStudentID(context);
         List<Module> list = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        final String SQL = "SELECT * FROM modules WHERE module_id NOT IN (SELECT  module_id  FROM module_teacher)  AND student_id = ?";
+        final String SQL = "SELECT * FROM modules WHERE module_id NOT IN (SELECT  module_id  FROM module_teacher) AND student_id = ?";
         try (Cursor cursor = db.rawQuery(SQL, new String[]{String.valueOf(studentID)});) {
             if (!isCursorEmpty(cursor)) {
                 while (cursor.moveToNext()) {

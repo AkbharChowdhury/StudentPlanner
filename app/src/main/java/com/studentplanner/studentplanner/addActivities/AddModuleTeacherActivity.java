@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -38,17 +39,13 @@ public class AddModuleTeacherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityAddModuleTeacherBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         db = DatabaseHelper.getInstance(this);
         moduleList = db.getModuleClassesAdd();
         txtModules = binding.txtModuleAddTeacher;
 
         txtModules.setText(R.string.select_module);
         getModulesList();
-
     }
     private void getModulesList() {
         final List<String> items = Module.populateDropdown(moduleList);
