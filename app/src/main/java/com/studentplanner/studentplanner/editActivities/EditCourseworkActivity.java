@@ -47,6 +47,7 @@ import com.studentplanner.studentplanner.utils.Validation;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -173,13 +174,17 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
 
         if (getIntent().hasExtra(SELECTED_ID)) {
             int id = getIntent().getIntExtra(SELECTED_ID, 0);
+
+            List<Integer> moduleIDList = db.getModules().stream().map(Module::getModuleID).toList();
+
+
             Coursework coursework = db.getSelectedCoursework(id);
             txtTitle.getEditText().setText(coursework.getTitle());
             txtDescription.getEditText().setText(coursework.getDescription());
             txtPriority.setText(txtPriority.getAdapter().getItem(Dropdown.getSelectedStringArrayNumber(coursework.getPriority(), this, R.array.priority_array)).toString(), false);
             txtDeadline.setText(Helper.formatDate(coursework.getDeadline()));
             txtDeadlineTime.setText(Helper.showFormattedDBTime(coursework.getDeadlineTime(), this));
-            txtModules.setText(txtModules.getAdapter().getItem(Dropdown.getModuleID(coursework.getModuleID(), db.getModules())).toString(), false);
+            txtModules.setText(txtModules.getAdapter().getItem(Dropdown.getDropDownID(coursework.getModuleID(), moduleIDList)).toString(), false);
             selectedModuleID = coursework.getModuleID();
             checkBoxCompleted.setChecked(coursework.isCompleted());
 

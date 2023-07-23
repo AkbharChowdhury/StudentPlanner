@@ -19,6 +19,7 @@ import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.databinding.ActivityEditClassesBinding;
 import com.studentplanner.studentplanner.enums.TimePickerType;
+import com.studentplanner.studentplanner.interfaces.Searchable;
 import com.studentplanner.studentplanner.models.Classes;
 import com.studentplanner.studentplanner.models.CustomTimePicker;
 import com.studentplanner.studentplanner.models.Module;
@@ -31,8 +32,11 @@ import com.studentplanner.studentplanner.utils.Helper;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 public class EditClassesActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
     private AutoCompleteTextView txtDays;
@@ -118,6 +122,8 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
         txtRoom = binding.txtRoom;
     }
 
+
+
     private void setupFields() {
         final String SELECTED_ID = ClassTable.COLUMN_ID;
         if (getIntent().hasExtra(SELECTED_ID)) {
@@ -127,8 +133,14 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
             txtRoom.getEditText().setText(model.getRoom());
             Helper.getDays(txtDays, this);
             Helper.getStringArray(this, txtClassType, R.array.type_array);
-            txtModules.setText(txtModules.getAdapter().getItem(Dropdown.getModuleID(model.getModuleID(), db.getModules())).toString(), false);
-            txtSemester.setText(txtSemester.getAdapter().getItem(Dropdown.getSemesterID(model.getModuleID(), db.getSemester())).toString(), false);
+
+
+            List<Integer> semesterIDList = db.getSemester().stream().map(Semester::getSemesterID).toList();
+            List<Integer> moduleIDList = db.getModules().stream().map(Module::getModuleID).toList();
+
+            txtSemester.setText(txtSemester.getAdapter().getItem(Dropdown.getDropDownID(model.getSemesterID(), semesterIDList)).toString(), false);
+            txtModules.setText(txtModules.getAdapter().getItem(Dropdown.getDropDownID(model.getModuleID(), moduleIDList)).toString(), false);
+
             txtClassType.setText(txtClassType.getAdapter().getItem(Dropdown.getSelectedStringArrayNumber(model.getClassType(), this, R.array.type_array)).toString(), false);
             String classDay = DayOfWeek.of(model.getDow()).toString();
 
