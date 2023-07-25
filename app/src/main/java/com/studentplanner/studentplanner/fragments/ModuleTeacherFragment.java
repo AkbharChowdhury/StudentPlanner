@@ -28,6 +28,8 @@ import com.studentplanner.studentplanner.adapters.ModuleTeacherAdapter;
 import com.studentplanner.studentplanner.addActivities.AddModuleTeacherActivity;
 import com.studentplanner.studentplanner.databinding.FragmentModuleTeacherBinding;
 import com.studentplanner.studentplanner.models.ModuleTeacher;
+import com.studentplanner.studentplanner.models.Search;
+import com.studentplanner.studentplanner.models.Teacher;
 import com.studentplanner.studentplanner.utils.EmptyData;
 import com.studentplanner.studentplanner.utils.Helper;
 
@@ -49,8 +51,8 @@ public class ModuleTeacherFragment extends Fragment {
 
     private EmptyData emptyData;
 
-    private void activityResult(ActivityResult result){
-        if (result.getResultCode() == RESULT_OK){
+    private void activityResult(ActivityResult result) {
+        if (result.getResultCode() == RESULT_OK) {
             getModuleTeacher();
         }
     }
@@ -79,7 +81,10 @@ public class ModuleTeacherFragment extends Fragment {
 
 
         db = DatabaseHelper.getInstance(context);
-        Helper.getIntentMessage(context, activity.getIntent().getExtras());
+
+        if (!db.getModuleTeachers().isEmpty()) {
+            binding.emptyText.setText(getString(R.string.no_module_teacher));
+        }
 
         getModuleTeacher();
         return binding.getRoot();
@@ -89,7 +94,8 @@ public class ModuleTeacherFragment extends Fragment {
         list = db.getModuleTeachers();
         buildRecyclerView();
     }
-    private List<ModuleTeacher> getList(){
+
+    private List<ModuleTeacher> getList() {
         return Collections.unmodifiableList(db.getModuleTeachers());
     }
 
@@ -114,7 +120,6 @@ public class ModuleTeacherFragment extends Fragment {
         }
 
         emptyData.emptyResultStatus(true);
-
 
 
     }
@@ -153,14 +158,14 @@ public class ModuleTeacherFragment extends Fragment {
         final List<ModuleTeacher> filteredList = ModuleTeacher.filterModuleTeachers(db.getModuleTeachers(), moduleIdList);
 
         if (filteredList.isEmpty()) {
+            adapter.filterList(filteredList);
             Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
             emptyData.emptyResultStatus(true);
-
-        } else {
-            adapter.filterList(filteredList);
-            emptyData.emptyResultStatus(false);
-
+            return;
         }
+        adapter.filterList(filteredList);
+        emptyData.emptyResultStatus(false);
+
     }
 
     @Override

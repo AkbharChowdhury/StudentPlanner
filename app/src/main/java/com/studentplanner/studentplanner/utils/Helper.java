@@ -3,16 +3,12 @@ package com.studentplanner.studentplanner.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.InputFilter;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
@@ -47,7 +43,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public final class Helper {
-    private static final String INTENT_MESSAGE = "message";
     private static final String ellipses = "...";
     public static boolean changeStatus = false;
 
@@ -55,23 +50,9 @@ public final class Helper {
     private Helper() {
     }
 
-
     public static void goToActivity(Activity currentActivity, Class<? extends Activity> activityPageToOpen) {
         currentActivity.startActivity(new Intent(currentActivity, activityPageToOpen));
 
-    }
-
-
-    public static void goToFragment(FragmentActivity activity, Fragment fragmentToOpen){
-        activity.getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, fragmentToOpen, "findThisFragment")
-                .addToBackStack(null)
-                .commit();
-    }
-
-
-    public static void toastMessage(Context context, String message) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 
     public static void longToastMessage(Context context, String message) {
@@ -98,17 +79,6 @@ public final class Helper {
 
     public static String trimStr(TextInputLayout textField, boolean isTrimmed) {
         return textField.getEditText().getText().toString();
-
-    }
-
-
-
-
-    public static void getIntentMessage(Context context, Bundle extras) {
-        if (extras != null && extras.getString(Helper.INTENT_MESSAGE) != null) {
-            Helper.longToastMessage(context, extras.getString(Helper.INTENT_MESSAGE));
-            extras.clear();
-        }
 
     }
 

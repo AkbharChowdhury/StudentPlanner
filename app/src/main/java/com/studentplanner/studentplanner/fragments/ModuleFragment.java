@@ -55,7 +55,6 @@ public class ModuleFragment extends Fragment {
 
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this::activityResult);
 
-
     public ModuleFragment() {
 
     }
@@ -74,7 +73,6 @@ public class ModuleFragment extends Fragment {
         db = DatabaseHelper.getInstance(context);
 
         emptyData = new EmptyData(binding.emptyImage, binding.emptyText);
-        Helper.getIntentMessage(context, activity.getIntent().getExtras());
         getModule();
 
         return binding.getRoot();
@@ -113,7 +111,6 @@ public class ModuleFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-
 
         if (!list.isEmpty()) {
             activity.getMenuInflater().inflate(R.menu.search_menu, menu);

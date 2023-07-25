@@ -93,6 +93,7 @@
 
     <string name="no_semesters_found">No Semesters found</string>
     <string name="no_modules_found">No modules found</string>
+    <string name="no_module_teacher">This module cannot be found.</string>
     <string name="no_coursework_found">No Coursework found</string>
     <string name="add_class">Add Class</string>
     <string name="select_class_type">Select class type</string>

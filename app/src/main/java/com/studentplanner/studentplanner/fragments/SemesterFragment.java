@@ -76,7 +76,6 @@ public class SemesterFragment extends Fragment {
         emptyData = new EmptyData(binding.emptyImage, binding.emptyText);
         db = DatabaseHelper.getInstance(context);
 
-        Helper.getIntentMessage(context, activity.getIntent().getExtras());
         getSemester();
 
         return binding.getRoot();
