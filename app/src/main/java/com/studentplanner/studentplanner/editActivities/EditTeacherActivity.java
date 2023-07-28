@@ -1,19 +1,18 @@
 package com.studentplanner.studentplanner.editActivities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.databinding.ActivityEditTeacherBinding;
 import com.studentplanner.studentplanner.models.Teacher;
-import com.studentplanner.studentplanner.tables.ModuleTable;
 import com.studentplanner.studentplanner.tables.TeacherTable;
 import com.studentplanner.studentplanner.utils.Helper;
 import com.studentplanner.studentplanner.utils.Validation;

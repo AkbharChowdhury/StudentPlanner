@@ -39,8 +39,9 @@ public class AddModuleActivity extends AppCompatActivity {
         txtModuleName = binding.txtModuleName;
 
         binding.btnAddModule.setOnClickListener(v -> {
-            if (!form.validateAddModuleForm(new Module(txtModuleCode, txtModuleName))) return;
-            if (db.addModule(getModuleDetails())) {
+            Module module = getModuleDetails();
+            if (!form.validateAddModuleForm(module)) return;
+            if (db.addModule(module)) {
                 Helper.longToastMessage(this, getString(R.string.module_added));
                 setResult(RESULT_OK);
                 finish();
