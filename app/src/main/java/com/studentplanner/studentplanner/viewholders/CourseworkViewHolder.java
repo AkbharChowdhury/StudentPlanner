@@ -2,6 +2,7 @@ package com.studentplanner.studentplanner.viewholders;
 
 import static com.studentplanner.studentplanner.utils.CompletionStatus.COMPLETED;
 import static com.studentplanner.studentplanner.utils.CompletionStatus.NOT_COMPLETED;
+import static com.studentplanner.studentplanner.utils.Helper.getSnippet;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -69,9 +70,9 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
         LocalDate deadline = LocalDate.parse(coursework.getDeadline());
 
         tvCourseworkID.setText(String.valueOf(coursework.getCourseworkID()));
-        tvCourseworkTitle.setText(Helper.getSnippet(WordUtils.capitalizeFully(coursework.getTitle())));
+        tvCourseworkTitle.setText(getSnippet(WordUtils.capitalizeFully(coursework.getTitle())));
 
-        showDescription(coursework.getDescription());
+        showDescription(getSnippet(coursework.getDescription(), 120));
 
         tvDeadline.setText(showDeadlineDetails(coursework));
         tvPriority.setText(coursework.getPriority());
@@ -119,6 +120,5 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
 
     private boolean isBlank(String str){
         return str == null || str.isBlank();
-
     }
 }
