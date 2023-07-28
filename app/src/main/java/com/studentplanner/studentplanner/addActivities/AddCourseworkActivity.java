@@ -73,7 +73,7 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
     private ImageView courseworkImage;
     private Bitmap imageToStore;
 
-    private void activityResult(ActivityResult result){
+    private void activityResult(ActivityResult result) {
         if (result.getResultCode() == RESULT_OK) {
             if (result.getData() != null) {
                 try {
@@ -112,7 +112,7 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
         txtPriority.setText(getString(R.string.select_priority));
         txtTitle = binding.txtTitle;
         txtDescription = binding.txtDescription;
-        courseworkImage =  binding.imgCoursework;
+        courseworkImage = binding.imgCoursework;
         setTimePicker();
         courseworkImage.setOnClickListener(v -> openFilesApp());
 
@@ -139,19 +139,20 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
 
 
     }
-    private void handleAddButton(){
-        if (form.validateAddCourseworkForm(getCourseworkErrorFields())) {
-            if (db.addCoursework(getCourseworkDetails())) {
-                Helper.changeStatus = true;
-                Helper.longToastMessage(this, getString(R.string.coursework_added));
-                setResult(RESULT_OK);
-                finish();
-            }
 
+    private void handleAddButton() {
+        if (!form.validateAddCourseworkForm(getCourseworkErrorFields())) return;
+        if (db.addCoursework(getCourseworkDetails())) {
+            Helper.changeStatus = true;
+            Helper.longToastMessage(this, getString(R.string.coursework_added));
+            setResult(RESULT_OK);
+            finish();
         }
+
+
     }
 
-    private void  handleRemoveClick(){
+    private void handleRemoveClick() {
         new AlertDialog.Builder(this)
                 .setTitle(getString(R.string.delete_image_title))
                 .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
@@ -179,11 +180,11 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
         Intent intent = new Intent();
         intent.setType(ImageHandler.IMAGE_TYPE);
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        intent = Intent.createChooser(intent,getString(R.string.select_image));
+        intent = Intent.createChooser(intent, getString(R.string.select_image));
         imageActivityResultLauncher.launch(intent);
     }
 
-    private Coursework getCourseworkErrorFields(){
+    private Coursework getCourseworkErrorFields() {
         TextInputLayout txtModuleError = binding.txtModuleError;
         TextInputLayout errorPriority = binding.txtPriorityError;
         TextInputLayout timeError = binding.txtDeadlineTimeError;
@@ -206,7 +207,7 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
 
         );
 
-        if (imageToStore!=null){
+        if (imageToStore != null) {
             coursework.setImage(imageToStore);
         }
 
@@ -250,10 +251,10 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
         txtDeadlineTime.setOnTouchListener((view, motionEvent) -> {
             if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                 deadlineTimePicker = new BoundTimePickerDialog(this, this, deadlineCustomTimePicker.getSelectedHour(), deadlineCustomTimePicker.getSelectedMinute());
-                String deadlineDate  = Helper.convertFUllDateToYYMMDD(Helper.trimStr(txtDeadline));
+                String deadlineDate = Helper.convertFUllDateToYYMMDD(Helper.trimStr(txtDeadline));
                 LocalDate deadline = LocalDate.parse(deadlineDate);
                 LocalDate today = CalendarUtils.getCurrentDate();
-                LocalDate date = deadline.isEqual(today) ? today: deadline;
+                LocalDate date = deadline.isEqual(today) ? today : deadline;
                 deadlineSetup(deadlineTimePicker, date);
                 deadlineTimePicker.show();
             }
@@ -277,7 +278,6 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
         if (item.getItemId() == android.R.id.home) finish();
         return true;
     }
-
 
 
     @Override

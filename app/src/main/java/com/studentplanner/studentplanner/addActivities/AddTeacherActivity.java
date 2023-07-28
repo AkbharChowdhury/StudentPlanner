@@ -40,15 +40,13 @@ public class AddTeacherActivity extends AppCompatActivity {
 
         binding.btnAddTeacher.setOnClickListener(v -> {
             Teacher teacher = new Teacher(txtFirstName, txtLastName, txtEmail);
-            if (form.validateAddTeacherForm(teacher)){
-                if (db.addTeacher(getTeacherDetails())){
-                    Helper.longToastMessage(getApplicationContext(), "Teacher added");
-                    setResult(RESULT_OK);
-                    finish();
+            if (!form.validateAddTeacherForm(teacher)) return;
+            if (db.addTeacher(getTeacherDetails())) {
+                Helper.longToastMessage(getApplicationContext(), getString(R.string.teacher_added));
+                setResult(RESULT_OK);
+                finish();
 
-                }
             }
-
 
 
         });
@@ -59,6 +57,7 @@ public class AddTeacherActivity extends AppCompatActivity {
         return new Teacher(Helper.trimStr(txtFirstName), Helper.trimStr(txtLastName), Helper.trimStr(txtEmail));
 
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 

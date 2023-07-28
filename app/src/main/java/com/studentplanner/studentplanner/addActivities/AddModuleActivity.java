@@ -39,13 +39,13 @@ public class AddModuleActivity extends AppCompatActivity {
         txtModuleName = binding.txtModuleName;
 
         binding.btnAddModule.setOnClickListener(v -> {
-            if (form.validateAddModuleForm(new Module(txtModuleCode, txtModuleName))) {
-                if (db.addModule(getModuleDetails())) {
-                    Helper.longToastMessage(this, getString(R.string.module_added));
-                    setResult(RESULT_OK);
-                    finish();
-                }
+            if (!form.validateAddModuleForm(new Module(txtModuleCode, txtModuleName))) return;
+            if (db.addModule(getModuleDetails())) {
+                Helper.longToastMessage(this, getString(R.string.module_added));
+                setResult(RESULT_OK);
+                finish();
             }
+
 
         });
 

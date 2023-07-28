@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -181,6 +182,10 @@ public class CourseworkFragment extends Fragment {
 
     private void getCoursework() {
         list = db.getCoursework();
+
+        StringBuilder sb = new StringBuilder();
+        db.getCoursework().forEach(c -> sb.append(c.getTitle()));
+        Log.d("CW_INFO", String.valueOf(sb.toString().length()));
         list.sort(Coursework.sortDeadlineAsc);
         search = new SearchCoursework(context, list);
         buildRecyclerView();

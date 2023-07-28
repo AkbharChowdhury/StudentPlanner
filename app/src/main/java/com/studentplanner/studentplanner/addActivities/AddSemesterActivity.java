@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
+import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.databinding.ActivityAddSemesterBinding;
 import com.studentplanner.studentplanner.enums.DatePickerType;
 import com.studentplanner.studentplanner.models.Semester;
@@ -48,21 +49,20 @@ public class AddSemesterActivity extends AppCompatActivity implements DatePicker
         setDefaultValues();
 
         binding.btnAddSemester.setOnClickListener(v -> {
-            if (form.validateSemesterForm(txtName)){
-                if (db.addSemester(getSemesterDetails())){
-                    Helper.longToastMessage(this,"Semester added");
-                    setResult(RESULT_OK);
-                    finish();
-                }
+            if (!form.validateSemesterForm(txtName)) return;
+            if (db.addSemester(getSemesterDetails())) {
+                Helper.longToastMessage(this, getString(R.string.semester_added));
+                setResult(RESULT_OK);
+                finish();
             }
-
 
 
         });
 
 
     }
-    private Semester getSemesterDetails(){
+
+    private Semester getSemesterDetails() {
         String name = Helper.trimStr(this.txtName);
         LocalDate start = LocalDate.parse(Helper.convertFUllDateToYYMMDD(txtStartDate.getEditableText().toString()));
         LocalDate end = LocalDate.parse(Helper.convertFUllDateToYYMMDD(txtEndDate.getEditableText().toString()));
@@ -116,7 +116,6 @@ public class AddSemesterActivity extends AppCompatActivity implements DatePicker
     }
 
 
-
     private void findTextFields() {
         txtName = binding.txtSemesterName;
         txtStartDate = binding.txtStartDate;
@@ -148,8 +147,6 @@ public class AddSemesterActivity extends AppCompatActivity implements DatePicker
         if (item.getItemId() == android.R.id.home) finish();
         return true;
     }
-
-
 
 
 }

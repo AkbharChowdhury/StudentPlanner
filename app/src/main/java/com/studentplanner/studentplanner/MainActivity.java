@@ -19,6 +19,7 @@ import com.studentplanner.studentplanner.fragments.LoginFragment;
 import com.studentplanner.studentplanner.fragments.ModuleFragment;
 import com.studentplanner.studentplanner.fragments.ReminderFragment;
 import com.studentplanner.studentplanner.fragments.TeacherFragment;
+import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.utils.AccountPreferences;
 import com.studentplanner.studentplanner.utils.FragmentHandler;
 
