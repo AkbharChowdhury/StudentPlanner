@@ -15,6 +15,7 @@ import com.studentplanner.studentplanner.models.Teacher;
 import com.studentplanner.studentplanner.tables.TeacherTable;
 import com.studentplanner.studentplanner.viewholders.TeacherViewHolder;
 
+import java.util.Collections;
 import java.util.List;
 
 public class TeacherAdapter extends RecyclerView.Adapter<TeacherViewHolder> {
@@ -24,7 +25,7 @@ public class TeacherAdapter extends RecyclerView.Adapter<TeacherViewHolder> {
     private final ActivityResultLauncher<Intent> startForResult;
 
     public TeacherAdapter(List<Teacher> list, Context context, ActivityResultLauncher<Intent> startForResult) {
-        this.list = list;
+        this.list = Collections.unmodifiableList(list);
         this.context = context;
         this.startForResult = startForResult;
     }

@@ -16,6 +16,7 @@ import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.tables.CourseworkTable;
 import com.studentplanner.studentplanner.viewholders.CourseworkViewHolder;
 
+import java.util.Collections;
 import java.util.List;
 
 
@@ -26,7 +27,7 @@ public class CourseworkAdapter extends RecyclerView.Adapter<CourseworkViewHolder
     private final ActivityResultLauncher<Intent> startForResult;
 
     public CourseworkAdapter(List<Coursework> list, Context context, ActivityResultLauncher<Intent> startForResult) {
-        this.list = list;
+        this.list = Collections.unmodifiableList(list);
         this.context = context;
         this.startForResult = startForResult;
     }

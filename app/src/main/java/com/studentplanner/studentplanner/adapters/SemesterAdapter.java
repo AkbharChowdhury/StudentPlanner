@@ -15,6 +15,7 @@ import com.studentplanner.studentplanner.models.Semester;
 import com.studentplanner.studentplanner.tables.SemesterTable;
 import com.studentplanner.studentplanner.viewholders.SemesterViewHolder;
 
+import java.util.Collections;
 import java.util.List;
 
 public class SemesterAdapter extends RecyclerView.Adapter<SemesterViewHolder> {
@@ -24,7 +25,7 @@ public class SemesterAdapter extends RecyclerView.Adapter<SemesterViewHolder> {
     private  final ActivityResultLauncher<Intent> startForResult;
 
     public SemesterAdapter(List<Semester> list, Context context, ActivityResultLauncher<Intent> startForResult) {
-        this.list = list;
+        this.list = Collections.unmodifiableList(list);
         this.context = context;
         this.startForResult = startForResult;
     }

@@ -15,6 +15,7 @@ import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.tables.ModuleTable;
 import com.studentplanner.studentplanner.viewholders.ModuleViewHolder;
 
+import java.util.Collections;
 import java.util.List;
 
 public class ModuleAdapter extends RecyclerView.Adapter<ModuleViewHolder> {
@@ -24,7 +25,7 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleViewHolder> {
     private  final ActivityResultLauncher<Intent> startForResult;
 
     public ModuleAdapter(List<Module> list, Context context, ActivityResultLauncher<Intent> startForResult) {
-        this.list = list;
+        this.list = Collections.unmodifiableList(list);
         this.context = context;
         this.startForResult = startForResult;
     }
