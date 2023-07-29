@@ -48,7 +48,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
     private String getErrorMessage(Exception e) {
         String methodName = Thread.currentThread().getStackTrace()[3].getMethodName();
-        return MessageFormat.format("There was a problem in method: {0}\nError: \n{1}",methodName, e.getMessage());
+        return MessageFormat.format("There was a problem in method: {0}\nError: \n{1}", methodName, e.getMessage());
 
     }
 
