@@ -3,6 +3,7 @@ package com.studentplanner.studentplanner.addActivities;
 import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.widget.ArrayAdapter;
@@ -22,6 +23,7 @@ import com.studentplanner.studentplanner.models.Classes;
 import com.studentplanner.studentplanner.models.CustomTimePicker;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.Semester;
+import com.studentplanner.studentplanner.tables.ClassTable;
 import com.studentplanner.studentplanner.utils.BoundTimePickerDialog;
 import com.studentplanner.studentplanner.utils.CalendarUtils;
 import com.studentplanner.studentplanner.utils.Helper;
@@ -77,6 +79,14 @@ public class AddClassesActivity extends AppCompatActivity implements TimePickerD
 
         setUpTimePickers();
         Helper.getDays(txtDays, this);
+
+
+        if (getIntent().getIntExtra(ClassTable.COLUMN_DOW,0) !=0) {
+
+            int dow = getIntent().getIntExtra(ClassTable.COLUMN_DOW,0) -1;
+            txtDays.setText(txtDays.getAdapter().getItem(dow).toString(), false);
+        }
+
         getModulesList();
         getSemesterList();
         Helper.getStringArray(this, txtClassType, R.array.type_array);
@@ -124,6 +134,9 @@ public class AddClassesActivity extends AppCompatActivity implements TimePickerD
         txtClassType.setText(getString(R.string.select_class_type));
         txtStartTime.setText(getString(R.string.select_start_time));
         txtEndTime.setText(getString(R.string.select_end_time));
+
+
+
     }
 
     private Classes getClassDetails() {
@@ -166,17 +179,16 @@ public class AddClassesActivity extends AppCompatActivity implements TimePickerD
         String selectedTime = String.format(Locale.getDefault(), getString(R.string.time_format_database), selectedHour, selectedMinute);
         String formattedTime = Helper.formatTime(selectedTime);
         switch (type) {
-            case START_TIME:
+            case START_TIME -> {
                 startCustomTimePicker.setSelectedHour(selectedHour);
                 startCustomTimePicker.setSelectedMinute(selectedMinute);
                 txtStartTime.setText(formattedTime);
-                break;
-
-            case END_TIME:
+            }
+            case END_TIME -> {
                 endCustomTimePicker.setSelectedHour(selectedHour);
                 endCustomTimePicker.setSelectedMinute(selectedMinute);
                 txtEndTime.setText(formattedTime);
-                break;
+            }
         }
 
     }

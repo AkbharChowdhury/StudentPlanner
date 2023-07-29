@@ -50,8 +50,6 @@
             android:layout_margin="16dp"
             android:hint="@string/semester">
 
-            >
-
             <AutoCompleteTextView
                 android:id="@+id/txtSemesterClasses"
                 android:layout_width="match_parent"
@@ -72,15 +70,11 @@
             android:layout_margin="16dp"
             android:hint="@string/day">
 
-            >
-
             <AutoCompleteTextView
                 android:id="@+id/txtDay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"
-
-                />
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -93,8 +87,6 @@
             android:layout_margin="16dp"
             android:hint="@string/start"
             app:startIconDrawable="@drawable/baseline_access_time_24">
-
-            >
 
             <AutoCompleteTextView
                 android:id="@+id/txtStartTime"
@@ -117,7 +109,6 @@
             android:hint="@string/end"
             app:startIconDrawable="@drawable/baseline_access_time_24">
 
-            >
 
             <AutoCompleteTextView
                 android:id="@+id/txtEndTime"

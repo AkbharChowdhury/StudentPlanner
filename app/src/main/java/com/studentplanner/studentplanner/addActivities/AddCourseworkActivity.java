@@ -125,6 +125,7 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
             txtDeadline.setText(getIntent().getStringExtra(CourseworkTable.COLUMN_DEADLINE));
 
         }
+
         setupDatePicker();
         getModulesList();
 

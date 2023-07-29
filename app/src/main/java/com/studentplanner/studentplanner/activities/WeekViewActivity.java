@@ -30,11 +30,11 @@ import com.studentplanner.studentplanner.databinding.ActivityWeekViewBinding;
 import com.studentplanner.studentplanner.interfaces.OnItemListener;
 import com.studentplanner.studentplanner.models.Event;
 import com.studentplanner.studentplanner.models.EventData;
-import com.studentplanner.studentplanner.tables.CourseworkTable;
 import com.studentplanner.studentplanner.utils.CalendarUtils;
 import com.studentplanner.studentplanner.utils.Helper;
 import com.studentplanner.studentplanner.utils.Validation;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -149,13 +149,21 @@ public class WeekViewActivity extends AppCompatActivity implements OnItemListene
             }
 
             // set deadline to selected calendar date
-            startForResult.launch(courseworkIntent());
+            startForResult.launch(CalendarUtils.courseworkIntent(this));
 
         }
 
         if (id == R.id.add_class_action) {
 
-            openActivity(AddClassesActivity.class);
+            DayOfWeek dow = CalendarUtils.getSelectedDate().getDayOfWeek();
+
+            if (Helper.weekends().contains(dow)){
+                openActivity(AddClassesActivity.class);
+                return true;
+            }
+            // set class to selected class day
+            startForResult.launch(CalendarUtils.classIntent(this));
+
         }
 
         if (id == android.R.id.home | id == R.id.action_week_view){
@@ -170,11 +178,6 @@ public class WeekViewActivity extends AppCompatActivity implements OnItemListene
         startForResult.launch(new Intent(this, activityPageToOpen));
     }
 
-    private Intent courseworkIntent() {
-        Intent intent = new Intent(this, AddCourseworkActivity.class);
-        intent.putExtra(CourseworkTable.COLUMN_DEADLINE, Helper.formatDate(CalendarUtils.getSelectedDate().toString()));
-        return intent;
-    }
 
     private void goBack(){
         CalendarUtils.setEventAdapter(eventListView, this, startForResult);

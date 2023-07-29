@@ -7,8 +7,12 @@ import android.widget.ListView;
 
 import androidx.activity.result.ActivityResultLauncher;
 
+import com.studentplanner.studentplanner.addActivities.AddClassesActivity;
+import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
 import com.studentplanner.studentplanner.models.Event;
 import com.studentplanner.studentplanner.adapters.EventAdapter;
+import com.studentplanner.studentplanner.tables.ClassTable;
+import com.studentplanner.studentplanner.tables.CourseworkTable;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -129,6 +133,20 @@ public class CalendarUtils {
     public static void setSelectedDate(DatePickerFragment datepicker, AutoCompleteTextView textField) {
         datepicker.setCustomDate(LocalDate.parse(Helper.convertFUllDateToYYMMDD(textField.getEditableText().toString())));
 
+    }
+
+
+
+    public static Intent courseworkIntent(Context context) {
+        Intent intent = new Intent(context, AddCourseworkActivity.class);
+        intent.putExtra(CourseworkTable.COLUMN_DEADLINE, Helper.formatDate(CalendarUtils.getSelectedDate().toString()));
+        return intent;
+    }
+    public static Intent classIntent(Context context) {
+        Intent intent = new Intent(context, AddClassesActivity.class);
+        int dow = getSelectedDate().getDayOfWeek().getValue();
+        intent.putExtra(ClassTable.COLUMN_DOW, dow);
+        return intent;
     }
 
 

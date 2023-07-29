@@ -27,6 +27,7 @@ import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Period;
@@ -372,4 +373,8 @@ public final class Helper {
         return spinner.getAdapter().getItem(position).toString();
 
     }
+    public static List<DayOfWeek> weekends(){
+        return Arrays.asList(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY);
+    }
+
 }
