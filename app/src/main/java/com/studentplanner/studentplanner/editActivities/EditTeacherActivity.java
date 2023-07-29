@@ -27,7 +27,6 @@ public class EditTeacherActivity extends AppCompatActivity {
     private String excludedEmail;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,13 +46,13 @@ public class EditTeacherActivity extends AppCompatActivity {
         binding.btnEditTeacher.setOnClickListener(v -> {
             Teacher teacher = new Teacher(txtFirstName, txtLastName, txtEmail);
 
-            if (form.validateEditTeacherForm(teacher, excludedEmail)) {
-                if (db.updateTeacher(getTeacherDetails())) {
-                    Helper.longToastMessage(this,getString(R.string.teacher_updated));
-                    setResult(RESULT_OK);
-                    finish();
-                }
+            if (!form.validateEditTeacherForm(teacher, excludedEmail)) return;
+            if (db.updateTeacher(getTeacherDetails())) {
+                Helper.longToastMessage(this, getString(R.string.teacher_updated));
+                setResult(RESULT_OK);
+                finish();
             }
+
         });
 
     }
@@ -68,8 +67,6 @@ public class EditTeacherActivity extends AppCompatActivity {
 
 
     }
-
-
 
 
     private void setupFields() {
@@ -88,7 +85,6 @@ public class EditTeacherActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.delete_menu, menu);
@@ -100,14 +96,14 @@ public class EditTeacherActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) finish();
 
 
-        if (item.getItemId() == R.id.ic_delete){
+        if (item.getItemId() == R.id.ic_delete) {
             new AlertDialog.Builder(this)
                     .setMessage(getString(R.string.delete_teacher_message)).setCancelable(false)
                     .setTitle(getString(R.string.delete_teacher_title))
                     .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
                         int id = getIntent().getIntExtra(TeacherTable.COLUMN_ID, 0);
-                        if (db.deleteRecord(TeacherTable.TABLE_NAME, TeacherTable.COLUMN_ID, id)){
-                            Helper.longToastMessage(this,getString(R.string.teacher_deleted));
+                        if (db.deleteRecord(TeacherTable.TABLE_NAME, TeacherTable.COLUMN_ID, id)) {
+                            Helper.longToastMessage(this, getString(R.string.teacher_deleted));
                             setResult(RESULT_OK);
                             finish();
                         }

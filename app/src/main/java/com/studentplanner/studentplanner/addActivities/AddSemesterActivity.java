@@ -67,18 +67,18 @@ public class AddSemesterActivity extends AppCompatActivity implements DatePicker
         LocalDate start = LocalDate.parse(Helper.convertFUllDateToYYMMDD(txtStartDate.getEditableText().toString()));
         LocalDate end = LocalDate.parse(Helper.convertFUllDateToYYMMDD(txtEndDate.getEditableText().toString()));
         return new Semester(name, start, end);
-
     }
 
     private void setUpDatePickers() {
+
         setStartDatePicker();
         setEndDatePicker();
 
     }
 
     private void setDefaultValues() {
-        txtStartDate.setText(Helper.formatDate(CalendarUtils.getCurrentDate().toString()));
-        txtEndDate.setText(Helper.formatDate(CalendarUtils.getCurrentDate().plusWeeks(3).toString()));
+        txtStartDate.setText(Helper.formatDate(LocalDate.now().toString()));
+        txtEndDate.setText(Helper.formatDate(LocalDate.now().plusWeeks(3).toString()));
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -143,7 +143,6 @@ public class AddSemesterActivity extends AppCompatActivity implements DatePicker
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
         if (item.getItemId() == android.R.id.home) finish();
         return true;
     }

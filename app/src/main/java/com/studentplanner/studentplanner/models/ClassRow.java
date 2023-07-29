@@ -8,6 +8,8 @@ import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.databinding.EventRowBinding;
 import com.studentplanner.studentplanner.utils.Helper;
 
+import org.apache.commons.text.WordUtils;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -36,7 +38,7 @@ public class ClassRow {
         final int moduleID = classes.getModuleID();
         List<ModuleTeacher> moduleTeacherList = db.getModuleTeachers();
         final String teachers = Helper.moduleIDExistsInModuleTeacher(moduleTeacherList, classes.getModuleID())
-                ? Helper.getSnippet(Helper.getTeachersForSelectedModule(context, moduleID), 35)
+                ? Helper.getSnippet(WordUtils.capitalizeFully(Helper.getTeachersForSelectedModule(context, moduleID)), 35)
                 : context.getString(R.string.no_teacher_assigned);
 
         lblType.setText(classes.getClassType());

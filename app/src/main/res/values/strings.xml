@@ -245,8 +245,9 @@
     <string name="coursework_updated">Coursework Updated</string>
     <string name="class_added">Class added</string>
     <string name="select_teacher">Please select at least one teacher from the list</string>
-    <string name="semester_added">Semester Added\n=</string>
+    <string name="semester_added">Semester Added</string>
     <string name="teacher_added">Teacher added</string>
+    <string name="_11_00">11:00</string>
 
 
 </resources>

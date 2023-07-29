@@ -58,7 +58,6 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
 
     private void setActivityTitle() {
         final String SELECTED_ID = ModuleTable.COLUMN_ID;
-
         if (getIntent().hasExtra(SELECTED_ID)) {
             int id = getIntent().getIntExtra(SELECTED_ID, 0);
             Module module = db.getSelectedModule(id);

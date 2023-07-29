@@ -318,9 +318,8 @@ public final class Validation {
             setError(textField, getInvalidEmailError());
             return false;
         }
+
         if (setAdditionalCheck) {
-
-
             if (db.emailExists(email, excludedEmail)) {
                 setError(textField, getEmailExistsError());
                 return false;

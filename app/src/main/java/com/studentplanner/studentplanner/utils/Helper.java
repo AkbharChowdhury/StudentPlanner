@@ -271,7 +271,7 @@ public final class Helper {
 
             for (int teacherId : model.teacherIDList()) {
                 Teacher teacher = db.getSelectedTeacher(teacherId);
-                teachers.append(teacher.getName()).append(", ");
+                teachers.append(WordUtils.capitalizeFully(teacher.getName())).append(", ");
             }
             return Helper.formatList(teachers.toString());
 
