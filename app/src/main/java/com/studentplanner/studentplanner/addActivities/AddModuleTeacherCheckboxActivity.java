@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
-import com.studentplanner.studentplanner.databinding.ActivityAddModuleTeacherCheckboxBinding;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.Teacher;
 import com.studentplanner.studentplanner.tables.ModuleTable;
@@ -25,14 +24,14 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
     private DatabaseHelper db;
     private ListView listView;
     private List<Teacher> teachers;
-    private ActivityAddModuleTeacherCheckboxBinding binding;
+//    private ActivityAddModuleTeacherCheckboxBinding binding;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityAddModuleTeacherCheckboxBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+//        binding = ActivityAddModuleTeacherCheckboxBinding.inflate(getLayoutInflater());
+        setContentView(R.layout.listview);
 
 
 
@@ -43,7 +42,7 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
         List<String> teacherNames = getTeacher();
         String[] myTeachers = Helper.convertArrayListStringToStringArray(teacherNames);
 
-        listView = binding.listviewData;
+        listView = findViewById(R.id.listview);
 
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(

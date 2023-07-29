@@ -6,22 +6,19 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:elevation="8dp"
-    app:cardCornerRadius="8dp"
-
-    >
+    app:cardCornerRadius="8dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- text view for our course name -->
         <TextView
-            style="@style/TextAppearance.Material3.HeadlineLarge"
             android:id="@+id/tv_module_name"
+            style="@style/TextAppearance.Material3.HeadlineLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="Logical Foundations"
+            android:text="@string/logical_foundations"
             android:textColor="@color/black"
             android:textSize="18sp" />
 
@@ -31,10 +28,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_module_name"
             android:padding="5dp"
-            android:text="MATH110"
+            android:text="@string/math110"
             android:textColor="@color/black" />
-
-
 
         <TextView
             android:id="@+id/tv_module_id"
@@ -42,8 +37,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_module_name"
             android:padding="2dp"
-            android:text="12sp"
-            android:visibility="invisible"
-            android:textColor="@color/black" />
+            android:text="@string/_1"
+            android:textColor="@color/black"
+            android:visibility="invisible" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

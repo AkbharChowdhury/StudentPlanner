@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.text.InputFilter;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -45,6 +46,7 @@ import java.util.stream.Collectors;
 public final class Helper {
     private static final String ellipses = "...";
     public static boolean changeStatus = false;
+    private static String ERROR_TAG = "ERROR";
 
 
     private Helper() {
@@ -94,7 +96,7 @@ public final class Helper {
             SimpleDateFormat formatter = new SimpleDateFormat("EEEE, MMM dd, yyyy", Locale.ENGLISH);
             return new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(Objects.requireNonNull(formatter.parse(dateStr)));
         } catch (ParseException e) {
-            System.out.println(e.getMessage());
+            Log.d(ERROR_TAG, e.getMessage());
 
         }
         return null;
@@ -141,8 +143,8 @@ public final class Helper {
         try {
             return new SimpleDateFormat("HH:mm", Locale.ENGLISH).format(Objects.requireNonNull(pattern.parse(time)));
 
-        } catch (ParseException pe) {
-            pe.printStackTrace();
+        } catch (ParseException e) {
+            Log.d(ERROR_TAG, e.getMessage());
         }
         return null;
     }
@@ -316,30 +318,15 @@ public final class Helper {
                 sb.append(nextLine);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.d(ERROR_TAG, e.getMessage());
         }
         return sb.toString();
     }
 
 
-    public static void setMinTimeStatus(BoundTimePickerDialog deadlineTimePicker, LocalDate date) {
-        LocalDate today = LocalDate.now();
-        deadlineTimePicker.setMinTimeToNow(false);
-
-        if (date.isEqual(today)) {
-            deadlineTimePicker.setMinTimeToNow(true);
-        } else if (date.isAfter(today)) {
-            deadlineTimePicker.setMinTimeToNow(false);
-
-        }
-
-    }
-
-
-
-    public static void deadlineSetup(BoundTimePickerDialog deadlineTimePicker, LocalDate localDate) {
-
-        Helper.setMinTimeStatus(deadlineTimePicker, localDate);
+    public static void deadlineSetup(BoundTimePickerDialog deadlineTimePicker, LocalDate date) {
+        // set min time status
+        deadlineTimePicker.setMinTimeToNow(date.isEqual(LocalDate.now()));
     }
 
     public static String getSnippet(String str, int length) {
@@ -380,7 +367,8 @@ public final class Helper {
         FilterArray[0] = new InputFilter.LengthFilter(length);
         editText.setFilters(FilterArray);
     }
-    public static String getSpinnerText(Spinner spinner, int position){
+
+    public static String getSpinnerText(Spinner spinner, int position) {
         return spinner.getAdapter().getItem(position).toString();
 
     }

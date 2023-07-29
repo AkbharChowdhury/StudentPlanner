@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setupNavDrawer(savedInstanceState);
         showStudentDetails();
 
-//        Helper.goToActivity(this, AddCourseworkActivity.class);
 
     }
 

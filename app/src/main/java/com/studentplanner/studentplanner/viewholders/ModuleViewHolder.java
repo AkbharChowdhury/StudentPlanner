@@ -10,18 +10,18 @@ import com.studentplanner.studentplanner.databinding.ModuleRowBinding;
 import com.studentplanner.studentplanner.models.Module;
 
 public class ModuleViewHolder extends RecyclerView.ViewHolder {
-    private final TextView tvModuleID;
-    private final TextView tvModuleCode;
-    private final TextView tvModuleName;
+    private final TextView moduleID;
+    private final TextView moduleCode;
+    private final TextView moduleName;
 
     private final CardView layout;
 
 
     public ModuleViewHolder(@NonNull ModuleRowBinding binding) {
         super(binding.getRoot());
-        tvModuleID = binding.tvModuleId;
-        tvModuleName = binding.tvModuleName;
-        tvModuleCode = binding.tvModuleCode;
+        moduleID = binding.tvModuleId;
+        moduleName = binding.tvModuleName;
+        moduleCode = binding.tvModuleCode;
         layout = binding.layout;
 
     }
@@ -32,9 +32,9 @@ public class ModuleViewHolder extends RecyclerView.ViewHolder {
 
     public void showDetails(Module module){
 
-        tvModuleID.setText(String.valueOf(module.getModuleID()));
-        tvModuleName.setText(module.getModuleName());
-        tvModuleCode.setText(module.getModuleCode());
+        moduleID.setText(String.valueOf(module.getModuleID()));
+        moduleName.setText(module.getModuleName());
+        moduleCode.setText(module.getModuleCode());
 
     }
 

@@ -6,9 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:elevation="8dp"
-    app:cardCornerRadius="8dp"
-
-    >
+    app:cardCornerRadius="8dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -21,7 +19,7 @@
             android:layout_height="wrap_content"
             android:padding="8dp"
 
-            android:text="COMP1421: Web App"
+            android:text="@string/comp1421_web_app"
             android:textColor="@color/black"
             android:textSize="18sp" />
 
@@ -41,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/imgTeacher"
             android:padding="5dp"
-            android:text="Sam Smith, John Doe"
+            android:text="@string/teachers"
             android:textColor="@color/black" />
 
 
@@ -51,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_module"
             android:padding="2dp"
-            android:text="12sp"
+            android:text="@string/_1"
             android:textColor="@color/black"
             android:visibility="invisible" />
     </RelativeLayout>

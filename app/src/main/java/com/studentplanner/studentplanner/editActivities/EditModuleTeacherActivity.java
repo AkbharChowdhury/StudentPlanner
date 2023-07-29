@@ -5,7 +5,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,7 +28,7 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_module_teacher);
+        setContentView(R.layout.listview);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         db = DatabaseHelper.getInstance(this);
@@ -38,9 +37,7 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
         List<String> teacherNames = getTeacher();
         String[] myTeachers = Helper.convertArrayListStringToStringArray(teacherNames);
 
-        listView = findViewById(R.id.listview_data_edit);
-
-
+        listView = findViewById(R.id.listview);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_multiple_choice,
@@ -99,14 +96,12 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
         });
 
 
-
         return selectedTeacherIds;
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.checkbox_menu, menu);
-
         return true;
     }
 

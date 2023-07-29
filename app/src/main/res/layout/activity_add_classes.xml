@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".addActivities.AddClassesActivity">
 
 
@@ -25,13 +25,11 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtModuleErrorClasses"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:hint="@string/module"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
-
-            >
+            android:hint="@string/module">
 
             <AutoCompleteTextView
                 android:id="@+id/txtModuleClasses"
@@ -46,11 +44,11 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtSemesterErrorClasses"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:hint="@string/semester"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+            android:hint="@string/semester">
 
             >
 
@@ -68,11 +66,11 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtDayError"
 
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:hint="@string/day"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+            android:hint="@string/day">
 
             >
 
@@ -89,12 +87,12 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtStartTimeError"
-            app:startIconDrawable="@drawable/baseline_access_time_24"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:hint="@string/start"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+            app:startIconDrawable="@drawable/baseline_access_time_24">
 
             >
 
@@ -111,13 +109,13 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtEndTimeError"
-            app:startIconDrawable="@drawable/baseline_access_time_24"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:hint="@string/end"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+            app:startIconDrawable="@drawable/baseline_access_time_24">
 
             >
 
@@ -130,8 +128,6 @@
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
-
-
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -155,24 +151,19 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtClassTypeError"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:hint="@string/select_class_type"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
-
-            >
+            android:hint="@string/select_class_type">
 
             <AutoCompleteTextView
                 android:id="@+id/txtClassType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"
-
-                />
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

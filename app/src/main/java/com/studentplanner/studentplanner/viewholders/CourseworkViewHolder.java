@@ -30,14 +30,14 @@ import java.util.Locale;
 
 public class CourseworkViewHolder extends RecyclerView.ViewHolder {
     private final TextView tvCourseworkID;
-    private final TextView tvCourseworkTitle;
-    private final TextView tvCourseworkDescription;
+    private final TextView title;
+    private final TextView description;
     private final TextView tvDeadline;
-    private final TextView tvPriority;
-    private final TextView tvTimeLeft;
+    private final TextView priority;
+    private final TextView timeLeft;
     private final TextView tvCourseworkModule;
-    private final TextView tvCourseworkCompleted;
-    private final ImageView tvImage;
+    private final TextView tvCompleted;
+    private final ImageView image;
     private final CardView layout;
     private final DatabaseHelper db;
     private final Context context;
@@ -49,15 +49,15 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
     public CourseworkViewHolder(@NonNull CourseworkRowBinding binding) {
         super(binding.getRoot());
         tvCourseworkID = binding.tvCourseworkId;
-        tvCourseworkTitle = binding.tvCourseworkTitle;
-        tvCourseworkDescription = binding.tvCourseworkDesc;
+        title = binding.tvCourseworkTitle;
+        description = binding.tvCourseworkDesc;
         tvDeadline = binding.tvCourseworkDeadline;
-        tvPriority = binding.tvCourseworkPriority;
-        tvTimeLeft = binding.tvTimeLeft;
+        priority = binding.tvCourseworkPriority;
+        timeLeft = binding.tvTimeLeft;
         tvCourseworkModule = binding.tvCourseworkModule;
-        tvCourseworkCompleted = binding.tvCourseworkCompleted;
+        tvCompleted = binding.tvCourseworkCompleted;
 
-        tvImage = binding.tvCourseworkImage;
+        image = binding.tvCourseworkImage;
         layout = binding.layout;
 
         context = binding.getRoot().getContext();
@@ -70,19 +70,19 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
         LocalDate deadline = LocalDate.parse(coursework.getDeadline());
 
         tvCourseworkID.setText(String.valueOf(coursework.getCourseworkID()));
-        tvCourseworkTitle.setText(getSnippet(WordUtils.capitalizeFully(coursework.getTitle())));
+        title.setText(getSnippet(WordUtils.capitalizeFully(coursework.getTitle())));
 
         showDescription(getSnippet(coursework.getDescription(), 120));
 
         tvDeadline.setText(showDeadlineDetails(coursework));
-        tvPriority.setText(coursework.getPriority());
-        tvPriority.setTextColor(Helper.getPriorityColour(coursework.getPriority(), context));
+        priority.setText(coursework.getPriority());
+        priority.setTextColor(Helper.getPriorityColour(coursework.getPriority(), context));
         tvCourseworkModule.setText(module.getModuleDetails());
-        tvCourseworkCompleted.setText(coursework.isCompleted() ? COMPLETED : NOT_COMPLETED);
-        tvCourseworkCompleted.setTextColor(coursework.isCompleted() ? context.getColor(R.color.dark_green) : Color.RED);
+        tvCompleted.setText(coursework.isCompleted() ? COMPLETED : NOT_COMPLETED);
+        tvCompleted.setTextColor(coursework.isCompleted() ? context.getColor(R.color.dark_green) : Color.RED);
 
         showTimeLeft(deadline, coursework);
-        ImageHandler.showImage(coursework.getByteImage(), tvImage);
+        ImageHandler.showImage(coursework.getByteImage(), image);
 
 
     }
@@ -92,21 +92,21 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
 
         final String timeLeft = Helper.calcDeadlineDate(deadline, coursework.isCompleted());
         if (!timeLeft.isBlank()) {
-            tvTimeLeft.setText(timeLeft);
-            tvTimeLeft.setTextColor(Helper.getPriorityColour(coursework.getPriority(), context));
+            this.timeLeft.setText(timeLeft);
+            this.timeLeft.setTextColor(Helper.getPriorityColour(coursework.getPriority(), context));
             return;
         }
-        tvTimeLeft.setVisibility(View.GONE);
+        this.timeLeft.setVisibility(View.GONE);
     }
 
 
     private void showDescription(final String description) {
         if (isBlank(description)) {
-            tvCourseworkDescription.setVisibility(View.GONE);
+            this.description.setVisibility(View.GONE);
             return;
         }
-        tvCourseworkDescription.setVisibility(View.VISIBLE);
-        tvCourseworkDescription.setText(description);
+        this.description.setVisibility(View.VISIBLE);
+        this.description.setText(description);
 
     }
 

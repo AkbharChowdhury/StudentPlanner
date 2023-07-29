@@ -248,6 +248,15 @@
     <string name="semester_added">Semester Added</string>
     <string name="teacher_added">Teacher added</string>
     <string name="_11_00">11:00</string>
+    <string name="remove_image">Remove Image</string>
+    <string name="logical_foundations">Logical Foundations</string>
+    <string name="math110">MATH110</string>
+    <string name="_1">1</string>
+    <string name="comp1421_web_app">COMP1421: Web App</string>
+    <string name="teachers">Sam Smith, John Doe</string>
+    <string name="sam">Sam</string>
+    <string name="example_gmail_com">example@gmail.com</string>
+    <string name="item_1">Item 1</string>
 
 
 </resources>
