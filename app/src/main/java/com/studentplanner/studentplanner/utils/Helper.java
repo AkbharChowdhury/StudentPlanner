@@ -128,10 +128,7 @@ public final class Helper {
     }
 
     public static String formatTime(String time) {
-        String timePattern = "hh:mm a";
-        LocalTime localTime = LocalTime.parse(time);
-        DateTimeFormatter timeColonFormatter = DateTimeFormatter.ofPattern(timePattern);
-        return timeColonFormatter.format(localTime);
+        return DateTimeFormatter.ofPattern("hh:mm a").format(LocalTime.parse(time));
     }
 
     public static String formatTimeShort(String time) {
@@ -145,7 +142,7 @@ public final class Helper {
             return new SimpleDateFormat("HH:mm", Locale.ENGLISH).format(Objects.requireNonNull(pattern.parse(time)));
 
         } catch (ParseException e) {
-            Log.d(ERROR_TAG, e.getMessage());
+            Log.d(ERROR_TAG, Objects.requireNonNull(e.getMessage()));
         }
         return null;
     }
@@ -164,7 +161,6 @@ public final class Helper {
             if (i % 7 == 0) {
                 daysWeek.add(i);
             }
-
         }
         return daysWeek;
     }
@@ -373,7 +369,8 @@ public final class Helper {
         return spinner.getAdapter().getItem(position).toString();
 
     }
-    public static List<DayOfWeek> weekends(){
+
+    public static List<DayOfWeek> weekends() {
         return Arrays.asList(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY);
     }
 

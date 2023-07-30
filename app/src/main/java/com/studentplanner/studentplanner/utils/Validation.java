@@ -103,12 +103,13 @@ public final class Validation {
         return !errors.contains(true);
 
     }
+
     public boolean isValidDueTime(AutoCompleteTextView txtDeadline, TextInputLayout txtTimeError, AutoCompleteTextView txtDeadlineTime) {
 
         LocalDate date = LocalDate.parse(Helper.convertFUllDateToYYMMDD(Helper.trimStr(txtDeadline)));
         LocalTime time = LocalTime.parse(Helper.convertFormattedTimeToDBFormat(txtDeadlineTime.getText().toString()));
 
-        if (date.isEqual(LocalDate.now()) && time.isBefore(LocalTime.now())){
+        if (date.isEqual(LocalDate.now()) && time.isBefore(LocalTime.now())) {
             txtTimeError.setError(context.getString(R.string.time_error));
             return true;
 
@@ -118,12 +119,10 @@ public final class Validation {
     }
 
 
-
     public boolean validateEditCourseworkForm(Coursework errorFields) {
         List<Boolean> errors = new ArrayList<>();
 
         errors.add(isEmpty(errorFields.getTxtTitle(), "Title"));
-
         errors.add(isPastDate(errorFields.getTxtDeadline(), errorFields.getTxtDeadlineError()));
 
         boolean isValidDueTime = isValidDueTime(
@@ -200,7 +199,7 @@ public final class Validation {
         errors.add(isValidEmail(student.getTxtEmail()));
         errors.add(isValidPassword(txtPassword));
         errors.add(isPassword8Chars(txtPassword));
-        if (!txtPhone.getText().toString().isEmpty()){
+        if (!txtPhone.getText().toString().isEmpty()) {
             errors.add(isValidPhone(txtPhone));
 
         }
@@ -234,19 +233,21 @@ public final class Validation {
         textField.setError(null);
         return true;
     }
-    private String phoneLength(final int length){
+
+    private String phoneLength(final int length) {
         return String.format(Locale.ENGLISH, context.getString(R.string.phone_error), WordUtils.capitalize(StudentTable.COLUMN_PHONE), length);
 
     }
+
     private boolean isValidPhone(EditText textField) {
 
         String phone = textField.getText().toString();
         List<String> phoneErrors = new ArrayList<>();
         final String ZERO = "0";
-        if (phone.startsWith(ZERO) && phone.length() < 11){
+        if (phone.startsWith(ZERO) && phone.length() < 11) {
             phoneErrors.add(phoneLength(11));
         }
-        if (!phone.startsWith(ZERO) && phone.length() < 10){
+        if (!phone.startsWith(ZERO) && phone.length() < 10) {
             phoneErrors.add(phoneLength(10));
         }
 
@@ -255,7 +256,7 @@ public final class Validation {
             textField.setError(null);
 
             StringBuilder sb = new StringBuilder();
-            phoneErrors.forEach(error ->  sb.append(error).append("\n"));
+            phoneErrors.forEach(error -> sb.append(error).append("\n"));
 
             String errorMessages = sb.toString();
             if (!errorMessages.isEmpty()) {
@@ -268,6 +269,7 @@ public final class Validation {
         textField.setError(null);
         return true;
     }
+
     private String getPasswordMinLengthError(String fieldName, int minLength) {
         return String.format(context.getString(R.string.password_min_error), fieldName, minLength);
     }
@@ -329,6 +331,7 @@ public final class Validation {
         textField.setError(null);
         return true;
     }
+
     private boolean isValidTeacherEmail(TextInputLayout textField) {
 
         String email = Helper.trimStr(textField);
@@ -429,7 +432,8 @@ public final class Validation {
 
         return !errorList.contains(true);
     }
-    private String getString(int resId){
+
+    private String getString(int resId) {
         return context.getString(resId);
     }
 
@@ -455,6 +459,7 @@ public final class Validation {
         return !errors.contains(false);
 
     }
+
     public boolean validateEditTeacherForm(Teacher teacher, String excludedEmail) {
         List<Boolean> errors = new ArrayList<>();
         setAdditionalCheck = true;

@@ -7,6 +7,7 @@ import android.widget.AutoCompleteTextView;
 import com.studentplanner.studentplanner.R;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class Dropdown {
     private Dropdown(){
@@ -42,7 +43,6 @@ public final class Dropdown {
 
 
     public static int getDropDownID(final int id, final List<Integer> list) {
-
         for (int i = 0; i < list.size(); i++) {
             if (id == list.get(i)) {
                 return i;
