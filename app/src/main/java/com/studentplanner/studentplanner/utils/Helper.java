@@ -47,7 +47,7 @@ import java.util.stream.Collectors;
 public final class Helper {
     private static final String ellipses = "...";
     public static boolean changeStatus = false;
-    private static String ERROR_TAG = "ERROR";
+    private static final String ERROR_TAG = "ERROR";
 
 
     private Helper() {
