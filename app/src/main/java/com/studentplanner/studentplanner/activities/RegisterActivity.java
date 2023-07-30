@@ -4,6 +4,7 @@ import static com.studentplanner.studentplanner.utils.Helper.setEditTextMaxLengt
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -57,30 +58,29 @@ public class RegisterActivity extends AppCompatActivity {
         alertDialogFragment = new AlertDialogFragment(this);
         findTextFields();
 
-
         terms = binding.checkboxTermsConditions;
         binding.btnTermsConditions.setOnClickListener(v -> alertDialogFragment.showTermsAndConditions());
-        binding.btnRegister.setOnClickListener(v -> {
+        binding.btnRegister.setOnClickListener(v -> handleRegisterClick());
+    }
 
 
-            Student student = new Student(txtFirstName, txtLastName, txtEmail, txtPassword);
-            student.setTxtUserPhone(txtPhone);
-            if (form.validateRegisterForm(student)) {
-                if (!terms.isChecked()) {
-                    alertDialogFragment.showTermsPolicyError();
-                    return;
-                }
+    private void handleRegisterClick(){
+        Student student = new Student(txtFirstName, txtLastName, txtEmail, txtPassword);
+        student.setTxtUserPhone(txtPhone);
 
-                if (db.registerStudent(getStudentDetails())) {
-                    Helper.longToastMessage(this, getString(R.string.account_created));
-                    finish();
-                    return;
-                }
-                Helper.longToastMessage(context, getString(R.string.create_account_error));
+        if (!form.validateRegisterForm(student)) return;
+        if (!terms.isChecked()) {
+            alertDialogFragment.showTermsPolicyError();
+            return;
+        }
 
-            }
+        if (db.registerStudent(getStudentDetails())) {
+            Helper.longToastMessage(this, getString(R.string.account_created));
+            finish();
+            return;
+        }
+        Helper.longToastMessage(context, getString(R.string.create_account_error));
 
-        });
     }
 
     private void findTextFields() {
@@ -109,15 +109,25 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     private Student getStudentDetails() {
-        return new Student(
-                Helper.trimStr(txtFirstName),
-                Helper.trimStr(txtLastName),
-                Helper.trimStr(txtEmail),
-                MessageFormat.format("{0}{1}", countryCodePicker.getSelectedCountryCodeWithPlus(), txtPhone.getText().toString()),
-                Helper.trimStr(txtPassword, false)
-        );
+        String phone = txtPhone.getText().toString();
+        if (!phone.isBlank()){
+            return new Student(
+                    Helper.trimStr(txtFirstName),
+                    Helper.trimStr(txtLastName),
+                    Helper.trimStr(txtEmail),
+                    MessageFormat.format("{0}{1}", countryCodePicker.getSelectedCountryCodeWithPlus(), txtPhone.getText().toString()),
+                    Helper.trimStr(txtPassword, false)
+            );
 
+        } else {
+            return new Student(
+                    Helper.trimStr(txtFirstName),
+                    Helper.trimStr(txtLastName),
+                    Helper.trimStr(txtEmail),
+                    Helper.trimStr(txtPassword, false)
+            );
 
+        }
     }
 
     private void updatePasswordStrengthView(String password) {
@@ -132,6 +142,7 @@ public class RegisterActivity extends AppCompatActivity {
         new PasswordValidator(context, progressBar).getProgressBarStatus(strength, strengthView);
 
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 

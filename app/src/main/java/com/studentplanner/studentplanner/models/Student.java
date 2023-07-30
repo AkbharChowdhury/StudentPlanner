@@ -51,6 +51,11 @@ public final class Student extends User {
         this.password = password;
     }
 
+    public Student(String firstname, String lastname, String email, String password) {
+        super(firstname, lastname, email);
+        this.password = password;
+    }
+
     public String getPassword() {
         return password;
     }
