@@ -19,7 +19,6 @@ public class AddModuleActivity extends AppCompatActivity {
     private TextInputLayout txtModuleCode;
     private TextInputLayout txtModuleName;
     private Validation form;
-    private ActivityAddModuleBinding binding;
 
 
     @Override
@@ -28,7 +27,7 @@ public class AddModuleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_module);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        binding = ActivityAddModuleBinding.inflate(getLayoutInflater());
+        ActivityAddModuleBinding binding = ActivityAddModuleBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         db = DatabaseHelper.getInstance(this);
@@ -36,19 +35,17 @@ public class AddModuleActivity extends AppCompatActivity {
 
         txtModuleCode = binding.txtModuleCode;
         txtModuleName = binding.txtModuleName;
+        binding.btnAddModule.setOnClickListener(v -> handleAddModuleClick());
 
-        binding.btnAddModule.setOnClickListener(v -> {
-            Module module = getModuleDetails();
-            if (!form.validateAddModuleForm(module)) return;
-            if (db.addModule(module)) {
-                Helper.longToastMessage(this, getString(R.string.module_added));
-                setResult(RESULT_OK);
-                finish();
-            }
-
-
-        });
-
+    }
+    private void handleAddModuleClick(){
+        Module module = getModuleDetails();
+        if (!form.validateAddModuleForm(module)) return;
+        if (db.addModule(module)) {
+            Helper.longToastMessage(this, getString(R.string.module_added));
+            setResult(RESULT_OK);
+            finish();
+        }
     }
 
     private Module getModuleDetails() {
