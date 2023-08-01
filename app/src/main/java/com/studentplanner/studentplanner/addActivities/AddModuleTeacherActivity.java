@@ -22,7 +22,6 @@ import java.util.List;
 public class AddModuleTeacherActivity extends AppCompatActivity {
     private ActivityAddModuleTeacherBinding binding;
     private AutoCompleteTextView txtModules;
-    List<Module> moduleList;
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -38,13 +37,11 @@ public class AddModuleTeacherActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         DatabaseHelper db = DatabaseHelper.getInstance(this);
-        moduleList = db.getModuleClassesAdd();
         txtModules = binding.txtModuleAddTeacher;
-
         txtModules.setText(R.string.select_module);
-        getModulesList();
+        getModulesList(db.getModuleClassesAdd());
     }
-    private void getModulesList() {
+    private void getModulesList( List<Module> moduleList) {
         final List<String> items = Module.populateDropdown(moduleList);
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item, items);
         txtModules.setAdapter(adapter);

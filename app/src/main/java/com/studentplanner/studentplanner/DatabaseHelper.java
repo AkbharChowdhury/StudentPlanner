@@ -685,7 +685,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         int studentID = AccountPreferences.getStudentID(context);
         List<Module> list = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        final String SQL = "SELECT * FROM modules WHERE module_id NOT IN (SELECT  module_id  FROM module_teacher) AND student_id = ?";
+        final String SQL = "SELECT * FROM modules WHERE module_id NOT IN (SELECT module_id FROM module_teacher) AND student_id = ?";
         try (Cursor cursor = db.rawQuery(SQL, new String[]{String.valueOf(studentID)});) {
             if (!isCursorEmpty(cursor)) {
                 while (cursor.moveToNext()) {
