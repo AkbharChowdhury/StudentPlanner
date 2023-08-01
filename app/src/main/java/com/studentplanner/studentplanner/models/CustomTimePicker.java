@@ -24,6 +24,4 @@ public class CustomTimePicker {
         this.selectedHour = selectedHour;
         this.selectedMinute = selectedMinute;
     }
-
-
 }
