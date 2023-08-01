@@ -1,20 +1,18 @@
 package com.studentplanner.studentplanner.addActivities;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
-import com.studentplanner.studentplanner.databinding.ActivityAddCourseworkBinding;
 import com.studentplanner.studentplanner.databinding.ActivityAddModuleTeacherBinding;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.tables.ModuleTable;
@@ -24,7 +22,6 @@ import java.util.List;
 public class AddModuleTeacherActivity extends AppCompatActivity {
     private ActivityAddModuleTeacherBinding binding;
     private AutoCompleteTextView txtModules;
-    private DatabaseHelper db;
     List<Module> moduleList;
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -40,7 +37,7 @@ public class AddModuleTeacherActivity extends AppCompatActivity {
         binding = ActivityAddModuleTeacherBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        db = DatabaseHelper.getInstance(this);
+        DatabaseHelper db = DatabaseHelper.getInstance(this);
         moduleList = db.getModuleClassesAdd();
         txtModules = binding.txtModuleAddTeacher;
 

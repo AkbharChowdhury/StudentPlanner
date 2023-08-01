@@ -3,7 +3,6 @@ package com.studentplanner.studentplanner.addActivities;
 import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.widget.ArrayAdapter;
@@ -17,7 +16,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.databinding.ActivityAddClassesBinding;
-
 import com.studentplanner.studentplanner.enums.TimePickerType;
 import com.studentplanner.studentplanner.models.Classes;
 import com.studentplanner.studentplanner.models.CustomTimePicker;
@@ -60,8 +58,8 @@ public class AddClassesActivity extends AppCompatActivity implements TimePickerD
 
     private BoundTimePickerDialog startTimePicker;
     private BoundTimePickerDialog endTimePicker;
-    private CustomTimePicker startCustomTimePicker = new CustomTimePicker(LocalTime.now().getHour(), LocalTime.now().getMinute());
-    private CustomTimePicker endCustomTimePicker = new CustomTimePicker(LocalTime.now().getHour(), LocalTime.now().getMinute());
+    private final CustomTimePicker startCustomTimePicker = new CustomTimePicker(LocalTime.now().getHour(), LocalTime.now().getMinute());
+    private final CustomTimePicker endCustomTimePicker = new CustomTimePicker(LocalTime.now().getHour(), LocalTime.now().getMinute());
 
 
     @Override
@@ -134,9 +132,6 @@ public class AddClassesActivity extends AppCompatActivity implements TimePickerD
         txtClassType.setText(getString(R.string.select_class_type));
         txtStartTime.setText(getString(R.string.select_start_time));
         txtEndTime.setText(getString(R.string.select_end_time));
-
-
-
     }
 
     private Classes getClassDetails() {

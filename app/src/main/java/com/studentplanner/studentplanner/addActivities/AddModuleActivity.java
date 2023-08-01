@@ -1,16 +1,15 @@
 package com.studentplanner.studentplanner.addActivities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.databinding.ActivityAddModuleBinding;
-import com.studentplanner.studentplanner.fragments.ModuleFragment;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.utils.Helper;
 import com.studentplanner.studentplanner.utils.Validation;
