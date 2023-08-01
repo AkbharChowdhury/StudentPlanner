@@ -257,6 +257,7 @@
     <string name="sam">Sam</string>
     <string name="example_gmail_com">example@gmail.com</string>
     <string name="item_1">Item 1</string>
+    <string name="_12_00">12:00</string>
 
 
 </resources>
