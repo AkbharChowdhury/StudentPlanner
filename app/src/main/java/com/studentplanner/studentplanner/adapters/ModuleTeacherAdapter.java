@@ -9,7 +9,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.databinding.ModuleTeacherRowBinding;
 import com.studentplanner.studentplanner.editActivities.EditModuleTeacherActivity;
 import com.studentplanner.studentplanner.models.ModuleTeacher;

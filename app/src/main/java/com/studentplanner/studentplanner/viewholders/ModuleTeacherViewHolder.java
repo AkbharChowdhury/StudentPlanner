@@ -13,7 +13,7 @@ import com.studentplanner.studentplanner.models.ModuleTeacher;
 import com.studentplanner.studentplanner.utils.Helper;
 
 public class ModuleTeacherViewHolder extends RecyclerView.ViewHolder{
-    private final TextView tvModuleId;
+    private final TextView moduleID;
 
     private final TextView tvModule;
     private final TextView tvTeachers;
@@ -26,7 +26,7 @@ public class ModuleTeacherViewHolder extends RecyclerView.ViewHolder{
 
     public ModuleTeacherViewHolder(@NonNull ModuleTeacherRowBinding binding) {
         super(binding.getRoot());
-        tvModuleId = binding.tvModuleIdTeacher;
+        moduleID = binding.tvModuleIdTeacher;
         tvModule = binding.tvModule;
         tvTeachers = binding.tvModulesTeachers;
         layout = binding.layout;
@@ -35,7 +35,7 @@ public class ModuleTeacherViewHolder extends RecyclerView.ViewHolder{
     public void showDetails(ModuleTeacher model, int position){
         Module module = db.getSelectedModule(model.moduleID());
         String teachers = Helper.getModuleTeachersList(position, db);
-        tvModuleId.setText(String.valueOf(model.moduleID()));
+        moduleID.setText(String.valueOf(model.moduleID()));
         tvModule.setText(module.getModuleDetails());
         tvTeachers.setText(teachers);
     }
