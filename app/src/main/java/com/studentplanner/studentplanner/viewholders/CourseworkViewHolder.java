@@ -31,10 +31,10 @@ import java.util.Locale;
 public class CourseworkViewHolder extends RecyclerView.ViewHolder {
     private final TextView tvCourseworkID;
     private final TextView title;
-    private final TextView description;
+    private final TextView tvDescription;
     private final TextView tvDeadline;
     private final TextView priority;
-    private final TextView timeLeft;
+    private final TextView tvTimeLeft;
     private final TextView tvCourseworkModule;
     private final TextView tvCompleted;
     private final ImageView image;
@@ -50,10 +50,10 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
         super(binding.getRoot());
         tvCourseworkID = binding.tvCourseworkId;
         title = binding.tvCourseworkTitle;
-        description = binding.tvCourseworkDesc;
+        tvDescription = binding.tvCourseworkDesc;
         tvDeadline = binding.tvCourseworkDeadline;
         priority = binding.tvCourseworkPriority;
-        timeLeft = binding.tvTimeLeft;
+        tvTimeLeft = binding.tvTimeLeft;
         tvCourseworkModule = binding.tvCourseworkModule;
         tvCompleted = binding.tvCourseworkCompleted;
 
@@ -92,21 +92,21 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
 
         final String timeLeft = Helper.calcDeadlineDate(deadline, coursework.isCompleted());
         if (!timeLeft.isBlank()) {
-            this.timeLeft.setText(timeLeft);
-            this.timeLeft.setTextColor(Helper.getPriorityColour(coursework.getPriority(), context));
+            tvTimeLeft.setText(timeLeft);
+            tvTimeLeft.setTextColor(Helper.getPriorityColour(coursework.getPriority(), context));
             return;
         }
-        this.timeLeft.setVisibility(View.GONE);
+        tvTimeLeft.setVisibility(View.GONE);
     }
 
 
     private void showDescription(final String description) {
         if (isBlank(description)) {
-            this.description.setVisibility(View.GONE);
+            tvDescription.setVisibility(View.GONE);
             return;
         }
-        this.description.setVisibility(View.VISIBLE);
-        this.description.setText(description);
+        tvDescription.setVisibility(View.VISIBLE);
+        tvDescription.setText(description);
 
     }
 
