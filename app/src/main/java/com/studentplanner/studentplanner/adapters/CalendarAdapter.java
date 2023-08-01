@@ -1,6 +1,5 @@
 package com.studentplanner.studentplanner.adapters;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,13 +10,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.studentplanner.studentplanner.databinding.CalendarCellBinding;
-import com.studentplanner.studentplanner.viewholders.CalendarViewHolder;
 import com.studentplanner.studentplanner.DatabaseHelper;
+import com.studentplanner.studentplanner.databinding.CalendarCellBinding;
 import com.studentplanner.studentplanner.enums.EventType;
 import com.studentplanner.studentplanner.interfaces.OnItemListener;
 import com.studentplanner.studentplanner.models.Event;
 import com.studentplanner.studentplanner.utils.CalendarUtils;
+import com.studentplanner.studentplanner.viewholders.CalendarViewHolder;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
