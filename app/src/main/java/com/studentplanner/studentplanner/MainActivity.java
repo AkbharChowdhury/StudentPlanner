@@ -40,9 +40,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-        String exists = getString(R.string.class_exists);
-        Log.d("IsssD", exists);
-        Helper.longToastMessage(this, exists);
         setContentView(binding.getRoot());
 
         db = DatabaseHelper.getInstance(this);

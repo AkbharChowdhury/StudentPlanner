@@ -217,8 +217,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         String[] selectionArgs = {fieldValue};
         // select the email field and compare it to the entered email
         try (Cursor cursor = db.query(table, columns, selection, selectionArgs, null, null, null)) {
-            int cursorCount = cursor.getCount();
-            return cursorCount > 0;
+            return cursor.getCount() > 0;
         } catch (Exception e) {
             Log.d(ERROR_TAG, getErrorMessage(e));
             Log.d(ERROR_TAG, getErrorMessage(e));
@@ -1175,7 +1174,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     public int getCourseworkCountByDate(LocalDate deadlineDate) {
 
         SQLiteDatabase db = getReadableDatabase();
-        int count = 0;
         final String SQL = """
                 SELECT
                   COUNT (deadline)
@@ -1197,14 +1195,14 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
-                count = cursor.getInt(0);
+                return cursor.getInt(0);
             }
         } catch (Exception e) {
 
             Log.d(ERROR_TAG, getErrorMessage(e));
 
         }
-        return count;
+        return 0;
 
 
     }
