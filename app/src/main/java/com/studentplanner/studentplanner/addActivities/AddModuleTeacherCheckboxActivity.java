@@ -23,23 +23,17 @@ import java.util.Locale;
 public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
     private DatabaseHelper db;
     private ListView listView;
-    private List<Teacher> teachers;
-//    private ActivityAddModuleTeacherCheckboxBinding binding;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        binding = ActivityAddModuleTeacherCheckboxBinding.inflate(getLayoutInflater());
         setContentView(R.layout.listview);
 
-
-
         db = DatabaseHelper.getInstance(this);
-        teachers = db.getTeachers();
         setActivityTitle();
 
-        List<String> teacherNames = getTeacher();
+        List<String> teacherNames = getTeacher(db.getTeachers());
         String[] myTeachers = Helper.convertArrayListStringToStringArray(teacherNames);
 
         listView = findViewById(R.id.listview);
@@ -67,7 +61,7 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
 
 
 
-    private List<String> getTeacher() {
+    private List<String> getTeacher(List<Teacher> teachers) {
         List<String> teacherArray = new ArrayList<>();
         for (Teacher teacher : teachers) {
             teacherArray.add(String.format("%s %s", teacher.getFirstname(), teacher.getLastname()));
@@ -86,8 +80,6 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
 
         return selectedTeacherIds;
     }
-
-
 
 
     @Override
