@@ -280,14 +280,11 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         int studentID = AccountPreferences.getStudentID(context);
         String[] columns = {ModuleTable.COLUMN_MODULE_C0DE, ModuleTable.COLUMN_STUDENT_ID};
         SQLiteDatabase db = getReadableDatabase();
-        // selection criteria
         String selection = ModuleTable.COLUMN_MODULE_C0DE + " LIKE ?" + " AND " + ModuleTable.COLUMN_STUDENT_ID + " = ?";
         String[] selectionArgs = {moduleCode, String.valueOf(studentID)};
 
         try (Cursor cursor = db.query(ModuleTable.TABLE_NAME, columns, selection, selectionArgs, null, null, null)) {
-
             return cursor.getCount() > 0;
-
         } catch (Exception e) {
             Log.d(ERROR_TAG, getErrorMessage(e));
             return false;
@@ -302,10 +299,11 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         int studentID = AccountPreferences.getStudentID(context);
         SQLiteDatabase db = getReadableDatabase();
 
-        try (Cursor cursor = db.rawQuery("""
+        try (Cursor cursor = db.rawQuery(
+                """
                 SELECT
                   COUNT(*) class_exists
-                                                            
+                                                          
                 FROM classes c
                 JOIN modules m
                   ON m.module_id = c.module_id
@@ -313,13 +311,12 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 AND c.module_id = ?
                 AND semester_id = ?
                 AND type = ?
-                """, new String[]{
+                """,
+                new String[]{
                 String.valueOf(studentID),
                 String.valueOf(moduleID),
                 String.valueOf(semesterID),
                 type,
-
-
         })) {
             if (cursor.moveToFirst()) {
                 return cursor.getInt(0) > 0;
