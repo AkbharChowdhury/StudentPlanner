@@ -1,7 +1,6 @@
 package com.studentplanner.studentplanner;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -10,15 +9,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-
+import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.navigation.NavigationView;
 import com.studentplanner.studentplanner.databinding.ActivityMainBinding;
 import com.studentplanner.studentplanner.databinding.NavHeaderBinding;
 import com.studentplanner.studentplanner.fragments.LoginFragment;
 import com.studentplanner.studentplanner.fragments.ReminderFragment;
+import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.utils.AccountPreferences;
 import com.studentplanner.studentplanner.utils.FragmentHandler;
-import com.studentplanner.studentplanner.utils.Helper;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
@@ -44,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         db = DatabaseHelper.getInstance(this);
         studentID = AccountPreferences.getStudentID(this);
+
 //        Module.addDefaultModules(this);
         setupNavDrawer(savedInstanceState);
         showStudentDetails();
@@ -63,7 +63,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void setupNavDrawer(Bundle savedInstanceState) {
-        androidx.appcompat.widget.Toolbar toolbar = binding.toolbar;
+        Toolbar toolbar = binding.toolbar;
+
         setSupportActionBar(toolbar);
 
         drawer = binding.drawerLayout;
