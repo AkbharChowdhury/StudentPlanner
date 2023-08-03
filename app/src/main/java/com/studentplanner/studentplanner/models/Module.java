@@ -27,16 +27,8 @@ public class Module implements Searchable {
         return txtModuleCode;
     }
 
-    public void setTxtModuleCode(TextInputLayout txtModuleCode) {
-        this.txtModuleCode = txtModuleCode;
-    }
-
     public TextInputLayout getTxtModuleName() {
         return txtModuleName;
-    }
-
-    public void setTxtModuleName(TextInputLayout txtModuleName) {
-        this.txtModuleName = txtModuleName;
     }
 
 
@@ -62,16 +54,10 @@ public class Module implements Searchable {
         return moduleName;
     }
 
-    public static ArrayList<String> populateDropdown(List<Module> list){
-        ArrayList<String> items = new ArrayList<>();
-        if (list.size() > 0) {
-            for (Module m : list) {
-                items.add(String.format("%s %s", m.getModuleCode(), m.getModuleName()));
-            }
-            return items;
-        }
-        return items;
-
+    public static List<String> populateDropdown(List<Module> list){
+        if (list.size() > 0)
+            return list.stream().map(Module::getModuleDetails).toList();
+        return new ArrayList<>();
     }
     public String getModuleDetails(){
         return String.format(Locale.ENGLISH, "%s %s", moduleCode, moduleName);
