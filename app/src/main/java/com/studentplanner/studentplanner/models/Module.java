@@ -9,6 +9,7 @@ import com.studentplanner.studentplanner.interfaces.Searchable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class Module implements Searchable {
     private int moduleID;
@@ -55,9 +56,7 @@ public class Module implements Searchable {
     }
 
     public static List<String> populateDropdown(List<Module> list){
-        if (list.size() > 0)
-            return list.stream().map(Module::getModuleDetails).toList();
-        return new ArrayList<>();
+       return list.stream().map(Module::getModuleDetails).toList();
     }
     public String getModuleDetails(){
         return String.format(Locale.ENGLISH, "%s %s", moduleCode, moduleName);
