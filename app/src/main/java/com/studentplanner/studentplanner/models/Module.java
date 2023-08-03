@@ -81,10 +81,7 @@ public class Module implements Searchable {
     }
     public static void addDefaultModules(Context context){
         DatabaseHelper db = DatabaseHelper.getInstance(context);
-        for (Module module : defaultModules()){
-            db.addModule(new Module(module.moduleCode, module.getModuleName()));
-        }
-
+        defaultModules().forEach(m-> db.addModule(new Module(m.moduleCode, m.getModuleName())));
     }
 
     @Override

@@ -28,20 +28,17 @@ public final class Student extends User {
     }
 
 
-    public TextInputLayout getTxtPhone() {
-        return txtPhone;
-    }
-
     public void setTxtPhone(TextInputLayout txtPhone) {
         this.txtPhone = txtPhone;
     }
 
     // register form
     public Student(TextInputLayout txtFirstName, TextInputLayout txLastName, TextInputLayout txtEmail, TextInputLayout txtPassword) {
-        super(txtFirstName,txLastName,txtEmail);
+        super(txtFirstName, txLastName, txtEmail);
         this.txtPassword = txtPassword;
     }
-    public Student(){
+
+    public Student() {
 
     }
 
@@ -68,7 +65,6 @@ public final class Student extends User {
     public TextInputLayout getTxtPassword() {
         return txtPassword;
     }
-
 
 
 }

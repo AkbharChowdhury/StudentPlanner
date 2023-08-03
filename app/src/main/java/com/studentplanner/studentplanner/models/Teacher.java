@@ -34,10 +34,7 @@ public class Teacher extends User implements Searchable {
     }
     public static void addDefaultTeachers(Context context){
         DatabaseHelper db = DatabaseHelper.getInstance(context);
-        for (Teacher teacher : defaultTeachers()){
-            db.addTeacher(new Teacher(teacher.getFirstname(), teacher.getLastname(), teacher.getEmail()));
-        }
-
+        defaultTeachers().forEach(t ->  db.addTeacher(new Teacher(t.getFirstname(), t.getLastname(), t.getEmail())));
     }
 
     @Override

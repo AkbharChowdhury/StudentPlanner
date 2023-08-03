@@ -7,7 +7,6 @@ import android.widget.AutoCompleteTextView;
 import com.studentplanner.studentplanner.R;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public final class Dropdown {
     private Dropdown(){

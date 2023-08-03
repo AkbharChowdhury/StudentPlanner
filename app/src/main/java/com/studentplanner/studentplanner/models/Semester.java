@@ -3,6 +3,8 @@ package com.studentplanner.studentplanner.models;
 import com.studentplanner.studentplanner.interfaces.Searchable;
 import com.studentplanner.studentplanner.utils.Helper;
 
+import org.apache.commons.text.WordUtils;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +54,7 @@ public class Semester implements Searchable {
     }
     private static String getDetails(Semester s){
         return String.format("%s (%s to %s)",
-                s.getName(),
+                WordUtils.capitalizeFully(s.getName()),
                 Helper.formatDateShort(s.getStart().toString()),
                 Helper.formatDateShort(s.getEnd().toString())
 
