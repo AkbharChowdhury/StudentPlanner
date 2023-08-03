@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record Semester(int semesterID, String name, LocalDate start, LocalDate end) implements Searchable {
-
     public static List<String> populateDropdown(List<Semester> list){
         return list.stream().map(Semester::getDetails).toList();
     }

@@ -83,12 +83,6 @@ public class BoundTimePickerDialog extends TimePickerDialog{
         }
 
         constrainStartAndEndTimes(selectedHour, selectedMinute);
-
-
-
-
-
-
     }
 
     private void constrainStartAndEndTimes(int hourOfDay, int minute){

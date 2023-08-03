@@ -17,18 +17,18 @@ public final class EventData {
     public EventData(DatabaseHelper db) {
         this.db = db;
     }
+
     public void getCourseworkDetails() {
         List<Event> courseworkEvent = Event.getCourseworkDetails(db);
         Event.getEventsList().addAll(courseworkEvent);
     }
+
     public void getClassDetails() {
 
         List<Classes> classList = db.getClasses();
         if (!classList.isEmpty()) {
             for (Classes myClass : classList) {
-                int semesterID = myClass.getSemesterID();
-                Semester semester = db.getSelectedSemester(semesterID);
-
+                Semester semester = db.getSelectedSemester(myClass.getSemesterID());
                 LocalDate startDate = semester.start();
                 LocalDate endDate = semester.end();
                 long numOfDays = ChronoUnit.DAYS.between(startDate, endDate);
@@ -36,7 +36,6 @@ public final class EventData {
 
             }
         }
-
 
     }
 
@@ -46,8 +45,8 @@ public final class EventData {
 
         for (LocalDate date : CalendarUtils.getRecurringEvents(numOfDays, startDate)) {
             if (date.getDayOfWeek() == DayOfWeek.of(myClass.getDow())) {
-                int semesterID = myClass.getSemesterID();
-                Semester semester = db.getSelectedSemester(semesterID);
+
+                Semester semester = db.getSelectedSemester(myClass.getSemesterID());
 
                 Event classEvent = new Event(
                         date,
