@@ -44,21 +44,19 @@ public class Semester implements Searchable {
     }
 
 
-    public static ArrayList<String> populateDropdown(List<Semester> list){
-        ArrayList<String> items = new ArrayList<>();
-        if (list.size() > 0) {
-            for (Semester m : list) {
-                items.add(String.format("%s (%s to %s)",
-                        m.getName(),
-                        Helper.formatDateShort(m.getStart().toString()),
-                        Helper.formatDateShort(m.getEnd().toString())
+    public static List<String> populateDropdown(List<Semester> list){
+        if (list.size() > 0)
+            return list.stream().map(Semester::getDetails).toList();
+        return new ArrayList<>();
 
-                ));
-            }
-            return items;
-        }
-        return items;
+    }
+    private static String getDetails(Semester s){
+        return String.format("%s (%s to %s)",
+                s.getName(),
+                Helper.formatDateShort(s.getStart().toString()),
+                Helper.formatDateShort(s.getEnd().toString())
 
+        );
     }
 
     @Override
