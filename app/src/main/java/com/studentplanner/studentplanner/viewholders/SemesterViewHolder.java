@@ -33,14 +33,14 @@ public class SemesterViewHolder  extends RecyclerView.ViewHolder{
     }
 
     public void showDetails(Semester semester){
-        semesterID.setText(String.valueOf(semester.getSemesterID()));
-        name.setText(WordUtils.capitalizeFully(semester.getName()));
+        semesterID.setText(String.valueOf(semester.semesterID()));
+        name.setText(WordUtils.capitalizeFully(semester.name()));
         description.setText(getDateMessage(semester));
     }
     private String getDateMessage(Semester semester){
         return MessageFormat.format("From {0} to {1}",
-                Helper.formatDateShort(semester.getStart().toString()),
-                Helper.formatDate(semester.getEnd().toString())
+                Helper.formatDateShort(semester.start().toString()),
+                Helper.formatDate(semester.end().toString())
         );
     }
 

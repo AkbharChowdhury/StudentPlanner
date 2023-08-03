@@ -29,8 +29,8 @@ public final class EventData {
                 int semesterID = myClass.getSemesterID();
                 Semester semester = db.getSelectedSemester(semesterID);
 
-                LocalDate startDate = semester.getStart();
-                LocalDate endDate = semester.getEnd();
+                LocalDate startDate = semester.start();
+                LocalDate endDate = semester.end();
                 long numOfDays = ChronoUnit.DAYS.between(startDate, endDate);
                 Event.getEventsList().addAll(populateClassData(numOfDays, startDate, myClass));
 
@@ -54,8 +54,8 @@ public final class EventData {
                         LocalTime.parse(myClass.getStartTime()),
                         LocalTime.parse(myClass.getEndTime()),
                         EventType.CLASSES,
-                        semester.getStart(),
-                        semester.getEnd(),
+                        semester.start(),
+                        semester.end(),
                         myClass.getDow()
                 );
                 classEvent.setId(myClass.getClassID());

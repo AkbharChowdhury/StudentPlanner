@@ -466,9 +466,9 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(SemesterTable.COLUMN_STUDENT_ID, studentID);
-        cv.put(SemesterTable.COLUMN_NAME, semester.getName());
-        cv.put(SemesterTable.COLUMN_START_DATE, semester.getStart().toString());
-        cv.put(SemesterTable.COLUMN_END_DATE, semester.getEnd().toString());
+        cv.put(SemesterTable.COLUMN_NAME, semester.name());
+        cv.put(SemesterTable.COLUMN_START_DATE, semester.start().toString());
+        cv.put(SemesterTable.COLUMN_END_DATE, semester.end().toString());
         long result = db.insert(SemesterTable.TABLE_NAME, null, cv);
         return result != -1;
 
@@ -1106,11 +1106,11 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     public boolean updateSemester(Semester semester) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(SemesterTable.COLUMN_START_DATE, semester.getStart().toString());
-        cv.put(SemesterTable.COLUMN_END_DATE, semester.getEnd().toString());
-        cv.put(SemesterTable.COLUMN_NAME, semester.getName());
+        cv.put(SemesterTable.COLUMN_START_DATE, semester.start().toString());
+        cv.put(SemesterTable.COLUMN_END_DATE, semester.end().toString());
+        cv.put(SemesterTable.COLUMN_NAME, semester.name());
 
-        long result = db.update(SemesterTable.TABLE_NAME, cv, SemesterTable.COLUMN_ID + "=?", new String[]{String.valueOf(semester.getSemesterID())});
+        long result = db.update(SemesterTable.TABLE_NAME, cv, SemesterTable.COLUMN_ID + "=?", new String[]{String.valueOf(semester.semesterID())});
         return result != -1;
     }
 

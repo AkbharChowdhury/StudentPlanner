@@ -135,7 +135,7 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
             Helper.getStringArray(this, txtClassType, R.array.type_array);
 
 
-            List<Integer> semesterIDList = db.getSemester().stream().map(Semester::getSemesterID).toList();
+            List<Integer> semesterIDList = db.getSemester().stream().map(Semester::semesterID).toList();
             List<Integer> moduleIDList = db.getModules().stream().map(Module::getModuleID).toList();
 
             txtSemester.setText(txtSemester.getAdapter().getItem(Dropdown.getDropDownID(model.getSemesterID(), semesterIDList)).toString(), false);
@@ -181,7 +181,7 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
         final List<String> items = Semester.populateDropdown(list);
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item, items);
         txtSemester.setAdapter(adapter);
-        txtSemester.setOnItemClickListener((parent, view, position, id) -> selectedSemesterID = list.get(position).getSemesterID());
+        txtSemester.setOnItemClickListener((parent, view, position, id) -> selectedSemesterID = list.get(position).semesterID());
 
     }
 

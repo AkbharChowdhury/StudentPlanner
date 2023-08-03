@@ -9,19 +9,23 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public record Semester(int semesterID, String name, LocalDate start, LocalDate end) implements Searchable {
+public record SemesterRecord(String name, LocalDate start, LocalDate end) implements Searchable {
+    public SemesterRecord(int semesterID, String name, LocalDate start, LocalDate end){
+        this(name, start, end);
 
+
+    }
     @Override
     public String searchText() {
         return name;
     }
-    public static List<String> populateDropdown(List<Semester> list){
+    public static List<String> populateDropdown(List<SemesterRecord> list){
         if (list.size() > 0)
-            return list.stream().map(Semester::getDetails).toList();
+            return list.stream().map(SemesterRecord::getDetails).toList();
         return new ArrayList<>();
 
     }
-    private static String getDetails(Semester s){
+    private static String getDetails(SemesterRecord s){
         return String.format("%s (%s to %s)",
                 WordUtils.capitalizeFully(s.name()),
                 Helper.formatDateShort(s.start().toString()),

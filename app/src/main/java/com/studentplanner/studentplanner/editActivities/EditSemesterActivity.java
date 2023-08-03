@@ -80,10 +80,10 @@ public class EditSemesterActivity extends AppCompatActivity  implements DatePick
 
             final int id = getIntent().getIntExtra(SELECTED_ID, 0);
             Semester semester = db.getSelectedSemester(id);
-            txtName.getEditText().setText(semester.getName());
-            txtStartDate.setText(Helper.formatDate(semester.getStart().toString()));
-            txtEndDate.setText(Helper.formatDate(semester.getEnd().toString()));
-            txtName.getEditText().setText(semester.getName());
+            txtName.getEditText().setText(semester.name());
+            txtStartDate.setText(Helper.formatDate(semester.start().toString()));
+            txtEndDate.setText(Helper.formatDate(semester.end().toString()));
+            txtName.getEditText().setText(semester.name());
         }
 
     }
