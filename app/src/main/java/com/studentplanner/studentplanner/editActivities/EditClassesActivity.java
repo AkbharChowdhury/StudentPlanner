@@ -19,7 +19,6 @@ import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.databinding.ActivityEditClassesBinding;
 import com.studentplanner.studentplanner.enums.TimePickerType;
-import com.studentplanner.studentplanner.interfaces.Searchable;
 import com.studentplanner.studentplanner.models.Classes;
 import com.studentplanner.studentplanner.models.CustomTimePicker;
 import com.studentplanner.studentplanner.models.Module;
@@ -32,11 +31,8 @@ import com.studentplanner.studentplanner.utils.Helper;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 public class EditClassesActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
     private AutoCompleteTextView txtDays;
