@@ -34,7 +34,7 @@ public class SearchCoursework {
     }
 
     private Predicate<Coursework> filterPriority() {
-        return !priority.equals(DEFAULT_PRIORITY) ? c -> c.getPriority().toLowerCase().contains(priority.toLowerCase()) : p -> true;
+        return !DEFAULT_PRIORITY.equals(priority) ? c -> c.getPriority().toLowerCase().contains(priority.toLowerCase()) : p -> true;
 
     }
 
