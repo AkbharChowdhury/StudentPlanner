@@ -220,9 +220,7 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
     private void getModulesList() {
 
         final List<Module> moduleList = db.getModules();
-        final List<String> items = Module.populateDropdown(moduleList);
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item, items);
-        txtModules.setAdapter(adapter);
+        txtModules.setAdapter(new ArrayAdapter<>(this, R.layout.list_item, Module.populateDropdown(moduleList)));
         txtModules.setOnItemClickListener((parent, view, position, id) -> selectedModuleID = moduleList.get(position).getModuleID());
     }
 

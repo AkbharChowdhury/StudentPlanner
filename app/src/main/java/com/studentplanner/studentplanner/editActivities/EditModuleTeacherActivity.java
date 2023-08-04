@@ -38,12 +38,12 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
         String[] myTeachers = Helper.convertArrayListStringToStringArray(teacherNames);
 
         listView = findViewById(R.id.listview);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+
+        listView.setAdapter(new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_multiple_choice,
                 myTeachers
-        );
-        listView.setAdapter(adapter);
+        ));
         getSelectedTeacherEdited();
 
 

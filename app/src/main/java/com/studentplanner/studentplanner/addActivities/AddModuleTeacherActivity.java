@@ -42,9 +42,8 @@ public class AddModuleTeacherActivity extends AppCompatActivity {
         getModulesList(db.getModuleClassesAdd(),txtModules);
     }
     private void getModulesList(List<Module> moduleList, AutoCompleteTextView txtModules) {
-        final List<String> items = Module.populateDropdown(moduleList);
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item, items);
-        txtModules.setAdapter(adapter);
+
+        txtModules.setAdapter(new ArrayAdapter<>(this, R.layout.list_item, Module.populateDropdown(moduleList)));
         txtModules.setOnItemClickListener((parent, view, position, id) -> startForResult.launch(moduleIntent(moduleList.get(position).getModuleID())));
     }
 

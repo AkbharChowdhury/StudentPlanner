@@ -150,10 +150,7 @@ public class AddClassesActivity extends AppCompatActivity implements TimePickerD
     private void getModulesList() {
 
         final List<Module> moduleList = db.getModules();
-        final List<String> items = Module.populateDropdown(moduleList);
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item, items);
-
-        txtModules.setAdapter(adapter);
+        txtModules.setAdapter(new ArrayAdapter<>(this, R.layout.list_item, Module.populateDropdown(moduleList)));
         txtModules.setOnItemClickListener((parent, view, position, id) -> selectedModuleID = moduleList.get(position).getModuleID());
 
     }
@@ -162,9 +159,7 @@ public class AddClassesActivity extends AppCompatActivity implements TimePickerD
     private void getSemesterList() {
 
         final List<Semester> list = db.getSemester();
-        final List<String> items = Semester.populateDropdown(list);
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item, items);
-        txtSemester.setAdapter(adapter);
+        txtSemester.setAdapter(new ArrayAdapter<>(this, R.layout.list_item, Semester.populateDropdown(list)));
         txtSemester.setOnItemClickListener((parent, view, position, id) -> selectedSemesterID = list.get(position).semesterID());
 
     }
