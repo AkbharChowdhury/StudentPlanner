@@ -30,6 +30,7 @@ import com.studentplanner.studentplanner.databinding.FragmentTeacherBinding;
 import com.studentplanner.studentplanner.models.Coursework;
 import com.studentplanner.studentplanner.models.Search;
 import com.studentplanner.studentplanner.models.Teacher;
+import com.studentplanner.studentplanner.models.User;
 import com.studentplanner.studentplanner.utils.EmptyData;
 import com.studentplanner.studentplanner.utils.Helper;
 
@@ -49,8 +50,9 @@ public class TeacherFragment extends Fragment {
     private List<Teacher> list;
     private FragmentTeacherBinding binding;
     private DatabaseHelper db;
-    private void activityResult(ActivityResult result){
-        if (result.getResultCode() == RESULT_OK){
+
+    private void activityResult(ActivityResult result) {
+        if (result.getResultCode() == RESULT_OK) {
             getTeachers();
         }
     }
@@ -83,7 +85,7 @@ public class TeacherFragment extends Fragment {
 
     private void getTeachers() {
         list = db.getTeachers();
-        Comparator<Teacher> sort = Comparator.comparing(t -> t.getLastname());
+        Comparator<Teacher> sort = Comparator.comparing(User::getLastname);
         list.sort(sort);
         buildRecyclerView();
     }
@@ -100,9 +102,8 @@ public class TeacherFragment extends Fragment {
     private void buildRecyclerView() {
         if (!list.isEmpty()) {
             adapter = new TeacherAdapter(list, getContext(), startForResult);
-            LinearLayoutManager manager = new LinearLayoutManager(context);
             recyclerView.setHasFixedSize(true);
-            recyclerView.setLayoutManager(manager);
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.setAdapter(adapter);
             return;
         }
@@ -136,8 +137,6 @@ public class TeacherFragment extends Fragment {
 
         }
     }
-
-
 
 
     private void filter(String text) {

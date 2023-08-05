@@ -22,7 +22,7 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleViewHolder> {
 
     private List<Module> list;
     private final Context context;
-    private  final ActivityResultLauncher<Intent> startForResult;
+    private final ActivityResultLauncher<Intent> startForResult;
 
     public ModuleAdapter(List<Module> list, Context context, ActivityResultLauncher<Intent> startForResult) {
         this.list = Collections.unmodifiableList(list);

@@ -10,7 +10,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.databinding.ActivityAddTeacherBinding;
-import com.studentplanner.studentplanner.databinding.ActivityEditTeacherBinding;
 import com.studentplanner.studentplanner.models.Teacher;
 import com.studentplanner.studentplanner.utils.Helper;
 import com.studentplanner.studentplanner.utils.Validation;
@@ -55,7 +54,6 @@ public class AddTeacherActivity extends AppCompatActivity {
 
     private Teacher getTeacherDetails() {
         return new Teacher(Helper.trimStr(txtFirstName), Helper.trimStr(txtLastName), Helper.trimStr(txtEmail));
-
     }
 
     @Override

@@ -182,10 +182,6 @@ public class CourseworkFragment extends Fragment {
 
     private void getCoursework() {
         list = db.getCoursework();
-
-        StringBuilder sb = new StringBuilder();
-        db.getCoursework().forEach(c -> sb.append(c.getTitle()));
-        Log.d("CW_INFO", String.valueOf(sb.toString().length()));
         list.sort(Coursework.sortDeadlineAsc);
         search = new SearchCoursework(context, list);
         buildRecyclerView();
@@ -204,10 +200,8 @@ public class CourseworkFragment extends Fragment {
         if (!list.isEmpty()) {
 
             adapter = new CourseworkAdapter(list, context, startForResult);
-            LinearLayoutManager manager = new LinearLayoutManager(context);
-
             recyclerView.setHasFixedSize(true);
-            recyclerView.setLayoutManager(manager);
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.setAdapter(adapter);
             return;
         }

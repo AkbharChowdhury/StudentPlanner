@@ -98,9 +98,8 @@ public class ReminderFragment extends Fragment {
     private void buildRecyclerView() {
         if (!list.isEmpty()) {
             adapter = new CourseworkAdapter(list, context, startForResult);
-            LinearLayoutManager manager = new LinearLayoutManager(context);
             recyclerView.setHasFixedSize(true);
-            recyclerView.setLayoutManager(manager);
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.setAdapter(adapter);
             return;
         }

@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.ImageDecoder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -74,18 +75,15 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
     private Bitmap imageToStore;
 
     private void activityResult(ActivityResult result) {
-        if (result.getResultCode() == RESULT_OK) {
-            if (result.getData() != null) {
-                try {
+        if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+            try {
 
-                    imageToStore = ImageDecoder.decodeBitmap(ImageDecoder.createSource(this.getContentResolver(), result.getData().getData()));
-                    courseworkImage.setImageBitmap(imageToStore);
-                    binding.btnRemovePicture.setVisibility(View.VISIBLE);
+                imageToStore = ImageDecoder.decodeBitmap(ImageDecoder.createSource(this.getContentResolver(), result.getData().getData()));
+                courseworkImage.setImageBitmap(imageToStore);
+                binding.btnRemovePicture.setVisibility(View.VISIBLE);
 
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-
+            } catch (IOException e) {
+                Log.d("ERROR", "There was an error uploading image " + e.getMessage());
             }
 
         }

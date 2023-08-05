@@ -22,7 +22,7 @@ public class SemesterAdapter extends RecyclerView.Adapter<SemesterViewHolder> {
 
     private List<Semester> list;
     private final Context context;
-    private  final ActivityResultLauncher<Intent> startForResult;
+    private final ActivityResultLauncher<Intent> startForResult;
 
     public SemesterAdapter(List<Semester> list, Context context, ActivityResultLauncher<Intent> startForResult) {
         this.list = Collections.unmodifiableList(list);

@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.ImageDecoder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -79,20 +80,15 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
     private Bitmap imageToStore;
     private boolean deleteImage = false;
 
-    private void activityResult(ActivityResult result){
-        if (result.getResultCode() == RESULT_OK) {
-            if (result.getData() != null) {
-                try {
-                    imageToStore = ImageDecoder.decodeBitmap(ImageDecoder.createSource(this.getContentResolver(), result.getData().getData()));
-                    courseworkImage.setImageBitmap(imageToStore);
-                    binding.btnRemovePicture.setVisibility(View.VISIBLE);
-                    deleteImage = false;
-
-
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-
+    private void activityResult(ActivityResult result) {
+        if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+            try {
+                imageToStore = ImageDecoder.decodeBitmap(ImageDecoder.createSource(getContentResolver(), result.getData().getData()));
+                courseworkImage.setImageBitmap(imageToStore);
+                binding.btnRemovePicture.setVisibility(View.VISIBLE);
+                deleteImage = false;
+            } catch (IOException e) {
+                Log.d("ERROR", "There was an error uploading image " + e.getMessage());
             }
 
         }
@@ -132,7 +128,8 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
 
 
     }
-    private void btnEditCoursework(){
+
+    private void btnEditCoursework() {
         if (form.validateEditCourseworkForm(getCourseworkErrorFields())) {
             if (db.updateCoursework(getCourseworkDetails(), deleteImage)) {
                 Helper.longToastMessage(this, getString(R.string.coursework_updated));

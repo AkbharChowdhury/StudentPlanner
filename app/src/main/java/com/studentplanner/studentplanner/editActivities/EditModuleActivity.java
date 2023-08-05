@@ -23,14 +23,13 @@ public class EditModuleActivity extends AppCompatActivity {
     private TextInputLayout txtModuleName;
     private Validation form;
     private String excludedModuleCode;
-    private ActivityEditModuleBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_module);
 
-        binding = ActivityEditModuleBinding.inflate(getLayoutInflater());
+        ActivityEditModuleBinding binding = ActivityEditModuleBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -44,7 +43,7 @@ public class EditModuleActivity extends AppCompatActivity {
         binding.btnEditModule.setOnClickListener(v -> {
             if (form.validateEditModuleForm(new Module(txtModuleCode, txtModuleName), excludedModuleCode)) {
                 if (db.updateModule(getModuleDetails())) {
-                    Helper.longToastMessage(this,getString(R.string.module_updated));
+                    Helper.longToastMessage(this, getString(R.string.module_updated));
                     setResult(RESULT_OK);
                     finish();
                 }
@@ -72,6 +71,7 @@ public class EditModuleActivity extends AppCompatActivity {
         }
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.delete_menu, menu);
@@ -83,15 +83,15 @@ public class EditModuleActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) finish();
 
 
-        if (item.getItemId() == R.id.ic_delete){
+        if (item.getItemId() == R.id.ic_delete) {
             new AlertDialog.Builder(this)
                     .setMessage(getString(R.string.delete_module_message))
                     .setCancelable(false)
                     .setTitle(getString(R.string.delete_module))
                     .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
                         int id = getIntent().getIntExtra(ModuleTable.COLUMN_ID, 0);
-                        if (db.deleteRecord(ModuleTable.TABLE_NAME, ModuleTable.COLUMN_ID, id)){
-                            Helper.longToastMessage(this,getString(R.string.module_deleted));
+                        if (db.deleteRecord(ModuleTable.TABLE_NAME, ModuleTable.COLUMN_ID, id)) {
+                            Helper.longToastMessage(this, getString(R.string.module_deleted));
                             setResult(RESULT_OK);
                             finish();
                         }
@@ -99,7 +99,6 @@ public class EditModuleActivity extends AppCompatActivity {
 
                     })
                     .setNegativeButton(getString(R.string.no), (dialog, which) -> dialog.cancel()).create().show();
-
         }
         return super.onOptionsItemSelected(item);
     }
