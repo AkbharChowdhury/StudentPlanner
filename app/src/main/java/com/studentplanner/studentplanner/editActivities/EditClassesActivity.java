@@ -80,8 +80,6 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
                 setResult(RESULT_OK);
                 finish();
             }
-
-
         });
 
 
@@ -117,7 +115,6 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
         txtEndTime = binding.txtEndTime;
         txtRoom = binding.txtRoom;
     }
-
 
 
     private void setupFields() {
@@ -164,19 +161,18 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
 
     private void getModulesList() {
 
-        final List<Module> moduleList = db.getModules();
-        txtModules.setAdapter(new ArrayAdapter<>(this, R.layout.list_item, Module.populateDropdown(moduleList)));
-        txtModules.setOnItemClickListener((parent, view, position, id) -> selectedModuleID = moduleList.get(position).getModuleID());
+        final List<Module> list = db.getModules();
+        txtModules.setAdapter(new ArrayAdapter<>(this, R.layout.list_item, Module.populateDropdown(list)));
+        txtModules.setOnItemClickListener((parent, view, position, id) -> selectedModuleID = list.get(position).getModuleID());
     }
 
     private void getSemesterList() {
 
         final List<Semester> list = db.getSemester();
-        txtSemester.setAdapter(new ArrayAdapter<>(this, R.layout.list_item,  Semester.populateDropdown(list)));
+        txtSemester.setAdapter(new ArrayAdapter<>(this, R.layout.list_item, Semester.populateDropdown(list)));
         txtSemester.setOnItemClickListener((parent, view, position, id) -> selectedSemesterID = list.get(position).semesterID());
 
     }
-
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -186,7 +182,7 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
                 type = TimePickerType.START_TIME;
                 startTimePicker = new BoundTimePickerDialog(this, this, startCustomTimePicker.getSelectedHour(), startCustomTimePicker.getSelectedMinute());
 
-                if (!Helper.trimStr(txtEndTime).equals(getString(R.string.select_end_time))){
+                if (!Helper.trimStr(txtEndTime).equals(getString(R.string.select_end_time))) {
                     LocalTime endTime = LocalTime.of(endCustomTimePicker.getSelectedHour(), endCustomTimePicker.getSelectedMinute());
                     startTimePicker.setMax(endTime.getHour(), endTime.getMinute());
                 }
@@ -204,7 +200,7 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
                 type = TimePickerType.END_TIME;
                 endTimePicker = new BoundTimePickerDialog(this, this, endCustomTimePicker.getSelectedHour(), endCustomTimePicker.getSelectedMinute());
 
-                if (!Helper.trimStr(txtStartTime).equals(getString(R.string.select_start_time))){
+                if (!Helper.trimStr(txtStartTime).equals(getString(R.string.select_start_time))) {
                     LocalTime startTime = LocalTime.of(startCustomTimePicker.getSelectedHour(), startCustomTimePicker.getSelectedMinute());
                     endTimePicker.setMin(startTime.getHour(), startTime.getMinute());
                 }
@@ -233,7 +229,7 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
                     .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
                         int id = getIntent().getIntExtra(ClassTable.COLUMN_ID, 0);
                         if (db.deleteRecord(ClassTable.TABLE_NAME, ClassTable.COLUMN_ID, id)) {
-                            Helper.longToastMessage(this,"Class deleted");
+                            Helper.longToastMessage(this, "Class deleted");
                             setResult(RESULT_OK);
                             finish();
                         }
@@ -245,7 +241,6 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
         }
         return super.onOptionsItemSelected(item);
     }
-
 
 
     @Override
@@ -266,8 +261,5 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
         }
 
     }
-
-
-
 
 }

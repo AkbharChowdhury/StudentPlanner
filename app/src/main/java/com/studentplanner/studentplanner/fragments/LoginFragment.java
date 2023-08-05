@@ -39,17 +39,17 @@ public class LoginFragment extends Fragment {
     }
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
+
     private void initFragment() {
         context = getContext();
         activity = getActivity();
         activity.setTitle(context.getString(R.string.login));
-        ((AppCompatActivity)activity).getSupportActionBar().hide();
+        ((AppCompatActivity) activity).getSupportActionBar().hide();
 
     }
 
@@ -67,8 +67,8 @@ public class LoginFragment extends Fragment {
         lblLoginError = binding.lblLoginError;
         lblLoginError.setVisibility(View.INVISIBLE);
 
-        txtEmail.getEditText().setText("tom@gmail.com");
-        txtPassword.getEditText().setText("password");
+//        txtEmail.getEditText().setText("tom@gmail.com");
+//        txtPassword.getEditText().setText("password");
         binding.btnLogin.setOnClickListener(v -> {
             String email = Helper.trimStr(txtEmail);
             String password = Helper.trimStr(txtPassword, false);
@@ -89,10 +89,12 @@ public class LoginFragment extends Fragment {
         return binding.getRoot();
 
     }
+
     private void configUserDetails(String email) {
         AccountPreferences.setLoginShredPref(context, db.getStudentID(email));
         Helper.goToActivity(activity, MainActivity.class);
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

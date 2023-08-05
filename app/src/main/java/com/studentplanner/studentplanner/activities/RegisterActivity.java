@@ -4,7 +4,6 @@ import static com.studentplanner.studentplanner.utils.Helper.setEditTextMaxLengt
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -64,7 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 
-    private void handleRegisterClick(){
+    private void handleRegisterClick() {
         Student student = new Student(txtFirstName, txtLastName, txtEmail, txtPassword);
         student.setTxtUserPhone(txtPhone);
 
@@ -73,7 +72,6 @@ public class RegisterActivity extends AppCompatActivity {
             alertDialogFragment.showTermsPolicyError();
             return;
         }
-
         if (db.registerStudent(getStudentDetails())) {
             Helper.longToastMessage(this, getString(R.string.account_created));
             finish();
@@ -98,6 +96,7 @@ public class RegisterActivity extends AppCompatActivity {
             updatePasswordStrengthView(password);
             return false;
         });
+
         txtPhone.setOnKeyListener((v, keyCode, event) -> {
             String phone = txtPhone.getText().toString();
             final int phoneLength = phone.startsWith("0") ? 11 : 10;
@@ -110,7 +109,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private Student getStudentDetails() {
         String phone = txtPhone.getText().toString();
-        if (!phone.isBlank()){
+        if (!phone.isBlank()) {
             return new Student(
                     Helper.trimStr(txtFirstName),
                     Helper.trimStr(txtLastName),
@@ -119,15 +118,16 @@ public class RegisterActivity extends AppCompatActivity {
                     Helper.trimStr(txtPassword, false)
             );
 
-        } else {
-            return new Student(
-                    Helper.trimStr(txtFirstName),
-                    Helper.trimStr(txtLastName),
-                    Helper.trimStr(txtEmail),
-                    Helper.trimStr(txtPassword, false)
-            );
-
         }
+
+        return new Student(
+                Helper.trimStr(txtFirstName),
+                Helper.trimStr(txtLastName),
+                Helper.trimStr(txtEmail),
+                Helper.trimStr(txtPassword, false)
+        );
+
+
     }
 
     private void updatePasswordStrengthView(String password) {
@@ -145,7 +145,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
         if (item.getItemId() == android.R.id.home) finish();
         return true;
     }

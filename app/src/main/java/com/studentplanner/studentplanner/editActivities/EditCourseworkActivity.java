@@ -185,7 +185,6 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
             selectedModuleID = coursework.getModuleID();
             checkBoxCompleted.setChecked(coursework.isCompleted());
 
-
             LocalTime deadlineTime = LocalTime.parse(coursework.getDeadlineTime());
 
             deadlineCustomTimePicker = new CustomTimePicker(deadlineTime.getHour(), deadlineTime.getMinute());

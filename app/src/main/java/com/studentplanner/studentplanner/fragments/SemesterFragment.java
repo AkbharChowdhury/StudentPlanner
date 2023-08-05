@@ -47,13 +47,16 @@ public class SemesterFragment extends Fragment {
 
     private FragmentSemesterBinding binding;
     private DatabaseHelper db;
-    private void activityResult(ActivityResult result){
-        if (result.getResultCode() == RESULT_OK){
+
+    private void activityResult(ActivityResult result) {
+        if (result.getResultCode() == RESULT_OK) {
             getSemester();
         }
     }
+
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this::activityResult);
-    private List<Semester> getList(){
+
+    private List<Semester> getList() {
         return Collections.unmodifiableList(db.getSemester());
     }
 
@@ -88,15 +91,12 @@ public class SemesterFragment extends Fragment {
         setHasOptionsMenu(true);
 
     }
+
     private void getSemester() {
         list = getList();
         buildRecyclerView();
     }
-
-
-
-
-
+    
     private void buildRecyclerView() {
         if (!list.isEmpty()) {
             adapter = new SemesterAdapter(list, context, startForResult);
@@ -106,7 +106,7 @@ public class SemesterFragment extends Fragment {
             return;
         }
 
-       emptyData.emptyResultStatus(true);
+        emptyData.emptyResultStatus(true);
 
 
     }
@@ -137,8 +137,6 @@ public class SemesterFragment extends Fragment {
 
         }
     }
-
-
 
 
     private void filter(String text) {

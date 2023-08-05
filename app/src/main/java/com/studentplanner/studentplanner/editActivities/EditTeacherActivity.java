@@ -95,7 +95,6 @@ public class EditTeacherActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) finish();
 
-
         if (item.getItemId() == R.id.ic_delete) {
             new AlertDialog.Builder(this)
                     .setMessage(getString(R.string.delete_teacher_message)).setCancelable(false)

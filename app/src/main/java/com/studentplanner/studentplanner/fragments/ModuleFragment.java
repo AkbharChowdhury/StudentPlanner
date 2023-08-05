@@ -47,8 +47,8 @@ public class ModuleFragment extends Fragment {
     private DatabaseHelper db;
     private EmptyData emptyData;
 
-    private void activityResult(ActivityResult result){
-        if (result.getResultCode() == RESULT_OK){
+    private void activityResult(ActivityResult result) {
+        if (result.getResultCode() == RESULT_OK) {
             getModule();
         }
     }
@@ -103,8 +103,6 @@ public class ModuleFragment extends Fragment {
         }
 
         emptyData.emptyResultStatus(true);
-
-
     }
 
 
@@ -133,9 +131,7 @@ public class ModuleFragment extends Fragment {
         }
     }
 
-
-
-    private List<Module> getList(){
+    private List<Module> getList() {
         return Collections.unmodifiableList(db.getModules());
     }
 

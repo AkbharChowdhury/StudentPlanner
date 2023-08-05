@@ -300,23 +300,23 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
         try (Cursor cursor = db.rawQuery(
                 """
-                SELECT
-                  COUNT(*) class_exists
-                                                          
-                FROM classes c
-                JOIN modules m
-                  ON m.module_id = c.module_id
-                WHERE m.student_id = ?
-                AND c.module_id = ?
-                AND semester_id = ?
-                AND type = ?
-                """,
+                        SELECT
+                          COUNT(*) class_exists
+                                                                  
+                        FROM classes c
+                        JOIN modules m
+                          ON m.module_id = c.module_id
+                        WHERE m.student_id = ?
+                        AND c.module_id = ?
+                        AND semester_id = ?
+                        AND type = ?
+                        """,
                 new String[]{
-                String.valueOf(studentID),
-                String.valueOf(moduleID),
-                String.valueOf(semesterID),
-                type,
-        })) {
+                        String.valueOf(studentID),
+                        String.valueOf(moduleID),
+                        String.valueOf(semesterID),
+                        type,
+                })) {
             if (cursor.moveToFirst()) {
                 return cursor.getInt(0) > 0;
 
@@ -1133,7 +1133,8 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
 
     }
-    private ContentValues deleteImage(ContentValues cv, boolean deleteImage, Bitmap image){
+
+    private ContentValues deleteImage(ContentValues cv, boolean deleteImage, Bitmap image) {
         if (deleteImage) {
             cv.putNull(CourseworkTable.COLUMN_IMAGE);
         } else {

@@ -28,14 +28,11 @@ import com.studentplanner.studentplanner.adapters.ModuleTeacherAdapter;
 import com.studentplanner.studentplanner.addActivities.AddModuleTeacherActivity;
 import com.studentplanner.studentplanner.databinding.FragmentModuleTeacherBinding;
 import com.studentplanner.studentplanner.models.ModuleTeacher;
-import com.studentplanner.studentplanner.models.Search;
-import com.studentplanner.studentplanner.models.Teacher;
 import com.studentplanner.studentplanner.utils.EmptyData;
 import com.studentplanner.studentplanner.utils.Helper;
 
 import org.apache.commons.text.WordUtils;
 
-import java.util.Collections;
 import java.util.List;
 
 
@@ -95,10 +92,6 @@ public class ModuleTeacherFragment extends Fragment {
         buildRecyclerView();
     }
 
-    private List<ModuleTeacher> getList() {
-        return Collections.unmodifiableList(db.getModuleTeachers());
-    }
-
 
     private void initFragment() {
         context = getContext();
@@ -119,7 +112,6 @@ public class ModuleTeacherFragment extends Fragment {
         }
 
         emptyData.emptyResultStatus(true);
-
 
     }
 

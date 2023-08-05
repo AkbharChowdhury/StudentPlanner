@@ -6,16 +6,16 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.appcompat.widget.Toolbar;
+
 import com.google.android.material.navigation.NavigationView;
 import com.studentplanner.studentplanner.databinding.ActivityMainBinding;
 import com.studentplanner.studentplanner.databinding.NavHeaderBinding;
 import com.studentplanner.studentplanner.fragments.LoginFragment;
 import com.studentplanner.studentplanner.fragments.ReminderFragment;
-import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.utils.AccountPreferences;
 import com.studentplanner.studentplanner.utils.FragmentHandler;
 
@@ -43,8 +43,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         db = DatabaseHelper.getInstance(this);
         studentID = AccountPreferences.getStudentID(this);
-
-//        Module.addDefaultModules(this);
         setupNavDrawer(savedInstanceState);
         showStudentDetails();
 
@@ -110,6 +108,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
-
 
 }
