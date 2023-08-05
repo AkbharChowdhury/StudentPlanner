@@ -388,6 +388,7 @@ public final class Validation {
 
         if (password.isEmpty()) {
             setError(textField, getRequiredFieldError(fieldName));
+            textField.setErrorIconDrawable(null);
             return false;
         }
 
