@@ -7,7 +7,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -59,17 +58,19 @@ public class CourseworkFragment extends Fragment {
     private FragmentCourseworkBinding binding;
 
     private EmptyData emptyData;
-    private void activityResult(ActivityResult result){
-        if (result.getResultCode() == RESULT_OK){
+
+    private void activityResult(ActivityResult result) {
+        if (result.getResultCode() == RESULT_OK) {
             getCoursework();
         }
     }
+
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this::activityResult);
 
     @Override
     public void onResume() {
         super.onResume();
-        if (Helper.changeStatus){
+        if (Helper.changeStatus) {
             getCoursework();
             Helper.changeStatus = false;
 
@@ -134,7 +135,8 @@ public class CourseworkFragment extends Fragment {
 
         return binding.getRoot();
     }
-    private void prioritySpinnerChanged(){
+
+    private void prioritySpinnerChanged() {
 
         txtPriority.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -152,7 +154,7 @@ public class CourseworkFragment extends Fragment {
         });
     }
 
-    private void CompletionStatusSpinnerChanged(){
+    private void CompletionStatusSpinnerChanged() {
         txtCompletionStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -256,9 +258,7 @@ public class CourseworkFragment extends Fragment {
         emptyData.emptyResultStatus(false);
 
 
-
     }
-
 
     @Override
     public void onDestroyView() {

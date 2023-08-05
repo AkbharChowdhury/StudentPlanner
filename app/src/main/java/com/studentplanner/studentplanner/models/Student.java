@@ -41,6 +41,9 @@ public final class Student extends User {
     public Student() {
 
     }
+    public Student(TextInputLayout txtEmail, TextInputLayout txtPassword){
+        super(txtEmail,txtPassword );
+    }
 
     public Student(String firstname, String lastname, String email, String phone, String password) {
         super(firstname, lastname, email);

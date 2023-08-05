@@ -38,6 +38,12 @@ public abstract class User {
         this.txtLastName = txLastName;
         this.txtEmail = txtEmail;
     }
+
+    public User(TextInputLayout txtEmail, TextInputLayout txtPassword) {
+        this.txtEmail = txtEmail;
+        this.txtPassword = txtPassword;
+    }
+
     public User(String firstname, String lastname, String email) {
         this.firstname = firstname;
         this.lastname = lastname;

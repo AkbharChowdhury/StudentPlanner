@@ -26,7 +26,6 @@ import com.studentplanner.studentplanner.utils.Validation;
 
 public class LoginFragment extends Fragment {
     private Context context;
-    private Activity activity;
     private FragmentLoginBinding binding;
     private DatabaseHelper db;
 
@@ -34,6 +33,7 @@ public class LoginFragment extends Fragment {
     private TextInputLayout txtPassword;
     private TextView lblLoginError;
     private Validation form;
+    private Activity activity;
 
     public LoginFragment() {
     }
@@ -49,7 +49,7 @@ public class LoginFragment extends Fragment {
         context = getContext();
         activity = getActivity();
         activity.setTitle(context.getString(R.string.login));
-        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+        ((AppCompatActivity)activity).getSupportActionBar().hide();
 
     }
 
@@ -62,23 +62,18 @@ public class LoginFragment extends Fragment {
         form = new Validation(getContext());
 
         txtPassword = binding.txtPassword;
-        txtEmail.getEditText().setText("tom@gmail.com");
-        txtPassword.getEditText().setText("password");
 
-        binding.btnRegisterLink.setOnClickListener(v -> Helper.goToActivity(getActivity(), RegisterActivity.class));
+        binding.btnRegisterLink.setOnClickListener(v -> Helper.goToActivity(activity, RegisterActivity.class));
         lblLoginError = binding.lblLoginError;
         lblLoginError.setVisibility(View.INVISIBLE);
 
-
-
+        txtEmail.getEditText().setText("tom@gmail.com");
+        txtPassword.getEditText().setText("password");
         binding.btnLogin.setOnClickListener(v -> {
             String email = Helper.trimStr(txtEmail);
             String password = Helper.trimStr(txtPassword, false);
 
-            Student student = new Student();
-            student.setTxtEmail(binding.txtEmail);
-            student.setTxtPassword(binding.txtPassword);
-
+            Student student = new Student(txtEmail, txtPassword);
 
             if (!form.validateLoginForm(student)) return;
             if (db.isAuthorised(email, Encryption.encode(password))) {
@@ -96,7 +91,7 @@ public class LoginFragment extends Fragment {
     }
     private void configUserDetails(String email) {
         AccountPreferences.setLoginShredPref(context, db.getStudentID(email));
-        Helper.goToActivity(getActivity(), MainActivity.class);
+        Helper.goToActivity(activity, MainActivity.class);
     }
     @Override
     public void onDestroyView() {
