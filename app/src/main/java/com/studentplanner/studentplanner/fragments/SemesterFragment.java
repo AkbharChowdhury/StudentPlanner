@@ -74,7 +74,7 @@ public class SemesterFragment extends Fragment {
         initFragment();
         binding = FragmentSemesterBinding.inflate(inflater, container, false);
         recyclerView = binding.recyclerView;
-        binding.fabAdd.setOnClickListener(v -> startForResult.launch(new Intent(getActivity(), AddSemesterActivity.class)));
+        binding.fabAdd.setOnClickListener(v -> startForResult.launch(new Intent(activity, AddSemesterActivity.class)));
 
         emptyData = new EmptyData(binding.emptyImage, binding.emptyText);
         db = DatabaseHelper.getInstance(context);

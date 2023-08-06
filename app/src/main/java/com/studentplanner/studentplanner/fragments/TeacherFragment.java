@@ -69,7 +69,7 @@ public class TeacherFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         initFragment();
         binding = FragmentTeacherBinding.inflate(inflater, container, false);
-        binding.fabAdd.setOnClickListener(v -> startForResult.launch(new Intent(getActivity(), AddTeacherActivity.class)));
+        binding.fabAdd.setOnClickListener(v -> startForResult.launch(new Intent(activity, AddTeacherActivity.class)));
 
         recyclerView = binding.recyclerView;
         emptyData = new EmptyData(binding.emptyImage, binding.emptyText);
@@ -98,7 +98,7 @@ public class TeacherFragment extends Fragment {
 
     private void buildRecyclerView() {
         if (!list.isEmpty()) {
-            adapter = new TeacherAdapter(list, getContext(), startForResult);
+            adapter = new TeacherAdapter(list, context, startForResult);
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.setAdapter(adapter);

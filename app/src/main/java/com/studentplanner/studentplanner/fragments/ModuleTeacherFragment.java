@@ -73,7 +73,7 @@ public class ModuleTeacherFragment extends Fragment {
         binding = FragmentModuleTeacherBinding.inflate(inflater, container, false);
         recyclerView = binding.recyclerView;
 
-        binding.fabAdd.setOnClickListener(v -> startForResult.launch(new Intent(getActivity(), AddModuleTeacherActivity.class)));
+        binding.fabAdd.setOnClickListener(v -> startForResult.launch(new Intent(activity, AddModuleTeacherActivity.class)));
         emptyData = new EmptyData(binding.emptyImage, binding.emptyText);
 
 

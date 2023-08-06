@@ -83,23 +83,22 @@ public class CourseworkFragment extends Fragment {
 
     private void setCompletionDropdown() {
 
-        txtCompletionStatus.setAdapter(new ArrayAdapter<>(
-                getActivity(),
-                android.R.layout.simple_spinner_dropdown_item,
-                context.getResources().getStringArray(R.array.completion_array_search)
-        ));
-
+        setSpinnerAdapter(txtCompletionStatus, List.of(context.getResources().getStringArray(R.array.completion_array_search)));
     }
 
     private void setPriorityDropdown() {
         Deque<String> deque = new LinkedList<>(Arrays.asList(context.getResources().getStringArray(R.array.priority_array)));
         deque.addFirst(context.getString(R.string.any_priority));
         List<String> priorityArray = new ArrayList<>(deque);
+        setSpinnerAdapter(txtPriority, priorityArray);
 
-        txtPriority.setAdapter(new ArrayAdapter<>(
-                getActivity(),
+    }
+
+    private void setSpinnerAdapter(Spinner spinner, List<String> list) {
+        spinner.setAdapter(new ArrayAdapter<>(
+                activity,
                 android.R.layout.simple_spinner_dropdown_item,
-                priorityArray
+                list
         ));
 
     }

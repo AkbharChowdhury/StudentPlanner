@@ -68,7 +68,7 @@ public class ModuleFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         initFragment();
         binding = FragmentModuleBinding.inflate(inflater, container, false);
-        binding.fabAdd.setOnClickListener(v -> startForResult.launch(new Intent(getActivity(), AddModuleActivity.class)));
+        binding.fabAdd.setOnClickListener(v -> startForResult.launch(new Intent(activity, AddModuleActivity.class)));
         recyclerView = binding.recyclerView;
         db = DatabaseHelper.getInstance(context);
 

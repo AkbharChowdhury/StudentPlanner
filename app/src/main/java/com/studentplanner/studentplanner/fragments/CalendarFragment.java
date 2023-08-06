@@ -54,7 +54,6 @@ public class CalendarFragment extends Fragment implements OnItemListener {
     private EventData eventData;
     private final LocalDate CURRENT_DATE = LocalDate.now();
 
-
     private void activityResult(ActivityResult result) {
         if (result.getResultCode() == RESULT_OK) {
             Event.getEventsList().clear();
@@ -178,7 +177,7 @@ public class CalendarFragment extends Fragment implements OnItemListener {
             }
 
             // set deadline to selected calendar date
-            startForResult.launch(CalendarUtils.courseworkIntent(getActivity()));
+            startForResult.launch(CalendarUtils.courseworkIntent(activity));
 
         }
 
@@ -186,12 +185,12 @@ public class CalendarFragment extends Fragment implements OnItemListener {
 
             DayOfWeek dow = CalendarUtils.getSelectedDate().getDayOfWeek();
 
-            if (Helper.weekends().contains(dow)){
+            if (Helper.weekends().contains(dow)) {
                 openActivity(AddClassesActivity.class);
                 return true;
             }
             // set class to selected class day
-            startForResult.launch(CalendarUtils.classIntent(getActivity()));
+            startForResult.launch(CalendarUtils.classIntent(activity));
 
         }
 
@@ -204,7 +203,7 @@ public class CalendarFragment extends Fragment implements OnItemListener {
     }
 
     private void openActivity(Class<? extends Activity> activityPageToOpen) {
-        startForResult.launch(new Intent(getActivity(), activityPageToOpen));
+        startForResult.launch(new Intent(activity, activityPageToOpen));
     }
 
 

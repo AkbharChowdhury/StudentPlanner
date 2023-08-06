@@ -4,6 +4,7 @@ import static com.studentplanner.studentplanner.utils.CalendarUtils.daysInWeekAr
 import static com.studentplanner.studentplanner.utils.CalendarUtils.monthYearFromDate;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -60,7 +61,7 @@ public class WeekViewActivity extends AppCompatActivity implements OnItemListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(getApplication().getResources().getString(R.string.week_view_calendar));
+        setTitle(getResources().getString(R.string.week_view_calendar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         eventData = new EventData(DatabaseHelper.getInstance(this));
         binding = ActivityWeekViewBinding.inflate(getLayoutInflater());
@@ -108,15 +109,11 @@ public class WeekViewActivity extends AppCompatActivity implements OnItemListene
     }
 
 
-
-
-    private void showCalendarEventData(){
+    private void showCalendarEventData() {
         ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtils.getSelectedDate());
-        eventListView.setAdapter(new EventAdapter(getApplicationContext(), dailyEvents, startForResult));
+        eventListView.setAdapter(new EventAdapter(this, dailyEvents, startForResult));
         getEventsFromDB();
     }
-
-
 
 
     public void todayAction(View view) {
@@ -125,14 +122,14 @@ public class WeekViewActivity extends AppCompatActivity implements OnItemListene
     }
 
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.classes_menu, menu);
         changeCalendarIcon(menu);
         return true;
     }
-    private void changeCalendarIcon(Menu menu){
+
+    private void changeCalendarIcon(Menu menu) {
         MenuItem weekView = menu.findItem(R.id.action_week_view);
         weekView.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_calendar_view));
     }
@@ -157,7 +154,7 @@ public class WeekViewActivity extends AppCompatActivity implements OnItemListene
 
             DayOfWeek dow = CalendarUtils.getSelectedDate().getDayOfWeek();
 
-            if (Helper.weekends().contains(dow)){
+            if (Helper.weekends().contains(dow)) {
                 openActivity(AddClassesActivity.class);
                 return true;
             }
@@ -166,7 +163,7 @@ public class WeekViewActivity extends AppCompatActivity implements OnItemListene
 
         }
 
-        if (id == android.R.id.home | id == R.id.action_week_view){
+        if (id == android.R.id.home | id == R.id.action_week_view) {
             goBack();
         }
 
@@ -174,12 +171,13 @@ public class WeekViewActivity extends AppCompatActivity implements OnItemListene
         return super.onOptionsItemSelected(item);
 
     }
+
     private void openActivity(Class<? extends Activity> activityPageToOpen) {
         startForResult.launch(new Intent(this, activityPageToOpen));
     }
 
 
-    private void goBack(){
+    private void goBack() {
         CalendarUtils.setEventAdapter(eventListView, this, startForResult);
         finish();
     }

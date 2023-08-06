@@ -59,7 +59,7 @@ public class LoginFragment extends Fragment {
         binding = FragmentLoginBinding.inflate(inflater, container, false);
         db = DatabaseHelper.getInstance(context);
         txtEmail = binding.txtEmail;
-        form = new Validation(getContext());
+        form = new Validation(context);
 
         txtPassword = binding.txtPassword;
 
