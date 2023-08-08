@@ -27,7 +27,8 @@ public abstract class User {
         this.txtPassword = txtPassword;
     }
 
-    public User(){}
+    public User() {
+    }
 
     public void setTxtEmail(TextInputLayout txtEmail) {
         this.txtEmail = txtEmail;
@@ -74,11 +75,11 @@ public abstract class User {
     }
 
 
-
     public User setFirstname(String firstname) {
         this.firstname = firstname;
         return this;
     }
+
     public String getFirstname() {
         return firstname;
     }
@@ -87,6 +88,7 @@ public abstract class User {
         this.lastname = lastname;
         return this;
     }
+
     public String getLastname() {
         return lastname;
     }
@@ -95,7 +97,8 @@ public abstract class User {
     public String getEmail() {
         return email;
     }
-    public String getName(){
+
+    public String getName() {
         return WordUtils.capitalizeFully(String.format("%s %s", firstname, lastname));
     }
 }

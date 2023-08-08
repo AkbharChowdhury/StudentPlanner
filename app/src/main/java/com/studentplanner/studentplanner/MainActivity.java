@@ -45,8 +45,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         studentID = AccountPreferences.getStudentID(this);
         setupNavDrawer(savedInstanceState);
         showStudentDetails();
-
-
     }
 
 

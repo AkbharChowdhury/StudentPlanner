@@ -317,10 +317,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                         String.valueOf(semesterID),
                         type,
                 })) {
-            if (cursor.moveToFirst()) {
-                return cursor.getInt(0) > 0;
-
-            }
+            if (cursor.moveToFirst()) return cursor.getInt(0) > 0;
 
         } catch (Exception e) {
             Log.d(ERROR_TAG, getErrorMessage(e));
@@ -411,7 +408,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         Student student = new Student();
 
         try (Cursor cursor = db.query(StudentTable.TABLE_NAME, columns, selection, selectionArgs, null, null, null)) {
-
             if (cursor.getCount() > 0) {
                 while (cursor.moveToNext()) {
                     student.setFirstname(cursor.getString(cursor.getColumnIndex(StudentTable.COLUMN_FIRSTNAME)));
@@ -419,12 +415,8 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 }
 
             }
-
-
         } catch (Exception e) {
             Log.d(ERROR_TAG, getErrorMessage(e));
-            return student;
-
         }
         return student;
 
