@@ -6,6 +6,7 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
+import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -20,12 +21,15 @@ import com.studentplanner.studentplanner.tables.ModuleTable;
 import java.util.List;
 
 public class AddModuleTeacherActivity extends AppCompatActivity {
-    private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
+    private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this::activityResult);
 
-            }
-    );
+    private void activityResult(ActivityResult result) {
+        if (result.getResultCode() == RESULT_OK) {
+            setResult(RESULT_OK);
+
+            finish();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
