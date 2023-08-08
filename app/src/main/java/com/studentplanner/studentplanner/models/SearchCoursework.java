@@ -72,5 +72,4 @@ public class SearchCoursework {
                 .collect(Collectors.toList());
     }
 
-
 }

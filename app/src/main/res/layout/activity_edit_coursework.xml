@@ -138,8 +138,6 @@
             android:hint="@string/deadline_time"
             app:startIconDrawable="@drawable/baseline_access_time_24">
 
-            >
-
             <AutoCompleteTextView
                 android:id="@+id/txtDeadlineTime"
                 android:layout_width="match_parent"
@@ -185,8 +183,7 @@
             android:text="Remove Image"
             android:textAllCaps="false"
             android:textColor="@color/red"
-            android:visibility="gone"
-            >
+            android:visibility="gone">
 
         </androidx.appcompat.widget.AppCompatButton>
 

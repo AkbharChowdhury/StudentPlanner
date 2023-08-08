@@ -11,5 +11,4 @@
     android:text="@string/item_1"
     android:paddingTop="12dp"
     android:textSize="16sp">
-
 </TextView>

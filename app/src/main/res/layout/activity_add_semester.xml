@@ -32,7 +32,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Semester Name"
+                android:hint="@string/semester_name"
                 android:inputType="textPersonName"
                 android:maxLength="30"
                 android:maxLines="1">
@@ -48,16 +48,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:hint="Start Date">
+            android:hint="@string/start_date">
 
 
             <AutoCompleteTextView
                 android:id="@+id/txtStartDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"
-
-                />
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -67,16 +65,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:hint="End date">
+            android:hint="@string/end_date">
 
 
             <AutoCompleteTextView
                 android:id="@+id/txtEndDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"
-
-                />
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
