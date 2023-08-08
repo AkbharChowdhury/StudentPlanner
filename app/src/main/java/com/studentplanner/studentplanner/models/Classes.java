@@ -58,12 +58,6 @@ public class Classes {
         this.txtClassTypeError = txtClassTypeError;
     }
 
-
-
-
-
-
-
     public Classes(int moduleID, int semesterID, int dow, String startTime, String endTime, String room, String classType) {
         this.moduleID = moduleID;
         this.semesterID = semesterID;
@@ -72,10 +66,6 @@ public class Classes {
         this.endTime = endTime;
         this.room = room;
         this.classType = classType;
-    }
-
-    public Classes(){
-
     }
 
     public Classes(int classID, int moduleID, int semesterID, int dow, String startTime, String endTime, String room, String classType) {

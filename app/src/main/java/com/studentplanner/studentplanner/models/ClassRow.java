@@ -42,8 +42,6 @@ public class ClassRow {
                 : context.getString(R.string.no_teacher_assigned);
 
         lblType.setText(classes.getClassType());
-
-
         lblTeachers.setText(teachers);
         lblClassTitle.setText(Objects.requireNonNull(db.getSelectedModule(moduleID)).getModuleName());
         final String room = classes.getRoom().isEmpty() ? context.getString(R.string.no_room_assigned) : classes.getRoom();

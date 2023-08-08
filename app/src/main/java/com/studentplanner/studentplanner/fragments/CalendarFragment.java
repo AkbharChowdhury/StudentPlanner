@@ -81,10 +81,7 @@ public class CalendarFragment extends Fragment implements OnItemListener {
     }
 
     private void clearEventStatus() {
-        if (!Event.getEventsList().isEmpty()) {
-            Event.getEventsList().clear();
-        }
-
+        if (!Event.getEventsList().isEmpty()) Event.getEventsList().clear();
     }
 
     @Override
