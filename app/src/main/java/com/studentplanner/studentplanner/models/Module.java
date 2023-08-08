@@ -9,7 +9,6 @@ import com.studentplanner.studentplanner.interfaces.Searchable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 public class Module implements Searchable {
     private int moduleID;
@@ -41,6 +40,7 @@ public class Module implements Searchable {
         this.moduleCode = moduleCode;
         this.moduleName = moduleName;
     }
+
     public Module(int moduleID, String moduleCode, String moduleName) {
         this.moduleID = moduleID;
         this.moduleCode = moduleCode;
@@ -55,15 +55,16 @@ public class Module implements Searchable {
         return moduleName;
     }
 
-    public static List<String> populateDropdown(List<Module> list){
-       return list.stream().map(Module::getModuleDetails).toList();
+    public static List<String> populateDropdown(List<Module> list) {
+        return list.stream().map(Module::getModuleDetails).toList();
     }
-    public String getModuleDetails(){
+
+    public String getModuleDetails() {
         return String.format(Locale.ENGLISH, "%s %s", moduleCode, moduleName);
     }
 
-    private static List<Module> defaultModules(){
-       List<Module> moduleList = new ArrayList<>();
+    private static List<Module> defaultModules() {
+        List<Module> moduleList = new ArrayList<>();
         moduleList.add(new Module("COMP1424", "Mobile Application Development"));
         moduleList.add(new Module("COMP1429", "Systems Modelling"));
         moduleList.add(new Module("COMP1430", "Systems Design and Development"));
@@ -78,9 +79,10 @@ public class Module implements Searchable {
 
         return moduleList;
     }
-    public static void addDefaultModules(Context context){
+
+    public static void addDefaultModules(Context context) {
         DatabaseHelper db = DatabaseHelper.getInstance(context);
-        defaultModules().forEach(m-> db.addModule(new Module(m.moduleCode, m.getModuleName())));
+        defaultModules().forEach(m -> db.addModule(new Module(m.moduleCode, m.getModuleName())));
     }
 
     @Override
