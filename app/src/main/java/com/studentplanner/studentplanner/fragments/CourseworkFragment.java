@@ -60,9 +60,7 @@ public class CourseworkFragment extends Fragment {
     private EmptyData emptyData;
 
     private void activityResult(ActivityResult result) {
-        if (result.getResultCode() == RESULT_OK) {
-            getCoursework();
-        }
+        if (result.getResultCode() == RESULT_OK) getCoursework();
     }
 
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this::activityResult);
@@ -82,7 +80,6 @@ public class CourseworkFragment extends Fragment {
     }
 
     private void setCompletionDropdown() {
-
         setSpinnerAdapter(txtCompletionStatus, List.of(context.getResources().getStringArray(R.array.completion_array_search)));
     }
 

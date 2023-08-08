@@ -49,9 +49,7 @@ public class TeacherFragment extends Fragment {
     private DatabaseHelper db;
 
     private void activityResult(ActivityResult result) {
-        if (result.getResultCode() == RESULT_OK) {
-            getTeachers();
-        }
+        if (result.getResultCode() == RESULT_OK) getTeachers();
     }
 
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this::activityResult);

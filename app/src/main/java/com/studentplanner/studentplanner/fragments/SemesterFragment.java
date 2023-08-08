@@ -49,9 +49,8 @@ public class SemesterFragment extends Fragment {
     private DatabaseHelper db;
 
     private void activityResult(ActivityResult result) {
-        if (result.getResultCode() == RESULT_OK) {
-            getSemester();
-        }
+        if (result.getResultCode() == RESULT_OK) getSemester();
+
     }
 
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this::activityResult);
@@ -96,7 +95,7 @@ public class SemesterFragment extends Fragment {
         list = getList();
         buildRecyclerView();
     }
-    
+
     private void buildRecyclerView() {
         if (!list.isEmpty()) {
             adapter = new SemesterAdapter(list, context, startForResult);

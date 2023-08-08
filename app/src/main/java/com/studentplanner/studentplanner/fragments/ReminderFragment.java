@@ -47,9 +47,7 @@ public class ReminderFragment extends Fragment {
     private DatabaseHelper db;
 
     private void activityResult(ActivityResult result) {
-        if (result.getResultCode() == RESULT_OK) {
-            getReminders();
-        }
+        if (result.getResultCode() == RESULT_OK) getReminders();
     }
 
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this::activityResult);

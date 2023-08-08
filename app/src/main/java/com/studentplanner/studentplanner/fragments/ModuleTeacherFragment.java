@@ -49,9 +49,7 @@ public class ModuleTeacherFragment extends Fragment {
     private EmptyData emptyData;
 
     private void activityResult(ActivityResult result) {
-        if (result.getResultCode() == RESULT_OK) {
-            getModuleTeacher();
-        }
+        if (result.getResultCode() == RESULT_OK) getModuleTeacher();
     }
 
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this::activityResult);
