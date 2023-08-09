@@ -23,7 +23,6 @@
     <ImageView
         android:id="@+id/emptyImage"
         android:layout_width="wrap_content"
-
         android:layout_height="wrap_content"
         android:layout_marginTop="88dp"
         android:alpha="0.7"
@@ -37,7 +36,6 @@
     <TextView
         android:id="@+id/emptyText"
         android:layout_width="wrap_content"
-
         android:layout_height="wrap_content"
         android:alpha="0.7"
         android:text="@string/no_coursework_found"
@@ -62,7 +60,6 @@
     <Spinner
         android:id="@+id/txtPriority"
         android:layout_width="395dp"
-
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

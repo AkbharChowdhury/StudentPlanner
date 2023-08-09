@@ -50,37 +50,28 @@
             android:layout_margin="16dp"
             android:hint="@string/semester">
 
-            >
-
             <AutoCompleteTextView
                 android:id="@+id/txtSemesterClasses"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"
-
-                />
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtDayErrorEdit"
-
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:hint="@string/day">
 
-            >
-
             <AutoCompleteTextView
                 android:id="@+id/txtDay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"
-
-                />
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -88,22 +79,17 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtStartTimeError"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:hint="@string/start"
             app:startIconDrawable="@drawable/baseline_access_time_24">
 
-            >
-
             <AutoCompleteTextView
                 android:id="@+id/txtStartTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"
-
-                />
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -122,9 +108,7 @@
                 android:id="@+id/txtEndTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"
-
-                />
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -145,8 +129,6 @@
                 android:maxLines="1">
 
             </com.google.android.material.textfield.TextInputEditText>
-
-
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -157,14 +139,11 @@
             android:layout_margin="16dp"
             android:hint="@string/select_class_type">
 
-            >
-
             <AutoCompleteTextView
                 android:id="@+id/txtClassType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"
-                />
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

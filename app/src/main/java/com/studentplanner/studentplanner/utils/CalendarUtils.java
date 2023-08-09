@@ -7,10 +7,10 @@ import android.widget.ListView;
 
 import androidx.activity.result.ActivityResultLauncher;
 
+import com.studentplanner.studentplanner.adapters.EventAdapter;
 import com.studentplanner.studentplanner.addActivities.AddClassesActivity;
 import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
 import com.studentplanner.studentplanner.models.Event;
-import com.studentplanner.studentplanner.adapters.EventAdapter;
 import com.studentplanner.studentplanner.tables.ClassTable;
 import com.studentplanner.studentplanner.tables.CourseworkTable;
 
@@ -27,8 +27,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CalendarUtils {
-    
+
     private static LocalDate selectedDate;
+
     public static LocalDate getSelectedDate() {
         return selectedDate;
     }
@@ -97,24 +98,22 @@ public class CalendarUtils {
     }
 
 
-
-    public static List<String> getDays(){
+    public static List<String> getDays() {
         List<String> days = new ArrayList<>();
-        for(DayOfWeek dow : DayOfWeek.values()) {
-            days.add(dow.getDisplayName(TextStyle.FULL, Locale.UK ));
+        for (DayOfWeek dow : DayOfWeek.values()) {
+            days.add(dow.getDisplayName(TextStyle.FULL, Locale.UK));
             if (dow == DayOfWeek.FRIDAY) break;
         }
         return days;
     }
-    public static int getDOWNumber(String day){
+
+    public static int getDOWNumber(String day) {
         return DayOfWeek.valueOf(day.toUpperCase()).getValue();
     }
 
-
-    public static LocalDate getCurrentDate(){
-       return LocalDate.now();
+    public static LocalDate getCurrentDate() {
+        return LocalDate.now();
     }
-
 
     public static void setEventAdapter(ListView eventListView, Context context, ActivityResultLauncher<Intent> startForResult) {
         ArrayList<Event> dailyEvents = Event.eventsForDate(selectedDate);
@@ -122,7 +121,7 @@ public class CalendarUtils {
         eventListView.setAdapter(eventAdapter);
     }
 
-    public static List<LocalDate> getRecurringEvents(long numOfDays, LocalDate startDate){
+    public static List<LocalDate> getRecurringEvents(long numOfDays, LocalDate startDate) {
         return Stream.iterate(startDate, date -> date.plusDays(1))
                 .limit(numOfDays)
                 .collect(Collectors.toList());
@@ -131,9 +130,7 @@ public class CalendarUtils {
 
     public static void setSelectedDate(DatePickerFragment datepicker, AutoCompleteTextView textField) {
         datepicker.setCustomDate(LocalDate.parse(Helper.convertFUllDateToYYMMDD(textField.getEditableText().toString())));
-
     }
-
 
 
     public static Intent courseworkIntent(Context context) {
@@ -141,12 +138,11 @@ public class CalendarUtils {
         intent.putExtra(CourseworkTable.COLUMN_DEADLINE, Helper.formatDate(CalendarUtils.getSelectedDate().toString()));
         return intent;
     }
+
     public static Intent classIntent(Context context) {
         Intent intent = new Intent(context, AddClassesActivity.class);
         int dow = getSelectedDate().getDayOfWeek().getValue();
         intent.putExtra(ClassTable.COLUMN_DOW, dow);
         return intent;
     }
-
-
 }

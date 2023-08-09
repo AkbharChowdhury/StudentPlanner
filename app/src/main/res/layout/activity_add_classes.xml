@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".addActivities.AddClassesActivity">
 
-
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,9 +34,7 @@
                 android:id="@+id/txtModuleClasses"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"
-
-                />
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -54,16 +51,13 @@
                 android:id="@+id/txtSemesterClasses"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"
-
-                />
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtDayError"
-
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -92,9 +86,7 @@
                 android:id="@+id/txtStartTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"
-
-                />
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -102,7 +94,6 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtEndTimeError"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
@@ -114,9 +105,7 @@
                 android:id="@+id/txtEndTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"
-
-                />
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

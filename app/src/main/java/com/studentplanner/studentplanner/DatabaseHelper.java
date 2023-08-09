@@ -875,10 +875,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
                 );
                 coursework.setImage(cursor.getBlob(cursor.getColumnIndex(CourseworkTable.COLUMN_IMAGE)));
-
-                coursework.setCompleted(cursor.getString(
-                                cursor.getColumnIndex(CourseworkTable.COLUMN_COMPLETED))
-                        .equalsIgnoreCase("Yes"));
+                coursework.setCompleted(cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_COMPLETED)).equalsIgnoreCase("Yes"));
             }
         } catch (Exception e) {
             Log.d(ERROR_TAG, getErrorMessage(e));

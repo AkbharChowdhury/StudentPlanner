@@ -22,7 +22,6 @@
             android:textColor="@color/black" />
 
 
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtFirstname"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"

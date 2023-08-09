@@ -48,7 +48,6 @@ import com.studentplanner.studentplanner.utils.Validation;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -72,7 +71,7 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
     private TextInputLayout txtDescription;
     private int selectedModuleID;
     private TextInputLayout txtDeadlineError;
-    private MaterialCheckBox checkBoxCompleted;
+    private MaterialCheckBox checkboxCompleted;
 
     private ActivityEditCourseworkBinding binding;
     private BoundTimePickerDialog deadlineTimePicker;
@@ -160,10 +159,8 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
 
         Dropdown.getStringArray(txtPriority, this, R.array.priority_array);
         txtDeadlineError = binding.txtDeadlineError;
-        checkBoxCompleted = binding.checkboxEditCoursework;
+        checkboxCompleted = binding.checkboxCompleted;
         courseworkImage = binding.imgCoursework;
-
-
     }
 
     private void setupFields() {
@@ -174,7 +171,6 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
 
             List<Integer> moduleIDList = db.getModules().stream().map(Module::getModuleID).toList();
 
-
             Coursework coursework = db.getSelectedCoursework(id);
             txtTitle.getEditText().setText(coursework.getTitle());
             txtDescription.getEditText().setText(coursework.getDescription());
@@ -183,7 +179,7 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
             txtDeadlineTime.setText(Helper.showFormattedDBTime(coursework.getDeadlineTime(), this));
             txtModules.setText(txtModules.getAdapter().getItem(Dropdown.getDropDownID(coursework.getModuleID(), moduleIDList)).toString(), false);
             selectedModuleID = coursework.getModuleID();
-            checkBoxCompleted.setChecked(coursework.isCompleted());
+            checkboxCompleted.setChecked(coursework.isCompleted());
 
             LocalTime deadlineTime = LocalTime.parse(coursework.getDeadlineTime());
 
@@ -280,7 +276,7 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
             coursework.setImage(imageToStore);
         }
 
-        coursework.setCompleted(checkBoxCompleted.isChecked());
+        coursework.setCompleted(checkboxCompleted.isChecked());
         return coursework;
     }
 

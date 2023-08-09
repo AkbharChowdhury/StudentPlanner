@@ -92,7 +92,6 @@ public class AddSemesterActivity extends AppCompatActivity implements DatePicker
                 createDatePickerConstraint(datePickerStart);
                 CalendarUtils.setSelectedDate(datePickerStart, txtStartDate);
 
-
             }
             return false;
         });
@@ -108,7 +107,6 @@ public class AddSemesterActivity extends AppCompatActivity implements DatePicker
                 datePickerEnd.setConstrainStartDate();
                 createDatePickerConstraint(datePickerEnd);
                 CalendarUtils.setSelectedDate(datePickerEnd, txtEndDate);
-
 
             }
             return false;
@@ -146,6 +144,4 @@ public class AddSemesterActivity extends AppCompatActivity implements DatePicker
         if (item.getItemId() == android.R.id.home) finish();
         return true;
     }
-
-
 }

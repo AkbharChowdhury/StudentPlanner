@@ -191,7 +191,6 @@ public class CourseworkFragment extends Fragment {
         activity = getActivity();
         activity.setTitle(context.getString(R.string.my_coursework));
         setHasOptionsMenu(true);
-
     }
 
     private void buildRecyclerView() {
@@ -252,7 +251,6 @@ public class CourseworkFragment extends Fragment {
 
         }
         emptyData.emptyResultStatus(false);
-
 
     }
 

@@ -9,9 +9,10 @@ import com.studentplanner.studentplanner.R;
 import java.util.List;
 
 public final class Dropdown {
-    private Dropdown(){
+    private Dropdown() {
 
     }
+
     public static void getStringArray(AutoCompleteTextView field, Context context, int array) {
         field.setAdapter(new ArrayAdapter<>(context, R.layout.list_item, context.getResources().getStringArray(array)));
     }
@@ -49,6 +50,5 @@ public final class Dropdown {
         }
         return 0;
     }
-
 
 }

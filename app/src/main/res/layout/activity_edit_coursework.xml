@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".editActivities.EditCourseworkActivity">
 
-
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,6 +20,7 @@
             android:text="@string/edit_coursework"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textColor="@color/black" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtModuleError"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -57,7 +57,6 @@
 
             </com.google.android.material.textfield.TextInputEditText>
 
-
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -88,7 +87,6 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtPriorityError"
-
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -99,9 +97,7 @@
                 android:id="@+id/txtPriority"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"
-
-                />
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -121,16 +117,13 @@
                 android:id="@+id/txtDeadline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"
-
-                />
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtDeadlineTimeError"
-
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -142,14 +135,12 @@
                 android:id="@+id/txtDeadlineTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"
-
-                />
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
         <com.google.android.material.checkbox.MaterialCheckBox
-            app:checkedState="unchecked"
-            android:id="@+id/checkbox_edit_coursework"
+            android:id="@+id/checkbox_completed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -160,12 +151,10 @@
             android:checked="true"
             android:text="@string/completed"
             android:textSize="16sp"
-            android:textStyle="bold">
+            android:textStyle="bold"
+            app:checkedState="unchecked">
 
         </com.google.android.material.checkbox.MaterialCheckBox>
-
-
-
 
         <ImageView
             android:id="@+id/imgCoursework"
@@ -180,7 +169,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="12dp"
-            android:text="Remove Image"
+            android:text="@string/remove_image"
             android:textAllCaps="false"
             android:textColor="@color/red"
             android:visibility="gone">
