@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".addActivities.AddCourseworkActivity">
 
-
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -100,9 +99,7 @@
                 android:id="@+id/txtPriority"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"
-
-                />
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -122,9 +119,7 @@
                 android:id="@+id/txtDeadline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"
-
-                />
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

@@ -49,7 +49,6 @@ public class ModuleFragment extends Fragment {
 
     private void activityResult(ActivityResult result) {
         if (result.getResultCode() == RESULT_OK) getModule();
-
     }
 
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this::activityResult);

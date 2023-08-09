@@ -60,7 +60,6 @@
 
                     android:padding="2dp"
                     android:text="@string/placeholder_date"
-
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
@@ -70,7 +69,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/placeholder_priority"
-
                     android:textColor="#FF0000" />
 
 
@@ -96,9 +94,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
-
                     android:layout_marginEnd="4dp"
-
                     android:text="@string/placeholder_time_left"
                     android:visibility="visible" />
 
@@ -108,7 +104,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
-
                     android:layout_marginEnd="4dp"
                     android:text="@string/placeholder_coursework_id"
                     android:visibility="gone" />

@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".editActivities.EditClassesActivity">
 
-
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,14 +29,11 @@
             android:layout_margin="16dp"
             android:hint="@string/module">
 
-
             <AutoCompleteTextView
                 android:id="@+id/txtModuleClasses"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"
-
-                />
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
