@@ -268,7 +268,7 @@ public final class Helper {
             StringBuilder sb = new StringBuilder();
             ModuleTeacher model = moduleTeacherList.get(position);
             model.teacherIDList().forEach(teacherId -> sb.append(WordUtils.capitalizeFully(db.getSelectedTeacher(teacherId).getName())).append(", "));
-            return Helper.formatList(sb.toString());
+            return formatList(sb.toString());
         }
         return "";
 
