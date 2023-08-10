@@ -21,7 +21,7 @@ public class ModuleTeacherViewHolder extends RecyclerView.ViewHolder {
     private final TextView tvModule;
     private final TextView tvTeachers;
     private final CardView layout;
-    private final DatabaseHelper db;
+    private DatabaseHelper db;
 
     public CardView getLayout() {
         return layout;
@@ -40,11 +40,11 @@ public class ModuleTeacherViewHolder extends RecyclerView.ViewHolder {
         Module module = db.getSelectedModule(model.moduleID());
         moduleID.setText(String.valueOf(model.moduleID()));
         tvModule.setText(module.getModuleDetails());
-        tvTeachers.setText(getTeacherNames(position, db));
+        tvTeachers.setText(getTeacherNames(position));
 
     }
 
-    private static String getTeacherNames(int position, DatabaseHelper db) {
+    private String getTeacherNames(int position) {
         StringBuilder sb = new StringBuilder();
         List<ModuleTeacher> moduleTeacherList = db.getModuleTeachers();
         ModuleTeacher model = moduleTeacherList.get(position);
