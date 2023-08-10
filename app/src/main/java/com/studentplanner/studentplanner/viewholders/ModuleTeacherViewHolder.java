@@ -10,9 +10,12 @@ import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.databinding.ModuleTeacherRowBinding;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.ModuleTeacher;
-import com.studentplanner.studentplanner.utils.Helper;
 
-public class ModuleTeacherViewHolder extends RecyclerView.ViewHolder{
+import org.apache.commons.text.WordUtils;
+
+import java.util.List;
+
+public class ModuleTeacherViewHolder extends RecyclerView.ViewHolder {
     private final TextView moduleID;
 
     private final TextView tvModule;
@@ -32,10 +35,28 @@ public class ModuleTeacherViewHolder extends RecyclerView.ViewHolder{
         layout = binding.layout;
         db = DatabaseHelper.getInstance(binding.getRoot().getContext());
     }
-    public void showDetails(ModuleTeacher model, int position){
+
+    public void showDetails(ModuleTeacher model, int position) {
         Module module = db.getSelectedModule(model.moduleID());
         moduleID.setText(String.valueOf(model.moduleID()));
         tvModule.setText(module.getModuleDetails());
-        tvTeachers.setText(Helper.getModuleTeachersList(position, db));
+        tvTeachers.setText(getTeacherNames(position, db));
+
+    }
+
+    private static String getTeacherNames(int position, DatabaseHelper db) {
+        StringBuilder sb = new StringBuilder();
+        List<ModuleTeacher> moduleTeacherList = db.getModuleTeachers();
+        if (!moduleTeacherList.isEmpty()) {
+            ModuleTeacher model = moduleTeacherList.get(position);
+            model.teacherIDList().forEach(teacherId -> sb.append(WordUtils.capitalizeFully(db.getSelectedTeacher(teacherId).getName())).append(", "));
+        }
+
+        return formatList(sb.toString());
+
+    }
+
+    public static String formatList(String str) {
+        return str.substring(0, str.lastIndexOf(","));
     }
 }
