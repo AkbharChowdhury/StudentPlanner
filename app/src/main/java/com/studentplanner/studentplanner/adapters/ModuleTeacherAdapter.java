@@ -9,7 +9,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.databinding.ModuleTeacherRowBinding;
 import com.studentplanner.studentplanner.editActivities.EditModuleTeacherActivity;
 import com.studentplanner.studentplanner.models.ModuleTeacher;
@@ -46,9 +45,7 @@ public class ModuleTeacherAdapter extends RecyclerView.Adapter<ModuleTeacherView
 
     @Override
     public void onBindViewHolder(@NonNull ModuleTeacherViewHolder holder, int position) {
-//        holder.showDetails(list.get(position), position);
         holder.showDetails(list, position);
-
         holder.getLayout().setOnClickListener(v -> startForResult.launch(intent(position)));
     }
 
