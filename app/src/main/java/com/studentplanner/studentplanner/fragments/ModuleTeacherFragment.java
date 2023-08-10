@@ -146,14 +146,13 @@ public class ModuleTeacherFragment extends Fragment {
 
         final List<Integer> moduleIdList = db.getModuleTeachersFiltered(text);
         final List<ModuleTeacher> filteredList = ModuleTeacher.filterModuleTeachers(db.getModuleTeachers(), moduleIdList);
-        if (filteredList.isEmpty()) {
-            adapter.filterList(filteredList);
+        adapter.filterList(filteredList);
 
+        if (filteredList.isEmpty()) {
             Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
             emptyData.emptyResultStatus(true);
             return;
         }
-        adapter.filterList(filteredList);
         emptyData.emptyResultStatus(false);
 
     }
