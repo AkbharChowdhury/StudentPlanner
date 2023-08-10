@@ -22,8 +22,7 @@ public class ModuleTeacherAdapter extends RecyclerView.Adapter<ModuleTeacherView
 
     private List<ModuleTeacher> list;
     private final Context context;
-    private  final ActivityResultLauncher<Intent> startForResult;
-
+    private final ActivityResultLauncher<Intent> startForResult;
 
     public ModuleTeacherAdapter(List<ModuleTeacher> list, Context context, ActivityResultLauncher<Intent> startForResult) {
         this.list = Collections.unmodifiableList(list);

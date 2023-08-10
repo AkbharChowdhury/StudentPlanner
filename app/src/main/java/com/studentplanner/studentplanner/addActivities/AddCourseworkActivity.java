@@ -128,10 +128,9 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
         getModulesList();
 
         binding.titleTextInputEditText.setOnKeyListener((v, keyCode, event) -> {
-            Helper.characterCounter(txtTitle, getApplicationContext());
+            Helper.characterCounter(txtTitle, this);
             return false;
         });
-
 
         binding.btnAddCoursework.setOnClickListener(v -> handleAddButton());
         binding.btnRemovePicture.setOnClickListener(v -> handleRemoveClick());
@@ -167,12 +166,9 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
         String[] perms = {Manifest.permission.CAMERA};
         if (EasyPermissions.hasPermissions(this, perms)) {
             openImageGallery();
-        } else {
-            EasyPermissions.requestPermissions(this, getString(R.string.permissions_rationale), STORAGE_PERMISSION_CODE, perms);
-
+            return;
         }
-
-
+        EasyPermissions.requestPermissions(this, getString(R.string.permissions_rationale), STORAGE_PERMISSION_CODE, perms);
     }
 
     private void openImageGallery() {
@@ -268,7 +264,6 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
         if (item.getItemId() == android.R.id.home) finish();
         return true;
     }

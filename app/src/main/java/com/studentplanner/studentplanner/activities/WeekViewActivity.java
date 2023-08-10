@@ -4,7 +4,6 @@ import static com.studentplanner.studentplanner.utils.CalendarUtils.daysInWeekAr
 import static com.studentplanner.studentplanner.utils.CalendarUtils.monthYearFromDate;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -46,7 +45,6 @@ public class WeekViewActivity extends AppCompatActivity implements OnItemListene
     private ListView eventListView;
     private ActivityWeekViewBinding binding;
     private EventData eventData;
-
 
     private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
         if (result.getResultCode() == RESULT_OK) {

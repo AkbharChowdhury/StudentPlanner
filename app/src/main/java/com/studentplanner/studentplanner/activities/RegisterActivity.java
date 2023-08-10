@@ -2,7 +2,6 @@ package com.studentplanner.studentplanner.activities;
 
 import static com.studentplanner.studentplanner.utils.Helper.setEditTextMaxLength;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -33,7 +32,6 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText txtPhone;
     private TextInputLayout txtPassword;
     private DatabaseHelper db;
-    private Context context;
     private Validation form;
     private ProgressBar progressBar;
     private MaterialCheckBox terms;
@@ -50,10 +48,9 @@ public class RegisterActivity extends AppCompatActivity {
 
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        context = getApplicationContext();
 
-        db = DatabaseHelper.getInstance(context);
-        form = new Validation(context, db);
+        db = DatabaseHelper.getInstance(this);
+        form = new Validation(this, db);
         alertDialogFragment = new AlertDialogFragment(this);
         findTextFields();
 
@@ -77,7 +74,7 @@ public class RegisterActivity extends AppCompatActivity {
             finish();
             return;
         }
-        Helper.longToastMessage(context, getString(R.string.create_account_error));
+        Helper.longToastMessage(this, getString(R.string.create_account_error));
 
     }
 
@@ -139,7 +136,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (PasswordValidator.containsUpperCase(password)) strength++;
         if (PasswordValidator.containsLowerCase(password)) strength++;
         if (PasswordValidator.containsNumber(password)) strength++;
-        new PasswordValidator(context, progressBar).getProgressBarStatus(strength, strengthView);
+        new PasswordValidator(this, progressBar).getProgressBarStatus(strength, strengthView);
 
     }
 
@@ -148,6 +145,4 @@ public class RegisterActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) finish();
         return true;
     }
-
-
 }

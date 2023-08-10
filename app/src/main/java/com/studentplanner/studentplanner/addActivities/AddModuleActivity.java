@@ -20,7 +20,6 @@ public class AddModuleActivity extends AppCompatActivity {
     private TextInputLayout txtModuleName;
     private Validation form;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +37,8 @@ public class AddModuleActivity extends AppCompatActivity {
         binding.btnAddModule.setOnClickListener(v -> handleAddModuleClick());
 
     }
-    private void handleAddModuleClick(){
+
+    private void handleAddModuleClick() {
         Module module = getModuleDetails();
         if (!form.validateAddModuleForm(module)) return;
         if (db.addModule(module)) {
@@ -55,7 +55,6 @@ public class AddModuleActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
         if (item.getItemId() == android.R.id.home) finish();
         return true;
     }

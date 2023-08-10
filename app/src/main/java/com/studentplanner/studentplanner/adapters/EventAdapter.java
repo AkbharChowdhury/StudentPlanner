@@ -59,7 +59,6 @@ public class EventAdapter extends ArrayAdapter<Event> {
     }
 
 
-
     private void showEventDetails(final Event event, EventRowBinding binding) {
         final ImageView classesIcon = binding.icClasses;
         final ImageView courseworkIcon = binding.icCoursework;

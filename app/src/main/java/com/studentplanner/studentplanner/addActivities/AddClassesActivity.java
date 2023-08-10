@@ -55,7 +55,6 @@ public class AddClassesActivity extends AppCompatActivity implements TimePickerD
     private TextInputLayout txtClassTypeError;
     private ActivityAddClassesBinding binding;
 
-
     private BoundTimePickerDialog startTimePicker;
     private BoundTimePickerDialog endTimePicker;
     private final CustomTimePicker startCustomTimePicker = new CustomTimePicker(LocalTime.now().getHour(), LocalTime.now().getMinute());
@@ -79,9 +78,9 @@ public class AddClassesActivity extends AppCompatActivity implements TimePickerD
         Helper.getDays(txtDays, this);
 
 
-        if (getIntent().getIntExtra(ClassTable.COLUMN_DOW,0) !=0) {
+        if (getIntent().getIntExtra(ClassTable.COLUMN_DOW, 0) != 0) {
 
-            int dow = getIntent().getIntExtra(ClassTable.COLUMN_DOW,0) -1;
+            int dow = getIntent().getIntExtra(ClassTable.COLUMN_DOW, 0) - 1;
             txtDays.setText(txtDays.getAdapter().getItem(dow).toString(), false);
         }
 

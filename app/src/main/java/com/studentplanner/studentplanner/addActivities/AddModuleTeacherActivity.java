@@ -26,7 +26,6 @@ public class AddModuleTeacherActivity extends AppCompatActivity {
     private void activityResult(ActivityResult result) {
         if (result.getResultCode() == RESULT_OK) {
             setResult(RESULT_OK);
-
             finish();
         }
     }
@@ -43,8 +42,9 @@ public class AddModuleTeacherActivity extends AppCompatActivity {
         AutoCompleteTextView txtModules = binding.txtModuleAddTeacher;
         txtModules.setText(R.string.select_module);
 
-        getModulesList(db.getModuleClassesAdd(),txtModules);
+        getModulesList(db.getModuleClassesAdd(), txtModules);
     }
+
     private void getModulesList(List<Module> moduleList, AutoCompleteTextView txtModules) {
 
         txtModules.setAdapter(new ArrayAdapter<>(this, R.layout.list_item, Module.populateDropdown(moduleList)));
@@ -52,7 +52,7 @@ public class AddModuleTeacherActivity extends AppCompatActivity {
     }
 
 
-    private Intent moduleIntent(int moduleID){
+    private Intent moduleIntent(int moduleID) {
         Intent intent = new Intent(this, AddModuleTeacherCheckboxActivity.class);
         intent.putExtra(ModuleTable.COLUMN_ID, moduleID);
         return intent;
