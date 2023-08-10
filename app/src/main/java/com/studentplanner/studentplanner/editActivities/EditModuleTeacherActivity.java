@@ -17,6 +17,8 @@ import com.studentplanner.studentplanner.models.User;
 import com.studentplanner.studentplanner.tables.ModuleTable;
 import com.studentplanner.studentplanner.utils.Helper;
 
+import org.apache.commons.text.WordUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -67,7 +69,8 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
         final String SELECTED_ID = ModuleTable.COLUMN_ID;
         if (getIntent().hasExtra(SELECTED_ID)) {
             int id = getIntent().getIntExtra(SELECTED_ID, 0);
-            setTitle(db.getSelectedModule(id).getModuleName());
+//
+            setTitle(WordUtils.capitalizeFully(db.getSelectedModule(id).getModuleName()));
 
         }
     }

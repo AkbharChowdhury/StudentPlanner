@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -145,9 +146,9 @@ public class ModuleTeacherFragment extends Fragment {
 
         final List<Integer> moduleIdList = db.getModuleTeachersFiltered(text);
         final List<ModuleTeacher> filteredList = ModuleTeacher.filterModuleTeachers(db.getModuleTeachers(), moduleIdList);
-
         if (filteredList.isEmpty()) {
             adapter.filterList(filteredList);
+
             Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
             emptyData.emptyResultStatus(true);
             return;
