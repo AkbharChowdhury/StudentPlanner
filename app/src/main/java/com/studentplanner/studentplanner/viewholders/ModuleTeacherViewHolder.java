@@ -37,18 +37,26 @@ public class ModuleTeacherViewHolder extends RecyclerView.ViewHolder {
         db = DatabaseHelper.getInstance(binding.getRoot().getContext());
     }
 
-//    public void showDetails(ModuleTeacher model, int position) {
+    //    public void showDetails(ModuleTeacher model, int position) {
 //        Module module = db.getSelectedModule(model.moduleID());
 //        moduleID.setText(String.valueOf(model.moduleID()));
 //        tvModule.setText(module.getModuleDetails());
 //        tvTeachers.setText(getTeacherNames(position));
 //    }
+    public void showDetails(List<ModuleTeacher> list, int position) {
+//        List<ModuleTeacher> moduleTeacherList
+        ModuleTeacher model = list.get(position);
+        Module module = db.getSelectedModule(model.moduleID());
+        moduleID.setText(String.valueOf(model.moduleID()));
+        tvModule.setText(module.getModuleDetails());
+        tvTeachers.setText(getTeacherNames(list, position));
+    }
 
 
-    private String getTeacherNames(int position, List<ModuleTeacher> moduleTeacherList) {
+    private String getTeacherNames(List<ModuleTeacher> list, int position) {
         StringBuilder sb = new StringBuilder();
-        List<ModuleTeacher> moduleTeacherList1 = db.getModuleTeachers();
-        moduleTeacherList1.get(position)
+//        List<ModuleTeacher> moduleTeacherList1 = db.getModuleTeachers();
+        list.get(position)
                 .teacherIDList()
                 .forEach(id -> sb
                         .append(WordUtils.capitalizeFully(db.getSelectedTeacher(id).getName()))

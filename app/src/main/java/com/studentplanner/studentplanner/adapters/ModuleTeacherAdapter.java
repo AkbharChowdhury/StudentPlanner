@@ -46,7 +46,9 @@ public class ModuleTeacherAdapter extends RecyclerView.Adapter<ModuleTeacherView
 
     @Override
     public void onBindViewHolder(@NonNull ModuleTeacherViewHolder holder, int position) {
-        holder.showDetails(list.get(position), position);
+//        holder.showDetails(list.get(position), position);
+        holder.showDetails(list, position);
+
         holder.getLayout().setOnClickListener(v -> startForResult.launch(intent(position)));
     }
 
