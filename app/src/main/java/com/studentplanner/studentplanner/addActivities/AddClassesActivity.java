@@ -87,25 +87,25 @@ public class AddClassesActivity extends AppCompatActivity implements TimePickerD
         getSemesterList();
         Helper.getStringArray(this, txtClassType, R.array.type_array);
 
-        binding.btnAddClasses.setOnClickListener(v -> {
-
-            if (!form.validateAddClassForm(getErrorFields())) return;
-            if (db.classExists(selectedModuleID, selectedSemesterID, Helper.trimStr(txtClassType))) {
-                txtClassTypeError.setError(getString(R.string.class_exists_error));
-                return;
-            }
-            txtClassTypeError.setError(null);
-
-            if (db.addClass(getClassDetails())) {
-                Helper.longToastMessage(this, getString(R.string.class_added));
-                setResult(RESULT_OK);
-                finish();
-            }
-
-
-        });
+        binding.btnAddClasses.setOnClickListener(v -> handleClick());
     }
-    private Classes getErrorFields(){
+
+    private void handleClick() {
+        if (!form.validateAddClassForm(getErrorFields())) return;
+        if (db.classExists(selectedModuleID, selectedSemesterID, Helper.trimStr(txtClassType))) {
+            txtClassTypeError.setError(getString(R.string.class_exists_error));
+            return;
+        }
+        txtClassTypeError.setError(null);
+
+        if (db.addClass(getClassDetails())) {
+            Helper.longToastMessage(this, getString(R.string.class_added));
+            setResult(RESULT_OK);
+            finish();
+        }
+    }
+
+    private Classes getErrorFields() {
         Classes errorFields = new Classes(txtDayError, txtSemesterError, txtModuleError, txtClassTypeError);
         errorFields.setTxtStartTimeError(binding.txtStartTimeError);
         errorFields.setTxtEndTimeError(binding.txtEndTimeError);
