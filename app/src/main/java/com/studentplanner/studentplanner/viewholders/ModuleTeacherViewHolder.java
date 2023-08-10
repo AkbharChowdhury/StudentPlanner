@@ -55,7 +55,6 @@ public class ModuleTeacherViewHolder extends RecyclerView.ViewHolder {
 
     private String getTeacherNames(List<ModuleTeacher> list, int position) {
         StringBuilder sb = new StringBuilder();
-//        List<ModuleTeacher> moduleTeacherList1 = db.getModuleTeachers();
         list.get(position)
                 .teacherIDList()
                 .forEach(id -> sb
