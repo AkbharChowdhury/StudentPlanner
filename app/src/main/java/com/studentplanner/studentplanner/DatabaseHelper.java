@@ -1003,7 +1003,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
             while (cursor.moveToNext()) {
                 int moduleID = cursor.getInt(cursor.getColumnIndex(ModuleTeacherTable.COLUMN_MODULE_ID));
-
                 list.add(moduleID);
 
             }

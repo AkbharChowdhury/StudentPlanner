@@ -262,20 +262,15 @@ public final class Helper {
     }
 
     public static String getModuleTeachersList(int position, DatabaseHelper db) {
-        StringBuilder teachers = new StringBuilder();
 
         List<ModuleTeacher> moduleTeacherList = db.getModuleTeachers();
-        if (moduleTeacherList.size() > 0) {
+        if (!moduleTeacherList.isEmpty()) {
+            StringBuilder sb = new StringBuilder();
             ModuleTeacher model = moduleTeacherList.get(position);
-
-            for (int teacherId : model.teacherIDList()) {
-                Teacher teacher = db.getSelectedTeacher(teacherId);
-                teachers.append(WordUtils.capitalizeFully(teacher.getName())).append(", ");
-            }
-            return Helper.formatList(teachers.toString());
-
+            model.teacherIDList().forEach(teacherId -> sb.append(WordUtils.capitalizeFully(db.getSelectedTeacher(teacherId).getName())).append(", "));
+            return Helper.formatList(sb.toString());
         }
-        return null;
+        return "";
 
     }
 

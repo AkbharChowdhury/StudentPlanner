@@ -5,14 +5,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
-import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.Teacher;
+import com.studentplanner.studentplanner.models.User;
 import com.studentplanner.studentplanner.tables.ModuleTable;
 import com.studentplanner.studentplanner.utils.Helper;
 
@@ -34,7 +35,7 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
         db = DatabaseHelper.getInstance(this);
         setActivityTitle();
 
-        List<String> teacherNames = getTeacher();
+        List<String> teacherNames = getTeacherNames(db.getTeachers());
         String[] myTeachers = Helper.convertArrayListStringToStringArray(teacherNames);
 
         listView = findViewById(R.id.listview);
@@ -47,22 +48,19 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
         getSelectedTeacherEdited();
 
 
-
     }
+
     private void getSelectedTeacherEdited() {
 
         List<Teacher> teachers = db.getTeachers();
         int moduleID = getIntent().getIntExtra(ModuleTable.COLUMN_ID, 0);
-
-        ArrayList<Integer> editedTeacherIDs = db.getModuleTeacherByModuleID(moduleID);
-        ArrayList<Integer> allTeacherIDs = getIdList(teachers);
-        IntStream.range(0, teachers.size()).forEach(i ->  listView.setItemChecked(i, editedTeacherIDs.contains(allTeacherIDs.get(i))));
+        List<Integer> editedTeacherIDs = db.getModuleTeacherByModuleID(moduleID);
+        List<Integer> allTeacherIDs = getIdList(teachers);
+        IntStream.range(0, teachers.size()).forEach(i -> listView.setItemChecked(i, editedTeacherIDs.contains(allTeacherIDs.get(i))));
     }
-    private ArrayList<Integer> getIdList(List<Teacher> teachers) {
-        ArrayList<Integer> idList = new ArrayList<>();
-        teachers.forEach(t -> idList.add(t.getUserID()));
-        return idList;
 
+    private List<Integer> getIdList(List<Teacher> teachers) {
+        return teachers.stream().map(User::getUserID).toList();
     }
 
     private void setActivityTitle() {
@@ -74,20 +72,15 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
         }
     }
 
-
-
-    private List<String> getTeacher() {
-        List<Teacher> teachers = db.getTeachers();
-        List<String> teacherArray = new ArrayList<>();
-
-        teachers.forEach(t-> teacherArray.add(String.format("%s %s", t.getFirstname(), t.getLastname())));
-        return teacherArray;
+    private List<String> getTeacherNames(List<Teacher> teachers) {
+        return teachers.stream().map(User::getName).toList();
     }
+
     private List<Integer> getSelectedTeacherIDList() {
 
         List<Integer> selectedTeacherIds = new ArrayList<>();
         List<Teacher> teacherList = db.getTeachers();
-        IntStream.range(0, listView.getCount()).forEach(i ->  {
+        IntStream.range(0, listView.getCount()).forEach(i -> {
             if (listView.isItemChecked(i)) {
                 selectedTeacherIds.add(teacherList.get(i).getUserID());
             }
@@ -114,12 +107,12 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
             List<Integer> teacherIDs = getSelectedTeacherIDList();
             if (teacherIDs.size() == 0) {
                 new AlertDialog.Builder(this)
-                        .setMessage( getString(R.string.delete_module_teacher_message))
+                        .setMessage(getString(R.string.delete_module_teacher_message))
                         .setCancelable(false)
                         .setTitle(getString(R.string.delete_module_teacher_title))
                         .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
                             int moduleId = getIntent().getIntExtra(ModuleTable.COLUMN_ID, 0);
-                            if (db.deleteSelectedTeacherModules(moduleId)){
+                            if (db.deleteSelectedTeacherModules(moduleId)) {
                                 Helper.longToastMessage(this, teacherRemoved(moduleId));
                                 setResult(RESULT_OK);
                                 finish();
@@ -131,7 +124,7 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
                 final String SELECTED_ID = ModuleTable.COLUMN_ID;
                 int moduleID = getIntent().getIntExtra(SELECTED_ID, 0);
 
-                if(db.updateModuleTeacher(teacherIDs, moduleID)){
+                if (db.updateModuleTeacher(teacherIDs, moduleID)) {
                     Helper.longToastMessage(this, teacherUpdated(moduleID));
                     setResult(RESULT_OK);
                     finish();
@@ -146,11 +139,12 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
 
     }
 
-    private String teacherRemoved(int moduleId){
+    private String teacherRemoved(int moduleId) {
         return "All teachers removed from " + db.getSelectedModule(moduleId).getModuleDetails();
 
     }
-    private String teacherUpdated(int moduleId){
+
+    private String teacherUpdated(int moduleId) {
         return "Teacher updated for " + db.getSelectedModule(moduleId).getModuleDetails();
 
     }

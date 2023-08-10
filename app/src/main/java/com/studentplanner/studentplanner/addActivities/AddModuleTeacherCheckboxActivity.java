@@ -11,19 +11,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
-import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.Teacher;
+import com.studentplanner.studentplanner.models.User;
 import com.studentplanner.studentplanner.tables.ModuleTable;
 import com.studentplanner.studentplanner.utils.Helper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
     private DatabaseHelper db;
     private ListView listView;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,9 +30,7 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
 
         db = DatabaseHelper.getInstance(this);
         setActivityTitle();
-
-        List<String> teacherNames = getTeacher(db.getTeachers());
-        String[] myTeachers = Helper.convertArrayListStringToStringArray(teacherNames);
+        String[] myTeachers = Helper.convertArrayListStringToStringArray(getTeacherNames(db.getTeachers()));
 
         listView = findViewById(R.id.listview);
         listView.setAdapter(new ArrayAdapter<>(
@@ -41,29 +38,21 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
                 android.R.layout.simple_list_item_multiple_choice,
                 myTeachers
         ));
-
-
     }
 
     private void setActivityTitle() {
         final String SELECTED_ID = ModuleTable.COLUMN_ID;
         if (getIntent().hasExtra(SELECTED_ID)) {
             int id = getIntent().getIntExtra(SELECTED_ID, 0);
-            Module module = db.getSelectedModule(id);
-            setTitle(module.getModuleName());
+            setTitle(db.getSelectedModule(id).getModuleName());
 
         }
     }
 
-
-
-    private List<String> getTeacher(List<Teacher> teachers) {
-        List<String> teacherArray = new ArrayList<>();
-        for (Teacher teacher : teachers) {
-            teacherArray.add(String.format("%s %s", teacher.getFirstname(), teacher.getLastname()));
-        }
-        return teacherArray;
+    private List<String> getTeacherNames(List<Teacher> teachers) {
+        return teachers.stream().map(User::getName).toList();
     }
+
     private List<Integer> getSelectedTeacherIDList() {
 
         List<Integer> selectedTeacherIds = new ArrayList<>();
@@ -86,24 +75,20 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.item_done) {
-
+        final int ID = item.getItemId();
+        if (ID == R.id.item_done) {
             List<Integer> teacherIDList = getSelectedTeacherIDList();
-            if (teacherIDList.size() == 0) {
+            if (teacherIDList.isEmpty()) {
                 Helper.shortToastMessage(this, getString(R.string.select_teacher));
+                return false;
+            }
 
-            } else {
-                final String SELECTED_ID = ModuleTable.COLUMN_ID;
-                int moduleID = getIntent().getIntExtra(SELECTED_ID, 0);
-
-                if(db.addModuleTeacher(teacherIDList, moduleID)){
-                    Helper.longToastMessage(this, String.format(Locale.ENGLISH,"Teacher Added for %s", db.getSelectedModule(moduleID).getModuleDetails()));
-                    setResult(RESULT_OK);
-                    finish();
-
-                }
-
+            final String SELECTED_ID = ModuleTable.COLUMN_ID;
+            int moduleID = getIntent().getIntExtra(SELECTED_ID, 0);
+            if (db.addModuleTeacher(teacherIDList, moduleID)) {
+                Helper.longToastMessage(this, "Teacher Added for " + db.getSelectedModule(moduleID).getModuleDetails());
+                setResult(RESULT_OK);
+                finish();
             }
 
         }
