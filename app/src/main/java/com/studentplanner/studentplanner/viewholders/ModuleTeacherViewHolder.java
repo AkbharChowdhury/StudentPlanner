@@ -45,14 +45,13 @@ public class ModuleTeacherViewHolder extends RecyclerView.ViewHolder {
     }
 
     private static String getTeacherNames(int position, DatabaseHelper db) {
+
         StringBuilder sb = new StringBuilder();
         List<ModuleTeacher> moduleTeacherList = db.getModuleTeachers();
-        if (!moduleTeacherList.isEmpty()) {
-            ModuleTeacher model = moduleTeacherList.get(position);
-            model.teacherIDList().forEach(teacherId -> sb.append(WordUtils.capitalizeFully(db.getSelectedTeacher(teacherId).getName())).append(", "));
-        }
-
+        ModuleTeacher model = moduleTeacherList.get(position);
+        model.teacherIDList().forEach(teacherId -> sb.append(WordUtils.capitalizeFully(db.getSelectedTeacher(teacherId).getName())).append(", "));
         return formatList(sb.toString());
+
 
     }
 
