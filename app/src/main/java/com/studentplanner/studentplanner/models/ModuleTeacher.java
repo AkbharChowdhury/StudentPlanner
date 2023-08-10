@@ -5,8 +5,8 @@ import java.util.stream.Collectors;
 
 public record ModuleTeacher(int moduleID, List<Integer> teacherIDList) {
 
-    public static List<ModuleTeacher> filterModuleTeachers(final List<ModuleTeacher> ALL, final List<Integer> filteredModuleIdList) {
-        return ALL.stream()
+    public static List<ModuleTeacher> filterModuleTeachers(final List<ModuleTeacher> moduleTeachers, final List<Integer> filteredModuleIdList) {
+        return moduleTeachers.stream()
                 .filter(p -> filteredModuleIdList.contains(p.moduleID()))
                 .collect(Collectors.toList());
     }

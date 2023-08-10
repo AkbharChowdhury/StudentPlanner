@@ -17,12 +17,10 @@ import java.util.List;
 
 public class ModuleTeacherViewHolder extends RecyclerView.ViewHolder {
     private final TextView moduleID;
-
     private final TextView tvModule;
     private final TextView tvTeachers;
     private final CardView layout;
     private DatabaseHelper db;
-
     public CardView getLayout() {
         return layout;
     }

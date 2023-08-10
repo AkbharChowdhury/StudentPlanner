@@ -136,13 +136,13 @@ public class ReminderFragment extends Fragment {
     private void filter(String text) {
 
         List<Coursework> filteredList = (List<Coursework>) Search.textSearch(getList(), text);
+        adapter.filterList(filteredList);
+
         if (filteredList.isEmpty()) {
-            adapter.filterList(filteredList);
             Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
             emptyData.emptyResultStatus(true);
             return;
         }
-        adapter.filterList(filteredList);
         emptyData.emptyResultStatus(false);
     }
 

@@ -146,6 +146,10 @@ public class ModuleTeacherFragment extends Fragment {
 
         final List<Integer> moduleIdList = db.getModuleTeachersFiltered(text);
         final List<ModuleTeacher> filteredList = ModuleTeacher.filterModuleTeachers(db.getModuleTeachers(), moduleIdList);
+//        filteredList.forEach(i -> {
+//            String s = "Module id " +  i.moduleID() + " teachers " + i.teacherIDList();
+//            Log.d("SAM",s);
+//        });
         adapter.filterList(filteredList);
 
         if (filteredList.isEmpty()) {
