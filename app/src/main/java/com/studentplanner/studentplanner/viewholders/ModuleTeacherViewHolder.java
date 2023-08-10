@@ -1,5 +1,7 @@
 package com.studentplanner.studentplanner.viewholders;
 
+import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,7 +22,8 @@ public class ModuleTeacherViewHolder extends RecyclerView.ViewHolder {
     private final TextView tvModule;
     private final TextView tvTeachers;
     private final CardView layout;
-    private DatabaseHelper db;
+    private final DatabaseHelper db;
+
     public CardView getLayout() {
         return layout;
     }
@@ -34,19 +37,22 @@ public class ModuleTeacherViewHolder extends RecyclerView.ViewHolder {
         db = DatabaseHelper.getInstance(binding.getRoot().getContext());
     }
 
-    public void showDetails(ModuleTeacher model, int position) {
-        Module module = db.getSelectedModule(model.moduleID());
-        moduleID.setText(String.valueOf(model.moduleID()));
-        tvModule.setText(module.getModuleDetails());
-        tvTeachers.setText(getTeacherNames(position));
+//    public void showDetails(ModuleTeacher model, int position) {
+//        Module module = db.getSelectedModule(model.moduleID());
+//        moduleID.setText(String.valueOf(model.moduleID()));
+//        tvModule.setText(module.getModuleDetails());
+//        tvTeachers.setText(getTeacherNames(position));
+//    }
 
-    }
 
-    private String getTeacherNames(int position) {
+    private String getTeacherNames(int position, List<ModuleTeacher> moduleTeacherList) {
         StringBuilder sb = new StringBuilder();
-        List<ModuleTeacher> moduleTeacherList = db.getModuleTeachers();
-        ModuleTeacher model = moduleTeacherList.get(position);
-        model.teacherIDList().forEach(teacherId -> sb.append(WordUtils.capitalizeFully(db.getSelectedTeacher(teacherId).getName())).append(", "));
+        List<ModuleTeacher> moduleTeacherList1 = db.getModuleTeachers();
+        moduleTeacherList1.get(position)
+                .teacherIDList()
+                .forEach(id -> sb
+                        .append(WordUtils.capitalizeFully(db.getSelectedTeacher(id).getName()))
+                        .append(", "));
         return formatList(sb.toString());
     }
 

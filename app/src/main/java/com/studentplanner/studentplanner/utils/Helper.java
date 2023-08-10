@@ -256,23 +256,6 @@ public final class Helper {
                 .collect(Collectors.toList());
     }
 
-    public static String formatList(String str) {
-        return str.substring(0, str.lastIndexOf(","));
-    }
-
-    public static String getModuleTeachersList(int position, DatabaseHelper db) {
-        StringBuilder sb = new StringBuilder();
-        List<ModuleTeacher> moduleTeacherList = db.getModuleTeachers();
-        if (!moduleTeacherList.isEmpty()) {
-            ModuleTeacher model = moduleTeacherList.get(position);
-            model.teacherIDList().forEach(teacherId -> sb.append(WordUtils.capitalizeFully(db.getSelectedTeacher(teacherId).getName())).append(", "));
-            return formatList(sb.toString());
-        }
-
-        return sb.toString();
-
-    }
-
     public static String getTeachersForSelectedModule(Context context, int moduleID) {
         DatabaseHelper db = DatabaseHelper.getInstance(context);
         String teachers = db.getTeachersForSelectedModuleID(moduleID).toString();

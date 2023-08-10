@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -74,7 +73,6 @@ public class ModuleTeacherFragment extends Fragment {
 
         binding.fabAdd.setOnClickListener(v -> startForResult.launch(new Intent(activity, AddModuleTeacherActivity.class)));
         emptyData = new EmptyData(binding.emptyImage, binding.emptyText);
-
 
         db = DatabaseHelper.getInstance(context);
 
@@ -144,8 +142,8 @@ public class ModuleTeacherFragment extends Fragment {
 
     private void filter(String text) {
 
-        final List<Integer> moduleIdList = db.getModuleTeachersFiltered(text);
-        final List<ModuleTeacher> filteredList = ModuleTeacher.filterModuleTeachers(db.getModuleTeachers(), moduleIdList);
+        List<Integer> moduleIdList = db.getModuleTeachersFiltered(text);
+        List<ModuleTeacher> filteredList = ModuleTeacher.filterModuleTeachers(db.getModuleTeachers(), moduleIdList);
         adapter.filterList(filteredList);
         if (filteredList.isEmpty()) {
             Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
