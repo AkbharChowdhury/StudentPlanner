@@ -77,7 +77,6 @@ public class AddClassesActivity extends AppCompatActivity implements TimePickerD
         setUpTimePickers();
         Helper.getDays(txtDays, this);
 
-
         if (getIntent().getIntExtra(ClassTable.COLUMN_DOW, 0) != 0) {
 
             int dow = getIntent().getIntExtra(ClassTable.COLUMN_DOW, 0) - 1;
@@ -90,11 +89,7 @@ public class AddClassesActivity extends AppCompatActivity implements TimePickerD
 
         binding.btnAddClasses.setOnClickListener(v -> {
 
-            Classes errorFields = new Classes(txtDayError, txtSemesterError, txtModuleError, txtClassTypeError);
-            errorFields.setTxtStartTimeError(binding.txtStartTimeError);
-            errorFields.setTxtEndTimeError(binding.txtEndTimeError);
-
-            if (!form.validateAddClassForm(errorFields)) return;
+            if (!form.validateAddClassForm(getErrorFields())) return;
             if (db.classExists(selectedModuleID, selectedSemesterID, Helper.trimStr(txtClassType))) {
                 txtClassTypeError.setError(getString(R.string.class_exists_error));
                 return;
@@ -109,6 +104,13 @@ public class AddClassesActivity extends AppCompatActivity implements TimePickerD
 
 
         });
+    }
+    private Classes getErrorFields(){
+        Classes errorFields = new Classes(txtDayError, txtSemesterError, txtModuleError, txtClassTypeError);
+        errorFields.setTxtStartTimeError(binding.txtStartTimeError);
+        errorFields.setTxtEndTimeError(binding.txtEndTimeError);
+        return errorFields;
+
     }
 
     private void initAndSetFields() {

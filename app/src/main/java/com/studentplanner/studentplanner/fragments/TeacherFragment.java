@@ -80,8 +80,7 @@ public class TeacherFragment extends Fragment {
 
     private void getTeachers() {
         list = db.getTeachers();
-        Comparator<Teacher> sort = Comparator.comparing(User::getLastname);
-        list.sort(sort);
+        list.sort(Comparator.comparing(User::getLastname));
         buildRecyclerView();
     }
 

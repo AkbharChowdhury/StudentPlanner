@@ -27,6 +27,14 @@ public class Module implements Searchable {
         return txtModuleCode;
     }
 
+    public void setTxtModuleCode(TextInputLayout txtModuleCode) {
+        this.txtModuleCode = txtModuleCode;
+    }
+
+    public void setTxtModuleName(TextInputLayout txtModuleName) {
+        this.txtModuleName = txtModuleName;
+    }
+
     public TextInputLayout getTxtModuleName() {
         return txtModuleName;
     }

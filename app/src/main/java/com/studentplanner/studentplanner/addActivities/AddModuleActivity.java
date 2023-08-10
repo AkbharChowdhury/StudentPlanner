@@ -46,10 +46,15 @@ public class AddModuleActivity extends AppCompatActivity {
             setResult(RESULT_OK);
             finish();
         }
+
     }
 
     private Module getModuleDetails() {
-        return new Module(Helper.trimStr(txtModuleCode), Helper.trimStr(txtModuleName));
+        Module module = new Module(Helper.trimStr(txtModuleCode), Helper.trimStr(txtModuleName));
+        module.setTxtModuleCode(txtModuleCode);
+        module.setTxtModuleName(txtModuleName);
+        return module;
+
 
     }
 

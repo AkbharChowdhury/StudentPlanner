@@ -38,10 +38,9 @@ public class AddTeacherActivity extends AppCompatActivity {
         txtEmail = binding.txtEmail;
 
         binding.btnAddTeacher.setOnClickListener(v -> {
-            Teacher teacher = getTeacherDetails();
-            if (!form.validateAddTeacherForm(teacher)) return;
-            if (db.addTeacher(teacher)) {
-                Helper.longToastMessage(getApplicationContext(), getString(R.string.teacher_added));
+            if (!form.validateAddTeacherForm(new Teacher(txtFirstName, txtLastName, txtEmail))) return;
+            if (db.addTeacher(getTeacherDetails())) {
+                Helper.longToastMessage(this, getString(R.string.teacher_added));
                 setResult(RESULT_OK);
                 finish();
 

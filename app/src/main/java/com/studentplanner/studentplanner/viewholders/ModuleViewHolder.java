@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.studentplanner.studentplanner.databinding.ModuleRowBinding;
 import com.studentplanner.studentplanner.models.Module;
 
+import org.apache.commons.text.WordUtils;
+
 public class ModuleViewHolder extends RecyclerView.ViewHolder {
     private final TextView moduleID;
     private final TextView moduleCode;
@@ -33,8 +35,8 @@ public class ModuleViewHolder extends RecyclerView.ViewHolder {
     public void showDetails(Module module){
 
         moduleID.setText(String.valueOf(module.getModuleID()));
-        moduleName.setText(module.getModuleName());
-        moduleCode.setText(module.getModuleCode());
+        moduleName.setText(WordUtils.capitalizeFully(module.getModuleName()));
+        moduleCode.setText(module.getModuleCode().toUpperCase());
 
     }
 

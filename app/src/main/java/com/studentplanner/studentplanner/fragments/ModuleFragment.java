@@ -29,10 +29,13 @@ import com.studentplanner.studentplanner.addActivities.AddModuleActivity;
 import com.studentplanner.studentplanner.databinding.FragmentModuleBinding;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.Search;
+import com.studentplanner.studentplanner.models.Teacher;
+import com.studentplanner.studentplanner.models.User;
 import com.studentplanner.studentplanner.utils.EmptyData;
 import com.studentplanner.studentplanner.utils.Helper;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -78,7 +81,11 @@ public class ModuleFragment extends Fragment {
 
 
     private void getModule() {
+
         list = getList();
+
+        list.sort(Comparator.comparing(module -> module.getModuleName().toLowerCase()));
+
         buildRecyclerView();
     }
 
@@ -130,7 +137,7 @@ public class ModuleFragment extends Fragment {
     }
 
     private List<Module> getList() {
-        return Collections.unmodifiableList(db.getModules());
+        return db.getModules();
     }
 
     private void filter(String text) {
