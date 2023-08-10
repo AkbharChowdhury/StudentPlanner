@@ -31,7 +31,6 @@
             android:src="@drawable/ic_person" />
 
         <TextView
-
             android:id="@+id/tv_modules_teachers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,8 +38,7 @@
             android:padding="5dp"
             android:text="@string/teachers"
             android:textColor="@color/black" />
-
-
+        
         <TextView
             android:id="@+id/tv_module_id_teacher"
             android:layout_width="match_parent"

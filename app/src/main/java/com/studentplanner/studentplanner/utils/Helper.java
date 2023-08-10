@@ -15,7 +15,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.models.ModuleTeacher;
-import com.studentplanner.studentplanner.models.Teacher;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.WordUtils;
@@ -262,15 +261,15 @@ public final class Helper {
     }
 
     public static String getModuleTeachersList(int position, DatabaseHelper db) {
-
+        StringBuilder sb = new StringBuilder();
         List<ModuleTeacher> moduleTeacherList = db.getModuleTeachers();
         if (!moduleTeacherList.isEmpty()) {
-            StringBuilder sb = new StringBuilder();
             ModuleTeacher model = moduleTeacherList.get(position);
             model.teacherIDList().forEach(teacherId -> sb.append(WordUtils.capitalizeFully(db.getSelectedTeacher(teacherId).getName())).append(", "));
             return formatList(sb.toString());
         }
-        return "";
+
+        return sb.toString();
 
     }
 
