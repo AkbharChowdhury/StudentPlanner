@@ -30,18 +30,13 @@ import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.activities.WeekViewActivity;
 import com.studentplanner.studentplanner.adapters.CalendarAdapter;
 import com.studentplanner.studentplanner.adapters.EventAdapter;
-import com.studentplanner.studentplanner.addActivities.AddClassesActivity;
-import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
 import com.studentplanner.studentplanner.databinding.FragmentCalendarBinding;
 import com.studentplanner.studentplanner.interfaces.OnItemListener;
 import com.studentplanner.studentplanner.models.CalendarActions;
 import com.studentplanner.studentplanner.models.Event;
 import com.studentplanner.studentplanner.models.EventData;
 import com.studentplanner.studentplanner.utils.CalendarUtils;
-import com.studentplanner.studentplanner.utils.Helper;
-import com.studentplanner.studentplanner.utils.Validation;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
