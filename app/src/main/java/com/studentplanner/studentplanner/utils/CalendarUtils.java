@@ -133,16 +133,7 @@ public class CalendarUtils {
     }
 
 
-    public static Intent courseworkIntent(Context context) {
-        Intent intent = new Intent(context, AddCourseworkActivity.class);
-        intent.putExtra(CourseworkTable.COLUMN_DEADLINE, Helper.formatDate(CalendarUtils.getSelectedDate().toString()));
-        return intent;
-    }
 
-    public static Intent classIntent(Context context) {
-        Intent intent = new Intent(context, AddClassesActivity.class);
-        int dow = getSelectedDate().getDayOfWeek().getValue();
-        intent.putExtra(ClassTable.COLUMN_DOW, dow);
-        return intent;
-    }
+
+
 }
