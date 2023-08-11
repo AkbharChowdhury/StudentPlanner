@@ -76,24 +76,25 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         final int ID = item.getItemId();
-        if (ID == R.id.item_done) {
-            List<Integer> teacherIDList = getSelectedTeacherIDList();
-            if (teacherIDList.isEmpty()) {
-                Helper.shortToastMessage(this, getString(R.string.select_teacher));
-                return false;
-            }
+        if (ID == R.id.item_done) confirmSelection();
+        return super.onOptionsItemSelected(item);
 
-            final String SELECTED_ID = ModuleTable.COLUMN_ID;
-            int moduleID = getIntent().getIntExtra(SELECTED_ID, 0);
-            if (db.addModuleTeacher(teacherIDList, moduleID)) {
-                Helper.longToastMessage(this, "Teacher Added for " + db.getSelectedModule(moduleID).getModuleDetails());
-                setResult(RESULT_OK);
-                finish();
-            }
+    }
 
+    private void confirmSelection() {
+        List<Integer> teacherIDList = getSelectedTeacherIDList();
+        if (teacherIDList.isEmpty()) {
+            Helper.shortToastMessage(this, getString(R.string.select_teacher));
+            return;
         }
 
-        return super.onOptionsItemSelected(item);
+        final String SELECTED_ID = ModuleTable.COLUMN_ID;
+        int moduleID = getIntent().getIntExtra(SELECTED_ID, 0);
+        if (db.addModuleTeacher(teacherIDList, moduleID)) {
+            Helper.longToastMessage(this, "Teacher Added for " + db.getSelectedModule(moduleID).getModuleDetails());
+            setResult(RESULT_OK);
+            finish();
+        }
 
     }
 }

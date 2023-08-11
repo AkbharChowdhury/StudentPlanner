@@ -103,42 +103,44 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (item.getItemId() == android.R.id.home) finish();
+        if (id == R.id.item_done) confirmSelection();
+        return super.onOptionsItemSelected(item);
 
-        if (id == R.id.item_done) {
+    }
 
-            List<Integer> teacherIDs = getSelectedTeacherIDList();
-            if (teacherIDs.size() == 0) {
-                new AlertDialog.Builder(this)
-                        .setMessage(getString(R.string.delete_module_teacher_message))
-                        .setCancelable(false)
-                        .setTitle(getString(R.string.delete_module_teacher_title))
-                        .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
-                            int moduleId = getIntent().getIntExtra(ModuleTable.COLUMN_ID, 0);
-                            if (db.deleteSelectedTeacherModules(moduleId)) {
-                                Helper.longToastMessage(this, teacherRemoved(moduleId));
-                                setResult(RESULT_OK);
-                                finish();
-                            }
-                        })
-                        .setNegativeButton(getString(R.string.no), (dialog, which) -> dialog.cancel()).create().show();
+    private void confirmSelection() {
+        List<Integer> teacherIDs = getSelectedTeacherIDList();
+        if (teacherIDs.isEmpty()) {
+            showAlertDialog();
+            return;
 
-            } else {
-                final String SELECTED_ID = ModuleTable.COLUMN_ID;
-                int moduleID = getIntent().getIntExtra(SELECTED_ID, 0);
+        }
+        final String SELECTED_ID = ModuleTable.COLUMN_ID;
+        int moduleID = getIntent().getIntExtra(SELECTED_ID, 0);
 
-                if (db.updateModuleTeacher(teacherIDs, moduleID)) {
-                    Helper.longToastMessage(this, teacherUpdated(moduleID));
-                    setResult(RESULT_OK);
-                    finish();
-
-                }
-
-            }
+        if (db.updateModuleTeacher(teacherIDs, moduleID)) {
+            Helper.longToastMessage(this, teacherUpdated(moduleID));
+            setResult(RESULT_OK);
+            finish();
 
         }
 
-        return super.onOptionsItemSelected(item);
+    }
 
+    private void showAlertDialog() {
+        new AlertDialog.Builder(this)
+                .setMessage(getString(R.string.delete_module_teacher_message))
+                .setCancelable(false)
+                .setTitle(getString(R.string.delete_module_teacher_title))
+                .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
+                    int moduleId = getIntent().getIntExtra(ModuleTable.COLUMN_ID, 0);
+                    if (db.deleteSelectedTeacherModules(moduleId)) {
+                        Helper.longToastMessage(this, teacherRemoved(moduleId));
+                        setResult(RESULT_OK);
+                        finish();
+                    }
+                })
+                .setNegativeButton(getString(R.string.no), (dialog, which) -> dialog.cancel()).create().show();
     }
 
     private String teacherRemoved(int moduleId) {
