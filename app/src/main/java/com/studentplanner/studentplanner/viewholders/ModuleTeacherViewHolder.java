@@ -16,6 +16,7 @@ import com.studentplanner.studentplanner.models.ModuleTeacher;
 import org.apache.commons.text.WordUtils;
 
 import java.util.List;
+import java.util.Locale;
 
 public class ModuleTeacherViewHolder extends RecyclerView.ViewHolder {
     private final TextView moduleID;
@@ -42,6 +43,8 @@ public class ModuleTeacherViewHolder extends RecyclerView.ViewHolder {
         Module module = db.getSelectedModule(model.moduleID());
         moduleID.setText(String.valueOf(model.moduleID()));
         tvModule.setText(module.getModuleDetails());
+        String code = module.getModuleCode().toUpperCase(Locale.ROOT);
+        String name = module.getModuleName();
         tvTeachers.setText(getTeacherNames(list, position));
     }
 
@@ -51,7 +54,7 @@ public class ModuleTeacherViewHolder extends RecyclerView.ViewHolder {
         list.get(position)
                 .teacherIDList()
                 .forEach(id -> sb
-                        .append(WordUtils.capitalizeFully(db.getSelectedTeacher(id).getName()))
+                        .append(db.getSelectedTeacher(id).getName())
                         .append(", "));
         return formatList(sb.toString());
     }

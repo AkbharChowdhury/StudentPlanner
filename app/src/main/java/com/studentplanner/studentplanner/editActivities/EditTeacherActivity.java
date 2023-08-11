@@ -23,20 +23,16 @@ public class EditTeacherActivity extends AppCompatActivity {
     private TextInputLayout txtFirstName;
     private TextInputLayout txtLastName;
     private TextInputLayout txtEmail;
-    private ActivityEditTeacherBinding binding;
     private String excludedEmail;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_teacher);
-        binding = ActivityEditTeacherBinding.inflate(getLayoutInflater());
+        ActivityEditTeacherBinding binding = ActivityEditTeacherBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setTitle(R.string.edit_teacher);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         db = DatabaseHelper.getInstance(this);
         form = new Validation(this, db);
         txtFirstName = binding.txtFirstname;
@@ -45,7 +41,6 @@ public class EditTeacherActivity extends AppCompatActivity {
         setupFields();
         binding.btnEditTeacher.setOnClickListener(v -> {
             Teacher teacher = new Teacher(txtFirstName, txtLastName, txtEmail);
-
             if (!form.validateEditTeacherForm(teacher, excludedEmail)) return;
             if (db.updateTeacher(getTeacherDetails())) {
                 Helper.longToastMessage(this, getString(R.string.teacher_updated));

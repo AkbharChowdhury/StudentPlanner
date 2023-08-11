@@ -6,6 +6,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.interfaces.Searchable;
 
+import org.apache.commons.text.WordUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -68,7 +70,7 @@ public class Module implements Searchable {
     }
 
     public String getModuleDetails() {
-        return String.format(Locale.ENGLISH, "%s %s", moduleCode, moduleName);
+        return String.format(Locale.ENGLISH, "%s %s", moduleCode.toUpperCase(), WordUtils.capitalizeFully(moduleName));
     }
 
     private static List<Module> defaultModules() {

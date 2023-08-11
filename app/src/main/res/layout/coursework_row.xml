@@ -74,7 +74,6 @@
 
                 <TextView
                     android:id="@+id/tv_coursework_module"
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/placeholder_module" />
