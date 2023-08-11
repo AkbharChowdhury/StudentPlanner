@@ -245,7 +245,8 @@ public final class Helper {
         field.setAdapter(adapter);
     }
 
-    public static String[] convertArrayListStringToStringArray(List<String> list) {
+    public static String[] convertListStringToStringArray(List<String> list) {
+
         return list.toArray(new String[0]);
 
     }

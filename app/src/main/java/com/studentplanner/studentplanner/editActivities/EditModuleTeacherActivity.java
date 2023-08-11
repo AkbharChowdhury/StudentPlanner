@@ -38,7 +38,7 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
         setActivityTitle();
 
         List<String> teacherNames = getTeacherNames(db.getTeachers());
-        String[] myTeachers = Helper.convertArrayListStringToStringArray(teacherNames);
+        String[] myTeachers = Helper.convertListStringToStringArray(teacherNames);
 
         listView = findViewById(R.id.listview);
 

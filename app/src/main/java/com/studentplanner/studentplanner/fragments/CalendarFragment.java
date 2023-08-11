@@ -163,40 +163,42 @@ public class CalendarFragment extends Fragment implements OnItemListener {
         activity.getMenuInflater().inflate(R.menu.classes_menu, menu);
     }
 
+
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-
-        if (id == R.id.add_coursework_action) {
-            if (Validation.isPastDate(CalendarUtils.getSelectedDate().toString())) {
-                openActivity(AddCourseworkActivity.class);
-                return true;
-            }
-
-            // set deadline to selected calendar date
-            startForResult.launch(CalendarUtils.courseworkIntent(activity));
-
-        }
-
-        if (id == R.id.add_class_action) {
-
-            DayOfWeek dow = CalendarUtils.getSelectedDate().getDayOfWeek();
-
-            if (Helper.weekends().contains(dow)) {
-                openActivity(AddClassesActivity.class);
-                return true;
-            }
-            // set class to selected class day
-            startForResult.launch(CalendarUtils.classIntent(activity));
-
-        }
-
-        if (id == R.id.action_week_view) {
-            openActivity(WeekViewActivity.class);
-        }
+        if (id == R.id.add_coursework_action) addCourseworkAction();
+        if (id == R.id.add_class_action) addClassAction();
+        if (id == R.id.action_week_view) openActivity(WeekViewActivity.class);
 
         return super.onOptionsItemSelected(item);
 
+    }
+
+
+
+
+    private void addCourseworkAction() {
+        if (Validation.isPastDate(CalendarUtils.getSelectedDate().toString())) {
+            openActivity(AddCourseworkActivity.class);
+            return;
+        }
+
+        // set deadline to selected calendar date
+        startForResult.launch(CalendarUtils.courseworkIntent(activity));
+
+    }
+
+    private void addClassAction() {
+        DayOfWeek dow = CalendarUtils.getSelectedDate().getDayOfWeek();
+
+        if (Helper.weekends().contains(dow)) {
+            openActivity(AddClassesActivity.class);
+            return;
+        }
+        // set class to selected class day
+        startForResult.launch(CalendarUtils.classIntent(activity));
     }
 
     private void openActivity(Class<? extends Activity> activityPageToOpen) {

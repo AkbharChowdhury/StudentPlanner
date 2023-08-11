@@ -18,6 +18,7 @@ import com.studentplanner.studentplanner.utils.Helper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
     private DatabaseHelper db;
@@ -30,7 +31,7 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
 
         db = DatabaseHelper.getInstance(this);
         setActivityTitle();
-        String[] myTeachers = Helper.convertArrayListStringToStringArray(getTeacherNames(db.getTeachers()));
+        String[] myTeachers = Helper.convertListStringToStringArray(getTeacherNames(db.getTeachers()));
 
         listView = findViewById(R.id.listview);
         listView.setAdapter(new ArrayAdapter<>(

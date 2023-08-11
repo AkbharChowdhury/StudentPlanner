@@ -132,40 +132,34 @@ public class WeekViewActivity extends AppCompatActivity implements OnItemListene
         weekView.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_calendar_view));
     }
 
+    private void addCourseworkAction() {
+        if (Validation.isPastDate(CalendarUtils.getSelectedDate().toString())) {
+            openActivity(AddCourseworkActivity.class);
+            return;
+        }
+
+        // set deadline to selected calendar date
+        startForResult.launch(CalendarUtils.courseworkIntent(this));
+    }
+
+    private void addClassAction() {
+        DayOfWeek dow = CalendarUtils.getSelectedDate().getDayOfWeek();
+
+        if (Helper.weekends().contains(dow)) {
+            openActivity(AddClassesActivity.class);
+            return;
+        }
+        // set class to selected class day
+        startForResult.launch(CalendarUtils.classIntent(this));
+    }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         int id = item.getItemId();
-
-        if (id == R.id.add_coursework_action) {
-            if (Validation.isPastDate(CalendarUtils.getSelectedDate().toString())) {
-                openActivity(AddCourseworkActivity.class);
-                return true;
-            }
-
-            // set deadline to selected calendar date
-            startForResult.launch(CalendarUtils.courseworkIntent(this));
-
-        }
-
-        if (id == R.id.add_class_action) {
-
-            DayOfWeek dow = CalendarUtils.getSelectedDate().getDayOfWeek();
-
-            if (Helper.weekends().contains(dow)) {
-                openActivity(AddClassesActivity.class);
-                return true;
-            }
-            // set class to selected class day
-            startForResult.launch(CalendarUtils.classIntent(this));
-
-        }
-
-        if (id == android.R.id.home | id == R.id.action_week_view) {
-            goBack();
-        }
-
-
+        if (id == R.id.add_coursework_action) addCourseworkAction();
+        if (id == R.id.add_class_action) addClassAction();
+        if (id == android.R.id.home | id == R.id.action_week_view) goBack();
         return super.onOptionsItemSelected(item);
 
     }
