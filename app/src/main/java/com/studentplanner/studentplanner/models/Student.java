@@ -1,4 +1,3 @@
-
 package com.studentplanner.studentplanner.models;
 
 import android.widget.EditText;
@@ -7,8 +6,15 @@ import com.google.android.material.textfield.TextInputLayout;
 
 public final class Student extends User {
 
-    private TextInputLayout txtPhone;
     private EditText txtUserPhone;
+
+    private TextInputLayout txtPassword;
+    private TextInputLayout txtPhone;
+
+
+    private String phone;
+    private String password;
+
 
     public EditText getTxtUserPhone() {
         return txtUserPhone;
@@ -18,10 +24,9 @@ public final class Student extends User {
         this.txtUserPhone = txtUserPhone;
     }
 
-    private TextInputLayout txtPassword;
-
-    private String phone;
-    private String password;
+    public TextInputLayout getTxtPassword() {
+        return txtPassword;
+    }
 
     public String getPhone() {
         return phone;
@@ -64,10 +69,6 @@ public final class Student extends User {
     public Student setPassword(String password) {
         this.password = password;
         return this;
-    }
-
-    public TextInputLayout getTxtPassword() {
-        return txtPassword;
     }
 
 

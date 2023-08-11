@@ -8,7 +8,6 @@ import com.studentplanner.studentplanner.interfaces.Searchable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class Teacher extends User implements Searchable {
     public Teacher(String firstname, String lastname, String email) {
@@ -23,18 +22,19 @@ public class Teacher extends User implements Searchable {
         super(userID, firstname, lastname, email);
     }
 
-    private static List<Teacher> defaultTeachers(){
+    private static List<Teacher> defaultTeachers() {
         List<Teacher> teacherList = new ArrayList<>();
-        teacherList.add(new Teacher("Torrance", "Tumulty","ttumulty7@github.com"));
-        teacherList.add(new Teacher("Dallas", "Garlant","dgarlantg@hp.com"));
-        teacherList.add(new Teacher("Timmy", "Geck","tgeckk@ning.com"));
-        teacherList.add(new Teacher("Milton", "Coppin","mcoppinn@smh.com.au"));
-        teacherList.add(new Teacher("Phil", "Persey","pperseym@bluehost.com"));
+        teacherList.add(new Teacher("Torrance", "Tumulty", "ttumulty7@github.com"));
+        teacherList.add(new Teacher("Dallas", "Garlant", "dgarlantg@hp.com"));
+        teacherList.add(new Teacher("Timmy", "Geck", "tgeckk@ning.com"));
+        teacherList.add(new Teacher("Milton", "Coppin", "mcoppinn@smh.com.au"));
+        teacherList.add(new Teacher("Phil", "Persey", "pperseym@bluehost.com"));
         return teacherList;
     }
-    public static void addDefaultTeachers(Context context){
+
+    public static void addDefaultTeachers(Context context) {
         DatabaseHelper db = DatabaseHelper.getInstance(context);
-        defaultTeachers().forEach(t ->  db.addTeacher(new Teacher(t.getFirstname(), t.getLastname(), t.getEmail())));
+        defaultTeachers().forEach(t -> db.addTeacher(new Teacher(t.getFirstname(), t.getLastname(), t.getEmail())));
     }
 
     @Override
