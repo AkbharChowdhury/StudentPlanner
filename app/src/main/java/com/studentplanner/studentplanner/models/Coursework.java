@@ -9,7 +9,7 @@ import com.studentplanner.studentplanner.interfaces.Searchable;
 import java.time.LocalDate;
 import java.util.Comparator;
 
-public class Coursework implements Searchable {
+public final class Coursework implements Searchable {
     private int courseworkID;
     private int moduleID;
     private String title;

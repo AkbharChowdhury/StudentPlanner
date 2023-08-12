@@ -2,7 +2,7 @@ package com.studentplanner.studentplanner.models;
 
 import com.google.android.material.textfield.TextInputLayout;
 
-public class Classes {
+public final class Classes {
     private int classID;
     private int moduleID;
     private int semesterID;

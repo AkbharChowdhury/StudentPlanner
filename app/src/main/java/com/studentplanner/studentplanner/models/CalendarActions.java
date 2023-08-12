@@ -18,7 +18,7 @@ import com.studentplanner.studentplanner.utils.Validation;
 
 import java.time.DayOfWeek;
 
-public class CalendarActions {
+public final class CalendarActions {
     private final ActivityResultLauncher<Intent> startForResult;
     private final Context context;
 

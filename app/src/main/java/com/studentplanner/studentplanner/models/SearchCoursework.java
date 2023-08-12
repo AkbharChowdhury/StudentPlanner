@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class SearchCoursework {
+public final class SearchCoursework {
 
     private final List<Coursework> ALL_COURSEWORK;
 

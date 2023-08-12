@@ -1,6 +1,6 @@
 package com.studentplanner.studentplanner.models;
 
-public class CustomTimePicker {
+public final class CustomTimePicker {
     private int selectedHour;
     private int selectedMinute;
 

@@ -13,7 +13,7 @@ import org.apache.commons.text.WordUtils;
 import java.util.List;
 import java.util.Objects;
 
-public class ClassRow {
+public final class ClassRow {
     private final Context context;
     private final DatabaseHelper db;
 

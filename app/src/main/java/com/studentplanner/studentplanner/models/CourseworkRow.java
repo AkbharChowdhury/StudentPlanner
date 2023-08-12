@@ -14,7 +14,7 @@ import com.studentplanner.studentplanner.utils.Helper;
 
 import org.apache.commons.text.WordUtils;
 
-public class CourseworkRow {
+public final class CourseworkRow {
     private final TextView title;
     private final TextView lblModule;
     private final TextView priority;

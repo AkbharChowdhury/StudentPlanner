@@ -7,7 +7,7 @@ import android.widget.ImageView;
 
 import java.io.ByteArrayOutputStream;
 
-public class ImageHandler {
+public final class ImageHandler {
     public static final String IMAGE_TYPE = "image/*";
     private ImageHandler(){
     }
