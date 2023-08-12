@@ -8,8 +8,7 @@ import org.apache.commons.text.WordUtils;
 import java.time.LocalDate;
 import java.util.List;
 
-public record Semester(int semesterID, String name, LocalDate start,
-                       LocalDate end) implements Searchable {
+public record Semester(int semesterID, String name, LocalDate start, LocalDate end) implements Searchable {
     public Semester(String name, LocalDate start, LocalDate end) {
         this(0, name, start, end);
     }
