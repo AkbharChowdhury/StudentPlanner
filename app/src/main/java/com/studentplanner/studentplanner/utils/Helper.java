@@ -343,10 +343,7 @@ public final class Helper {
         editText.setFilters(FilterArray);
     }
 
-    public static String getSpinnerText(Spinner spinner, int position) {
-        return spinner.getAdapter().getItem(position).toString();
 
-    }
 
     public static List<DayOfWeek> weekends() {
         return Arrays.asList(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY);

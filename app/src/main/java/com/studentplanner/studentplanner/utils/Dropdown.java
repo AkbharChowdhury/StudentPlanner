@@ -3,6 +3,7 @@ package com.studentplanner.studentplanner.utils;
 import android.content.Context;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Spinner;
 
 import com.studentplanner.studentplanner.R;
 
@@ -49,6 +50,18 @@ public final class Dropdown {
             }
         }
         return 0;
+    }
+
+    public static void setDefaultSpinnerPosition(Spinner... spinners) {
+        for (Spinner spinner : spinners) {
+            spinner.setSelection(0, false);
+
+        }
+
+    }
+    public static String getSpinnerText(Spinner spinner, int position) {
+        return spinner.getAdapter().getItem(position).toString();
+
     }
 
 }
