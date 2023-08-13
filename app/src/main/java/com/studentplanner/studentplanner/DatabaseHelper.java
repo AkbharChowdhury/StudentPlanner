@@ -441,12 +441,9 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     public boolean addModule(Module module) {
 
         int studentID = AccountPreferences.getStudentID(context);
-
         SQLiteDatabase db = getWritableDatabase();
-        ContentValues cv = new ContentValues();
+        ContentValues cv = Module.contentValues(module);
         cv.put(ModuleTable.COLUMN_STUDENT_ID, studentID);
-        cv.put(ModuleTable.COLUMN_MODULE_C0DE, module.getModuleCode());
-        cv.put(ModuleTable.COLUMN_MODULE_NAME, module.getModuleName());
         long result = db.insert(ModuleTable.TABLE_NAME, null, cv);
         return result != -1;
 
@@ -456,11 +453,8 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
         int studentID = AccountPreferences.getStudentID(context);
         SQLiteDatabase db = getWritableDatabase();
-        ContentValues cv = new ContentValues();
+        ContentValues cv = Semester.contentValues(semester);
         cv.put(SemesterTable.COLUMN_STUDENT_ID, studentID);
-        cv.put(SemesterTable.COLUMN_NAME, semester.name());
-        cv.put(SemesterTable.COLUMN_START_DATE, semester.start().toString());
-        cv.put(SemesterTable.COLUMN_END_DATE, semester.end().toString());
         long result = db.insert(SemesterTable.TABLE_NAME, null, cv);
         return result != -1;
 
@@ -469,20 +463,11 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean addCoursework(Coursework coursework) {
         SQLiteDatabase db = getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put(CourseworkTable.COLUMN_MODULE_ID, coursework.getModuleID());
-        cv.put(CourseworkTable.COLUMN_TITLE, coursework.getTitle());
-        cv.put(CourseworkTable.COLUMN_DESCRIPTION, coursework.getDescription());
-        cv.put(CourseworkTable.COLUMN_PRIORITY, coursework.getPriority());
-        cv.put(CourseworkTable.COLUMN_DEADLINE, coursework.getDeadline());
-        cv.put(CourseworkTable.COLUMN_DEADLINE_TIME, coursework.getDeadlineTime());
-
+        ContentValues cv = Coursework.contentValues(coursework);
         if (coursework.getImage() != null) {
             cv.put(CourseworkTable.COLUMN_IMAGE, ImageHandler.getBitmapAsByteArray(coursework.getImage()));
 
         }
-
-
         long result = db.insert(CourseworkTable.TABLE_NAME, null, cv);
         return result != -1;
 
@@ -490,16 +475,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean addClass(Classes classes) {
         SQLiteDatabase db = getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put(ClassTable.COLUMN_MODULE_ID, classes.getModuleID());
-        cv.put(ClassTable.COLUMN_SEMESTER_ID, classes.getSemesterID());
-        cv.put(ClassTable.COLUMN_DOW, classes.getDow());
-        cv.put(ClassTable.COLUMN_START_TIME, classes.getStartTime());
-        cv.put(ClassTable.COLUMN_END_TIME, classes.getEndTime());
-        cv.put(ClassTable.COLUMN_ROOM, classes.getRoom());
-        cv.put(ClassTable.COLUMN_TYPE, classes.getClassType());
-
-
+        ContentValues cv = Classes.contentValues(classes);
         long result = db.insert(ClassTable.TABLE_NAME, null, cv);
         return result != -1;
 
@@ -519,21 +495,21 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean addTeacher(Teacher teacher) {
         int studentID = AccountPreferences.getStudentID(context);
-
         SQLiteDatabase db = getWritableDatabase();
-        ContentValues cv = new ContentValues();
+        ContentValues cv = Teacher.contentValues(teacher);
         cv.put(TeacherTable.COLUMN_STUDENT_ID, studentID);
-        cv.put(TeacherTable.COLUMN_FIRSTNAME, teacher.getFirstname());
-        cv.put(TeacherTable.COLUMN_LASTNAME, teacher.getLastname());
-        cv.put(TeacherTable.COLUMN_EMAIL, teacher.getEmail());
-
         long result = db.insert(TeacherTable.TABLE_NAME, null, cv);
         return result != -1;
 
     }
 
     public boolean addModuleTeacher(List<Integer> teacherIDs, int moduleID) {
+        insertModuleTeacher(teacherIDs, moduleID);
+        return true;
 
+    }
+
+    private void insertModuleTeacher(List<Integer> teacherIDs, int moduleID) {
         SQLiteDatabase db = getWritableDatabase();
         for (Integer teacherID : teacherIDs) {
             ContentValues cv = new ContentValues();
@@ -541,19 +517,13 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
             cv.put(ModuleTeacherTable.COLUMN_MODULE_ID, moduleID);
             db.insert(ModuleTeacherTable.TABLE_NAME, null, cv);
         }
-        return true;
 
     }
 
     public boolean updateModuleTeacher(List<Integer> teacherIDs, int moduleID) {
         deleteSelectedTeacherModules(moduleID);
-        SQLiteDatabase db = getWritableDatabase();
-        for (Integer teacherID : teacherIDs) {
-            ContentValues cv = new ContentValues();
-            cv.put(ModuleTeacherTable.COLUMN_TEACHER_ID, teacherID);
-            cv.put(ModuleTeacherTable.COLUMN_MODULE_ID, moduleID);
-            db.insert(ModuleTeacherTable.TABLE_NAME, null, cv);
-        }
+        insertModuleTeacher(teacherIDs, moduleID);
+
         return true;
 
     }
@@ -842,7 +812,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 while (cursor.moveToNext()) {
                     String firstname = cursor.getString(cursor.getColumnIndex(TeacherTable.COLUMN_FIRSTNAME));
                     String lastname = cursor.getString(cursor.getColumnIndex(TeacherTable.COLUMN_LASTNAME));
-
                     list.add(String.format("%s %s", firstname, lastname));
 
                 }
@@ -1064,10 +1033,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean updateModule(Module module) {
         SQLiteDatabase db = getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put(ModuleTable.COLUMN_MODULE_C0DE, module.getModuleCode());
-        cv.put(ModuleTable.COLUMN_MODULE_NAME, module.getModuleName());
-
+        ContentValues cv = Module.contentValues(module);
         long result = db.update(ModuleTable.TABLE_NAME, cv, ModuleTable.COLUMN_ID + "=?", new String[]{String.valueOf(module.getModuleID())});
         return result != -1;
 
@@ -1077,14 +1043,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean updateTeacher(Teacher teacher) {
         SQLiteDatabase db = getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        int studentID = AccountPreferences.getStudentID(context);
-
-        cv.put(TeacherTable.COLUMN_STUDENT_ID, studentID);
-        cv.put(TeacherTable.COLUMN_FIRSTNAME, teacher.getFirstname());
-        cv.put(TeacherTable.COLUMN_LASTNAME, teacher.getLastname());
-        cv.put(TeacherTable.COLUMN_EMAIL, teacher.getEmail());
-
+        ContentValues cv = Teacher.contentValues(teacher);
         long result = db.update(TeacherTable.TABLE_NAME, cv, TeacherTable.COLUMN_ID + "=?", new String[]{String.valueOf(teacher.getUserID())});
         return result != -1;
 
@@ -1093,11 +1052,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean updateSemester(Semester semester) {
         SQLiteDatabase db = getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put(SemesterTable.COLUMN_START_DATE, semester.start().toString());
-        cv.put(SemesterTable.COLUMN_END_DATE, semester.end().toString());
-        cv.put(SemesterTable.COLUMN_NAME, semester.name());
-
+        ContentValues cv = Semester.contentValues(semester);
         long result = db.update(SemesterTable.TABLE_NAME, cv, SemesterTable.COLUMN_ID + "=?", new String[]{String.valueOf(semester.semesterID())});
         return result != -1;
     }
@@ -1106,20 +1061,11 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     public boolean updateCoursework(Coursework coursework, boolean deleteImage) {
 
         SQLiteDatabase db = getWritableDatabase();
-        ContentValues cv = new ContentValues();
-
-        cv.put(CourseworkTable.COLUMN_MODULE_ID, coursework.getModuleID());
-        cv.put(CourseworkTable.COLUMN_TITLE, coursework.getTitle());
-        cv.put(CourseworkTable.COLUMN_DESCRIPTION, coursework.getDescription());
-        cv.put(CourseworkTable.COLUMN_PRIORITY, coursework.getPriority());
-        cv.put(CourseworkTable.COLUMN_DEADLINE, coursework.getDeadline());
-        cv.put(CourseworkTable.COLUMN_DEADLINE_TIME, coursework.getDeadlineTime());
+        ContentValues cv = Coursework.contentValues(coursework);
         cv.put(CourseworkTable.COLUMN_COMPLETED, coursework.isCompleted() ? "Yes" : "No");
         ContentValues values = deleteImage(cv, deleteImage, coursework.getImage());
         long result = db.update(CourseworkTable.TABLE_NAME, values, CourseworkTable.COLUMN_ID + "=?", new String[]{String.valueOf(coursework.getCourseworkID())});
         return result != -1;
-
-
     }
 
     private ContentValues deleteImage(ContentValues cv, boolean deleteImage, Bitmap image) {
@@ -1135,22 +1081,10 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public boolean updateClass(Classes classes) {
-
         SQLiteDatabase db = getWritableDatabase();
-        ContentValues cv = new ContentValues();
-
-        cv.put(ClassTable.COLUMN_MODULE_ID, classes.getModuleID());
-        cv.put(ClassTable.COLUMN_SEMESTER_ID, classes.getSemesterID());
-        cv.put(ClassTable.COLUMN_DOW, classes.getDow());
-        cv.put(ClassTable.COLUMN_START_TIME, classes.getStartTime());
-        cv.put(ClassTable.COLUMN_END_TIME, classes.getEndTime());
-        cv.put(ClassTable.COLUMN_ROOM, classes.getRoom());
-        cv.put(ClassTable.COLUMN_TYPE, classes.getClassType());
-
+        ContentValues cv = Classes.contentValues(classes);
         long result = db.update(ClassTable.TABLE_NAME, cv, ClassTable.COLUMN_ID + "=?", new String[]{String.valueOf(classes.getClassID())});
         return result != -1;
-
-
     }
 
     public boolean deleteRecord(String table, String idField, int id) {

@@ -1,6 +1,9 @@
 package com.studentplanner.studentplanner.models;
 
+import android.content.ContentValues;
+
 import com.google.android.material.textfield.TextInputLayout;
+import com.studentplanner.studentplanner.tables.ClassTable;
 
 public final class Classes {
     private int classID;
@@ -109,6 +112,18 @@ public final class Classes {
 
     public String getClassType() {
         return classType;
+    }
+
+    public static ContentValues contentValues(Classes classes) {
+        ContentValues cv = new ContentValues();
+        cv.put(ClassTable.COLUMN_MODULE_ID, classes.getModuleID());
+        cv.put(ClassTable.COLUMN_SEMESTER_ID, classes.getSemesterID());
+        cv.put(ClassTable.COLUMN_DOW, classes.getDow());
+        cv.put(ClassTable.COLUMN_START_TIME, classes.getStartTime());
+        cv.put(ClassTable.COLUMN_END_TIME, classes.getEndTime());
+        cv.put(ClassTable.COLUMN_ROOM, classes.getRoom());
+        cv.put(ClassTable.COLUMN_TYPE, classes.getClassType());
+        return cv;
     }
 
     @Override

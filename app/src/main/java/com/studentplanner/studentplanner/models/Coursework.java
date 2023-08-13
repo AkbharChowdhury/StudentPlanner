@@ -1,10 +1,12 @@
 package com.studentplanner.studentplanner.models;
 
+import android.content.ContentValues;
 import android.graphics.Bitmap;
 import android.widget.AutoCompleteTextView;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.interfaces.Searchable;
+import com.studentplanner.studentplanner.tables.CourseworkTable;
 
 import java.time.LocalDate;
 import java.util.Comparator;
@@ -34,6 +36,7 @@ public final class Coursework implements Searchable {
     public Bitmap getImage() {
         return image;
     }
+
     public byte[] getByteImage() {
         return byteImage;
     }
@@ -41,6 +44,7 @@ public final class Coursework implements Searchable {
     public void setImage(Bitmap image) {
         this.image = image;
     }
+
     public void setImage(byte[] image) {
         this.byteImage = image;
     }
@@ -222,4 +226,17 @@ public final class Coursework implements Searchable {
     public String searchText() {
         return title;
     }
+
+    public static ContentValues contentValues(Coursework coursework) {
+        ContentValues cv = new ContentValues();
+        cv.put(CourseworkTable.COLUMN_MODULE_ID, coursework.getModuleID());
+        cv.put(CourseworkTable.COLUMN_TITLE, coursework.getTitle());
+        cv.put(CourseworkTable.COLUMN_DESCRIPTION, coursework.getDescription());
+        cv.put(CourseworkTable.COLUMN_PRIORITY, coursework.getPriority());
+        cv.put(CourseworkTable.COLUMN_DEADLINE, coursework.getDeadline());
+        cv.put(CourseworkTable.COLUMN_DEADLINE_TIME, coursework.getDeadlineTime());
+        return cv;
+    }
+
+
 }

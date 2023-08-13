@@ -1,10 +1,12 @@
 package com.studentplanner.studentplanner.models;
 
+import android.content.ContentValues;
 import android.content.Context;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.interfaces.Searchable;
+import com.studentplanner.studentplanner.tables.ModuleTable;
 
 import org.apache.commons.text.WordUtils;
 
@@ -107,5 +109,12 @@ public final class Module implements Searchable {
     @Override
     public String searchText() {
         return getModuleDetails();
+    }
+
+    public static ContentValues contentValues(Module module) {
+        ContentValues cv = new ContentValues();
+        cv.put(ModuleTable.COLUMN_MODULE_C0DE, module.getModuleCode());
+        cv.put(ModuleTable.COLUMN_MODULE_NAME, module.getModuleName());
+        return cv;
     }
 }
