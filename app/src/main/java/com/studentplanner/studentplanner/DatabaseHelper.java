@@ -145,7 +145,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 + CourseworkTable.COLUMN_DEADLINE_TIME + " TEXT NOT NULL, "
                 + CourseworkTable.COLUMN_COMPLETED + " TEXT NOT NULL DEFAULT 'No', "
                 + CourseworkTable.COLUMN_IMAGE + " BLOB, "
-                + "FOREIGN KEY (" + CourseworkTable.COLUMN_MODULE_ID + ") REFERENCES " + ModuleTable.TABLE_NAME + "(" + ModuleTable.COLUMN_ID + ") ON UPDATE CASCADE ON DELETE CASCADE "
+                + "FOREIGN KEY (" + CourseworkTable.COLUMN_MODULE_ID + ") REFERENCES " + ModuleTable.TABLE_NAME + "(" + ModuleTable.COLUMN_ID + ") ON UPDATE CASCADE ON DELETE CASCADE"
                 + ");"
         );
 
@@ -185,7 +185,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 + SemesterTable.COLUMN_NAME + " TEXT NOT NULL,"
                 + SemesterTable.COLUMN_START_DATE + " TEXT NOT NULL, "
                 + SemesterTable.COLUMN_END_DATE + " TEXT NOT NULL, "
-                + "FOREIGN KEY (" + SemesterTable.COLUMN_STUDENT_ID + ") REFERENCES " + StudentTable.TABLE_NAME + "(" + StudentTable.COLUMN_ID + ") ON UPDATE CASCADE ON DELETE CASCADE "
+                + "FOREIGN KEY (" + SemesterTable.COLUMN_STUDENT_ID + ") REFERENCES " + StudentTable.TABLE_NAME + "(" + StudentTable.COLUMN_ID + ") ON UPDATE CASCADE ON DELETE CASCADE"
                 + ");"
         );
 
@@ -202,8 +202,8 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 + ClassTable.COLUMN_END_TIME + " TEXT NOT NULL, "
                 + ClassTable.COLUMN_ROOM + " TEXT, "
                 + ClassTable.COLUMN_TYPE + " TEXT NOT NULL, "
-                + "FOREIGN KEY (" + ClassTable.COLUMN_MODULE_ID + ") REFERENCES " + ModuleTable.TABLE_NAME + "(" + ModuleTable.COLUMN_ID + ") ON UPDATE CASCADE ON DELETE CASCADE, "
-                + "FOREIGN KEY (" + ClassTable.COLUMN_SEMESTER_ID + ") REFERENCES " + SemesterTable.TABLE_NAME + "(" + SemesterTable.COLUMN_ID + ") ON UPDATE CASCADE ON DELETE CASCADE "
+                + "FOREIGN KEY (" + ClassTable.COLUMN_MODULE_ID + ") REFERENCES " + ModuleTable.TABLE_NAME + "(" + ModuleTable.COLUMN_ID + ") ON UPDATE CASCADE ON DELETE CASCADE,"
+                + "FOREIGN KEY (" + ClassTable.COLUMN_SEMESTER_ID + ") REFERENCES " + SemesterTable.TABLE_NAME + "(" + SemesterTable.COLUMN_ID + ") ON UPDATE CASCADE ON DELETE CASCADE"
                 + ")"
         );
 
@@ -1196,7 +1196,4 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-
 }
-
-
