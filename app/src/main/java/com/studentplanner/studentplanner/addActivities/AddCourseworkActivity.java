@@ -56,7 +56,6 @@ import pub.devrel.easypermissions.EasyPermissions;
 public class AddCourseworkActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, EasyPermissions.PermissionCallbacks {
     private final int STORAGE_PERMISSION_CODE = 1;
     private final LocalTime DEFAULT_DEADLINE_TIME = LocalTime.now().plusHours(1);
-
     private final CustomTimePicker deadlineCustomTimePicker = new CustomTimePicker(DEFAULT_DEADLINE_TIME.getHour(), DEFAULT_DEADLINE_TIME.getMinute());
 
     private AutoCompleteTextView txtPriority;
@@ -102,20 +101,10 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
         db = DatabaseHelper.getInstance(this);
         form = new Validation(this);
 
-        txtPriority = binding.txtPriority;
-        txtDeadline = binding.txtDeadline;
-        txtDeadlineTime = binding.txtDeadlineTime;
-        txtModules = binding.txtModule;
-        txtModules.setText(R.string.select_module);
-        txtPriority.setText(getString(R.string.select_priority));
-        txtTitle = binding.txtTitle;
-        txtDescription = binding.txtDescription;
-        courseworkImage = binding.imgCoursework;
+        initFields();
         setTimePicker();
         courseworkImage.setOnClickListener(v -> openFilesApp());
-
         txtDeadlineTime.setText(Helper.showFormattedDBTime(LocalTime.now().plusHours(1).toString(), this));
-
         Dropdown.getStringArray(txtPriority, this, R.array.priority_array);
         txtDeadline.setText(Helper.formatDate(CalendarUtils.getCurrentDate().toString()));
 
@@ -137,6 +126,20 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
 
 
     }
+
+    private void initFields() {
+        txtPriority = binding.txtPriority;
+        txtDeadline = binding.txtDeadline;
+        txtDeadlineTime = binding.txtDeadlineTime;
+        txtModules = binding.txtModule;
+        txtModules.setText(R.string.select_module);
+        txtPriority.setText(getString(R.string.select_priority));
+        txtTitle = binding.txtTitle;
+        txtDescription = binding.txtDescription;
+        courseworkImage = binding.imgCoursework;
+
+    }
+
 
     private void handleAddButton() {
         if (!form.validateAddCourseworkForm(getCourseworkErrorFields())) return;
@@ -165,19 +168,13 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
     private void openFilesApp() {
         String[] perms = {Manifest.permission.CAMERA};
         if (EasyPermissions.hasPermissions(this, perms)) {
-            openImageGallery();
+            ImageHandler.openImageGallery(imageActivityResultLauncher);
             return;
         }
         EasyPermissions.requestPermissions(this, getString(R.string.permissions_rationale), STORAGE_PERMISSION_CODE, perms);
     }
 
-    private void openImageGallery() {
-        Intent intent = new Intent();
-        intent.setType(ImageHandler.IMAGE_TYPE);
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        intent = Intent.createChooser(intent, getString(R.string.select_image));
-        imageActivityResultLauncher.launch(intent);
-    }
+
 
     private Coursework getCourseworkErrorFields() {
         TextInputLayout txtModuleError = binding.txtModuleError;

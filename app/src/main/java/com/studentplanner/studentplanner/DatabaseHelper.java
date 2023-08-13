@@ -497,7 +497,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean addModuleTeacher(ModuleTeacher moduleTeacher) {
         return insertModuleTeacher(moduleTeacher);
-
     }
 
     private boolean insertModuleTeacher(ModuleTeacher moduleTeacher) {

@@ -101,10 +101,8 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
         setContentView(R.layout.activity_edit_coursework);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(R.string.edit_coursework);
-
         binding = ActivityEditCourseworkBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
 
         db = DatabaseHelper.getInstance(this);
         form = new Validation(this);
@@ -140,7 +138,6 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
 
     private Coursework getCourseworkErrorFields() {
         Coursework coursework = new Coursework();
-
         coursework.setTxtDeadlineTime(txtDeadlineTime);
         coursework.setTxtDeadlineTimeError(binding.txtDeadlineTimeError);
         coursework.setTxtDeadline(txtDeadline);
@@ -156,11 +153,11 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
         txtModules = binding.txtModule;
         txtTitle = binding.txtTitle;
         txtDescription = binding.txtDescription;
-
-        Dropdown.getStringArray(txtPriority, this, R.array.priority_array);
         txtDeadlineError = binding.txtDeadlineError;
         checkboxCompleted = binding.checkboxCompleted;
         courseworkImage = binding.imgCoursework;
+        Dropdown.getStringArray(txtPriority, this, R.array.priority_array);
+
     }
 
     private void setupFields() {
@@ -184,7 +181,6 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
             LocalTime deadlineTime = LocalTime.parse(coursework.getDeadlineTime());
 
             deadlineCustomTimePicker = new CustomTimePicker(deadlineTime.getHour(), deadlineTime.getMinute());
-
             showCourseworkImage(coursework.getByteImage());
 
 
@@ -193,13 +189,13 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
     }
 
     private void showCourseworkImage(byte[] image) {
-        if (image != null) {
-            courseworkImage.setImageBitmap(ImageHandler.decodeBitmapByteArray(image));
-            binding.btnRemovePicture.setVisibility(View.VISIBLE);
-
-        } else {
+        if (image == null) {
             courseworkImage.setImageResource(R.drawable.ic_placeholder_image);
+            return;
         }
+        courseworkImage.setImageBitmap(ImageHandler.decodeBitmapByteArray(image));
+        binding.btnRemovePicture.setVisibility(View.VISIBLE);
+
     }
 
 
@@ -272,10 +268,7 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
 
         );
 
-        if (imageToStore != null) {
-            coursework.setImage(imageToStore);
-        }
-
+        if (imageToStore != null) coursework.setImage(imageToStore);
         coursework.setCompleted(checkboxCompleted.isChecked());
         return coursework;
     }
@@ -288,29 +281,26 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            setResult(RESULT_OK);
-            finish();
-        }
-
-        if (item.getItemId() == R.id.ic_delete) {
-            new AlertDialog.Builder(this)
-                    .setMessage("You can't undo this").setCancelable(false)
-                    .setTitle(getString(R.string.delete_coursework_title))
-                    .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
-                        int id = getIntent().getIntExtra(CourseworkTable.COLUMN_ID, 0);
-                        if (db.deleteRecord(CourseworkTable.TABLE_NAME, CourseworkTable.COLUMN_ID, id)) {
-                            Helper.longToastMessage(this, getString(R.string.delete_coursework));
-                            setResult(RESULT_OK);
-                            finish();
-                        }
-
-
-                    })
-                    .setNegativeButton(getString(R.string.no), (dialog, which) -> dialog.cancel()).create().show();
-
-        }
+        if (item.getItemId() == android.R.id.home) finish();
+        if (item.getItemId() == R.id.ic_delete) deleteCoursework();
         return super.onOptionsItemSelected(item);
+    }
+
+    private void deleteCoursework() {
+        new AlertDialog.Builder(this)
+                .setMessage("You can't undo this").setCancelable(false)
+                .setTitle(getString(R.string.delete_coursework_title))
+                .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
+                    int id = getIntent().getIntExtra(CourseworkTable.COLUMN_ID, 0);
+                    if (db.deleteRecord(CourseworkTable.TABLE_NAME, CourseworkTable.COLUMN_ID, id)) {
+                        Helper.longToastMessage(this, getString(R.string.delete_coursework));
+                        setResult(RESULT_OK);
+                        finish();
+                    }
+
+
+                })
+                .setNegativeButton(getString(R.string.no), (dialog, which) -> dialog.cancel()).create().show();
     }
 
 
@@ -333,13 +323,10 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
     private void openFilesApp() {
         String[] perms = {Manifest.permission.CAMERA};
         if (EasyPermissions.hasPermissions(this, perms)) {
-            openImageGallery();
-        } else {
-            EasyPermissions.requestPermissions(this, getString(R.string.permissions_rationale), STORAGE_PERMISSION_CODE, perms);
-
+            ImageHandler.openImageGallery(imageActivityResultLauncher);
+            return;
         }
-
-
+        EasyPermissions.requestPermissions(this, getString(R.string.permissions_rationale), STORAGE_PERMISSION_CODE, perms);
     }
 
     @Override
@@ -359,14 +346,5 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
             new AppSettingsDialog.Builder(this).build().show();
         }
     }
-
-    private void openImageGallery() {
-        Intent intent = new Intent();
-        intent.setType(ImageHandler.IMAGE_TYPE);
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        intent = Intent.createChooser(intent, getString(R.string.select_image));
-        imageActivityResultLauncher.launch(intent);
-    }
-
 
 }
