@@ -71,7 +71,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
         createAllTables(db);
         addDefaultTableValues(db);
-
     }
 
 
@@ -248,7 +247,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
             return cursor.getCount() > 0;
 
         } catch (Exception e) {
-            String s = Thread.currentThread().getStackTrace()[3].getMethodName();
             Log.d(ERROR_TAG, getErrorMessage(e));
             return false;
 
@@ -301,8 +299,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         try (Cursor cursor = db.rawQuery(
                 """
                         SELECT
-                          COUNT(*) class_exists
-                                                                  
+                            COUNT(*) class_exists                                                             
                         FROM classes c
                         JOIN modules m
                           ON m.module_id = c.module_id
@@ -503,27 +500,28 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean addModuleTeacher(List<Integer> teacherIDs, int moduleID) {
-        insertModuleTeacher(teacherIDs, moduleID);
-        return true;
+    public boolean addModuleTeacher(ModuleTeacher moduleTeacher) {
+        return insertModuleTeacher(moduleTeacher);
 
     }
 
-    private void insertModuleTeacher(List<Integer> teacherIDs, int moduleID) {
+    private boolean insertModuleTeacher(ModuleTeacher moduleTeacher) {
+        List<Long> list = new ArrayList<>();
         SQLiteDatabase db = getWritableDatabase();
-        for (Integer teacherID : teacherIDs) {
+        moduleTeacher.teacherIDList().forEach(teacherID -> {
             ContentValues cv = new ContentValues();
             cv.put(ModuleTeacherTable.COLUMN_TEACHER_ID, teacherID);
-            cv.put(ModuleTeacherTable.COLUMN_MODULE_ID, moduleID);
-            db.insert(ModuleTeacherTable.TABLE_NAME, null, cv);
-        }
+            cv.put(ModuleTeacherTable.COLUMN_MODULE_ID, moduleTeacher.moduleID());
+            long result = db.insert(TeacherTable.TABLE_NAME, null, cv);
+            list.add(result);
+        });
 
+        return !list.contains((long) -1);
     }
 
-    public boolean updateModuleTeacher(List<Integer> teacherIDs, int moduleID) {
-        deleteSelectedTeacherModules(moduleID);
-        insertModuleTeacher(teacherIDs, moduleID);
-        return true;
+    public boolean updateModuleTeacher(ModuleTeacher moduleTeacher) {
+        if (!deleteSelectedTeacherModules(moduleTeacher.moduleID())) return false;
+        return insertModuleTeacher(moduleTeacher);
 
     }
 
@@ -610,7 +608,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                   ON m.module_id = c.module_id
                 WHERE m.student_id = ?
                 """;
-        try (Cursor cursor = db.rawQuery(SQL, new String[]{String.valueOf(studentID)});) {
+        try (Cursor cursor = db.rawQuery(SQL, new String[]{String.valueOf(studentID)})) {
             if (!isCursorEmpty(cursor)) {
                 while (cursor.moveToNext()) {
 
@@ -643,16 +641,16 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         List<Module> list = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
         final String SQL = "SELECT * FROM modules WHERE module_id NOT IN (SELECT module_id FROM module_teacher) AND student_id = ?";
-        try (Cursor cursor = db.rawQuery(SQL, new String[]{String.valueOf(studentID)});) {
-            if (!isCursorEmpty(cursor)) {
-                while (cursor.moveToNext()) {
-                    list.add(new Module(
-                            cursor.getInt(cursor.getColumnIndex(ModuleTable.COLUMN_ID)),
-                            cursor.getString(cursor.getColumnIndex(ModuleTable.COLUMN_MODULE_C0DE)),
-                            cursor.getString(cursor.getColumnIndex(ModuleTable.COLUMN_MODULE_NAME))
-                    ));
-                }
+        try (Cursor cursor = db.rawQuery(SQL, new String[]{String.valueOf(studentID)})) {
+            if (isCursorEmpty(cursor)) Log.d(ERROR_TAG, "cursor is empty");
+            while (cursor.moveToNext()) {
+                list.add(new Module(
+                        cursor.getInt(cursor.getColumnIndex(ModuleTable.COLUMN_ID)),
+                        cursor.getString(cursor.getColumnIndex(ModuleTable.COLUMN_MODULE_C0DE)),
+                        cursor.getString(cursor.getColumnIndex(ModuleTable.COLUMN_MODULE_NAME))
+                ));
             }
+
         } catch (Exception e) {
             Log.d(ERROR_TAG, getErrorMessage(e));
         }
@@ -727,7 +725,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                       BETWEEN DATE('now', 'start of month') AND DATE('now', 'start of month', '+1 month', '-1 day')
                 ORDER by c.deadline DESC
                 """;
-        try (Cursor cursor = db.rawQuery(SQL, new String[]{String.valueOf(studentID)});) {
+        try (Cursor cursor = db.rawQuery(SQL, new String[]{String.valueOf(studentID)})) {
             if (!isCursorEmpty(cursor)) {
                 while (cursor.moveToNext()) {
                     Coursework coursework = new Coursework(
@@ -773,7 +771,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 WHERE student_id = ?
                 GROUP BY mt.module_id
                 """;
-        try (Cursor cursor = db.rawQuery(SQL, new String[]{String.valueOf(studentID)});) {
+        try (Cursor cursor = db.rawQuery(SQL, new String[]{String.valueOf(studentID)})) {
             if (!isCursorEmpty(cursor)) {
 
                 while (cursor.moveToNext()) {
@@ -805,7 +803,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                   ON t.teacher_id = mt.teacher_id
                 WHERE module_id = ?
                 """;
-        try (Cursor cursor = db.rawQuery(SQL, new String[]{String.valueOf(module)});) {
+        try (Cursor cursor = db.rawQuery(SQL, new String[]{String.valueOf(module)})) {
             if (!isCursorEmpty(cursor)) {
 
                 while (cursor.moveToNext()) {

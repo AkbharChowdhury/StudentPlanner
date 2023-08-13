@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
+import com.studentplanner.studentplanner.models.ModuleTeacher;
 import com.studentplanner.studentplanner.models.Teacher;
 import com.studentplanner.studentplanner.models.User;
 import com.studentplanner.studentplanner.tables.ModuleTable;
@@ -91,7 +92,7 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
 
         final String SELECTED_ID = ModuleTable.COLUMN_ID;
         int moduleID = getIntent().getIntExtra(SELECTED_ID, 0);
-        if (db.addModuleTeacher(teacherIDList, moduleID)) {
+        if (db.addModuleTeacher(new ModuleTeacher(moduleID, teacherIDList))) {
             Helper.longToastMessage(this, "Teacher Added for " + db.getSelectedModule(moduleID).getModuleDetails());
             setResult(RESULT_OK);
             finish();

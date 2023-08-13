@@ -10,4 +10,5 @@ public record ModuleTeacher(int moduleID, List<Integer> teacherIDList) {
                 .filter(p -> filteredModuleIdList.contains(p.moduleID()))
                 .collect(Collectors.toList());
     }
+
 }
