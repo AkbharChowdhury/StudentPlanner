@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -54,7 +55,7 @@ public class LoginFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         initFragment();
         binding = FragmentLoginBinding.inflate(inflater, container, false);
         db = DatabaseHelper.getInstance(context);
@@ -66,9 +67,6 @@ public class LoginFragment extends Fragment {
         binding.btnRegisterLink.setOnClickListener(v -> Helper.goToActivity(activity, RegisterActivity.class));
         lblLoginError = binding.lblLoginError;
         lblLoginError.setVisibility(View.INVISIBLE);
-
-//        txtEmail.getEditText().setText("tom@gmail.com");
-//        txtPassword.getEditText().setText("password");
         binding.btnLogin.setOnClickListener(v -> {
             String email = Helper.trimStr(txtEmail);
             String password = Helper.trimStr(txtPassword, false);
