@@ -49,7 +49,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     private void openFragment(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(binding.fragmentContainer.getId(), fragment).commit();
+
     }
 
     private void showStudentDetails() {
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
             openFragment(new ReminderFragment());
+
             navigationView.setCheckedItem(R.id.nav_reminder);
         }
 
