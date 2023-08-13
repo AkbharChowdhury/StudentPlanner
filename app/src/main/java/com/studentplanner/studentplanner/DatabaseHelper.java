@@ -523,7 +523,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     public boolean updateModuleTeacher(List<Integer> teacherIDs, int moduleID) {
         deleteSelectedTeacherModules(moduleID);
         insertModuleTeacher(teacherIDs, moduleID);
-
         return true;
 
     }
@@ -1036,8 +1035,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues cv = Module.contentValues(module);
         long result = db.update(ModuleTable.TABLE_NAME, cv, ModuleTable.COLUMN_ID + "=?", new String[]{String.valueOf(module.getModuleID())});
         return result != -1;
-
-
     }
 
 
@@ -1071,10 +1068,10 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     private ContentValues deleteImage(ContentValues cv, boolean deleteImage, Bitmap image) {
         if (deleteImage) {
             cv.putNull(CourseworkTable.COLUMN_IMAGE);
-        } else {
-            if (image != null) {
-                cv.put(CourseworkTable.COLUMN_IMAGE, ImageHandler.getBitmapAsByteArray(image));
-            }
+            return cv;
+        }
+        if (image != null) {
+            cv.put(CourseworkTable.COLUMN_IMAGE, ImageHandler.getBitmapAsByteArray(image));
         }
         return cv;
 
