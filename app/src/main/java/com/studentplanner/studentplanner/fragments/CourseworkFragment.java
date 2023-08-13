@@ -1,8 +1,8 @@
 package com.studentplanner.studentplanner.fragments;
 
 import static android.app.Activity.RESULT_OK;
-import static com.studentplanner.studentplanner.utils.Dropdown.setDefaultSpinnerPosition;
 import static com.studentplanner.studentplanner.utils.Dropdown.getSpinnerText;
+import static com.studentplanner.studentplanner.utils.Dropdown.setDefaultSpinnerPosition;
 
 import android.app.Activity;
 import android.content.Context;
@@ -131,7 +131,6 @@ public class CourseworkFragment extends Fragment {
 
         return binding.getRoot();
     }
-
 
 
     private void prioritySpinnerChanged() {
