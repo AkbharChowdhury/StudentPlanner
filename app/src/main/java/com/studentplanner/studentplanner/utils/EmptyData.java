@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class EmptyData {
+public final class EmptyData {
     private final ImageView emptyImage;
     private final TextView emptyText;
 

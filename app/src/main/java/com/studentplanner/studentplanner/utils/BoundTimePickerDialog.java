@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class BoundTimePickerDialog extends TimePickerDialog{
+public final class BoundTimePickerDialog extends TimePickerDialog {
 
     private int minHour = -1;
     private int minMinute = -1;
@@ -26,20 +26,17 @@ public class BoundTimePickerDialog extends TimePickerDialog{
     private int selectedMinute;
 
 
-
     private boolean setMinTimeToNow = false;
+
     public void setMinTimeToNow(boolean status) {
         setMinTimeToNow = status;
     }
-
 
 
     public BoundTimePickerDialog(Context context, Activity activity, int selectedHour, int selectedMinute) {
         super(context, (TimePickerDialog.OnTimeSetListener) activity, selectedHour, selectedMinute, false);
         this.selectedHour = selectedHour;
         this.selectedMinute = selectedMinute;
-
-
 
         try {
             Class<?> superclass = getClass().getSuperclass();
@@ -51,8 +48,6 @@ public class BoundTimePickerDialog extends TimePickerDialog{
         }
 
     }
-
-
 
 
     public void setMin(@IntRange(from = 0, to = 23) int hour, @IntRange(from = 0, to = 59) int minute) {
@@ -85,14 +80,14 @@ public class BoundTimePickerDialog extends TimePickerDialog{
         constrainStartAndEndTimes(selectedHour, selectedMinute);
     }
 
-    private void constrainStartAndEndTimes(int hourOfDay, int minute){
+    private void constrainStartAndEndTimes(int hourOfDay, int minute) {
         boolean isValidTime = true;
 
-        if (hourOfDay < minHour || (hourOfDay == minHour && minute < minMinute)){
+        if (hourOfDay < minHour || (hourOfDay == minHour && minute < minMinute)) {
             isValidTime = false;
         }
 
-        if (hourOfDay  > maxHour || (hourOfDay == maxHour && minute > maxMinute)){
+        if (hourOfDay > maxHour || (hourOfDay == maxHour && minute > maxMinute)) {
             isValidTime = false;
         }
 

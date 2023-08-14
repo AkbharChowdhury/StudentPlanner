@@ -1,53 +1,9 @@
-//package com.studentplanner.studentplanner.utils;
-//
-//import static android.content.Context.MODE_PRIVATE;
-//
-//import android.content.Context;
-//import android.content.SharedPreferences;
-//
-//public final class AccountPreferences {
-//
-//    private static final String LOGIN_SHARED_PREF = "LoginDetails";
-//    private static final String STUDENT_ID = "StudentID";
-//
-//    private AccountPreferences() {
-//
-//    }
-//
-//    public static void setLoginShredPref(Context context, int studentID) {
-//
-//        SharedPreferences sharedPreferences = context.getSharedPreferences(LOGIN_SHARED_PREF, MODE_PRIVATE);
-//        SharedPreferences.Editor editor = sharedPreferences.edit();
-//
-//        editor.putInt(STUDENT_ID, studentID);
-//        editor.apply();
-//    }
-//
-//
-//
-//    public static int getStudentID(Context context) {
-//        SharedPreferences sharedPreferences = context.getSharedPreferences(LOGIN_SHARED_PREF, MODE_PRIVATE);
-//        return Integer.parseInt(sharedPreferences.getString(STUDENT_ID,""));
-//    }
-//
-//    public static void logout(Context context) {
-//        SharedPreferences sharedPreferences = context.getSharedPreferences(LOGIN_SHARED_PREF, MODE_PRIVATE);
-//        SharedPreferences.Editor editor = sharedPreferences.edit();
-//        editor.putInt(STUDENT_ID,0);
-//        editor.apply();
-//    }
-//
-//
-//}
 package com.studentplanner.studentplanner.utils;
 
 import static android.content.Context.MODE_PRIVATE;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.LinearGradient;
-import android.preference.PreferenceManager;
-import android.util.Log;
 
 public final class AccountPreferences {
 
@@ -61,12 +17,10 @@ public final class AccountPreferences {
     }
 
     public static void setLoginShredPref(Context context, int studentID) {
-
         SharedPreferences loginSharedPref = context.getSharedPreferences(LOGIN_SHARED_PREF, MODE_PRIVATE);
         SharedPreferences.Editor editor = loginSharedPref.edit();
         editor.putInt(STUDENT_ID, studentID);
         editor.apply();
-
     }
 
     public static int getStudentID(Context context) {
@@ -76,9 +30,7 @@ public final class AccountPreferences {
 
     public static void logout(Context context) {
         context.deleteSharedPreferences(LOGIN_SHARED_PREF);
-
     }
-
 
 
 }

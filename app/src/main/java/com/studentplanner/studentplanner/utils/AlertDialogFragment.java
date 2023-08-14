@@ -7,7 +7,7 @@ import android.text.Html;
 import androidx.appcompat.app.AlertDialog;
 import com.studentplanner.studentplanner.R;
 import org.apache.commons.text.WordUtils;
-public class AlertDialogFragment {
+public final class AlertDialogFragment {
     private final Context context;
 
     public AlertDialogFragment(Context context) {

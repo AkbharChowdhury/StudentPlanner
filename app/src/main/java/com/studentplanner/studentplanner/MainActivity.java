@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             AccountPreferences.logout(this);
             openFragment(new LoginFragment());
         } else {
-            openFragment(new FragmentHandler().getSelectedFragment(item));
+            openFragment(FragmentHandler.getSelectedFragment(item));
         }
 
         drawer.closeDrawer(GravityCompat.START);

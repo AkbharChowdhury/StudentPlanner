@@ -8,11 +8,7 @@ import android.widget.ListView;
 import androidx.activity.result.ActivityResultLauncher;
 
 import com.studentplanner.studentplanner.adapters.EventAdapter;
-import com.studentplanner.studentplanner.addActivities.AddClassesActivity;
-import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
 import com.studentplanner.studentplanner.models.Event;
-import com.studentplanner.studentplanner.tables.ClassTable;
-import com.studentplanner.studentplanner.tables.CourseworkTable;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -26,7 +22,10 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class CalendarUtils {
+public final class CalendarUtils {
+    private CalendarUtils() {
+
+    }
 
     private static LocalDate selectedDate;
 
@@ -131,9 +130,6 @@ public class CalendarUtils {
     public static void setSelectedDate(DatePickerFragment datepicker, AutoCompleteTextView textField) {
         datepicker.setCustomDate(LocalDate.parse(Helper.convertFUllDateToYYMMDD(textField.getEditableText().toString())));
     }
-
-
-
 
 
 }
