@@ -81,6 +81,11 @@ public final class DatePickerFragment extends DialogFragment {
     }
 
     private void createDatePicker() {
+        LocalDate d = setCustomDate(isCustomDate);
+        datePicker = new DatePickerDialog(getActivity(), (DatePickerDialog.OnDateSetListener) getActivity(), d.getYear(), d.getMonthValue(), d.getDayOfMonth());
+    }
+
+    private LocalDate setCustomDate(boolean isCustomDate){
         int year;
         int month;
         int day;
@@ -96,7 +101,8 @@ public final class DatePickerFragment extends DialogFragment {
             month = d.getMonthValue();
             day = d.getDayOfMonth();
         }
-        datePicker = new DatePickerDialog(getActivity(), (DatePickerDialog.OnDateSetListener) getActivity(), year, --month, day);
+        return LocalDate.of(year, --month, day);
+
     }
 
 
