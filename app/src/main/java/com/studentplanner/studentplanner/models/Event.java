@@ -152,10 +152,10 @@ public final class Event {
     }
 
 
-    public static List<Event> getCourseworkDetails(DatabaseHelper db) {
+    public static List<Event> getCourseworkList(DatabaseHelper db) {
         List<Event> courseworkEventList = new ArrayList<>();
         List<Coursework> courseworkList = db.getCoursework();
-        if (courseworkList.size() > 0) {
+        if (!courseworkList.isEmpty()) {
             for (Coursework coursework : courseworkList) {
                 Event courseworkEvent = new Event(
                         LocalDate.parse(coursework.getDeadline()),
@@ -169,11 +169,6 @@ public final class Event {
         }
         return courseworkEventList;
     }
-
-
-
-
-
 
 
 }
