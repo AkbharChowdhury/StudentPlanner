@@ -53,24 +53,28 @@ public class LoginFragment extends Fragment {
         ((AppCompatActivity) activity).getSupportActionBar().hide();
 
     }
+    private void initFields(){
+        txtEmail = binding.txtEmail;
+        txtPassword = binding.txtPassword;
+        lblLoginError = binding.lblLoginError;
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        initFragment();
         binding = FragmentLoginBinding.inflate(inflater, container, false);
+
+        initFragment();
+        initFields();
+
         db = DatabaseHelper.getInstance(context);
-        txtEmail = binding.txtEmail;
         form = new Validation(context);
 
-        txtPassword = binding.txtPassword;
 
         binding.btnRegisterLink.setOnClickListener(v -> Helper.goToActivity(activity, RegisterActivity.class));
-        lblLoginError = binding.lblLoginError;
         lblLoginError.setVisibility(View.INVISIBLE);
         binding.btnLogin.setOnClickListener(v -> {
             String email = Helper.trimStr(txtEmail);
             String password = Helper.trimStr(txtPassword, false);
-
             Student student = new Student(txtEmail, txtPassword);
 
             if (!form.validateLoginForm(student)) return;

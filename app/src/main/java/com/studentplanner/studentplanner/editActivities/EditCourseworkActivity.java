@@ -98,7 +98,6 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_coursework);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(R.string.edit_coursework);
         binding = ActivityEditCourseworkBinding.inflate(getLayoutInflater());

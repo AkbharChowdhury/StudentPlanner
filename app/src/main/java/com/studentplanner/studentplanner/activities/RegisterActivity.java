@@ -71,6 +71,7 @@ public class RegisterActivity extends AppCompatActivity {
             finish();
             return;
         }
+
         Helper.longToastMessage(this, getString(R.string.create_account_error));
 
     }

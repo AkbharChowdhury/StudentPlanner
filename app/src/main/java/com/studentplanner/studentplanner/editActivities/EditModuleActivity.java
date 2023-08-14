@@ -27,7 +27,6 @@ public class EditModuleActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_module);
 
         ActivityEditModuleBinding binding = ActivityEditModuleBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

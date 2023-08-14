@@ -59,7 +59,6 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_classes);
         binding = ActivityEditClassesBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
