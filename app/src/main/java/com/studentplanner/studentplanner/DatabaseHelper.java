@@ -453,7 +453,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-
     public boolean addCoursework(Coursework coursework) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = Coursework.contentValues(coursework);
@@ -514,13 +513,11 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-
     public boolean updateModuleTeacher(ModuleTeacher moduleTeacher) {
         if (!deleteSelectedTeacherModules(moduleTeacher.moduleID())) return false;
         return insertModuleTeacher(moduleTeacher);
 
     }
-
 
     @SuppressLint("Range")
     public List<Module> getModules() {
