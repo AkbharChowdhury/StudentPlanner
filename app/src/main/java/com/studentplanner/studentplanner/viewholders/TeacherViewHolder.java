@@ -27,10 +27,9 @@ public class TeacherViewHolder extends RecyclerView.ViewHolder {
         name = binding.tvTeacherName;
         email = binding.tvEmail;
         layout = binding.layout;
-
-
     }
-    public void showDetails(Teacher teacher){
+
+    public void showDetails(Teacher teacher) {
         teacherID.setText(String.valueOf(teacher.getUserID()));
         name.setText(teacher.getName());
         email.setText(teacher.getEmail());

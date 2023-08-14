@@ -27,12 +27,13 @@ public final class ImageHandler {
     }
 
     public static void showImage(final byte[] image, ImageView imageView) {
-        if (image != null) {
-            imageView.setImageBitmap(ImageHandler.decodeBitmapByteArray(image));
-            imageView.setVisibility(View.VISIBLE);
+        if (image == null) {
+            imageView.setVisibility(View.GONE);
             return;
         }
-        imageView.setVisibility(View.GONE);
+        imageView.setImageBitmap(ImageHandler.decodeBitmapByteArray(image));
+        imageView.setVisibility(View.VISIBLE);
+
 
     }
 

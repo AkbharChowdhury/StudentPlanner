@@ -43,8 +43,6 @@ public class ModuleTeacherViewHolder extends RecyclerView.ViewHolder {
         Module module = db.getSelectedModule(model.moduleID());
         moduleID.setText(String.valueOf(model.moduleID()));
         tvModule.setText(module.getModuleDetails());
-        String code = module.getModuleCode().toUpperCase(Locale.ROOT);
-        String name = module.getModuleName();
         tvTeachers.setText(getTeacherNames(list, position));
     }
 
