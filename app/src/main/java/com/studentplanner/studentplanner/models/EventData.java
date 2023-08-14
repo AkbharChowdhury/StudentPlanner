@@ -19,12 +19,10 @@ public final class EventData {
     }
 
     public void getCourseworkDetails() {
-        List<Event> courseworkEvents = Event.getCourseworkList(db);
-        Event.getEventsList().addAll(courseworkEvents);
+        Event.getEventsList().addAll(Event.getCourseworkList(db));
     }
 
     public void getClassDetails() {
-
         List<Classes> classList = db.getClasses();
         if (!classList.isEmpty()) {
             for (Classes myClass : classList) {
