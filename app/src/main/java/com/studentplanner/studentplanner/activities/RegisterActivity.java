@@ -43,18 +43,15 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        initFields();
 
         db = DatabaseHelper.getInstance(this);
         form = new Validation(this, db);
         alertDialogFragment = new AlertDialogFragment(this);
-        findTextFields();
 
-        terms = binding.checkboxTermsConditions;
         binding.btnTermsConditions.setOnClickListener(v -> alertDialogFragment.showTermsAndConditions());
         binding.btnRegister.setOnClickListener(v -> handleRegisterClick());
     }
@@ -78,7 +75,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void findTextFields() {
+    private void initFields() {
         progressBar = binding.progressBar;
         txtFirstName = binding.txtFirstname;
         txtLastName = binding.txtLastname;
@@ -87,6 +84,7 @@ public class RegisterActivity extends AppCompatActivity {
         txtPassword = binding.txtPassword;
         countryCodePicker = binding.ccp;
         countryCodePicker.setAutoDetectedCountry(true);
+        terms = binding.checkboxTermsConditions;
 
         binding.txtPasswordText.setOnKeyListener((v, keyCode, event) -> {
             String password = txtPassword.getEditText().getText().toString();
