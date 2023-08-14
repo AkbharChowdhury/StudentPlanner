@@ -4,8 +4,8 @@ package com.studentplanner.studentplanner.utils;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 import android.app.DatePickerDialog;
-import android.os.Bundle;
 import android.app.Dialog;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -46,9 +46,6 @@ public final class DatePickerFragment extends DialogFragment {
     }
 
 
-
-
-
     public void setMinDateToToday() {
         setMinDateToNow = true;
     }
@@ -85,7 +82,7 @@ public final class DatePickerFragment extends DialogFragment {
         datePicker = new DatePickerDialog(getActivity(), (DatePickerDialog.OnDateSetListener) getActivity(), d.getYear(), d.getMonthValue(), d.getDayOfMonth());
     }
 
-    private LocalDate setCustomDate(boolean isCustomDate){
+    private LocalDate setCustomDate(boolean isCustomDate) {
         int year;
         int month;
         int day;
