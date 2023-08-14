@@ -19,7 +19,6 @@ import com.studentplanner.studentplanner.utils.Helper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
     private DatabaseHelper db;
@@ -96,7 +95,9 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
             Helper.longToastMessage(this, "Teacher Added for " + db.getSelectedModule(moduleID).getModuleDetails());
             setResult(RESULT_OK);
             finish();
+            return;
         }
+        Helper.longToastMessage(this, getString(R.string.module_teacher_error));
 
     }
 }

@@ -299,7 +299,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         try (Cursor cursor = db.rawQuery(
                 """
                         SELECT
-                            COUNT(*) class_exists                                                             
+                            COUNT(*) class_exists
                         FROM classes c
                         JOIN modules m
                           ON m.module_id = c.module_id
@@ -506,12 +506,14 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
             ContentValues cv = new ContentValues();
             cv.put(ModuleTeacherTable.COLUMN_TEACHER_ID, teacherID);
             cv.put(ModuleTeacherTable.COLUMN_MODULE_ID, moduleTeacher.moduleID());
-            long result = db.insert(TeacherTable.TABLE_NAME, null, cv);
+            long result = db.insert(ModuleTeacherTable.TABLE_NAME, null, cv);
             list.add(result);
         });
 
         return !list.contains((long) -1);
     }
+
+
 
     public boolean updateModuleTeacher(ModuleTeacher moduleTeacher) {
         if (!deleteSelectedTeacherModules(moduleTeacher.moduleID())) return false;

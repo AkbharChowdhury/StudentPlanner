@@ -15,6 +15,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.studentplanner.studentplanner.databinding.ActivityMainBinding;
 import com.studentplanner.studentplanner.databinding.NavHeaderBinding;
 import com.studentplanner.studentplanner.fragments.LoginFragment;
+import com.studentplanner.studentplanner.fragments.ModuleTeacherFragment;
 import com.studentplanner.studentplanner.fragments.ReminderFragment;
 import com.studentplanner.studentplanner.utils.AccountPreferences;
 import com.studentplanner.studentplanner.utils.FragmentHandler;
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return;
             }
 
-            openFragment(new ReminderFragment());
+            openFragment(new ModuleTeacherFragment());
 
             navigationView.setCheckedItem(R.id.nav_reminder);
         }

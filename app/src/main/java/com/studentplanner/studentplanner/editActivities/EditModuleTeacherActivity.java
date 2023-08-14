@@ -123,8 +123,11 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
             Helper.longToastMessage(this, teacherUpdated(moduleID));
             setResult(RESULT_OK);
             finish();
+            return;
 
         }
+        Helper.longToastMessage(this, getString(R.string.module_teacher_error));
+
 
     }
 
