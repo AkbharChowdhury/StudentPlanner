@@ -15,7 +15,7 @@ public final class SearchCoursework {
 
     private String title = "";
     private String priority = "";
-    private boolean isCompleted = false;
+    private boolean isCompleted;
     private final String DEFAULT_PRIORITY;
 
     /**

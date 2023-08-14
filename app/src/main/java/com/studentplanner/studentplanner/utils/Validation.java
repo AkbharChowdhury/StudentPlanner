@@ -27,7 +27,7 @@ import java.util.Locale;
 public final class Validation {
     private final Context context;
     private DatabaseHelper db;
-    private boolean setAdditionalCheck = false;
+    private boolean setAdditionalCheck;
 
     public Validation(Context context) {
         this.context = context;
@@ -212,7 +212,6 @@ public final class Validation {
         List<Boolean> errors = new ArrayList<>();
         setAdditionalCheck = false;
         errors.add(isValidEmail(student.getTxtEmail()));
-//        errors.add(isValidPassword(student.getTxtPassword()));
         return !errors.contains(false);
 
     }
@@ -221,8 +220,6 @@ public final class Validation {
 
         String password = Helper.trimStr(textField);
         String fieldName = Helper.capitalise(StudentTable.COLUMN_PASSWORD);
-
-
         if (password.isEmpty()) return true;
         int PASSWORD_MIN_LENGTH = 8;
         if (!isMinLength(password, PASSWORD_MIN_LENGTH)) {

@@ -77,7 +77,7 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
     private BoundTimePickerDialog deadlineTimePicker;
     private ImageView courseworkImage;
     private Bitmap imageToStore;
-    private boolean deleteImage = false;
+    private boolean deleteImage;
 
     private void activityResult(ActivityResult result) {
         if (result.getResultCode() == RESULT_OK && result.getData() != null) {
