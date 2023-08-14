@@ -10,7 +10,6 @@ import java.util.List;
 
 public final class Event {
 
-
     private int id;
 
     public int getId() {
