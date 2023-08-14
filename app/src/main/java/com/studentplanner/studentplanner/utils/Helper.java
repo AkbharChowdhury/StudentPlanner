@@ -133,7 +133,7 @@ public final class Helper {
         return DateTimeFormatter.ofPattern("hh:mm a").format(LocalTime.parse(time));
     }
 
-    //link https://beginnersbook.com/2014/01/how-to-convert-12-hour-time-to-24-hour-date-in-java/
+    // link https://beginnersbook.com/2014/01/how-to-convert-12-hour-time-to-24-hour-date-in-java/
     public static String convertFormattedTimeToDBFormat(String time) {
         DateFormat pattern = new SimpleDateFormat("hh:mm aa", Locale.ENGLISH);
         try {

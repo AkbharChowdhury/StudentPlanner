@@ -53,7 +53,8 @@ public class LoginFragment extends Fragment {
         ((AppCompatActivity) activity).getSupportActionBar().hide();
 
     }
-    private void initFields(){
+
+    private void initFields() {
         txtEmail = binding.txtEmail;
         txtPassword = binding.txtPassword;
         lblLoginError = binding.lblLoginError;
@@ -69,27 +70,25 @@ public class LoginFragment extends Fragment {
         db = DatabaseHelper.getInstance(context);
         form = new Validation(context);
 
-
         binding.btnRegisterLink.setOnClickListener(v -> Helper.goToActivity(activity, RegisterActivity.class));
         lblLoginError.setVisibility(View.INVISIBLE);
-        binding.btnLogin.setOnClickListener(v -> {
-            String email = Helper.trimStr(txtEmail);
-            String password = Helper.trimStr(txtPassword, false);
-            Student student = new Student(txtEmail, txtPassword);
-
-            if (!form.validateLoginForm(student)) return;
-            if (db.isAuthorised(email, Encryption.encode(password))) {
-                lblLoginError.setVisibility(View.INVISIBLE);
-                configUserDetails(email);
-                return;
-            }
-            lblLoginError.setVisibility(View.VISIBLE);
-
-        });
-
-
+        binding.btnLogin.setOnClickListener(v -> handleLogin());
         return binding.getRoot();
 
+    }
+
+    private void handleLogin() {
+        String email = Helper.trimStr(txtEmail);
+        String password = Helper.trimStr(txtPassword, false);
+        Student student = new Student(txtEmail, txtPassword);
+
+        if (!form.validateLoginForm(student)) return;
+        if (db.isAuthorised(email, Encryption.encode(password))) {
+            lblLoginError.setVisibility(View.INVISIBLE);
+            configUserDetails(email);
+            return;
+        }
+        lblLoginError.setVisibility(View.VISIBLE);
     }
 
     private void configUserDetails(String email) {

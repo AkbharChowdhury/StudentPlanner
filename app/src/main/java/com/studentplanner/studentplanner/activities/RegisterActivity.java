@@ -53,11 +53,11 @@ public class RegisterActivity extends AppCompatActivity {
         alertDialogFragment = new AlertDialogFragment(this);
 
         binding.btnTermsConditions.setOnClickListener(v -> alertDialogFragment.showTermsAndConditions());
-        binding.btnRegister.setOnClickListener(v -> handleRegisterClick());
+        binding.btnRegister.setOnClickListener(v -> handleRegister());
     }
 
 
-    private void handleRegisterClick() {
+    private void handleRegister() {
         Student student = new Student(txtFirstName, txtLastName, txtEmail, txtPassword);
         student.setTxtUserPhone(txtPhone);
 
