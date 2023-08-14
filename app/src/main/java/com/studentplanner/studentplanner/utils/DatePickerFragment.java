@@ -14,11 +14,11 @@ import androidx.fragment.app.DialogFragment;
 import java.time.LocalDate;
 
 public final class DatePickerFragment extends DialogFragment {
-    private boolean setMinDateToNow = false;
-    private boolean isConstrained = false;
-    private boolean isConstrainStartDate = false;
-    private boolean isConstrainEndDate = false;
-    private boolean isCustomDate = false;
+    private boolean setMinDateToNow;
+    private boolean isConstrained;
+    private boolean isConstrainStartDate;
+    private boolean isConstrainEndDate;
+    private boolean isCustomDate;
     private LocalDate selectedDate;
     private DatePickerDialog datePicker;
 
