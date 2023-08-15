@@ -20,10 +20,6 @@ public final class PasswordValidator {
         this.progressBar = progressBar;
         this.strengthView = strengthView;
     }
-//    public PasswordValidator(Context context, ProgressBar progressBar, TextView strengthView) {
-//        this.context = context;
-//        this.progressBar = progressBar;
-//    }
 
 
     public static boolean is8Chars(String password) {
