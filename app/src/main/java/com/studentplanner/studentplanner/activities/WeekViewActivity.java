@@ -3,7 +3,6 @@ package com.studentplanner.studentplanner.activities;
 import static com.studentplanner.studentplanner.utils.CalendarUtils.daysInWeekArray;
 import static com.studentplanner.studentplanner.utils.CalendarUtils.monthYearFromDate;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,6 +11,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -24,18 +24,13 @@ import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.adapters.CalendarAdapter;
 import com.studentplanner.studentplanner.adapters.EventAdapter;
-import com.studentplanner.studentplanner.addActivities.AddClassesActivity;
-import com.studentplanner.studentplanner.addActivities.AddCourseworkActivity;
 import com.studentplanner.studentplanner.databinding.ActivityWeekViewBinding;
 import com.studentplanner.studentplanner.interfaces.OnItemListener;
 import com.studentplanner.studentplanner.models.CalendarActions;
 import com.studentplanner.studentplanner.models.Event;
 import com.studentplanner.studentplanner.models.EventData;
 import com.studentplanner.studentplanner.utils.CalendarUtils;
-import com.studentplanner.studentplanner.utils.Helper;
-import com.studentplanner.studentplanner.utils.Validation;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -48,15 +43,16 @@ public class WeekViewActivity extends AppCompatActivity implements OnItemListene
     private EventData eventData;
     private CalendarActions calendarActions;
 
-
-    private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+    private void activityResult(ActivityResult result) {
         if (result.getResultCode() == RESULT_OK) {
             Event.getEventsList().clear();
             showCalendarEventData();
             setWeekView();
         }
 
-    });
+    }
+
+    private final ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this::activityResult);
 
 
     @Override
