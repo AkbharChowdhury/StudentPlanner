@@ -38,6 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
     private AlertDialogFragment alertDialogFragment;
     private ActivityRegisterBinding binding;
     private CountryCodePicker countryCodePicker;
+    private PasswordValidator passwordValidator;
 
 
     @Override
@@ -47,7 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         initFields();
-
+        passwordValidator = new PasswordValidator(this, binding.progressBar, binding.lblPasswordStrength);
         db = DatabaseHelper.getInstance(this);
         form = new Validation(this, db);
         alertDialogFragment = new AlertDialogFragment(this);
@@ -77,7 +78,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void initFields() {
-        progressBar = binding.progressBar;
         txtFirstName = binding.txtFirstname;
         txtLastName = binding.txtLastname;
         txtEmail = binding.txtEmail;
@@ -86,7 +86,6 @@ public class RegisterActivity extends AppCompatActivity {
         countryCodePicker = binding.ccp;
         countryCodePicker.setAutoDetectedCountry(true);
         terms = binding.checkboxTermsConditions;
-
         binding.txtPasswordText.setOnKeyListener((v, keyCode, event) -> {
             String password = txtPassword.getEditText().getText().toString();
             updatePasswordStrengthView(password);
@@ -128,14 +127,12 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void updatePasswordStrengthView(String password) {
         int strength = 0;
-        TextView strengthView = binding.lblPasswordStrength;
-        if (TextView.VISIBLE != strengthView.getVisibility()) return;
         if (PasswordValidator.is8Chars(password)) strength++;
         if (PasswordValidator.containsSpecialChar(password)) strength++;
         if (PasswordValidator.containsUpperCase(password)) strength++;
         if (PasswordValidator.containsLowerCase(password)) strength++;
         if (PasswordValidator.containsNumber(password)) strength++;
-        new PasswordValidator(this, progressBar).getProgressBarStatus(strength, strengthView);
+        passwordValidator.getProgressBarStatus(strength);
 
     }
 

@@ -13,11 +13,17 @@ import java.util.regex.Pattern;
 public final class PasswordValidator {
     private final Context context;
     private final ProgressBar progressBar;
+    private final TextView strengthView;
 
-    public PasswordValidator(Context context, ProgressBar progressBar) {
+    public PasswordValidator(Context context, ProgressBar progressBar, TextView strengthView) {
         this.context = context;
         this.progressBar = progressBar;
+        this.strengthView = strengthView;
     }
+//    public PasswordValidator(Context context, ProgressBar progressBar, TextView strengthView) {
+//        this.context = context;
+//        this.progressBar = progressBar;
+//    }
 
 
     public static boolean is8Chars(String password) {
@@ -33,7 +39,7 @@ public final class PasswordValidator {
     }
 
 
-    public void getProgressBarStatus(int strength, TextView strengthView) {
+    public void getProgressBarStatus(int strength) {
         switch (strength) {
             case 1 -> {
                 final int COLOUR = context.getColor(R.color.orange);
