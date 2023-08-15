@@ -87,6 +87,7 @@ public class ModuleTeacherFragment extends Fragment {
     private void getModuleTeacher() {
         list = db.getModuleTeachers();
         buildRecyclerView();
+
     }
 
 
@@ -100,17 +101,13 @@ public class ModuleTeacherFragment extends Fragment {
 
 
     private void buildRecyclerView() {
-        if (!list.isEmpty()) {
-            adapter = new ModuleTeacherAdapter(list, context, startForResult);
-            recyclerView.setHasFixedSize(true);
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(adapter);
-            return;
-        }
-
-        emptyData.emptyResultStatus(true);
-
+        emptyData.emptyResultStatus(list.isEmpty());
+        adapter = new ModuleTeacherAdapter(list, context, startForResult);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setAdapter(adapter);
     }
+
 
 
     @Override

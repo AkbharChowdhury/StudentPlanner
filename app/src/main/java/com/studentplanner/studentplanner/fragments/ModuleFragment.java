@@ -29,12 +29,9 @@ import com.studentplanner.studentplanner.addActivities.AddModuleActivity;
 import com.studentplanner.studentplanner.databinding.FragmentModuleBinding;
 import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.Search;
-import com.studentplanner.studentplanner.models.Teacher;
-import com.studentplanner.studentplanner.models.User;
 import com.studentplanner.studentplanner.utils.EmptyData;
 import com.studentplanner.studentplanner.utils.Helper;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -82,10 +79,10 @@ public class ModuleFragment extends Fragment {
 
     private void getModule() {
 
-        list = getList();
-
-        list.sort(Comparator.comparing(module -> module.getModuleName().toLowerCase()));
-
+        list = db.getModules();
+        if (!list.isEmpty()) {
+            list.sort(Comparator.comparing(module -> module.getModuleName().toLowerCase()));
+        }
         buildRecyclerView();
     }
 
@@ -99,15 +96,11 @@ public class ModuleFragment extends Fragment {
 
 
     private void buildRecyclerView() {
-        if (!list.isEmpty()) {
-            adapter = new ModuleAdapter(list, context, startForResult);
-            recyclerView.setHasFixedSize(true);
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(adapter);
-            return;
-        }
-
-        emptyData.emptyResultStatus(true);
+        emptyData.emptyResultStatus(list.isEmpty());
+        adapter = new ModuleAdapter(list, context, startForResult);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setAdapter(adapter);
     }
 
 
@@ -136,13 +129,10 @@ public class ModuleFragment extends Fragment {
         }
     }
 
-    private List<Module> getList() {
-        return db.getModules();
-    }
 
     private void filter(String text) {
 
-        List<Module> filteredList = (List<Module>) Search.textSearch(getList(), text);
+        List<Module> filteredList = (List<Module>) Search.textSearch(db.getModules(), text);
         adapter.filterList(filteredList);
 
         if (filteredList.isEmpty()) {

@@ -80,7 +80,7 @@ public class TeacherFragment extends Fragment {
 
     private void getTeachers() {
         list = db.getTeachers();
-        list.sort(Comparator.comparing(User::getLastname));
+        if (!list.isEmpty()) list.sort(Comparator.comparing(User::getLastname));
         buildRecyclerView();
     }
 
@@ -94,15 +94,11 @@ public class TeacherFragment extends Fragment {
 
 
     private void buildRecyclerView() {
-        if (!list.isEmpty()) {
-            adapter = new TeacherAdapter(list, context, startForResult);
-            recyclerView.setHasFixedSize(true);
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(adapter);
-            return;
-        }
-
-        emptyData.emptyResultStatus(true);
+        emptyData.emptyResultStatus(list.isEmpty());
+        adapter = new TeacherAdapter(list, context, startForResult);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setAdapter(adapter);
     }
 
 

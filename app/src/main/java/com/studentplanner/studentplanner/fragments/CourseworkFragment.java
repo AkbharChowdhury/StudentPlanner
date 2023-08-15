@@ -181,7 +181,7 @@ public class CourseworkFragment extends Fragment {
 
     private void getCoursework() {
         list = db.getCoursework();
-        list.sort(Coursework.sortDeadlineAsc);
+        if (!list.isEmpty()) list.sort(Coursework.sortDeadlineAsc);
         search = new SearchCoursework(context, list);
         buildRecyclerView();
     }
@@ -195,17 +195,25 @@ public class CourseworkFragment extends Fragment {
     }
 
     private void buildRecyclerView() {
-        if (!list.isEmpty()) {
-
-            adapter = new CourseworkAdapter(list, context, startForResult);
-            recyclerView.setHasFixedSize(true);
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(adapter);
-            return;
-        }
-
-        emptyData.emptyResultStatus(true);
+        emptyData.emptyResultStatus(list.isEmpty());
+        adapter = new CourseworkAdapter(list, context, startForResult);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setAdapter(adapter);
     }
+
+//    private void buildRecyclerView() {
+//        if (!list.isEmpty()) {
+//
+//            adapter = new CourseworkAdapter(list, context, startForResult);
+//            recyclerView.setHasFixedSize(true);
+//            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+//            recyclerView.setAdapter(adapter);
+//            return;
+//        }
+//
+//        emptyData.emptyResultStatus(true);
+//    }
 
 
     @Override
