@@ -87,8 +87,7 @@ public class RegisterActivity extends AppCompatActivity {
         countryCodePicker.setAutoDetectedCountry(true);
         terms = binding.checkboxTermsConditions;
         binding.txtPasswordText.setOnKeyListener((v, keyCode, event) -> {
-            String password = txtPassword.getEditText().getText().toString();
-            updatePasswordStrengthView(password);
+            updatePasswordStrengthView(txtPassword.getEditText().getText().toString());
             return false;
         });
 
