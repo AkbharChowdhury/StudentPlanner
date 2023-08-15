@@ -39,48 +39,49 @@ public final class PasswordValidator {
         switch (strength) {
             case 1 -> {
                 final int COLOUR = context.getColor(R.color.orange);
-                progressBar.setProgress(20);
-                strengthView.setText(context.getString(R.string.weak));
-                strengthView.setTextColor(COLOUR);
+                setStrength(20, context.getString(R.string.weak), COLOUR);
                 setProgressbarColour(COLOUR);
             }
             case 2 -> {
-                final int COLOUR = context.getColor(R.color.dark_blue);
 
-                progressBar.setProgress(40);
-                strengthView.setText(context.getString(R.string.average));
-                strengthView.setTextColor(COLOUR);
+                final int COLOUR = context.getColor(R.color.dark_blue);
+                setStrength(40, context.getString(R.string.average), COLOUR);
                 setProgressbarColour(COLOUR);
             }
             case 3 -> {
-                final int COLOUR = context.getColor(R.color.green);
 
-                progressBar.setProgress(60);
-                strengthView.setText(context.getString(R.string.good));
-                strengthView.setTextColor(COLOUR);
+                final int COLOUR = context.getColor(R.color.green);
+                setStrength(60, context.getString(R.string.good), COLOUR);
                 setProgressbarColour(COLOUR);
             }
             case 4 -> {
-                final int COLOUR = context.getColor(R.color.dark_yellow);
 
-                progressBar.setProgress(80);
-                strengthView.setText(context.getString(R.string.excellent));
-                strengthView.setTextColor(COLOUR);
+                final int COLOUR = context.getColor(R.color.dark_yellow);
+                setStrength(80, context.getString(R.string.excellent), COLOUR);
+
                 setProgressbarColour(COLOUR);
             }
             case 5 -> {
-                final int COLOUR = context.getColor(R.color.black);
 
-                progressBar.setProgress(100);
-                strengthView.setText(context.getString(R.string.strong));
-                strengthView.setTextColor(COLOUR);
+                final int COLOUR = context.getColor(R.color.black);
+                setStrength(100, context.getString(R.string.strong), COLOUR);
                 setProgressbarColour(COLOUR);
             }
-            default -> {
-                progressBar.setProgress(0);
-                strengthView.setText("");
-            }
+            default -> defaultStrength();
         }
+    }
+
+    private void setStrength(int progress, String status, int textColour) {
+        progressBar.setProgress(progress);
+        strengthView.setText(status);
+        strengthView.setTextColor(textColour);
+
+    }
+
+    private void defaultStrength() {
+        progressBar.setProgress(0);
+        strengthView.setText("");
+
     }
 
     private void setProgressbarColour(final int selectedColour) {
@@ -88,10 +89,12 @@ public final class PasswordValidator {
 
 
     }
-    public static boolean containsUpperCase(final String password){
+
+    public static boolean containsUpperCase(final String password) {
         return !password.equals(password.toLowerCase());
     }
-    public static boolean containsLowerCase(final String password){
+
+    public static boolean containsLowerCase(final String password) {
         return !password.equals(password.toUpperCase());
     }
 
