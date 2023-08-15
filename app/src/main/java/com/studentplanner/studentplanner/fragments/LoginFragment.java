@@ -66,6 +66,8 @@ public class LoginFragment extends Fragment {
 
         initFragment();
         initFields();
+        txtEmail.getEditText().setText("tom@gmail.com");
+        txtPassword.getEditText().setText("password");
 
         db = DatabaseHelper.getInstance(context);
         form = new Validation(context);

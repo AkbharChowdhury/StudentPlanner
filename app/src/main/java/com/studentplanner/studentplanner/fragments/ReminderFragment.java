@@ -78,11 +78,13 @@ public class ReminderFragment extends Fragment {
 
     private void getReminders() {
         list = getList();
+        if (!list.isEmpty()) list.sort(Coursework.sortDeadlineDesc);
+
         buildRecyclerView();
     }
 
     private List<Coursework> getList() {
-        return Collections.unmodifiableList(db.getUpComingCourseworkByMonth());
+        return db.getUpComingCourseworkByMonth();
     }
 
 
