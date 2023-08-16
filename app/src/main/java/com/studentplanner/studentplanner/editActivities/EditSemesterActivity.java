@@ -84,6 +84,7 @@ public class EditSemesterActivity extends AppCompatActivity implements DatePicke
             txtStartDate.setText(Helper.formatDate(semester.start().toString()));
             txtEndDate.setText(Helper.formatDate(semester.end().toString()));
             txtName.getEditText().setText(semester.name());
+
         }
 
     }
@@ -96,24 +97,25 @@ public class EditSemesterActivity extends AppCompatActivity implements DatePicke
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.ic_delete) {
-            new AlertDialog.Builder(this)
-                    .setMessage(getString(R.string.delete_semester_message))
-                    .setCancelable(false)
-                    .setTitle(getString(R.string.delete_semester_title))
-                    .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
-                        final int id = getIntent().getIntExtra(SemesterTable.COLUMN_ID, 0);
-                        if (db.deleteRecord(SemesterTable.TABLE_NAME, SemesterTable.COLUMN_ID, id)) {
-                            Helper.longToastMessage(this, getString(R.string.delete_semester));
-                            setResult(RESULT_OK);
-                            finish();
-                        }
-                    })
-                    .setNegativeButton(getString(R.string.no), (dialog, which) -> dialog.cancel()).create().show();
-
-        }
+        if (item.getItemId() == R.id.ic_delete) confirmDelete();
         if (item.getItemId() == android.R.id.home) finish();
         return super.onOptionsItemSelected(item);
+    }
+
+    private void confirmDelete() {
+        new AlertDialog.Builder(this)
+                .setMessage(getString(R.string.delete_semester_message))
+                .setCancelable(false)
+                .setTitle(getString(R.string.delete_semester_title))
+                .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
+                    final int id = getIntent().getIntExtra(SemesterTable.COLUMN_ID, 0);
+                    if (db.deleteRecord(SemesterTable.TABLE_NAME, SemesterTable.COLUMN_ID, id)) {
+                        Helper.longToastMessage(this, getString(R.string.delete_semester));
+                        setResult(RESULT_OK);
+                        finish();
+                    }
+                })
+                .setNegativeButton(getString(R.string.no), (dialog, which) -> dialog.cancel()).create().show();
     }
 
     private void findTextFields() {

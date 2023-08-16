@@ -80,27 +80,27 @@ public class EditModuleActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) finish();
-
-
-        if (item.getItemId() == R.id.ic_delete) {
-            new AlertDialog.Builder(this)
-                    .setMessage(getString(R.string.delete_module_message))
-                    .setCancelable(false)
-                    .setTitle(getString(R.string.delete_module))
-                    .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
-                        int id = getIntent().getIntExtra(ModuleTable.COLUMN_ID, 0);
-                        if (db.deleteRecord(ModuleTable.TABLE_NAME, ModuleTable.COLUMN_ID, id)) {
-                            setResult(RESULT_OK);
-
-                            Helper.longToastMessage(this, getString(R.string.module_deleted));
-                            finish();
-                        }
-
-
-                    })
-                    .setNegativeButton(getString(R.string.no), (dialog, which) -> dialog.cancel()).create().show();
-        }
+        if (item.getItemId() == R.id.ic_delete) confirmDelete();
         return super.onOptionsItemSelected(item);
+    }
+
+    private void confirmDelete() {
+        new AlertDialog.Builder(this)
+                .setMessage(getString(R.string.delete_module_message))
+                .setCancelable(false)
+                .setTitle(getString(R.string.delete_module))
+                .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
+                    int id = getIntent().getIntExtra(ModuleTable.COLUMN_ID, 0);
+                    if (db.deleteRecord(ModuleTable.TABLE_NAME, ModuleTable.COLUMN_ID, id)) {
+                        setResult(RESULT_OK);
+
+                        Helper.longToastMessage(this, getString(R.string.module_deleted));
+                        finish();
+                    }
+
+
+                })
+                .setNegativeButton(getString(R.string.no), (dialog, which) -> dialog.cancel()).create().show();
     }
 
 }

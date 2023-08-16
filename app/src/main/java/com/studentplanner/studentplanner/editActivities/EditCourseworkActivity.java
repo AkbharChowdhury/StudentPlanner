@@ -281,11 +281,11 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) finish();
-        if (item.getItemId() == R.id.ic_delete) deleteCoursework();
+        if (item.getItemId() == R.id.ic_delete) confirmDelete();
         return super.onOptionsItemSelected(item);
     }
 
-    private void deleteCoursework() {
+    private void confirmDelete() {
         new AlertDialog.Builder(this)
                 .setMessage("You can't undo this").setCancelable(false)
                 .setTitle(getString(R.string.delete_coursework_title))

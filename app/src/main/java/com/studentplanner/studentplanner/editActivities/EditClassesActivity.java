@@ -29,6 +29,8 @@ import com.studentplanner.studentplanner.utils.CalendarUtils;
 import com.studentplanner.studentplanner.utils.Dropdown;
 import com.studentplanner.studentplanner.utils.Helper;
 
+import org.apache.commons.text.WordUtils;
+
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.List;
@@ -220,25 +222,26 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) finish();
-
-        if (item.getItemId() == R.id.ic_delete) {
-            new AlertDialog.Builder(this)
-                    .setMessage("You can't undo this").setCancelable(false)
-                    .setTitle("Are you sure you want to delete this class?")
-                    .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
-                        int id = getIntent().getIntExtra(ClassTable.COLUMN_ID, 0);
-                        if (db.deleteRecord(ClassTable.TABLE_NAME, ClassTable.COLUMN_ID, id)) {
-                            Helper.longToastMessage(this, "Class deleted");
-                            setResult(RESULT_OK);
-                            finish();
-                        }
-
-
-                    })
-                    .setNegativeButton(getString(R.string.no), (dialog, which) -> dialog.cancel()).create().show();
-
-        }
+        if (item.getItemId() == R.id.ic_delete) confirmDelete();
         return super.onOptionsItemSelected(item);
+    }
+
+    private void confirmDelete() {
+        new AlertDialog.Builder(this)
+                .setMessage("You can't undo this").setCancelable(false)
+                .setTitle(getString(R.string.delete_class_title))
+                .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
+                    int id = getIntent().getIntExtra(ClassTable.COLUMN_ID, 0);
+                    if (db.deleteRecord(ClassTable.TABLE_NAME, ClassTable.COLUMN_ID, id)) {
+                        Helper.longToastMessage(this, WordUtils.capitalizeFully(getString(R.string.class_deleted)));
+                        setResult(RESULT_OK);
+                        finish();
+                    }
+
+
+                })
+                .setNegativeButton(getString(R.string.no), (dialog, which) -> dialog.cancel()).create().show();
+
     }
 
 
