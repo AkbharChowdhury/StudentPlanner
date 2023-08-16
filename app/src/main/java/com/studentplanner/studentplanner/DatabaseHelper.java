@@ -685,7 +685,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                             cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DEADLINE_TIME))
                     );
                     coursework.setImage(cursor.getBlob(cursor.getColumnIndex(CourseworkTable.COLUMN_IMAGE)));
-                    coursework.setCompleted(cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_COMPLETED)).equalsIgnoreCase("Yes"));
+                    coursework.setCompleted(Coursework.isCompleted(cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_COMPLETED))));
                     courseworkList.add(coursework);
 
                 }
@@ -729,7 +729,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                     );
 
 
-                    coursework.setCompleted(cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_COMPLETED)).equalsIgnoreCase("Yes"));
+                    coursework.setCompleted(Coursework.isCompleted(cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_COMPLETED))));
                     coursework.setImage(cursor.getBlob(cursor.getColumnIndex(CourseworkTable.COLUMN_IMAGE)));
                     courseworkList.add(coursework);
 
@@ -766,7 +766,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                     List<String> teacherIDListStr = new ArrayList<>(Arrays.asList(teacherIDs.split(",")));
                     List<Integer> TeacherIDList = Helper.convertStringArrayToIntArrayList(teacherIDListStr);
                     list.add(new ModuleTeacher(moduleID, TeacherIDList));
-
                 }
 
             }
@@ -827,7 +826,8 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
                 );
                 coursework.setImage(cursor.getBlob(cursor.getColumnIndex(CourseworkTable.COLUMN_IMAGE)));
-                coursework.setCompleted(cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_COMPLETED)).equalsIgnoreCase("Yes"));
+                coursework.setCompleted(Coursework.isCompleted(cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_COMPLETED))));
+
             }
         } catch (Exception e) {
             Log.d(ERROR_TAG, getErrorMessage(e));

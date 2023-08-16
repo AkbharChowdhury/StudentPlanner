@@ -88,6 +88,11 @@ public final class Coursework implements Searchable {
         return isCompleted;
     }
 
+    public static boolean isCompleted(String completionStatus) {
+        return completionStatus.equalsIgnoreCase("Yes");
+    }
+
+
     public void setCompleted(boolean completed) {
         isCompleted = completed;
     }
