@@ -242,7 +242,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
             return cursor.getCount() > 0;
         } catch (Exception e) {
             Log.d(ERROR_TAG, getErrorMessage(e));
-            Log.d(ERROR_TAG, getErrorMessage(e));
             return false;
         }
 
