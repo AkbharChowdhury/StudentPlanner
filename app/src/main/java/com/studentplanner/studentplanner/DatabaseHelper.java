@@ -595,11 +595,13 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         final String SQL = """
                 SELECT
-                  c.*
-                FROM classes c
-                JOIN modules m
-                  ON m.module_id = c.module_id
-                WHERE m.student_id = ?
+                    c.*
+                FROM
+                    classes c
+                JOIN modules m ON
+                    m.module_id = c.module_id
+                WHERE
+                    m.student_id = ?
                 """;
         try (Cursor cursor = db.rawQuery(SQL, getStudentIDArray())) {
             if (!isCursorEmpty(cursor)) {
@@ -662,14 +664,16 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
         final String SQL = """
                 SELECT
-                  c.*,
-                  m.module_code,
-                  m.module_name,
-                  m.student_id
-                FROM coursework c
-                JOIN modules m
-                  ON m.module_id = c.module_id
-                WHERE student_id = ?
+                    c.*,
+                    module_code,
+                    module_name,
+                    student_id
+                FROM
+                    coursework c
+                JOIN modules m ON
+                    m.module_id = c.module_id
+                WHERE
+                    student_id = ?
                 """;
 
         try (Cursor cursor = db.rawQuery(SQL, getStudentIDArray())) {
@@ -701,11 +705,11 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     public List<Coursework> getUpComingCourseworkByMonth() {
         List<Coursework> courseworkList = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        final String SQL = """
+        final String SQL = """        
                 SELECT c.*,
-                       m.module_code,
-                       m.module_name,
-                       m.student_id
+                       module_code,
+                       module_name,
+                       student_id
                 FROM coursework c
                     JOIN modules m
                         ON m.module_id = c.module_id
@@ -749,13 +753,16 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         final String SQL = """
                 SELECT
-                  mt.module_id,
-                  group_concat(mt.teacher_id) teacher_id_list
-                FROM module_teacher mt
-                JOIN modules m
-                  ON m.module_id = mt.module_id
-                WHERE student_id = ?
-                GROUP BY mt.module_id
+                    mt.module_id,
+                    GROUP_CONCAT(mt.teacher_id) teacher_id_list
+                FROM
+                    module_teacher mt
+                JOIN modules m ON
+                    m.module_id = mt.module_id
+                WHERE
+                    student_id = ?
+                GROUP BY
+                    mt.module_id
                 """;
         try (Cursor cursor = db.rawQuery(SQL, getStudentIDArray())) {
             if (!isCursorEmpty(cursor)) {
@@ -781,12 +788,15 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         final String SQL = """
                 SELECT
-                  t.firstname,
-                  t.lastname
-                FROM module_teacher mt
-                JOIN teachers t
-                  ON t.teacher_id = mt.teacher_id
-                WHERE module_id = ?
+                    t.firstname,
+                    t.lastname
+                FROM
+                    module_teacher mt
+                JOIN teachers t ON
+                    t.teacher_id = mt.teacher_id
+                WHERE
+                    module_id = ?
+                
                 """;
         try (Cursor cursor = db.rawQuery(SQL, new String[]{String.valueOf(moduleID)})) {
             if (!isCursorEmpty(cursor)) {
