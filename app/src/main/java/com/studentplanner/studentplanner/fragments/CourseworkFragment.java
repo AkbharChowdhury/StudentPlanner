@@ -202,19 +202,6 @@ public class CourseworkFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
-//    private void buildRecyclerView() {
-//        if (!list.isEmpty()) {
-//
-//            adapter = new CourseworkAdapter(list, context, startForResult);
-//            recyclerView.setHasFixedSize(true);
-//            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-//            recyclerView.setAdapter(adapter);
-//            return;
-//        }
-//
-//        emptyData.emptyResultStatus(true);
-//    }
-
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
