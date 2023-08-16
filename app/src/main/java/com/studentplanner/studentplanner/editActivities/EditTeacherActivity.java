@@ -88,26 +88,28 @@ public class EditTeacherActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home) finish();
-
-        if (item.getItemId() == R.id.ic_delete) {
-            new AlertDialog.Builder(this)
-                    .setMessage(getString(R.string.delete_teacher_message)).setCancelable(false)
-                    .setTitle(getString(R.string.delete_teacher_title))
-                    .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
-                        int id = getIntent().getIntExtra(TeacherTable.COLUMN_ID, 0);
-                        if (db.deleteRecord(TeacherTable.TABLE_NAME, TeacherTable.COLUMN_ID, id)) {
-                            Helper.longToastMessage(this, getString(R.string.teacher_deleted));
-                            setResult(RESULT_OK);
-                            finish();
-                        }
-
-
-                    })
-                    .setNegativeButton(getString(R.string.no), (dialog, which) -> dialog.cancel()).create().show();
-
-        }
+        final int ID = item.getItemId();
+        if (ID == R.id.ic_delete) confirmDelete();
+        if (ID == android.R.id.home) finish();
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private void confirmDelete() {
+        new AlertDialog.Builder(this)
+                .setMessage(getString(R.string.delete_teacher_message)).setCancelable(false)
+                .setTitle(getString(R.string.delete_teacher_title))
+                .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
+                    int id = getIntent().getIntExtra(TeacherTable.COLUMN_ID, 0);
+                    if (db.deleteRecord(TeacherTable.TABLE_NAME, TeacherTable.COLUMN_ID, id)) {
+                        Helper.longToastMessage(this, getString(R.string.teacher_deleted));
+                        setResult(RESULT_OK);
+                        finish();
+                    }
+
+
+                })
+                .setNegativeButton(getString(R.string.no), (dialog, which) -> dialog.cancel()).create().show();
     }
 
 }

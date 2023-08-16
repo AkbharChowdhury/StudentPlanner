@@ -157,7 +157,6 @@ public class AddClassesActivity extends AppCompatActivity implements TimePickerD
 
 
     private void getSemesterList() {
-
         final List<Semester> list = db.getSemester();
         txtSemester.setAdapter(new ArrayAdapter<>(this, R.layout.list_item, Semester.populateDropdown(list)));
         txtSemester.setOnItemClickListener((parent, view, position, id) -> selectedSemesterID = list.get(position).semesterID());
@@ -226,7 +225,6 @@ public class AddClassesActivity extends AppCompatActivity implements TimePickerD
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
         if (item.getItemId() == android.R.id.home) finish();
         return true;
     }

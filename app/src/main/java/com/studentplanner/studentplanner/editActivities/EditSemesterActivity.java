@@ -97,8 +97,9 @@ public class EditSemesterActivity extends AppCompatActivity implements DatePicke
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.ic_delete) confirmDelete();
-        if (item.getItemId() == android.R.id.home) finish();
+        final int ID = item.getItemId();
+        if (ID == R.id.ic_delete) confirmDelete();
+        if (ID == android.R.id.home) finish();
         return super.onOptionsItemSelected(item);
     }
 

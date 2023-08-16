@@ -219,10 +219,12 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
         return super.onCreateOptionsMenu(menu);
     }
 
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home) finish();
-        if (item.getItemId() == R.id.ic_delete) confirmDelete();
+        final int ID = item.getItemId();
+        if (ID == android.R.id.home) finish();
+        if (ID == R.id.ic_delete) confirmDelete();
         return super.onOptionsItemSelected(item);
     }
 

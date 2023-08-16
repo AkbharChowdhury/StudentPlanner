@@ -76,10 +76,8 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        final int ID = item.getItemId();
-        if (ID == R.id.item_done) confirmSelection();
+        if (item.getItemId() == R.id.item_done) confirmSelection();
         return super.onOptionsItemSelected(item);
-
     }
 
     private void confirmSelection() {

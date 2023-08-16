@@ -136,7 +136,6 @@ public class WeekViewActivity extends AppCompatActivity implements OnItemListene
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
         int id = item.getItemId();
         if (id == R.id.add_coursework_action) calendarActions.addCourseworkAction();
         if (id == R.id.add_class_action) calendarActions.addClassAction();

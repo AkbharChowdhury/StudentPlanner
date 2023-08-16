@@ -102,9 +102,9 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        if (item.getItemId() == android.R.id.home) finish();
-        if (id == R.id.item_done) confirmSelection();
+        final int ID = item.getItemId();
+        if (ID == android.R.id.home) finish();
+        if (ID == R.id.item_done) confirmSelection();
         return super.onOptionsItemSelected(item);
 
     }
