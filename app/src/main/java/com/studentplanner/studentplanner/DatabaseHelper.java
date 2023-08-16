@@ -47,6 +47,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     private static final String ERROR_TAG = "ERROR";
 
     private String getErrorMessage(Exception e) {
+        Helper.longToastMessage(context, String.format("Error in %s class\nplease refer to the logcat\nfor more details", DatabaseHelper.getInstance(context).getClass().getSimpleName()));
         String methodName = Thread.currentThread().getStackTrace()[3].getMethodName();
         return MessageFormat.format("There was a problem in method: {0}\nError: \n{1}", methodName, e.getMessage());
 
