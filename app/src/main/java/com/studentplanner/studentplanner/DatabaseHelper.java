@@ -41,7 +41,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     private final SQLiteDatabase db;
-    @SuppressLint("StaticFieldLeak")
+//    @SuppressLint("StaticFieldLeak")
     private static DatabaseHelper instance;
     private final Context context;
     private static final String ERROR_TAG = "ERROR";
@@ -55,14 +55,14 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
     public static synchronized DatabaseHelper getInstance(Context context) {
         if (instance == null) {
-            instance = new DatabaseHelper(context);
+            instance = new DatabaseHelper(context.getApplicationContext());
         }
         return instance;
     }
 
     private DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        this.context = context;
+        this.context = context.getApplicationContext();
         // must be writable for queries to run from on create method
         db = getWritableDatabase();
     }
