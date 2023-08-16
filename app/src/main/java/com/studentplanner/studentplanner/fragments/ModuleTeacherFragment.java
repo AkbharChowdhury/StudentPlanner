@@ -76,7 +76,7 @@ public class ModuleTeacherFragment extends Fragment {
 
         db = DatabaseHelper.getInstance(context);
 
-        if (!db.getModuleTeachers().isEmpty()) {
+        if (!getList().isEmpty()) {
             binding.emptyText.setText(getString(R.string.no_module_teacher));
         }
 
@@ -85,9 +85,13 @@ public class ModuleTeacherFragment extends Fragment {
     }
 
     private void getModuleTeacher() {
-        list = db.getModuleTeachers();
+        list = getList();
         buildRecyclerView();
 
+    }
+
+    private List<ModuleTeacher> getList() {
+        return db.getModuleTeachers();
     }
 
 
@@ -107,7 +111,6 @@ public class ModuleTeacherFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(adapter);
     }
-
 
 
     @Override
