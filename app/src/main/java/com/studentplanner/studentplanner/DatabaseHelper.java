@@ -38,7 +38,7 @@ import java.util.List;
 public final class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "StudentPlanner.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 1;
 
     private final SQLiteDatabase db;
     private static DatabaseHelper instance;
@@ -77,19 +77,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         addDefaultTableValues(db);
     }
 
-//    private void dropTables(SQLiteDatabase db, String... tableNames) {
-////        db.setForeignKeyConstraintsEnabled(false);
-////        onConfigure(db);
-//        for (String table: tableNames) {
-//            db.execSQL("DROP TABLE IF EXISTS " + table);
-//
-//        }
-////        db.setForeignKeyConstraintsEnabled(true);
-////        onCreate(db);
-//
-//
-//    }
-
 
     private void dropTables(SQLiteDatabase db, String... tableNames) {
         for (String table : tableNames) {
@@ -97,9 +84,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    private void dropAllTables(SQLiteDatabase db) {
 
         dropTables(db,
                 ClassTable.TABLE_NAME,
@@ -110,7 +95,11 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 StudentTable.TABLE_NAME,
                 TeacherTable.TABLE_NAME
         );
+    }
 
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        dropAllTables(db);
         Log.d(getClass().getName().toUpperCase() + "_UPGRADE", MessageFormat.format("{0} database upgrade to version {1}  - old data lost", DATABASE_NAME, newVersion));
         onCreate(db);
     }
@@ -1145,5 +1134,4 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
 
     }
-
 }
