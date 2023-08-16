@@ -1,18 +1,17 @@
 package com.studentplanner.studentplanner.editActivities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
@@ -28,7 +27,7 @@ import com.studentplanner.studentplanner.utils.Validation;
 
 import java.time.LocalDate;
 
-public class EditSemesterActivity extends AppCompatActivity  implements DatePickerDialog.OnDateSetListener {
+public class EditSemesterActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     private DatabaseHelper db;
     private AutoCompleteTextView txtStartDate;
     private AutoCompleteTextView txtEndDate;
@@ -53,19 +52,19 @@ public class EditSemesterActivity extends AppCompatActivity  implements DatePick
         setupFields();
         binding.btnEditSemester.setOnClickListener(v -> {
 
-            if (form.validateSemesterForm(txtName)){
-                if (db.updateSemester(getSemesterDetails())) {
-                    Helper.longToastMessage(this,"Semester Updated");
-                    setResult(RESULT_OK);
-                    finish();
-                }
-
+            if (!form.validateSemesterForm(txtName)) return;
+            if (db.updateSemester(getSemesterDetails())) {
+                Helper.longToastMessage(this, getString(R.string.semester_updated));
+                setResult(RESULT_OK);
+                finish();
             }
+
+
         });
     }
 
     private Semester getSemesterDetails() {
-        return  new Semester(
+        return new Semester(
                 getIntent().getIntExtra(SemesterTable.COLUMN_ID, 0),
                 Helper.trimStr(txtName),
                 LocalDate.parse(Helper.convertFUllDateToYYMMDD(txtStartDate.getEditableText().toString())),
@@ -79,8 +78,8 @@ public class EditSemesterActivity extends AppCompatActivity  implements DatePick
         final String SELECTED_ID = SemesterTable.COLUMN_ID;
         if (getIntent().hasExtra(SELECTED_ID)) {
 
-            final int id = getIntent().getIntExtra(SELECTED_ID, 0);
-            Semester semester = db.getSelectedSemester(id);
+            final int ID = getIntent().getIntExtra(SELECTED_ID, 0);
+            Semester semester = db.getSelectedSemester(ID);
             txtName.getEditText().setText(semester.name());
             txtStartDate.setText(Helper.formatDate(semester.start().toString()));
             txtEndDate.setText(Helper.formatDate(semester.end().toString()));
@@ -97,16 +96,15 @@ public class EditSemesterActivity extends AppCompatActivity  implements DatePick
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.ic_delete){
+        if (item.getItemId() == R.id.ic_delete) {
             new AlertDialog.Builder(this)
                     .setMessage(getString(R.string.delete_semester_message))
                     .setCancelable(false)
                     .setTitle(getString(R.string.delete_semester_title))
                     .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
                         final int id = getIntent().getIntExtra(SemesterTable.COLUMN_ID, 0);
-                        if (db.deleteRecord(SemesterTable.TABLE_NAME, SemesterTable.COLUMN_ID, id)){
-
-                            Helper.longToastMessage(this,getString(R.string.delete_semester));
+                        if (db.deleteRecord(SemesterTable.TABLE_NAME, SemesterTable.COLUMN_ID, id)) {
+                            Helper.longToastMessage(this, getString(R.string.delete_semester));
                             setResult(RESULT_OK);
                             finish();
                         }
@@ -117,16 +115,19 @@ public class EditSemesterActivity extends AppCompatActivity  implements DatePick
         if (item.getItemId() == android.R.id.home) finish();
         return super.onOptionsItemSelected(item);
     }
+
     private void findTextFields() {
-        txtName =  binding.txtSemesterName;
+        txtName = binding.txtSemesterName;
         txtStartDate = binding.txtStartDate;
         txtEndDate = binding.txtEndDate;
     }
+
     private void setUpDatePickers() {
         setStartDatePicker();
         setEndDatePicker();
 
     }
+
     @SuppressLint("ClickableViewAccessibility")
     private void setStartDatePicker() {
         txtStartDate.setOnTouchListener((view, motionEvent) -> {
@@ -143,6 +144,7 @@ public class EditSemesterActivity extends AppCompatActivity  implements DatePick
             return false;
         });
     }
+
     @SuppressLint("ClickableViewAccessibility")
     private void setEndDatePicker() {
         txtEndDate.setOnTouchListener((view, motionEvent) -> {
@@ -158,6 +160,7 @@ public class EditSemesterActivity extends AppCompatActivity  implements DatePick
             return false;
         });
     }
+
     private void createDatePickerConstraint(DatePickerFragment datePickerStart) {
         String endDate = Helper.convertFUllDateToYYMMDD(txtEndDate.getEditableText().toString());
         String startDate = Helper.convertFUllDateToYYMMDD(txtStartDate.getEditableText().toString());
