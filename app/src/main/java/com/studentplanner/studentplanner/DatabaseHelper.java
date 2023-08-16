@@ -38,10 +38,9 @@ import java.util.List;
 public final class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "StudentPlanner.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private final SQLiteDatabase db;
-//    @SuppressLint("StaticFieldLeak")
     private static DatabaseHelper instance;
     private final Context context;
     private static final String ERROR_TAG = "ERROR";
@@ -78,11 +77,41 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         addDefaultTableValues(db);
     }
 
+//    private void dropTables(SQLiteDatabase db, String... tableNames) {
+////        db.setForeignKeyConstraintsEnabled(false);
+////        onConfigure(db);
+//        for (String table: tableNames) {
+//            db.execSQL("DROP TABLE IF EXISTS " + table);
+//
+//        }
+////        db.setForeignKeyConstraintsEnabled(true);
+////        onCreate(db);
+//
+//
+//    }
+
+
+    private void dropTables(SQLiteDatabase db, String... tableNames) {
+        for (String table : tableNames) {
+            db.execSQL("DROP TABLE IF EXISTS " + table);
+        }
+    }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_NAME);
-        Log.v(getClass().getName(), MessageFormat.format("{0} database upgrade to version {1}  - old data lost", DATABASE_NAME, newVersion));
+
+        dropTables(db,
+                ClassTable.TABLE_NAME,
+                CourseworkTable.TABLE_NAME,
+                ModuleTable.TABLE_NAME,
+                ModuleTeacherTable.TABLE_NAME,
+                SemesterTable.TABLE_NAME,
+                StudentTable.TABLE_NAME,
+                TeacherTable.TABLE_NAME
+        );
+
+        Log.d(getClass().getName().toUpperCase() + "_UPGRADE", MessageFormat.format("{0} database upgrade to version {1}  - old data lost", DATABASE_NAME, newVersion));
         onCreate(db);
     }
 
