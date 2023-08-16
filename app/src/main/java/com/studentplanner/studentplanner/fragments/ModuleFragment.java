@@ -144,7 +144,6 @@ public class ModuleFragment extends Fragment {
     private List<Module> sortList(List<Module> list) {
         if (!list.isEmpty()) {
             list.sort(Comparator.comparing(module -> module.getModuleName().toLowerCase()));
-
         }
         return list;
 
