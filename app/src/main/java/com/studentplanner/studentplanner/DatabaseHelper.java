@@ -38,7 +38,7 @@ import java.util.List;
 public final class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "StudentPlanner.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private final SQLiteDatabase db;
     private static DatabaseHelper instance;
@@ -131,7 +131,8 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
 
     private void createStudentTable(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + StudentTable.TABLE_NAME + " ("
+
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + StudentTable.TABLE_NAME + " ("
                 + StudentTable.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + StudentTable.COLUMN_FIRSTNAME + " TEXT NOT NULL,"
                 + StudentTable.COLUMN_LASTNAME + " TEXT NOT NULL,"
@@ -145,7 +146,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     private void createModuleTable(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + ModuleTable.TABLE_NAME + " ("
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + ModuleTable.TABLE_NAME + " ("
                 + ModuleTable.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + ModuleTable.COLUMN_STUDENT_ID + " INTEGER NOT NULL,"
                 + ModuleTable.COLUMN_MODULE_C0DE + " TEXT NOT NULL,"
@@ -157,7 +158,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     private void createCourseworkTable(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + CourseworkTable.TABLE_NAME + " ("
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + CourseworkTable.TABLE_NAME + " ("
                 + CourseworkTable.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + CourseworkTable.COLUMN_MODULE_ID + " INTEGER NOT NULL,"
                 + CourseworkTable.COLUMN_TITLE + " TEXT NOT NULL,"
@@ -174,7 +175,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     private void createTeacherTable(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + TeacherTable.TABLE_NAME + " ("
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TeacherTable.TABLE_NAME + " ("
                 + TeacherTable.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + TeacherTable.COLUMN_STUDENT_ID + " INTEGER NOT NULL,"
                 + TeacherTable.COLUMN_FIRSTNAME + " TEXT NOT NULL,"
@@ -188,7 +189,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
     private void createModuleTeacherTable(SQLiteDatabase db) {
 
-        db.execSQL("CREATE TABLE " + ModuleTeacherTable.TABLE_NAME + " ("
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + ModuleTeacherTable.TABLE_NAME + " ("
                 + ModuleTeacherTable.COLUMN_TEACHER_ID + " INTEGER NOT NULL, "
                 + ModuleTeacherTable.COLUMN_MODULE_ID + " INTEGER NOT NULL, "
                 + "PRIMARY KEY(" + ModuleTeacherTable.COLUMN_TEACHER_ID + ", " + ModuleTeacherTable.COLUMN_MODULE_ID + "),"
@@ -201,7 +202,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public void createSemesterTable(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + SemesterTable.TABLE_NAME + " ("
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + SemesterTable.TABLE_NAME + " ("
                 + SemesterTable.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + SemesterTable.COLUMN_STUDENT_ID + " INTEGER NOT NULL,"
                 + SemesterTable.COLUMN_NAME + " TEXT NOT NULL,"
@@ -215,7 +216,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public void createClassesTable(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + ClassTable.TABLE_NAME + " ("
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + ClassTable.TABLE_NAME + " ("
                 + ClassTable.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + ClassTable.COLUMN_MODULE_ID + " INTEGER NOT NULL,"
                 + ClassTable.COLUMN_SEMESTER_ID + " INTEGER NOT NULL,"
