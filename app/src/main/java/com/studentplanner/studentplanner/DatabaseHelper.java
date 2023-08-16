@@ -227,7 +227,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 + ClassTable.COLUMN_TYPE + " TEXT NOT NULL, "
                 + "FOREIGN KEY (" + ClassTable.COLUMN_MODULE_ID + ") REFERENCES " + ModuleTable.TABLE_NAME + "(" + ModuleTable.COLUMN_ID + ") ON UPDATE CASCADE ON DELETE CASCADE,"
                 + "FOREIGN KEY (" + ClassTable.COLUMN_SEMESTER_ID + ") REFERENCES " + SemesterTable.TABLE_NAME + "(" + SemesterTable.COLUMN_ID + ") ON UPDATE CASCADE ON DELETE CASCADE"
-                + ")"
+                + ");"
         );
 
     }
