@@ -75,7 +75,6 @@ public class ModuleTeacherFragment extends Fragment {
         emptyData = new EmptyData(binding.emptyImage, binding.emptyText);
 
         db = DatabaseHelper.getInstance(context);
-
         if (!getList().isEmpty()) {
             binding.emptyText.setText(getString(R.string.no_module_teacher));
         }
