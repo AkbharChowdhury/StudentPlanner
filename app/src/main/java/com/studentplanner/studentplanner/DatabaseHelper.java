@@ -796,7 +796,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                     t.teacher_id = mt.teacher_id
                 WHERE
                     module_id = ?
-                
+                                
                 """;
         try (Cursor cursor = db.rawQuery(SQL, new String[]{String.valueOf(moduleID)})) {
             if (!isCursorEmpty(cursor)) {
