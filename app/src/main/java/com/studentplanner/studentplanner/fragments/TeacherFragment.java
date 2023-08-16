@@ -132,15 +132,11 @@ public class TeacherFragment extends Fragment {
     private void filter(String text) {
 
         List<Teacher> filteredList = (List<Teacher>) Search.textSearch(db.getTeachers(), text);
-
-        if (filteredList.isEmpty()) {
-            adapter.filterList(filteredList);
-            Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
-            emptyData.emptyResultStatus(true);
-            return;
-        }
         adapter.filterList(filteredList);
-        emptyData.emptyResultStatus(false);
+        emptyData.emptyResultStatus(filteredList.isEmpty());
+        if (filteredList.isEmpty()) {
+            Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
+        }
     }
 
 

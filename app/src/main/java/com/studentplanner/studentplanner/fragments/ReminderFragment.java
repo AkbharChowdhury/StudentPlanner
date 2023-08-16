@@ -31,7 +31,6 @@ import com.studentplanner.studentplanner.models.Search;
 import com.studentplanner.studentplanner.utils.EmptyData;
 import com.studentplanner.studentplanner.utils.Helper;
 
-import java.util.Collections;
 import java.util.List;
 
 
@@ -136,13 +135,11 @@ public class ReminderFragment extends Fragment {
 
         List<Coursework> filteredList = (List<Coursework>) Search.textSearch(getList(), text);
         adapter.filterList(filteredList);
+        emptyData.emptyResultStatus(filteredList.isEmpty());
 
         if (filteredList.isEmpty()) {
             Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
-            emptyData.emptyResultStatus(true);
-            return;
         }
-        emptyData.emptyResultStatus(false);
     }
 
     @Override

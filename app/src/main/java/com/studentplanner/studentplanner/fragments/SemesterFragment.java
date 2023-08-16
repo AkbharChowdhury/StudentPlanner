@@ -135,15 +135,12 @@ public class SemesterFragment extends Fragment {
     private void filter(String text) {
 
         List<Semester> filteredList = (List<Semester>) Search.textSearch(getList(), text);
+        adapter.filterList(filteredList);
+        emptyData.emptyResultStatus(filteredList.isEmpty());
 
         if (filteredList.isEmpty()) {
-            adapter.filterList(filteredList);
             Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
-            emptyData.emptyResultStatus(true);
-            return;
         }
-        adapter.filterList(filteredList);
-        emptyData.emptyResultStatus(false);
     }
 
 

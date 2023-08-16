@@ -47,6 +47,7 @@ public class ModuleFragment extends Fragment {
     private DatabaseHelper db;
     private EmptyData emptyData;
 
+
     private void activityResult(ActivityResult result) {
         if (result.getResultCode() == RESULT_OK) getModule();
     }
@@ -108,6 +109,7 @@ public class ModuleFragment extends Fragment {
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
 
         if (!list.isEmpty()) {
+
             activity.getMenuInflater().inflate(R.menu.search_menu, menu);
 
             MenuItem searchItem = menu.findItem(R.id.actionSearch);
@@ -134,13 +136,10 @@ public class ModuleFragment extends Fragment {
 
         List<Module> filteredList = (List<Module>) Search.textSearch(db.getModules(), text);
         adapter.filterList(filteredList);
-
+        emptyData.emptyResultStatus(filteredList.isEmpty());
         if (filteredList.isEmpty()) {
             Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
-            emptyData.emptyResultStatus(true);
-            return;
         }
-        emptyData.emptyResultStatus(false);
     }
 
 
