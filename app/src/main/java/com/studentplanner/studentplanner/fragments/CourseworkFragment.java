@@ -180,12 +180,19 @@ public class CourseworkFragment extends Fragment {
     }
 
     private void getCoursework() {
-        list = db.getCoursework();
-        if (!list.isEmpty()) list.sort(Coursework.sortDeadlineAsc);
+        list = sortList(db.getCoursework());
         search = new SearchCoursework(context, list);
         buildRecyclerView();
     }
 
+    private List<Coursework> sortList(List<Coursework> list) {
+        if (!list.isEmpty()) {
+            list.sort(Coursework.sortDeadlineAsc);
+
+        }
+        return list;
+
+    }
 
     private void initFragment() {
         context = getContext();

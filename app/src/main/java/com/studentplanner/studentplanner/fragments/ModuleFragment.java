@@ -79,11 +79,7 @@ public class ModuleFragment extends Fragment {
 
 
     private void getModule() {
-
-        list = db.getModules();
-        if (!list.isEmpty()) {
-            list.sort(Comparator.comparing(module -> module.getModuleName().toLowerCase()));
-        }
+        list = sortList(getList());
         buildRecyclerView();
     }
 
@@ -130,16 +126,28 @@ public class ModuleFragment extends Fragment {
 
         }
     }
-
+    private List<Module> getList(){
+        return db.getModules();
+    }
 
     private void filter(String text) {
 
-        List<Module> filteredList = (List<Module>) Search.textSearch(db.getModules(), text);
+        List<Module> filteredList = (List<Module>) Search.textSearch(getList(), text);
+        sortList(filteredList);
         adapter.filterList(filteredList);
         emptyData.emptyResultStatus(filteredList.isEmpty());
         if (filteredList.isEmpty()) {
             Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
         }
+    }
+
+    private List<Module> sortList(List<Module> list) {
+        if (!list.isEmpty()) {
+            list.sort(Comparator.comparing(module -> module.getModuleName().toLowerCase()));
+
+        }
+        return list;
+
     }
 
 

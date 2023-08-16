@@ -76,10 +76,17 @@ public class ReminderFragment extends Fragment {
     }
 
     private void getReminders() {
-        list = getList();
-        if (!list.isEmpty()) list.sort(Coursework.sortDeadlineDesc);
-
+        list = sortList(getList());
         buildRecyclerView();
+    }
+
+    private List<Coursework> sortList(List<Coursework> list) {
+        if (!list.isEmpty()) {
+            list.sort(Coursework.sortDeadlineDesc);
+
+        }
+        return list;
+
     }
 
     private List<Coursework> getList() {
@@ -134,6 +141,7 @@ public class ReminderFragment extends Fragment {
     private void filter(String text) {
 
         List<Coursework> filteredList = (List<Coursework>) Search.textSearch(getList(), text);
+        sortList(filteredList);
         adapter.filterList(filteredList);
         emptyData.emptyResultStatus(filteredList.isEmpty());
 

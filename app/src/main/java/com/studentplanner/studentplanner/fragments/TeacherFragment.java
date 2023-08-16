@@ -79,9 +79,21 @@ public class TeacherFragment extends Fragment {
     }
 
     private void getTeachers() {
-        list = db.getTeachers();
+        list = sortList(getList());
         if (!list.isEmpty()) list.sort(Comparator.comparing(User::getLastname));
         buildRecyclerView();
+    }
+
+    private List<Teacher> getList() {
+        return db.getTeachers();
+    }
+
+    private List<Teacher> sortList(List<Teacher> list) {
+        if (!list.isEmpty()) {
+            list.sort(Comparator.comparing(User::getLastname));
+        }
+        return list;
+
     }
 
     private void initFragment() {
@@ -132,6 +144,7 @@ public class TeacherFragment extends Fragment {
     private void filter(String text) {
 
         List<Teacher> filteredList = (List<Teacher>) Search.textSearch(db.getTeachers(), text);
+        sortList(filteredList);
         adapter.filterList(filteredList);
         emptyData.emptyResultStatus(filteredList.isEmpty());
         if (filteredList.isEmpty()) {
