@@ -20,12 +20,11 @@ public class AddTeacherActivity extends AppCompatActivity {
     private TextInputLayout txtFirstName;
     private TextInputLayout txtLastName;
     private TextInputLayout txtEmail;
-    private ActivityAddTeacherBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityAddTeacherBinding.inflate(getLayoutInflater());
+        ActivityAddTeacherBinding binding = ActivityAddTeacherBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -44,8 +43,6 @@ public class AddTeacherActivity extends AppCompatActivity {
                 finish();
 
             }
-
-
         });
     }
 
