@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class Event {
 
@@ -90,15 +91,9 @@ public final class Event {
     private static final ArrayList<Event> eventsList = new ArrayList<>();
 
 
-    public static ArrayList<Event> eventsForDate(LocalDate date) {
-        ArrayList<Event> events = new ArrayList<>();
+    public static List<Event> eventsForDate(LocalDate date) {
+        return eventsList.stream().filter(event -> event.getDate().equals(date)).toList();
 
-        for (Event event : eventsList) {
-            if (event.getDate().equals(date))
-                events.add(event);
-        }
-
-        return events;
     }
 
     // for coursework entries
@@ -152,23 +147,7 @@ public final class Event {
     }
 
 
-    public static List<Event> getCourseworkList(DatabaseHelper db) {
-        List<Event> courseworkEventList = new ArrayList<>();
-        List<Coursework> courseworkList = db.getCoursework();
-        if (!courseworkList.isEmpty()) {
-            for (Coursework coursework : courseworkList) {
-                Event courseworkEvent = new Event(
-                        LocalDate.parse(coursework.getDeadline()),
-                        LocalTime.parse(coursework.getDeadlineTime()),
-                        EventType.COURSEWORK);
 
-                courseworkEvent.setId(coursework.getCourseworkID());
-                courseworkEvent.setCoursework(coursework);
-                courseworkEventList.add(courseworkEvent);
-            }
-        }
-        return courseworkEventList;
-    }
 
 
 }

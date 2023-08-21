@@ -33,6 +33,7 @@ import com.studentplanner.studentplanner.utils.CalendarUtils;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class WeekViewActivity extends AppCompatActivity implements OnItemListener {
@@ -109,7 +110,7 @@ public class WeekViewActivity extends AppCompatActivity implements OnItemListene
 
 
     private void showCalendarEventData() {
-        ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtils.getSelectedDate());
+        List<Event> dailyEvents = Event.eventsForDate(CalendarUtils.getSelectedDate());
         eventListView.setAdapter(new EventAdapter(this, dailyEvents, startForResult));
         getEventsFromDB();
     }

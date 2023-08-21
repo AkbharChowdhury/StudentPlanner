@@ -102,7 +102,7 @@ public final class CalendarUtils {
     }
 
     public static void setEventAdapter(ListView eventListView, Context context, ActivityResultLauncher<Intent> startForResult) {
-        ArrayList<Event> dailyEvents = Event.eventsForDate(selectedDate);
+        List<Event> dailyEvents = Event.eventsForDate(selectedDate);
         EventAdapter eventAdapter = new EventAdapter(context, dailyEvents, startForResult);
         eventListView.setAdapter(eventAdapter);
     }

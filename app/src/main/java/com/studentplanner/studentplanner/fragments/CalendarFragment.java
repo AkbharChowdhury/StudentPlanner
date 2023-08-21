@@ -39,6 +39,7 @@ import com.studentplanner.studentplanner.utils.CalendarUtils;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CalendarFragment extends Fragment implements OnItemListener {
     private Activity activity;
@@ -105,7 +106,7 @@ public class CalendarFragment extends Fragment implements OnItemListener {
     }
 
     private void showCalendarEventData() {
-        ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtils.getSelectedDate());
+        List<Event> dailyEvents = Event.eventsForDate(CalendarUtils.getSelectedDate());
         eventListView.setAdapter(new EventAdapter(context, dailyEvents, startForResult));
         getEventsFromDB();
     }

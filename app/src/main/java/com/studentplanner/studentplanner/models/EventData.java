@@ -19,7 +19,25 @@ public final class EventData {
     }
 
     public void getCourseworkDetails() {
-        Event.getEventsList().addAll(Event.getCourseworkList(db));
+        Event.getEventsList().addAll(getCourseworkList());
+    }
+
+    private List<Event> getCourseworkList() {
+        List<Event> courseworkEventList = new ArrayList<>();
+        List<Coursework> courseworkList = db.getCoursework();
+        if (!courseworkList.isEmpty()) {
+            for (Coursework coursework : courseworkList) {
+                Event courseworkEvent = new Event(
+                        LocalDate.parse(coursework.getDeadline()),
+                        LocalTime.parse(coursework.getDeadlineTime()),
+                        EventType.COURSEWORK);
+
+                courseworkEvent.setId(coursework.getCourseworkID());
+                courseworkEvent.setCoursework(coursework);
+                courseworkEventList.add(courseworkEvent);
+            }
+        }
+        return courseworkEventList;
     }
 
     public void getClassDetails() {
