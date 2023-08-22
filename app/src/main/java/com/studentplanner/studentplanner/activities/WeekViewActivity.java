@@ -38,7 +38,7 @@ import java.util.List;
 
 public class WeekViewActivity extends AppCompatActivity implements OnItemListener {
     private TextView monthYearText;
-    private RecyclerView calendarWeekRecyclerView;
+    private RecyclerView recyclerView;
     private ListView eventListView;
     private ActivityWeekViewBinding binding;
     private EventData eventData;
@@ -73,16 +73,16 @@ public class WeekViewActivity extends AppCompatActivity implements OnItemListene
 
     private void initWidgets() {
 
-        calendarWeekRecyclerView = binding.calendarRecyclerWeekView;
-        monthYearText = binding.monthYearTVWeekView;
+        recyclerView = binding.recyclerView;
+        monthYearText = binding.monthYearTV;
         eventListView = binding.eventListView;
     }
 
     private void setWeekView() {
         monthYearText.setText(monthYearFromDate(CalendarUtils.getSelectedDate()));
         ArrayList<LocalDate> days = daysInWeekArray(CalendarUtils.getSelectedDate());
-        calendarWeekRecyclerView.setLayoutManager(new GridLayoutManager(this, 7));
-        calendarWeekRecyclerView.setAdapter(new CalendarAdapter(days, this));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 7));
+        recyclerView.setAdapter(new CalendarAdapter(days, this));
         CalendarUtils.setEventAdapter(eventListView, this, startForResult);
     }
 

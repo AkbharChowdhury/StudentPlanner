@@ -45,7 +45,7 @@ public class CalendarFragment extends Fragment implements OnItemListener {
     private Activity activity;
     private Context context;
     private TextView monthYearText;
-    private RecyclerView calendarRecyclerView;
+    private RecyclerView recyclerView;
     private ListView eventListView;
     private FragmentCalendarBinding binding;
     private EventData eventData;
@@ -134,7 +134,7 @@ public class CalendarFragment extends Fragment implements OnItemListener {
 
 
     private void initWidgets() {
-        calendarRecyclerView = binding.calendarRecyclerView;
+        recyclerView = binding.recyclerView;
         monthYearText = binding.monthYearTV;
         eventListView = binding.eventListView;
 
@@ -143,8 +143,8 @@ public class CalendarFragment extends Fragment implements OnItemListener {
     private void setMonthView() {
         monthYearText.setText(monthYearFromDate(CalendarUtils.getSelectedDate()));
         ArrayList<LocalDate> daysInMonth = daysInMonthArray(CalendarUtils.getSelectedDate());
-        calendarRecyclerView.setLayoutManager(new GridLayoutManager(context, 7));
-        calendarRecyclerView.setAdapter(new CalendarAdapter(daysInMonth, this));
+        recyclerView.setLayoutManager(new GridLayoutManager(context, 7));
+        recyclerView.setAdapter(new CalendarAdapter(daysInMonth, this));
         CalendarUtils.setEventAdapter(eventListView, context, startForResult);
     }
 

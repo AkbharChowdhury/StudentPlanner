@@ -62,7 +62,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/monthYearTVWeekView"
+            android:id="@+id/monthYearTV"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
@@ -159,7 +159,7 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/calendarRecyclerWeekView"
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
