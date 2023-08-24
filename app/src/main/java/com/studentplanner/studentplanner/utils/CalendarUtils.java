@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public final class CalendarUtils {
@@ -44,18 +45,10 @@ public final class CalendarUtils {
     public static ArrayList<LocalDate> daysInMonthArray(LocalDate date) {
         ArrayList<LocalDate> daysInMonthArray = new ArrayList<>();
         YearMonth yearMonth = YearMonth.from(date);
-
         int daysInMonth = yearMonth.lengthOfMonth();
-
         LocalDate firstOfMonth = CalendarUtils.selectedDate.withDayOfMonth(1);
         int dayOfWeek = firstOfMonth.getDayOfWeek().getValue();
-
-        for (int i = 1; i <= 42; i++) {
-            if (i <= dayOfWeek || i > daysInMonth + dayOfWeek)
-                daysInMonthArray.add(null);
-            else
-                daysInMonthArray.add(LocalDate.of(selectedDate.getYear(), selectedDate.getMonth(), i - dayOfWeek));
-        }
+        IntStream.range(1, 42).forEach(i -> daysInMonthArray.add(i <= dayOfWeek || i > daysInMonth + dayOfWeek ? null : LocalDate.of(selectedDate.getYear(), selectedDate.getMonth(), i - dayOfWeek)));
         return daysInMonthArray;
     }
 
@@ -107,12 +100,10 @@ public final class CalendarUtils {
         return Stream.iterate(startDate, date -> date.plusDays(1))
                 .limit(numOfDays)
                 .collect(Collectors.toList());
-
     }
 
     public static void setSelectedDate(DatePickerFragment datepicker, AutoCompleteTextView textField) {
         datepicker.setCustomDate(LocalDate.parse(Helper.convertFUllDateToYYMMDD(textField.getEditableText().toString())));
     }
-
 
 }
