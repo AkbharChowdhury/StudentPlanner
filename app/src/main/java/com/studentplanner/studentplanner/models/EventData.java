@@ -26,7 +26,7 @@ public final class EventData {
         List<Event> courseworkEventList = new ArrayList<>();
         List<Coursework> courseworkList = db.getCoursework();
         if (!courseworkList.isEmpty()) {
-            for (Coursework coursework : courseworkList) {
+            courseworkList.forEach(coursework -> {
                 Event courseworkEvent = new Event(
                         LocalDate.parse(coursework.getDeadline()),
                         LocalTime.parse(coursework.getDeadlineTime()),
@@ -35,7 +35,10 @@ public final class EventData {
                 courseworkEvent.setId(coursework.getCourseworkID());
                 courseworkEvent.setCoursework(coursework);
                 courseworkEventList.add(courseworkEvent);
-            }
+
+            });
+
+
         }
         return courseworkEventList;
     }
@@ -43,14 +46,15 @@ public final class EventData {
     public void getClassDetails() {
         List<Classes> classList = db.getClasses();
         if (!classList.isEmpty()) {
-            for (Classes myClass : classList) {
+            classList.forEach(myClass -> {
                 Semester semester = db.getSelectedSemester(myClass.getSemesterID());
                 LocalDate startDate = semester.start();
                 LocalDate endDate = semester.end();
                 long numOfDays = ChronoUnit.DAYS.between(startDate, endDate);
                 Event.getEventsList().addAll(populateClassData(numOfDays, startDate, myClass));
+            });
 
-            }
+
         }
 
     }
@@ -58,14 +62,10 @@ public final class EventData {
 
     private List<Event> populateClassData(long numOfDays, LocalDate startDate, Classes myClass) {
         List<Event> classes = new ArrayList<>();
-
-        for (LocalDate date : CalendarUtils.getRecurringEvents(numOfDays, startDate)) {
+        CalendarUtils.getRecurringEvents(numOfDays, startDate).forEach(date -> {
             if (date.getDayOfWeek() == DayOfWeek.of(myClass.getDow())) {
-
                 Semester semester = db.getSelectedSemester(myClass.getSemesterID());
-
-                Event classEvent = new Event(
-                        date,
+                Event classEvent = new Event(date,
                         LocalTime.parse(myClass.getStartTime()),
                         LocalTime.parse(myClass.getEndTime()),
                         EventType.CLASSES,
@@ -73,11 +73,15 @@ public final class EventData {
                         semester.end(),
                         myClass.getDow()
                 );
+
                 classEvent.setId(myClass.getClassID());
                 classEvent.setClasses(myClass);
                 classes.add(classEvent);
             }
-        }
+
+        });
+
+
         return classes;
     }
 }

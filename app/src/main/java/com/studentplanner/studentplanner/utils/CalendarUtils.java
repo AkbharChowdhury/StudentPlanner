@@ -34,8 +34,8 @@ public final class CalendarUtils {
         return selectedDate;
     }
 
-    public static void setSelectedDate(LocalDate selectedDate) {
-        CalendarUtils.selectedDate = selectedDate;
+    public static void setSelectedDate(LocalDate date) {
+        selectedDate = date;
     }
 
     public static String monthYearFromDate(LocalDate date) {
@@ -46,7 +46,7 @@ public final class CalendarUtils {
         ArrayList<LocalDate> daysInMonthArray = new ArrayList<>();
         YearMonth yearMonth = YearMonth.from(date);
         int daysInMonth = yearMonth.lengthOfMonth();
-        LocalDate firstOfMonth = CalendarUtils.selectedDate.withDayOfMonth(1);
+        LocalDate firstOfMonth = selectedDate.withDayOfMonth(1);
         int dayOfWeek = firstOfMonth.getDayOfWeek().getValue();
         IntStream.range(1, 42).forEach(i -> daysInMonthArray.add(i <= dayOfWeek || i > daysInMonth + dayOfWeek ? null : LocalDate.of(selectedDate.getYear(), selectedDate.getMonth(), i - dayOfWeek)));
         return daysInMonthArray;
@@ -99,7 +99,7 @@ public final class CalendarUtils {
     public static List<LocalDate> getRecurringEvents(long numOfDays, LocalDate startDate) {
         return Stream.iterate(startDate, date -> date.plusDays(1))
                 .limit(numOfDays)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public static void setSelectedDate(DatePickerFragment datepicker, AutoCompleteTextView textField) {
