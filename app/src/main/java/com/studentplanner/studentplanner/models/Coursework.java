@@ -19,7 +19,7 @@ public final class Coursework implements Searchable {
     private String priority;
     private String deadline;
     private String deadlineTime;
-    private boolean isCompleted = false;
+    private boolean isCompleted;
     private TextInputLayout txtTitle;
     private TextInputLayout txtModuleID;
     private TextInputLayout txtPriority;
@@ -89,7 +89,7 @@ public final class Coursework implements Searchable {
     }
 
     public static boolean isCompleted(String completionStatus) {
-        return completionStatus.equalsIgnoreCase("Yes");
+        return "Yes".equalsIgnoreCase(completionStatus);
     }
 
 
