@@ -16,6 +16,7 @@ import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -72,25 +73,20 @@ public final class CalendarUtils {
 
     private static LocalDate sundayForDate(LocalDate current) {
         LocalDate oneWeekAgo = current.minusWeeks(1);
-
         while (current.isAfter(oneWeekAgo)) {
-            if (current.getDayOfWeek() == DayOfWeek.SUNDAY)
-                return current;
-
+            if (current.getDayOfWeek() == DayOfWeek.SUNDAY) return current;
             current = current.minusDays(1);
         }
 
-        return null;
+        return current;
     }
 
 
     public static List<String> getDays() {
-        List<String> days = new ArrayList<>();
-        for (DayOfWeek dow : DayOfWeek.values()) {
-            days.add(dow.getDisplayName(TextStyle.FULL, Locale.UK));
-            if (dow == DayOfWeek.FRIDAY) break;
-        }
-        return days;
+        return Arrays.stream(DayOfWeek.values())
+                .filter(dow -> dow.getValue() <= DayOfWeek.FRIDAY.getValue())
+                .map(dow -> dow.getDisplayName(TextStyle.FULL, Locale.UK))
+                .toList();
     }
 
     public static int getDOWNumber(String day) {
