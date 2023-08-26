@@ -27,11 +27,8 @@ public final class Coursework implements Searchable {
     private AutoCompleteTextView txtDeadline;
     private AutoCompleteTextView txtDeadlineTime;
     private TextInputLayout txtDeadlineTimeError;
-
-
     private Bitmap image;
     private byte[] byteImage;
-
 
     public Bitmap getImage() {
         return image;
