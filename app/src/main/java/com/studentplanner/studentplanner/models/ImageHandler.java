@@ -9,6 +9,8 @@ import android.widget.ImageView;
 
 import androidx.activity.result.ActivityResultLauncher;
 
+import org.apache.commons.text.WordUtils;
+
 import java.io.ByteArrayOutputStream;
 import java.util.Objects;
 
@@ -47,7 +49,7 @@ public final class ImageHandler {
     public static void openImageGallery(ActivityResultLauncher<Intent> imageActivityResultLauncher) {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType( "image/*");
-        intent = Intent.createChooser(intent, "Select Image");
+        intent = Intent.createChooser(intent, WordUtils.capitalizeFully("Select Image"));
         imageActivityResultLauncher.launch(intent);
     }
 
