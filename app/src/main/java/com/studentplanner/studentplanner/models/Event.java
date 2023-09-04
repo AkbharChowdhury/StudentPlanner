@@ -1,13 +1,11 @@
 package com.studentplanner.studentplanner.models;
 
-import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.enums.EventType;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public final class Event {
 
