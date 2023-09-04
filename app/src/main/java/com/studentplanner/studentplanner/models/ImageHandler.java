@@ -3,23 +3,31 @@ package com.studentplanner.studentplanner.models;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import androidx.activity.result.ActivityResultLauncher;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Objects;
 
 public final class ImageHandler {
-    public static final String IMAGE_TYPE = "image/*";
+    private static final String IMAGE_TYPE = "image/*";
 
     private ImageHandler() {
     }
 
     public static byte[] getBitmapAsByteArray(Bitmap bitmap) {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-        return outputStream.toByteArray();
+        try (var outputStream = new ByteArrayOutputStream()) {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+            return outputStream.toByteArray();
+        } catch (Exception e) {
+            Log.d("ERROR", Objects.requireNonNull(e.getMessage()));
+
+        }
+        return null;
+
     }
 
     public static Bitmap decodeBitmapByteArray(byte[] imgByte) {
@@ -31,7 +39,7 @@ public final class ImageHandler {
             imageView.setVisibility(View.GONE);
             return;
         }
-        imageView.setImageBitmap(ImageHandler.decodeBitmapByteArray(image));
+        imageView.setImageBitmap(decodeBitmapByteArray(image));
         imageView.setVisibility(View.VISIBLE);
 
 
@@ -39,7 +47,7 @@ public final class ImageHandler {
 
     public static void openImageGallery(ActivityResultLauncher<Intent> imageActivityResultLauncher) {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType(ImageHandler.IMAGE_TYPE);
+        intent.setType(IMAGE_TYPE);
         intent = Intent.createChooser(intent, "Select Image");
         imageActivityResultLauncher.launch(intent);
     }
