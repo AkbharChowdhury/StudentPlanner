@@ -13,7 +13,6 @@ import java.io.ByteArrayOutputStream;
 import java.util.Objects;
 
 public final class ImageHandler {
-    private static final String IMAGE_TYPE = "image/*";
 
     private ImageHandler() {
     }
@@ -47,7 +46,7 @@ public final class ImageHandler {
 
     public static void openImageGallery(ActivityResultLauncher<Intent> imageActivityResultLauncher) {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType(IMAGE_TYPE);
+        intent.setType( "image/*");
         intent = Intent.createChooser(intent, "Select Image");
         imageActivityResultLauncher.launch(intent);
     }
