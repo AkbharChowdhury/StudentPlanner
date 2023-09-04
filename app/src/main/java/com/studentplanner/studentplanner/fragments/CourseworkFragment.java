@@ -186,10 +186,7 @@ public class CourseworkFragment extends Fragment {
     }
 
     private List<Coursework> sortList(List<Coursework> list) {
-        if (!list.isEmpty()) {
-            list.sort(Coursework.sortDeadlineAsc);
-
-        }
+        if (!list.isEmpty()) list.sort(Coursework.sortDeadlineAsc);
         return list;
 
     }

@@ -11,10 +11,11 @@ import com.studentplanner.studentplanner.tables.ModuleTable;
 import org.apache.commons.text.WordUtils;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
-public final class Module implements Searchable {
+public final class Module implements Searchable, Comparable<Module> {
     private int moduleID;
     private String moduleCode;
     private String moduleName;
@@ -104,7 +105,13 @@ public final class Module implements Searchable {
                 ", moduleName='" + moduleName + '\'' +
                 '}';
     }
+    public static List<Module> sortList(List<Module> list) {
+        if (!list.isEmpty()) {
+            list.sort(Comparator.comparing(module -> module.getModuleName().toLowerCase()));
+        }
+        return list;
 
+    }
 
     @Override
     public String searchText() {
@@ -116,5 +123,12 @@ public final class Module implements Searchable {
         cv.put(ModuleTable.COLUMN_MODULE_C0DE, module.getModuleCode());
         cv.put(ModuleTable.COLUMN_MODULE_NAME, module.getModuleName());
         return cv;
+    }
+
+
+    @Override
+    public int compareTo(Module module) {
+
+        return 0;
     }
 }

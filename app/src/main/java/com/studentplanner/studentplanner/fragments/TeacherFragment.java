@@ -2,6 +2,8 @@ package com.studentplanner.studentplanner.fragments;
 
 import static android.app.Activity.RESULT_OK;
 
+import static com.studentplanner.studentplanner.models.Teacher.sortList;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -88,13 +90,7 @@ public class TeacherFragment extends Fragment {
         return db.getTeachers();
     }
 
-    private List<Teacher> sortList(List<Teacher> list) {
-        if (!list.isEmpty()) {
-            list.sort(Comparator.comparing(User::getLastname));
-        }
-        return list;
 
-    }
 
     private void initFragment() {
         context = getContext();

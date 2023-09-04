@@ -2,6 +2,8 @@ package com.studentplanner.studentplanner.fragments;
 
 import static android.app.Activity.RESULT_OK;
 
+import static com.studentplanner.studentplanner.models.Module.sortList;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -32,7 +34,6 @@ import com.studentplanner.studentplanner.models.Search;
 import com.studentplanner.studentplanner.utils.EmptyData;
 import com.studentplanner.studentplanner.utils.Helper;
 
-import java.util.Comparator;
 import java.util.List;
 
 
@@ -139,14 +140,6 @@ public class ModuleFragment extends Fragment {
         if (filteredList.isEmpty()) {
             Helper.shortToastMessage(context, context.getString(R.string.no_data_found));
         }
-    }
-
-    private List<Module> sortList(List<Module> list) {
-        if (!list.isEmpty()) {
-            list.sort(Comparator.comparing(module -> module.getModuleName().toLowerCase()));
-        }
-        return list;
-
     }
 
 

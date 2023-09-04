@@ -9,6 +9,7 @@ import com.studentplanner.studentplanner.interfaces.Searchable;
 import com.studentplanner.studentplanner.tables.TeacherTable;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Teacher extends User implements Searchable {
@@ -50,5 +51,12 @@ public class Teacher extends User implements Searchable {
         cv.put(TeacherTable.COLUMN_LASTNAME, teacher.getLastname());
         cv.put(TeacherTable.COLUMN_EMAIL, teacher.getEmail());
         return cv;
+    }
+    public static List<Teacher> sortList(List<Teacher> list) {
+        if (!list.isEmpty()) {
+            list.sort(Comparator.comparing(User::getLastname));
+        }
+        return list;
+
     }
 }
