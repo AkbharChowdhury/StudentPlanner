@@ -2,6 +2,8 @@ package com.studentplanner.studentplanner.fragments;
 
 import static android.app.Activity.RESULT_OK;
 
+import static com.studentplanner.studentplanner.models.Coursework.sortList;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -76,17 +78,8 @@ public class ReminderFragment extends Fragment {
     }
 
     private void getReminders() {
-        list = sortList(getList());
+        list = sortList(getList(), Coursework.sortDeadlineDesc);
         buildRecyclerView();
-    }
-
-    private List<Coursework> sortList(List<Coursework> list) {
-        if (!list.isEmpty()) {
-            list.sort(Coursework.sortDeadlineDesc);
-
-        }
-        return list;
-
     }
 
     private List<Coursework> getList() {

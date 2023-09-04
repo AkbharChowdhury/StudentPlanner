@@ -15,7 +15,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
-public final class Module implements Searchable, Comparable<Module> {
+public final class Module implements Searchable{
     private int moduleID;
     private String moduleCode;
     private String moduleName;
@@ -122,9 +122,5 @@ public final class Module implements Searchable, Comparable<Module> {
     }
 
 
-    @Override
-    public int compareTo(Module module) {
 
-        return 0;
-    }
 }

@@ -244,6 +244,10 @@ public final class Coursework implements Searchable {
         return !list.isEmpty() ? list.stream().sorted(sortDeadlineAsc).toList(): list;
 
     }
+    public static List<Coursework> sortList(List<Coursework> list, Comparator<Coursework> comparator) {
+        return !list.isEmpty() ? list.stream().sorted(comparator).toList(): list;
+
+    }
 
 
 }
