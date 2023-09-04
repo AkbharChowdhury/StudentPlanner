@@ -10,6 +10,7 @@ import com.studentplanner.studentplanner.tables.CourseworkTable;
 
 import java.time.LocalDate;
 import java.util.Comparator;
+import java.util.List;
 
 public final class Coursework implements Searchable {
     private int courseworkID;
@@ -238,6 +239,10 @@ public final class Coursework implements Searchable {
         cv.put(CourseworkTable.COLUMN_DEADLINE, coursework.getDeadline());
         cv.put(CourseworkTable.COLUMN_DEADLINE_TIME, coursework.getDeadlineTime());
         return cv;
+    }
+    public static List<Coursework> sortList(List<Coursework> list) {
+        return !list.isEmpty() ? list.stream().sorted(sortDeadlineAsc).toList(): list;
+
     }
 
 

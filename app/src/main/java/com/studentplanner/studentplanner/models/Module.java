@@ -106,11 +106,7 @@ public final class Module implements Searchable, Comparable<Module> {
                 '}';
     }
     public static List<Module> sortList(List<Module> list) {
-        if (!list.isEmpty()) {
-            list.sort(Comparator.comparing(module -> module.getModuleName().toLowerCase()));
-        }
-        return list;
-
+        return !list.isEmpty() ? list.stream().sorted(Comparator.comparing(module -> module.getModuleName().toLowerCase())).toList() : list;
     }
 
     @Override

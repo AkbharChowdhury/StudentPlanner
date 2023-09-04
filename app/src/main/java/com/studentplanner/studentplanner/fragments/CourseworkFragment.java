@@ -1,6 +1,7 @@
 package com.studentplanner.studentplanner.fragments;
 
 import static android.app.Activity.RESULT_OK;
+import static com.studentplanner.studentplanner.models.Coursework.sortList;
 import static com.studentplanner.studentplanner.utils.Dropdown.getSpinnerText;
 import static com.studentplanner.studentplanner.utils.Dropdown.setDefaultSpinnerPosition;
 
@@ -185,11 +186,7 @@ public class CourseworkFragment extends Fragment {
         buildRecyclerView();
     }
 
-    private List<Coursework> sortList(List<Coursework> list) {
-        if (!list.isEmpty()) list.sort(Coursework.sortDeadlineAsc);
-        return list;
 
-    }
 
     private void initFragment() {
         context = getContext();
