@@ -31,6 +31,8 @@ import com.studentplanner.studentplanner.models.Event;
 import com.studentplanner.studentplanner.models.EventData;
 import com.studentplanner.studentplanner.utils.CalendarUtils;
 
+import org.apache.commons.text.WordUtils;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +61,7 @@ public class WeekViewActivity extends AppCompatActivity implements OnItemListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(getResources().getString(R.string.week_view_calendar));
+        setTitle(WordUtils.capitalizeFully(getString(R.string.week_view_calendar)));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         eventData = new EventData(DatabaseHelper.getInstance(this));
         calendarActions = new CalendarActions(startForResult, this);

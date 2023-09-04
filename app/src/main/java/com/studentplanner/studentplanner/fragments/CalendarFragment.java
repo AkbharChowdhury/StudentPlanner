@@ -36,7 +36,6 @@ import com.studentplanner.studentplanner.models.CalendarActions;
 import com.studentplanner.studentplanner.models.Event;
 import com.studentplanner.studentplanner.models.EventData;
 import com.studentplanner.studentplanner.utils.CalendarUtils;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
