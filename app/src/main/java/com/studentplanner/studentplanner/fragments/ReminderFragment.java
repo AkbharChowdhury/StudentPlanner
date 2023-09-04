@@ -78,7 +78,7 @@ public class ReminderFragment extends Fragment {
     }
 
     private void getReminders() {
-        list = sortList(getList(), Coursework.sortDeadlineDesc);
+        list = sortList(getList());
         buildRecyclerView();
     }
 
