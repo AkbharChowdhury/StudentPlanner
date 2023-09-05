@@ -66,8 +66,6 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
 
 
     public void showDetails(Coursework coursework) {
-        Module module = db.getSelectedModule(coursework.getModuleID());
-        LocalDate deadline = LocalDate.parse(coursework.getDeadline());
 
         tvCourseworkID.setText(String.valueOf(coursework.getCourseworkID()));
         title.setText(getSnippet(WordUtils.capitalizeFully(coursework.getTitle())));
@@ -77,11 +75,11 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
         tvDeadline.setText(showDeadlineDetails(coursework));
         priority.setText(coursework.getPriority());
         priority.setTextColor(Helper.getPriorityColour(coursework.getPriority(), context));
-        tvCourseworkModule.setText(module.getModuleDetails());
+        tvCourseworkModule.setText(db.getSelectedModule(coursework.getModuleID()).getModuleDetails());
         tvCompleted.setText(coursework.isCompleted() ? COMPLETED : NOT_COMPLETED);
         tvCompleted.setTextColor(coursework.isCompleted() ? context.getColor(R.color.dark_green) : Color.RED);
 
-        showTimeLeft(deadline, coursework);
+        showTimeLeft(LocalDate.parse(coursework.getDeadline()), coursework);
         ImageHandler.showImage(coursework.getByteImage(), image);
 
 

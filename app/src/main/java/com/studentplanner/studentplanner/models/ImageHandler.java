@@ -42,8 +42,6 @@ public final class ImageHandler {
         }
         imageView.setImageBitmap(decodeBitmapByteArray(image));
         imageView.setVisibility(View.VISIBLE);
-
-
     }
 
     public static void openImageGallery(ActivityResultLauncher<Intent> imageActivityResultLauncher) {
