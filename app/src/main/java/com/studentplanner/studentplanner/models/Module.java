@@ -123,6 +123,4 @@ public final class Module implements Searchable {
                 ", moduleName='" + moduleName + '\'' +
                 '}';
     }
-
-
 }
