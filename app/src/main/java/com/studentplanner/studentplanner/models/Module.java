@@ -15,7 +15,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
-public final class Module implements Searchable{
+public final class Module implements Searchable {
     private int moduleID;
     private String moduleCode;
     private String moduleName;
@@ -98,13 +98,7 @@ public final class Module implements Searchable{
         defaultModules().forEach(m -> db.addModule(new Module(m.moduleCode, m.getModuleName())));
     }
 
-    @Override
-    public String toString() {
-        return "Module{" +
-                "moduleCode='" + moduleCode + '\'' +
-                ", moduleName='" + moduleName + '\'' +
-                '}';
-    }
+
     public static List<Module> sortList(List<Module> list) {
         return !list.isEmpty() ? list.stream().sorted(Comparator.comparing(module -> module.getModuleName().toLowerCase())).toList() : list;
     }
@@ -121,6 +115,14 @@ public final class Module implements Searchable{
         return cv;
     }
 
+
+    @Override
+    public String toString() {
+        return "Module{" +
+                "moduleCode='" + moduleCode + '\'' +
+                ", moduleName='" + moduleName + '\'' +
+                '}';
+    }
 
 
 }
