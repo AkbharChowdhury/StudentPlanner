@@ -1129,7 +1129,5 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
         }
         return 0;
-
-
     }
 }
