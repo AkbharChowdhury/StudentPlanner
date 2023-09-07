@@ -28,6 +28,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
     private CalendarCellBinding binding;
     private ImageView imgCoursework;
     private ImageView imgClasses;
+    private final double MONTH_VIEW_HEIGHT = 0.166666666;
 
     public CalendarAdapter(ArrayList<LocalDate> days, OnItemListener onItemListener) {
         this.days = days;
@@ -45,16 +46,13 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
         imgClasses = binding.imgClassesIcon;
 
         ViewGroup.LayoutParams layoutParams = binding.getRoot().getLayoutParams();
-        if (days.size() > 15) {
-            //month view
-            layoutParams.height = (int) (parent.getHeight() * 0.166666666);
-        } else {
-            // week view
-            layoutParams.height = parent.getHeight();
-
-        }
+        //                                          Month view           Week view
+        layoutParams.height = days.size() > 15 ? monthViewHeight(parent) : parent.getHeight();
         return new CalendarViewHolder(binding, onItemListener, days);
 
+    }
+    private int monthViewHeight(ViewGroup parent){
+        return (int) (parent.getHeight() * MONTH_VIEW_HEIGHT);
     }
 
     private void showTotalCoursework(final TextView lblTotalCoursework, final LocalDate date) {
