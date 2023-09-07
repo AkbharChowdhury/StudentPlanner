@@ -28,7 +28,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
     private CalendarCellBinding binding;
     private ImageView imgCoursework;
     private ImageView imgClasses;
-    private final double MONTH_VIEW_HEIGHT = 0.166666666;
 
     public CalendarAdapter(ArrayList<LocalDate> days, OnItemListener onItemListener) {
         this.days = days;
@@ -52,6 +51,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
 
     }
     private int monthViewHeight(ViewGroup parent){
+        final double MONTH_VIEW_HEIGHT = 0.166666666;
         return (int) (parent.getHeight() * MONTH_VIEW_HEIGHT);
     }
 
