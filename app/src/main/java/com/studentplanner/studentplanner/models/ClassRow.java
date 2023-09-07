@@ -26,7 +26,7 @@ public final class ClassRow {
 
     public ClassRow(EventRowBinding binding, Context context) {
         this.context = context;
-        this.db = DatabaseHelper.getInstance(context);
+        db = DatabaseHelper.getInstance(context);
         lblTeachers = binding.tvClassTeachers;
         lblClassTitle =  binding.tvClassTitle;
         lblRoom = binding.tvRoom;

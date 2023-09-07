@@ -21,6 +21,7 @@ public final class CourseworkRow {
     private final TextView time;
     private final TextView completionStatus;
     private final Context context;
+    private final DatabaseHelper db;
 
     public CourseworkRow(EventRowBinding binding, Context context){
         title = binding.tvCwTitle;
@@ -29,10 +30,11 @@ public final class CourseworkRow {
         time = binding.tvCwTime;
         completionStatus = binding.tvCwCompleted;
         this.context = context;
+        db = DatabaseHelper.getInstance(context);
     }
     public void setDetails(Coursework coursework){
         String priorityLevel = coursework.getPriority();
-        Module module = DatabaseHelper.getInstance(context).getSelectedModule(coursework.getModuleID());
+        Module module = db.getSelectedModule(coursework.getModuleID());
         String moduleDetails = module.getModuleDetails();
         title.setText(Helper.getSnippet(WordUtils.capitalizeFully(coursework.getTitle()), 20));
 
