@@ -679,23 +679,14 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
     @SuppressLint("Range")
     public List<Coursework> getCoursework() {
+        return getCourseworkList(context.getString(R.string.getCoursework));
+    }
+
+    @SuppressLint("Range")
+
+    private List<Coursework> getCourseworkList(final String SQL) {
         List<Coursework> courseworkList = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-
-        final String SQL = """
-                SELECT
-                    c.*,
-                    module_code,
-                    module_name,
-                    student_id
-                FROM
-                    coursework c
-                JOIN modules m ON
-                    m.module_id = c.module_id
-                WHERE
-                    student_id = ?
-                """;
-
         try (Cursor c = db.rawQuery(SQL, getStudentIDArray())) {
             if (!isCursorEmpty(c)) {
                 while (c.moveToNext()) {
@@ -719,49 +710,13 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
             Log.d(ERROR_TAG, getErrorMessage(e));
         }
         return courseworkList;
+
+
     }
 
     @SuppressLint("Range")
     public List<Coursework> getUpComingCourseworkByMonth() {
-        List<Coursework> courseworkList = new ArrayList<>();
-        SQLiteDatabase db = getReadableDatabase();
-        final String SQL = """        
-                SELECT c.*,
-                       module_code,
-                       module_name,
-                       student_id
-                FROM coursework c
-                    JOIN modules m
-                        ON m.module_id = c.module_id
-                WHERE student_id = ?
-                      AND c.deadline
-                      BETWEEN DATE('now', 'start of month') AND DATE('now', 'start of month', '+1 month', '-1 day')
-                ORDER by c.deadline DESC
-                """;
-        try (Cursor c = db.rawQuery(SQL, getStudentIDArray())) {
-            if (!isCursorEmpty(c)) {
-                while (c.moveToNext()) {
-                    Coursework coursework = new Coursework(
-                            c.getInt(c.getColumnIndex(CourseworkTable.COLUMN_ID)),
-                            c.getInt(c.getColumnIndex(CourseworkTable.COLUMN_MODULE_ID)),
-                            c.getString(c.getColumnIndex(CourseworkTable.COLUMN_TITLE)),
-                            c.getString(c.getColumnIndex(CourseworkTable.COLUMN_DESCRIPTION)),
-                            c.getString(c.getColumnIndex(CourseworkTable.COLUMN_PRIORITY)),
-                            LocalDate.parse(c.getString(c.getColumnIndex(CourseworkTable.COLUMN_DEADLINE))),
-                            LocalTime.parse(c.getString(c.getColumnIndex(CourseworkTable.COLUMN_DEADLINE_TIME)))
-
-                    );
-                    coursework.setCompleted(Coursework.isCompleted(c.getString(c.getColumnIndex(CourseworkTable.COLUMN_COMPLETED))));
-                    coursework.setImage(c.getBlob(c.getColumnIndex(CourseworkTable.COLUMN_IMAGE)));
-                    courseworkList.add(coursework);
-
-                }
-
-            }
-        } catch (Exception e) {
-            Log.d(ERROR_TAG, getErrorMessage(e));
-        }
-        return courseworkList;
+        return getCourseworkList(context.getString(R.string.getUpComingCourseworkByMonth));
     }
 
 

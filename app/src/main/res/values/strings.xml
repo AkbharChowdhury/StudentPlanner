@@ -265,5 +265,30 @@
     <string name="delete_class_title">Are you sure you want to delete this class?</string>
     <string name="class_deleted">Class deleted</string>
 
-
+    <string name="getCoursework">
+        SELECT
+                    c.*,
+                    module_code,
+                    module_name,
+                    student_id
+                FROM
+                    coursework c
+                JOIN modules m ON
+                    m.module_id = c.module_id
+                WHERE
+                    student_id = ?
+    </string>
+    <string name="getUpComingCourseworkByMonth">
+        SELECT c.*,
+                       module_code,
+                       module_name,
+                       student_id
+                FROM coursework c
+                    JOIN modules m
+                        ON m.module_id = c.module_id
+                WHERE student_id = ?
+                      AND c.deadline
+                      BETWEEN DATE('now', 'start of month') AND DATE('now', 'start of month', '+1 month', '-1 day')
+                ORDER by c.deadline DESC
+    </string>
 </resources>
