@@ -228,8 +228,8 @@ public final class Helper {
 
     public static void getDays(AutoCompleteTextView field, Context context) {
         final List<String> days = CalendarUtils.getDays();
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.list_item, days);
-        field.setAdapter(adapter);
+//        final ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.list_item, days);
+        field.setAdapter(new ArrayAdapter<>(context, R.layout.list_item, days));
     }
 
     public static void getStringArray(Context context, AutoCompleteTextView field, int array) {
