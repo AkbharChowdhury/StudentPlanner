@@ -679,23 +679,13 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
     @SuppressLint("Range")
     public List<Coursework> getCoursework() {
+        return data(context.getString(R.string.getCoursework));
+    }
+    @SuppressLint("Range")
+
+    private List<Coursework> data(final String SQL){
         List<Coursework> courseworkList = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-
-        final String SQL = """
-                SELECT
-                    c.*,
-                    module_code,
-                    module_name,
-                    student_id
-                FROM
-                    coursework c
-                JOIN modules m ON
-                    m.module_id = c.module_id
-                WHERE
-                    student_id = ?
-                """;
-
         try (Cursor c = db.rawQuery(SQL, getStudentIDArray())) {
             if (!isCursorEmpty(c)) {
                 while (c.moveToNext()) {
@@ -719,7 +709,10 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
             Log.d(ERROR_TAG, getErrorMessage(e));
         }
         return courseworkList;
+
+
     }
+//    private void
 
     @SuppressLint("Range")
     public List<Coursework> getUpComingCourseworkByMonth() {

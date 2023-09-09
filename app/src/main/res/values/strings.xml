@@ -265,5 +265,17 @@
     <string name="delete_class_title">Are you sure you want to delete this class?</string>
     <string name="class_deleted">Class deleted</string>
 
-
+    <string name="getCoursework">
+        SELECT
+                    c.*,
+                    module_code,
+                    module_name,
+                    student_id
+                FROM
+                    coursework c
+                JOIN modules m ON
+                    m.module_id = c.module_id
+                WHERE
+                    student_id = ?
+    </string>
 </resources>
