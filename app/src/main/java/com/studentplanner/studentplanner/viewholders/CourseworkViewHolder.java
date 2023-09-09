@@ -79,7 +79,7 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
         tvCompleted.setText(coursework.isCompleted() ? COMPLETED : NOT_COMPLETED);
         tvCompleted.setTextColor(coursework.isCompleted() ? context.getColor(R.color.dark_green) : Color.RED);
 
-        showTimeLeft(LocalDate.parse(coursework.getDeadline()), coursework);
+        showTimeLeft(coursework.getDeadline(), coursework);
         ImageHandler.showImage(coursework.getByteImage(), image);
 
 
@@ -109,8 +109,8 @@ public class CourseworkViewHolder extends RecyclerView.ViewHolder {
 
     private String showDeadlineDetails(Coursework coursework) {
         return String.format(Locale.ENGLISH, "%s, %s",
-                Helper.formatDate(coursework.getDeadline()),
-                Helper.formatTime(coursework.getDeadlineTime())
+                Helper.formatDate(coursework.getDeadline().toString()),
+                Helper.formatTime(coursework.getDeadlineTime().toString())
         );
 
     }

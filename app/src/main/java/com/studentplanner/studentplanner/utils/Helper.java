@@ -92,10 +92,10 @@ public final class Helper {
 
     public static String convertFUllDateToYYMMDD(String dateStr) {
         try {
-            SimpleDateFormat formatter = new SimpleDateFormat("EEEE, MMM dd, yyyy", Locale.ENGLISH);
+            var formatter = new SimpleDateFormat("EEEE, MMM dd, yyyy", Locale.ENGLISH);
             return new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(Objects.requireNonNull(formatter.parse(dateStr)));
         } catch (ParseException e) {
-            Log.d(ERROR_TAG, e.getMessage());
+            Log.d(ERROR_TAG, Objects.requireNonNull(e.getMessage()));
 
         }
         return null;

@@ -28,8 +28,8 @@ public final class EventData {
         if (!courseworkList.isEmpty()) {
             courseworkList.forEach(coursework -> {
                 Event courseworkEvent = new Event(
-                        LocalDate.parse(coursework.getDeadline()),
-                        LocalTime.parse(coursework.getDeadlineTime()),
+                        coursework.getDeadline(),
+                        coursework.getDeadlineTime(),
                         EventType.COURSEWORK);
 
                 courseworkEvent.setId(coursework.getCourseworkID());

@@ -194,8 +194,8 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
                 Helper.trimStr(txtTitle),
                 Helper.trimStr(txtDescription),
                 Helper.trimStr(txtPriority),
-                Helper.convertFUllDateToYYMMDD(Helper.trimStr(txtDeadline)),
-                Helper.convertFormattedTimeToDBFormat(txtDeadlineTime.getText().toString())
+                LocalDate.parse(Helper.convertFUllDateToYYMMDD(Helper.trimStr(txtDeadline))),
+                LocalTime.parse(Helper.convertFormattedTimeToDBFormat(txtDeadlineTime.getText().toString()))
         );
 
         if (imageToStore != null) coursework.setImage(imageToStore);

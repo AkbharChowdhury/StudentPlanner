@@ -168,16 +168,18 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
             List<Integer> moduleIDList = db.getModules().stream().map(Module::getModuleID).toList();
 
             Coursework coursework = db.getSelectedCoursework(id);
+            LocalTime deadlineTime = coursework.getDeadlineTime();
+
             txtTitle.getEditText().setText(coursework.getTitle());
             txtDescription.getEditText().setText(coursework.getDescription());
             txtPriority.setText(txtPriority.getAdapter().getItem(Dropdown.getSelectedStringArrayNumber(coursework.getPriority(), this, R.array.priority_array)).toString(), false);
-            txtDeadline.setText(Helper.formatDate(coursework.getDeadline()));
-            txtDeadlineTime.setText(Helper.showFormattedDBTime(coursework.getDeadlineTime(), this));
+            txtDeadline.setText(Helper.formatDate(coursework.getDeadline().toString()));
+            txtDeadlineTime.setText(Helper.showFormattedDBTime(deadlineTime.toString(), this));
             txtModules.setText(txtModules.getAdapter().getItem(Dropdown.getDropDownID(coursework.getModuleID(), moduleIDList)).toString(), false);
             selectedModuleID = coursework.getModuleID();
             checkboxCompleted.setChecked(coursework.isCompleted());
 
-            LocalTime deadlineTime = LocalTime.parse(coursework.getDeadlineTime());
+//            LocalTime deadlineTime = LocalTime.parse(coursework.getDeadlineTime());
 
             deadlineCustomTimePicker = new CustomTimePicker(deadlineTime.getHour(), deadlineTime.getMinute());
             showCourseworkImage(coursework.getByteImage());
@@ -262,8 +264,8 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
                 Helper.trimStr(txtTitle),
                 Helper.trimStr(txtDescription),
                 Helper.trimStr(txtPriority),
-                Helper.convertFUllDateToYYMMDD(Helper.trimStr(txtDeadline)),
-                Helper.convertFormattedTimeToDBFormat(txtDeadlineTime.getText().toString())
+                LocalDate.parse(Helper.convertFUllDateToYYMMDD(Helper.trimStr(txtDeadline))),
+                LocalTime.parse(Helper.convertFormattedTimeToDBFormat(txtDeadlineTime.getText().toString()))
 
         );
 

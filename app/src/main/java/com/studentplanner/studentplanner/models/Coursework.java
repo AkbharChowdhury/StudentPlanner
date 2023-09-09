@@ -9,6 +9,7 @@ import com.studentplanner.studentplanner.interfaces.Searchable;
 import com.studentplanner.studentplanner.tables.CourseworkTable;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.List;
 
@@ -18,8 +19,8 @@ public final class Coursework implements Searchable {
     private String title;
     private String description;
     private String priority;
-    private String deadline;
-    private String deadlineTime;
+    private LocalDate deadline;
+    private LocalTime deadlineTime;
     private boolean isCompleted;
     private TextInputLayout txtTitle;
     private TextInputLayout txtModuleID;
@@ -130,11 +131,11 @@ public final class Coursework implements Searchable {
         this.priority = priority;
     }
 
-    public void setDeadline(String deadline) {
+    public void setDeadline(LocalDate deadline) {
         this.deadline = deadline;
     }
 
-    public void setDeadlineTime(String deadlineTime) {
+    public void setDeadlineTime(LocalTime deadlineTime) {
         this.deadlineTime = deadlineTime;
     }
 
@@ -160,7 +161,7 @@ public final class Coursework implements Searchable {
         this.txtPriority = txtPriority;
     }
 
-    public Coursework(int moduleID, String title, String description, String priority, String deadline, String deadlineTime) {
+    public Coursework(int moduleID, String title, String description, String priority, LocalDate deadline, LocalTime deadlineTime) {
         this.moduleID = moduleID;
         this.title = title;
         this.description = description;
@@ -169,7 +170,7 @@ public final class Coursework implements Searchable {
         this.deadlineTime = deadlineTime;
     }
 
-    public Coursework(int courseworkID, int moduleID, String title, String description, String priority, String deadline, String deadlineTime) {
+    public Coursework(int courseworkID, int moduleID, String title, String description, String priority, LocalDate deadline, LocalTime deadlineTime) {
         this.courseworkID = courseworkID;
         this.moduleID = moduleID;
         this.title = title;
@@ -180,8 +181,8 @@ public final class Coursework implements Searchable {
 
     }
 
-    public static Comparator<Coursework> sortDeadlineAsc = Comparator.comparing(c -> LocalDate.parse(c.getDeadline()));
-    public static Comparator<Coursework> sortDeadlineDesc = (c1, c2) -> c2.getDeadline().compareTo(LocalDate.now().toString());
+    public static Comparator<Coursework> sortDeadlineAsc = Comparator.comparing(Coursework::getDeadline);
+    public static Comparator<Coursework> sortDeadlineDesc = (c1, c2) -> c2.getDeadline().compareTo(LocalDate.now());
 
 
     public int getCourseworkID() {
@@ -204,11 +205,11 @@ public final class Coursework implements Searchable {
         return priority;
     }
 
-    public String getDeadline() {
+    public LocalDate getDeadline() {
         return deadline;
     }
 
-    public String getDeadlineTime() {
+    public LocalTime getDeadlineTime() {
         return deadlineTime;
     }
 
@@ -236,8 +237,8 @@ public final class Coursework implements Searchable {
         cv.put(CourseworkTable.COLUMN_TITLE, coursework.getTitle());
         cv.put(CourseworkTable.COLUMN_DESCRIPTION, coursework.getDescription());
         cv.put(CourseworkTable.COLUMN_PRIORITY, coursework.getPriority());
-        cv.put(CourseworkTable.COLUMN_DEADLINE, coursework.getDeadline());
-        cv.put(CourseworkTable.COLUMN_DEADLINE_TIME, coursework.getDeadlineTime());
+        cv.put(CourseworkTable.COLUMN_DEADLINE, coursework.getDeadline().toString());
+        cv.put(CourseworkTable.COLUMN_DEADLINE_TIME, coursework.getDeadlineTime().toString());
         return cv;
     }
     public static List<Coursework> sortList(List<Coursework> list) {

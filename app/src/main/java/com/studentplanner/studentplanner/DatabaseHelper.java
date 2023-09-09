@@ -31,6 +31,7 @@ import com.studentplanner.studentplanner.utils.Helper;
 
 import java.text.MessageFormat;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -704,8 +705,8 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                             cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_TITLE)),
                             cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DESCRIPTION)),
                             cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_PRIORITY)),
-                            cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DEADLINE)),
-                            cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DEADLINE_TIME))
+                            LocalDate.parse(cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DEADLINE))),
+                            LocalTime.parse(cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DEADLINE_TIME)))
                     );
                     coursework.setImage(cursor.getBlob(cursor.getColumnIndex(CourseworkTable.COLUMN_IMAGE)));
                     coursework.setCompleted(Coursework.isCompleted(cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_COMPLETED))));
@@ -746,12 +747,10 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                             cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_TITLE)),
                             cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DESCRIPTION)),
                             cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_PRIORITY)),
-                            cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DEADLINE)),
-                            cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DEADLINE_TIME))
+                            LocalDate.parse(cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DEADLINE))),
+                            LocalTime.parse(cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DEADLINE_TIME)))
 
                     );
-
-
                     coursework.setCompleted(Coursework.isCompleted(cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_COMPLETED))));
                     coursework.setImage(cursor.getBlob(cursor.getColumnIndex(CourseworkTable.COLUMN_IMAGE)));
                     courseworkList.add(coursework);
@@ -850,8 +849,8 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                         cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_TITLE)),
                         cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DESCRIPTION)),
                         cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_PRIORITY)),
-                        cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DEADLINE)),
-                        cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DEADLINE_TIME))
+                        LocalDate.parse(cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DEADLINE))),
+                        LocalTime.parse(cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DEADLINE_TIME)))
 
                 );
                 coursework.setImage(cursor.getBlob(cursor.getColumnIndex(CourseworkTable.COLUMN_IMAGE)));

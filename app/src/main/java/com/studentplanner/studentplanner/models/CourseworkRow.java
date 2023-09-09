@@ -41,7 +41,7 @@ public final class CourseworkRow {
         lblModule.setText(Helper.getSnippet(moduleDetails, 30));
         priority.setText(priorityLevel);
         priority.setTextColor(Helper.getPriorityColour(priorityLevel, context));
-        time.setText(Helper.formatTimeShort(coursework.getDeadlineTime()));
+        time.setText(Helper.formatTimeShort(coursework.getDeadlineTime().toString()));
 
         completionStatus.setText(coursework.isCompleted() ? COMPLETED : NOT_COMPLETED);
         completionStatus.setTextColor(coursework.isCompleted() ? context.getColor(R.color.dark_green) : Color.RED);
