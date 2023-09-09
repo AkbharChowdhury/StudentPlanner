@@ -679,11 +679,11 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
     @SuppressLint("Range")
     public List<Coursework> getCoursework() {
-        return data(context.getString(R.string.getCoursework));
+        return getCourseworkList(context.getString(R.string.getCoursework));
     }
     @SuppressLint("Range")
 
-    private List<Coursework> data(final String SQL){
+    private List<Coursework> getCourseworkList(final String SQL){
         List<Coursework> courseworkList = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
         try (Cursor c = db.rawQuery(SQL, getStudentIDArray())) {
