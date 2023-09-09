@@ -685,7 +685,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     @SuppressLint("Range")
 
     private List<Coursework> getCourseworkList(final String SQL) {
-        List<Coursework> courseworkList = new ArrayList<>();
+        List<Coursework> list = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
         try (Cursor c = db.rawQuery(SQL, getStudentIDArray())) {
             if (!isCursorEmpty(c)) {
@@ -701,7 +701,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                     );
                     coursework.setImage(c.getBlob(c.getColumnIndex(CourseworkTable.COLUMN_IMAGE)));
                     coursework.setCompleted(Coursework.isCompleted(c.getString(c.getColumnIndex(CourseworkTable.COLUMN_COMPLETED))));
-                    courseworkList.add(coursework);
+                    list.add(coursework);
 
                 }
 
@@ -709,7 +709,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         } catch (Exception e) {
             Log.d(ERROR_TAG, getErrorMessage(e));
         }
-        return courseworkList;
+        return list;
 
 
     }
