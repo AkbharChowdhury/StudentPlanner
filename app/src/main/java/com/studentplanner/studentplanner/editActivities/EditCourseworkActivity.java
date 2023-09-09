@@ -174,12 +174,10 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
             txtDescription.getEditText().setText(coursework.getDescription());
             txtPriority.setText(txtPriority.getAdapter().getItem(Dropdown.getSelectedStringArrayNumber(coursework.getPriority(), this, R.array.priority_array)).toString(), false);
             txtDeadline.setText(Helper.formatDate(coursework.getDeadline().toString()));
-            txtDeadlineTime.setText(Helper.showFormattedDBTime(deadlineTime.toString(), this));
+            txtDeadlineTime.setText(Helper.showFormattedDBTime(deadlineTime, this));
             txtModules.setText(txtModules.getAdapter().getItem(Dropdown.getDropDownID(coursework.getModuleID(), moduleIDList)).toString(), false);
             selectedModuleID = coursework.getModuleID();
             checkboxCompleted.setChecked(coursework.isCompleted());
-
-//            LocalTime deadlineTime = LocalTime.parse(coursework.getDeadlineTime());
 
             deadlineCustomTimePicker = new CustomTimePicker(deadlineTime.getHour(), deadlineTime.getMinute());
             showCourseworkImage(coursework.getByteImage());

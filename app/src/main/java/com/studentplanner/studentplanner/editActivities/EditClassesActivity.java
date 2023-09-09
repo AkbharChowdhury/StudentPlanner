@@ -98,8 +98,8 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
                 selectedModuleID,
                 selectedSemesterID,
                 CalendarUtils.getDOWNumber(Helper.trimStr(txtDays)),
-                Helper.convertFormattedTimeToDBFormat(Helper.trimStr(txtStartTime)),
-                Helper.convertFormattedTimeToDBFormat(Helper.trimStr(txtEndTime)),
+                LocalTime.parse(Helper.convertFormattedTimeToDBFormat(Helper.trimStr(txtStartTime))),
+                LocalTime.parse(Helper.convertFormattedTimeToDBFormat(Helper.trimStr(txtEndTime))),
                 Helper.trimStr(txtRoom),
                 Helper.trimStr(txtClassType)
 
@@ -122,9 +122,9 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
         final String SELECTED_ID = ClassTable.COLUMN_ID;
         if (getIntent().hasExtra(SELECTED_ID)) {
             int id = getIntent().getIntExtra(SELECTED_ID, 0);
-            Classes model = db.getSelectedClass(id);
+            Classes myClass = db.getSelectedClass(id);
 
-            txtRoom.getEditText().setText(model.getRoom());
+            txtRoom.getEditText().setText(myClass.getRoom());
             Helper.getDays(txtDays, this);
             Helper.getStringArray(this, txtClassType, R.array.type_array);
 
@@ -132,11 +132,11 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
             List<Integer> semesterIDList = db.getSemester().stream().map(Semester::semesterID).toList();
             List<Integer> moduleIDList = db.getModules().stream().map(Module::getModuleID).toList();
 
-            txtSemester.setText(txtSemester.getAdapter().getItem(Dropdown.getDropDownID(model.getSemesterID(), semesterIDList)).toString(), false);
-            txtModules.setText(txtModules.getAdapter().getItem(Dropdown.getDropDownID(model.getModuleID(), moduleIDList)).toString(), false);
+            txtSemester.setText(txtSemester.getAdapter().getItem(Dropdown.getDropDownID(myClass.getSemesterID(), semesterIDList)).toString(), false);
+            txtModules.setText(txtModules.getAdapter().getItem(Dropdown.getDropDownID(myClass.getModuleID(), moduleIDList)).toString(), false);
 
-            txtClassType.setText(txtClassType.getAdapter().getItem(Dropdown.getSelectedStringArrayNumber(model.getClassType(), this, R.array.type_array)).toString(), false);
-            String classDay = DayOfWeek.of(model.getDow()).toString();
+            txtClassType.setText(txtClassType.getAdapter().getItem(Dropdown.getSelectedStringArrayNumber(myClass.getClassType(), this, R.array.type_array)).toString(), false);
+            String classDay = DayOfWeek.of(myClass.getDow()).toString();
 
             txtDays.setText(
                     txtDays.getAdapter()
@@ -144,14 +144,14 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
                             toString(),
                     false);
 
-            txtStartTime.setText(Helper.showFormattedDBTime(model.getStartTime(), this));
-            txtEndTime.setText(Helper.showFormattedDBTime(model.getEndTime(), this));
+            txtStartTime.setText(Helper.showFormattedDBTime(myClass.getStartTime(), this));
+            txtEndTime.setText(Helper.showFormattedDBTime(myClass.getEndTime(), this));
 
-            selectedModuleID = model.getModuleID();
-            selectedSemesterID = model.getSemesterID();
+            selectedModuleID = myClass.getModuleID();
+            selectedSemesterID = myClass.getSemesterID();
 
-            LocalTime startTime = LocalTime.parse(model.getStartTime());
-            LocalTime endTime = LocalTime.parse(model.getEndTime());
+            LocalTime startTime = myClass.getStartTime();
+            LocalTime endTime = myClass.getStartTime();
 
             startCustomTimePicker = new CustomTimePicker(startTime.getHour(), startTime.getMinute());
             endCustomTimePicker = new CustomTimePicker(endTime.getHour(), endTime.getMinute());

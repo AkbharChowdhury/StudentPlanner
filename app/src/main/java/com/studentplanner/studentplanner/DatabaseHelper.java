@@ -239,8 +239,8 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         String selection = column + " LIKE ?";
         String[] selectionArgs = {fieldValue};
-        try (var cursor = db.query(table, columns, selection, selectionArgs, null, null, null)) {
-            return cursor.getCount() > 0;
+        try (Cursor c = db.query(table, columns, selection, selectionArgs, null, null, null)) {
+            return c.getCount() > 0;
         } catch (Exception e) {
             Log.d(ERROR_TAG, getErrorMessage(e));
             return false;
@@ -264,9 +264,9 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 String.valueOf(getStudentID()),
 
         };
-        try (var cursor = db.query(TeacherTable.TABLE_NAME, columns, selection, selectionArgs, null, null, null)) {
+        try (Cursor c = db.query(TeacherTable.TABLE_NAME, columns, selection, selectionArgs, null, null, null)) {
 
-            return cursor.getCount() > 0;
+            return c.getCount() > 0;
 
         } catch (Exception e) {
             Log.d(ERROR_TAG, getErrorMessage(e));
@@ -284,8 +284,8 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         String selection = StudentTable.COLUMN_EMAIL + " = ?" + " AND " + StudentTable.COLUMN_PASSWORD + " = ?";
         String[] selectionArgs = {email, password};
 
-        try (var cursor = db.query(StudentTable.TABLE_NAME, columns, selection, selectionArgs, null, null, null)) {
-            return cursor.getCount() > 0;
+        try (Cursor c = db.query(StudentTable.TABLE_NAME, columns, selection, selectionArgs, null, null, null)) {
+            return c.getCount() > 0;
         } catch (Exception e) {
             Log.d(ERROR_TAG, getErrorMessage(e));
             return false;
@@ -301,8 +301,8 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         String selection = ModuleTable.COLUMN_MODULE_C0DE + " LIKE ?" + " AND " + ModuleTable.COLUMN_STUDENT_ID + " = ?";
         String[] selectionArgs = {moduleCode, String.valueOf(getStudentID())};
 
-        try (var cursor = db.query(ModuleTable.TABLE_NAME, columns, selection, selectionArgs, null, null, null)) {
-            return cursor.getCount() > 0;
+        try (Cursor c = db.query(ModuleTable.TABLE_NAME, columns, selection, selectionArgs, null, null, null)) {
+            return c.getCount() > 0;
         } catch (Exception e) {
             Log.d(ERROR_TAG, getErrorMessage(e));
             return false;
@@ -316,7 +316,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     public boolean classExists(int moduleID, int semesterID, String type) {
         SQLiteDatabase db = getReadableDatabase();
 
-        try (var cursor = db.rawQuery(
+        try (Cursor c = db.rawQuery(
                 """
                         SELECT
                             COUNT(*) class_exists
@@ -334,7 +334,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                         String.valueOf(semesterID),
                         type,
                 })) {
-            if (cursor.moveToFirst()) return cursor.getInt(0) > 0;
+            if (c.moveToFirst()) return c.getInt(0) > 0;
 
         } catch (Exception e) {
             Log.d(ERROR_TAG, getErrorMessage(e));
@@ -358,9 +358,9 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 String.valueOf(getStudentID()),
 
         };
-        try (var cursor = db.query(ModuleTable.TABLE_NAME, columns, selection, selectionArgs, null, null, null)) {
+        try (Cursor c = db.query(ModuleTable.TABLE_NAME, columns, selection, selectionArgs, null, null, null)) {
 
-            return cursor.getCount() > 0;
+            return c.getCount() > 0;
 
         } catch (Exception e) {
             Log.d(ERROR_TAG, getErrorMessage(e));
@@ -377,10 +377,10 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         String selection = StudentTable.COLUMN_EMAIL + " = ?";
         String[] selectionArgs = {email};
-        try (var cursor = db.query(StudentTable.TABLE_NAME, columns, selection, selectionArgs, null, null, null)) {
-            if (cursor.getCount() > 0) {
-                cursor.moveToFirst();
-                studentID = cursor.getInt(0);
+        try (Cursor c = db.query(StudentTable.TABLE_NAME, columns, selection, selectionArgs, null, null, null)) {
+            if (c.getCount() > 0) {
+                c.moveToFirst();
+                studentID = c.getInt(0);
             }
 
         } catch (Exception e) {
@@ -400,10 +400,10 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         String selection = StudentTable.COLUMN_ID + " = ?";
         String[] selectionArgs = {String.valueOf(studentID)};
 
-        try (var cursor = db.query(StudentTable.TABLE_NAME, columns, selection, selectionArgs, null, null, null)) {
-            if (cursor.getCount() > 0) {
-                cursor.moveToFirst();
-                email = cursor.getString(0);
+        try (Cursor c = db.query(StudentTable.TABLE_NAME, columns, selection, selectionArgs, null, null, null)) {
+            if (c.getCount() > 0) {
+                c.moveToFirst();
+                email = c.getString(0);
             }
 
         } catch (Exception e) {
@@ -424,11 +424,11 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         String[] selectionArgs = {String.valueOf(userID)};
         Student student = new Student();
 
-        try (var cursor = db.query(StudentTable.TABLE_NAME, columns, selection, selectionArgs, null, null, null)) {
-            if (cursor.getCount() > 0) {
-                while (cursor.moveToNext()) {
-                    student.setFirstname(cursor.getString(cursor.getColumnIndex(StudentTable.COLUMN_FIRSTNAME)));
-                    student.setLastname(cursor.getString(cursor.getColumnIndex(StudentTable.COLUMN_LASTNAME)));
+        try (Cursor c = db.query(StudentTable.TABLE_NAME, columns, selection, selectionArgs, null, null, null)) {
+            if (c.getCount() > 0) {
+                while (c.moveToNext()) {
+                    student.setFirstname(c.getString(c.getColumnIndex(StudentTable.COLUMN_FIRSTNAME)));
+                    student.setLastname(c.getString(c.getColumnIndex(StudentTable.COLUMN_LASTNAME)));
                 }
 
             }
@@ -544,13 +544,13 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         List<Module> modules = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
         String selection = ModuleTable.COLUMN_STUDENT_ID + " = ?";
-        try (var cursor = db.query(ModuleTable.TABLE_NAME, null, selection, getStudentIDArray(), null, null, null)) {
-            if (!isCursorEmpty(cursor)) {
-                while (cursor.moveToNext()) {
+        try (Cursor c = db.query(ModuleTable.TABLE_NAME, null, selection, getStudentIDArray(), null, null, null)) {
+            if (!isCursorEmpty(c)) {
+                while (c.moveToNext()) {
                     modules.add(new Module(
-                            cursor.getInt(cursor.getColumnIndex(ModuleTable.COLUMN_ID)),
-                            cursor.getString(cursor.getColumnIndex(ModuleTable.COLUMN_MODULE_C0DE)),
-                            cursor.getString(cursor.getColumnIndex(ModuleTable.COLUMN_MODULE_NAME))
+                            c.getInt(c.getColumnIndex(ModuleTable.COLUMN_ID)),
+                            c.getString(c.getColumnIndex(ModuleTable.COLUMN_MODULE_C0DE)),
+                            c.getString(c.getColumnIndex(ModuleTable.COLUMN_MODULE_NAME))
                     ));
                 }
             }
@@ -567,10 +567,10 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         String selection = ModuleTeacherTable.COLUMN_MODULE_ID + " = ?";
         String[] selectionArgs = {String.valueOf(moduleID)};
-        try (var cursor = db.query(ModuleTeacherTable.TABLE_NAME, null, selection, selectionArgs, null, null, null)) {
-            if (!isCursorEmpty(cursor)) {
-                while (cursor.moveToNext()) {
-                    teacherIds.add(cursor.getInt(cursor.getColumnIndex(ModuleTeacherTable.COLUMN_TEACHER_ID)));
+        try (Cursor c = db.query(ModuleTeacherTable.TABLE_NAME, null, selection, selectionArgs, null, null, null)) {
+            if (!isCursorEmpty(c)) {
+                while (c.moveToNext()) {
+                    teacherIds.add(c.getInt(c.getColumnIndex(ModuleTeacherTable.COLUMN_TEACHER_ID)));
                 }
             }
         } catch (Exception e) {
@@ -585,14 +585,14 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         List<Teacher> teachers = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
         String selection = TeacherTable.COLUMN_STUDENT_ID + " = ?";
-        try (var cursor = db.query(TeacherTable.TABLE_NAME, null, selection, getStudentIDArray(), null, null, null)) {
-            if (!isCursorEmpty(cursor)) {
-                while (cursor.moveToNext()) {
+        try (Cursor c = db.query(TeacherTable.TABLE_NAME, null, selection, getStudentIDArray(), null, null, null)) {
+            if (!isCursorEmpty(c)) {
+                while (c.moveToNext()) {
                     teachers.add(new Teacher(
-                            cursor.getInt(cursor.getColumnIndex(TeacherTable.COLUMN_ID)),
-                            cursor.getString(cursor.getColumnIndex(TeacherTable.COLUMN_FIRSTNAME)),
-                            cursor.getString(cursor.getColumnIndex(TeacherTable.COLUMN_LASTNAME)),
-                            cursor.getString(cursor.getColumnIndex(TeacherTable.COLUMN_EMAIL))
+                            c.getInt(c.getColumnIndex(TeacherTable.COLUMN_ID)),
+                            c.getString(c.getColumnIndex(TeacherTable.COLUMN_FIRSTNAME)),
+                            c.getString(c.getColumnIndex(TeacherTable.COLUMN_LASTNAME)),
+                            c.getString(c.getColumnIndex(TeacherTable.COLUMN_EMAIL))
 
                     ));
                 }
@@ -623,20 +623,20 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 WHERE
                     m.student_id = ?
                 """;
-        try (var cursor = db.rawQuery(SQL, getStudentIDArray())) {
-            if (!isCursorEmpty(cursor)) {
-                while (cursor.moveToNext()) {
+        try (Cursor c = db.rawQuery(SQL, getStudentIDArray())) {
+            if (!isCursorEmpty(c)) {
+                while (c.moveToNext()) {
 
                     classesList.add(new Classes(
 
-                            cursor.getInt(cursor.getColumnIndex(ClassTable.COLUMN_ID)),
-                            cursor.getInt(cursor.getColumnIndex(ClassTable.COLUMN_MODULE_ID)),
-                            cursor.getInt(cursor.getColumnIndex(ClassTable.COLUMN_SEMESTER_ID)),
-                            cursor.getInt(cursor.getColumnIndex(ClassTable.COLUMN_DOW)),
-                            cursor.getString(cursor.getColumnIndex(ClassTable.COLUMN_START_TIME)),
-                            cursor.getString(cursor.getColumnIndex(ClassTable.COLUMN_END_TIME)),
-                            cursor.getString(cursor.getColumnIndex(ClassTable.COLUMN_ROOM)),
-                            cursor.getString(cursor.getColumnIndex(ClassTable.COLUMN_TYPE))
+                            c.getInt(c.getColumnIndex(ClassTable.COLUMN_ID)),
+                            c.getInt(c.getColumnIndex(ClassTable.COLUMN_MODULE_ID)),
+                            c.getInt(c.getColumnIndex(ClassTable.COLUMN_SEMESTER_ID)),
+                            c.getInt(c.getColumnIndex(ClassTable.COLUMN_DOW)),
+                            LocalTime.parse(c.getString(c.getColumnIndex(ClassTable.COLUMN_START_TIME))),
+                            LocalTime.parse(c.getString(c.getColumnIndex(ClassTable.COLUMN_END_TIME))),
+                            c.getString(c.getColumnIndex(ClassTable.COLUMN_ROOM)),
+                            c.getString(c.getColumnIndex(ClassTable.COLUMN_TYPE))
 
 
                     ));
@@ -655,13 +655,13 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         List<Module> list = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
         final String SQL = "SELECT * FROM modules WHERE module_id NOT IN (SELECT module_id FROM module_teacher) AND student_id = ?";
-        try (var cursor = db.rawQuery(SQL, getStudentIDArray())) {
-            if (isCursorEmpty(cursor)) Log.d(ERROR_TAG, "cursor is empty");
-            while (cursor.moveToNext()) {
+        try (Cursor c = db.rawQuery(SQL, getStudentIDArray())) {
+            if (isCursorEmpty(c)) Log.d(ERROR_TAG, "cursor is empty");
+            while (c.moveToNext()) {
                 list.add(new Module(
-                        cursor.getInt(cursor.getColumnIndex(ModuleTable.COLUMN_ID)),
-                        cursor.getString(cursor.getColumnIndex(ModuleTable.COLUMN_MODULE_C0DE)),
-                        cursor.getString(cursor.getColumnIndex(ModuleTable.COLUMN_MODULE_NAME))
+                        c.getInt(c.getColumnIndex(ModuleTable.COLUMN_ID)),
+                        c.getString(c.getColumnIndex(ModuleTable.COLUMN_MODULE_C0DE)),
+                        c.getString(c.getColumnIndex(ModuleTable.COLUMN_MODULE_NAME))
                 ));
             }
 
@@ -696,20 +696,20 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                     student_id = ?
                 """;
 
-        try (var cursor = db.rawQuery(SQL, getStudentIDArray())) {
-            if (!isCursorEmpty(cursor)) {
-                while (cursor.moveToNext()) {
+        try (Cursor c = db.rawQuery(SQL, getStudentIDArray())) {
+            if (!isCursorEmpty(c)) {
+                while (c.moveToNext()) {
                     Coursework coursework = new Coursework(
-                            cursor.getInt(cursor.getColumnIndex(CourseworkTable.COLUMN_ID)),
-                            cursor.getInt(cursor.getColumnIndex(CourseworkTable.COLUMN_MODULE_ID)),
-                            cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_TITLE)),
-                            cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DESCRIPTION)),
-                            cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_PRIORITY)),
-                            LocalDate.parse(cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DEADLINE))),
-                            LocalTime.parse(cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DEADLINE_TIME)))
+                            c.getInt(c.getColumnIndex(CourseworkTable.COLUMN_ID)),
+                            c.getInt(c.getColumnIndex(CourseworkTable.COLUMN_MODULE_ID)),
+                            c.getString(c.getColumnIndex(CourseworkTable.COLUMN_TITLE)),
+                            c.getString(c.getColumnIndex(CourseworkTable.COLUMN_DESCRIPTION)),
+                            c.getString(c.getColumnIndex(CourseworkTable.COLUMN_PRIORITY)),
+                            LocalDate.parse(c.getString(c.getColumnIndex(CourseworkTable.COLUMN_DEADLINE))),
+                            LocalTime.parse(c.getString(c.getColumnIndex(CourseworkTable.COLUMN_DEADLINE_TIME)))
                     );
-                    coursework.setImage(cursor.getBlob(cursor.getColumnIndex(CourseworkTable.COLUMN_IMAGE)));
-                    coursework.setCompleted(Coursework.isCompleted(cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_COMPLETED))));
+                    coursework.setImage(c.getBlob(c.getColumnIndex(CourseworkTable.COLUMN_IMAGE)));
+                    coursework.setCompleted(Coursework.isCompleted(c.getString(c.getColumnIndex(CourseworkTable.COLUMN_COMPLETED))));
                     courseworkList.add(coursework);
 
                 }
@@ -738,21 +738,21 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                       BETWEEN DATE('now', 'start of month') AND DATE('now', 'start of month', '+1 month', '-1 day')
                 ORDER by c.deadline DESC
                 """;
-        try (var cursor = db.rawQuery(SQL, getStudentIDArray())) {
-            if (!isCursorEmpty(cursor)) {
-                while (cursor.moveToNext()) {
+        try (Cursor c = db.rawQuery(SQL, getStudentIDArray())) {
+            if (!isCursorEmpty(c)) {
+                while (c.moveToNext()) {
                     Coursework coursework = new Coursework(
-                            cursor.getInt(cursor.getColumnIndex(CourseworkTable.COLUMN_ID)),
-                            cursor.getInt(cursor.getColumnIndex(CourseworkTable.COLUMN_MODULE_ID)),
-                            cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_TITLE)),
-                            cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DESCRIPTION)),
-                            cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_PRIORITY)),
-                            LocalDate.parse(cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DEADLINE))),
-                            LocalTime.parse(cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DEADLINE_TIME)))
+                            c.getInt(c.getColumnIndex(CourseworkTable.COLUMN_ID)),
+                            c.getInt(c.getColumnIndex(CourseworkTable.COLUMN_MODULE_ID)),
+                            c.getString(c.getColumnIndex(CourseworkTable.COLUMN_TITLE)),
+                            c.getString(c.getColumnIndex(CourseworkTable.COLUMN_DESCRIPTION)),
+                            c.getString(c.getColumnIndex(CourseworkTable.COLUMN_PRIORITY)),
+                            LocalDate.parse(c.getString(c.getColumnIndex(CourseworkTable.COLUMN_DEADLINE))),
+                            LocalTime.parse(c.getString(c.getColumnIndex(CourseworkTable.COLUMN_DEADLINE_TIME)))
 
                     );
-                    coursework.setCompleted(Coursework.isCompleted(cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_COMPLETED))));
-                    coursework.setImage(cursor.getBlob(cursor.getColumnIndex(CourseworkTable.COLUMN_IMAGE)));
+                    coursework.setCompleted(Coursework.isCompleted(c.getString(c.getColumnIndex(CourseworkTable.COLUMN_COMPLETED))));
+                    coursework.setImage(c.getBlob(c.getColumnIndex(CourseworkTable.COLUMN_IMAGE)));
                     courseworkList.add(coursework);
 
                 }
@@ -782,12 +782,12 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 GROUP BY
                     mt.module_id
                 """;
-        try (var cursor = db.rawQuery(SQL, getStudentIDArray())) {
-            if (!isCursorEmpty(cursor)) {
+        try (Cursor c = db.rawQuery(SQL, getStudentIDArray())) {
+            if (!isCursorEmpty(c)) {
 
-                while (cursor.moveToNext()) {
-                    int moduleID = cursor.getInt(cursor.getColumnIndex(ModuleTeacherTable.COLUMN_MODULE_ID));
-                    String teacherIDs = cursor.getString(cursor.getColumnIndex("teacher_id_list"));
+                while (c.moveToNext()) {
+                    int moduleID = c.getInt(c.getColumnIndex(ModuleTeacherTable.COLUMN_MODULE_ID));
+                    String teacherIDs = c.getString(c.getColumnIndex("teacher_id_list"));
                     List<String> teacherIDListStr = new ArrayList<>(Arrays.asList(teacherIDs.split(",")));
                     List<Integer> TeacherIDList = Helper.convertStringArrayToIntArrayList(teacherIDListStr);
                     list.add(new ModuleTeacher(moduleID, TeacherIDList));
@@ -816,12 +816,12 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                     module_id = ?
                                 
                 """;
-        try (var cursor = db.rawQuery(SQL, new String[]{String.valueOf(moduleID)})) {
-            if (!isCursorEmpty(cursor)) {
+        try (Cursor c = db.rawQuery(SQL, new String[]{String.valueOf(moduleID)})) {
+            if (!isCursorEmpty(c)) {
 
-                while (cursor.moveToNext()) {
-                    String firstname = cursor.getString(cursor.getColumnIndex(TeacherTable.COLUMN_FIRSTNAME));
-                    String lastname = cursor.getString(cursor.getColumnIndex(TeacherTable.COLUMN_LASTNAME));
+                while (c.moveToNext()) {
+                    String firstname = c.getString(c.getColumnIndex(TeacherTable.COLUMN_FIRSTNAME));
+                    String lastname = c.getString(c.getColumnIndex(TeacherTable.COLUMN_LASTNAME));
                     list.add(String.format("%s %s", firstname, lastname));
 
                 }
@@ -840,21 +840,21 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         String selection = CourseworkTable.COLUMN_ID + " =?";
         String[] selectionArgs = {String.valueOf(id)};
-        try (var cursor = db.query(CourseworkTable.TABLE_NAME, null, selection, selectionArgs,
+        try (Cursor c = db.query(CourseworkTable.TABLE_NAME, null, selection, selectionArgs,
                 null, null, null)) {
-            if (cursor.moveToLast()) {
+            if (c.moveToLast()) {
                 coursework = new Coursework(
-                        cursor.getInt(cursor.getColumnIndex(CourseworkTable.COLUMN_ID)),
-                        cursor.getInt(cursor.getColumnIndex(CourseworkTable.COLUMN_MODULE_ID)),
-                        cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_TITLE)),
-                        cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DESCRIPTION)),
-                        cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_PRIORITY)),
-                        LocalDate.parse(cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DEADLINE))),
-                        LocalTime.parse(cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_DEADLINE_TIME)))
+                        c.getInt(c.getColumnIndex(CourseworkTable.COLUMN_ID)),
+                        c.getInt(c.getColumnIndex(CourseworkTable.COLUMN_MODULE_ID)),
+                        c.getString(c.getColumnIndex(CourseworkTable.COLUMN_TITLE)),
+                        c.getString(c.getColumnIndex(CourseworkTable.COLUMN_DESCRIPTION)),
+                        c.getString(c.getColumnIndex(CourseworkTable.COLUMN_PRIORITY)),
+                        LocalDate.parse(c.getString(c.getColumnIndex(CourseworkTable.COLUMN_DEADLINE))),
+                        LocalTime.parse(c.getString(c.getColumnIndex(CourseworkTable.COLUMN_DEADLINE_TIME)))
 
                 );
-                coursework.setImage(cursor.getBlob(cursor.getColumnIndex(CourseworkTable.COLUMN_IMAGE)));
-                coursework.setCompleted(Coursework.isCompleted(cursor.getString(cursor.getColumnIndex(CourseworkTable.COLUMN_COMPLETED))));
+                coursework.setImage(c.getBlob(c.getColumnIndex(CourseworkTable.COLUMN_IMAGE)));
+                coursework.setCompleted(Coursework.isCompleted(c.getString(c.getColumnIndex(CourseworkTable.COLUMN_COMPLETED))));
 
             }
         } catch (Exception e) {
@@ -870,18 +870,18 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         String selection = ClassTable.COLUMN_ID + " =?";
         String[] selectionArgs = {String.valueOf(id)};
-        try (var cursor = db.query(ClassTable.TABLE_NAME, null, selection, selectionArgs,
+        try (Cursor c = db.query(ClassTable.TABLE_NAME, null, selection, selectionArgs,
                 null, null, null)) {
-            if (cursor.moveToLast()) {
+            if (c.moveToLast()) {
                 return new Classes(
-                        cursor.getInt(cursor.getColumnIndex(ClassTable.COLUMN_ID)),
-                        cursor.getInt(cursor.getColumnIndex(ClassTable.COLUMN_MODULE_ID)),
-                        cursor.getInt(cursor.getColumnIndex(ClassTable.COLUMN_SEMESTER_ID)),
-                        cursor.getInt(cursor.getColumnIndex(ClassTable.COLUMN_DOW)),
-                        cursor.getString(cursor.getColumnIndex(ClassTable.COLUMN_START_TIME)),
-                        cursor.getString(cursor.getColumnIndex(ClassTable.COLUMN_END_TIME)),
-                        cursor.getString(cursor.getColumnIndex(ClassTable.COLUMN_ROOM)),
-                        cursor.getString(cursor.getColumnIndex(ClassTable.COLUMN_TYPE))
+                        c.getInt(c.getColumnIndex(ClassTable.COLUMN_ID)),
+                        c.getInt(c.getColumnIndex(ClassTable.COLUMN_MODULE_ID)),
+                        c.getInt(c.getColumnIndex(ClassTable.COLUMN_SEMESTER_ID)),
+                        c.getInt(c.getColumnIndex(ClassTable.COLUMN_DOW)),
+                        LocalTime.parse(c.getString(c.getColumnIndex(ClassTable.COLUMN_START_TIME))),
+                        LocalTime.parse(c.getString(c.getColumnIndex(ClassTable.COLUMN_END_TIME))),
+                        c.getString(c.getColumnIndex(ClassTable.COLUMN_ROOM)),
+                        c.getString(c.getColumnIndex(ClassTable.COLUMN_TYPE))
 
                 );
             }
@@ -903,7 +903,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         String selection = SemesterTable.COLUMN_STUDENT_ID + " = ?";
 
-        try (var cursor = db.query(
+        try (Cursor c = db.query(
                 SemesterTable.TABLE_NAME,
                 null,
                 selection,
@@ -912,13 +912,13 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 null,
                 null
         )) {
-            if (!isCursorEmpty(cursor)) {
-                while (cursor.moveToNext()) {
+            if (!isCursorEmpty(c)) {
+                while (c.moveToNext()) {
                     semesterList.add(new Semester(
-                            cursor.getInt(cursor.getColumnIndex(SemesterTable.COLUMN_ID)),
-                            cursor.getString(cursor.getColumnIndex(SemesterTable.COLUMN_NAME)),
-                            LocalDate.parse(cursor.getString(cursor.getColumnIndex(SemesterTable.COLUMN_START_DATE))),
-                            LocalDate.parse(cursor.getString(cursor.getColumnIndex(SemesterTable.COLUMN_END_DATE)))
+                            c.getInt(c.getColumnIndex(SemesterTable.COLUMN_ID)),
+                            c.getString(c.getColumnIndex(SemesterTable.COLUMN_NAME)),
+                            LocalDate.parse(c.getString(c.getColumnIndex(SemesterTable.COLUMN_START_DATE))),
+                            LocalDate.parse(c.getString(c.getColumnIndex(SemesterTable.COLUMN_END_DATE)))
                     ));
                 }
 
@@ -938,12 +938,12 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         String selection = ModuleTable.COLUMN_ID + " = ?" + " AND " + ModuleTable.COLUMN_STUDENT_ID + "= ?";
         String[] selectionArgs = {String.valueOf(id), String.valueOf(getStudentID())};
         String[] columns = {ModuleTable.COLUMN_MODULE_C0DE, ModuleTable.COLUMN_MODULE_NAME};
-        try (var cursor = db.query(ModuleTable.TABLE_NAME, columns, selection, selectionArgs,
+        try (Cursor c = db.query(ModuleTable.TABLE_NAME, columns, selection, selectionArgs,
                 null, null, null)) {
-            if (cursor.moveToLast()) {
+            if (c.moveToLast()) {
                 module = new Module(
-                        cursor.getString(cursor.getColumnIndex(ModuleTable.COLUMN_MODULE_C0DE)),
-                        cursor.getString(cursor.getColumnIndex(ModuleTable.COLUMN_MODULE_NAME)));
+                        c.getString(c.getColumnIndex(ModuleTable.COLUMN_MODULE_C0DE)),
+                        c.getString(c.getColumnIndex(ModuleTable.COLUMN_MODULE_NAME)));
             }
         } catch (Exception e) {
             Log.d(ERROR_TAG, getErrorMessage(e));
@@ -970,13 +970,13 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                   AND details LIKE ?
                  """;
 
-        try (var cursor = db.rawQuery(SQL, new String[]{
+        try (Cursor c = db.rawQuery(SQL, new String[]{
                 String.valueOf(getStudentID()),
                 MessageFormat.format("%{0}%", module)
         })) {
 
-            while (cursor.moveToNext()) {
-                int moduleID = cursor.getInt(cursor.getColumnIndex(ModuleTeacherTable.COLUMN_MODULE_ID));
+            while (c.moveToNext()) {
+                int moduleID = c.getInt(c.getColumnIndex(ModuleTeacherTable.COLUMN_MODULE_ID));
                 list.add(moduleID);
 
             }
@@ -994,14 +994,14 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         String selection = TeacherTable.COLUMN_ID + " = ?" + " AND " + TeacherTable.COLUMN_STUDENT_ID + "= ?";
         String[] selectionArgs = {String.valueOf(id), String.valueOf(getStudentID())};
-        try (var cursor = db.query(TeacherTable.TABLE_NAME, null, selection, selectionArgs,
+        try (Cursor c = db.query(TeacherTable.TABLE_NAME, null, selection, selectionArgs,
                 null, null, null)) {
-            if (cursor.moveToLast()) {
+            if (c.moveToLast()) {
                 teacher = new Teacher(
-                        cursor.getInt(cursor.getColumnIndex(TeacherTable.COLUMN_ID)),
-                        cursor.getString(cursor.getColumnIndex(TeacherTable.COLUMN_FIRSTNAME)),
-                        cursor.getString(cursor.getColumnIndex(TeacherTable.COLUMN_LASTNAME)),
-                        cursor.getString(cursor.getColumnIndex(TeacherTable.COLUMN_EMAIL)));
+                        c.getInt(c.getColumnIndex(TeacherTable.COLUMN_ID)),
+                        c.getString(c.getColumnIndex(TeacherTable.COLUMN_FIRSTNAME)),
+                        c.getString(c.getColumnIndex(TeacherTable.COLUMN_LASTNAME)),
+                        c.getString(c.getColumnIndex(TeacherTable.COLUMN_EMAIL)));
             }
         } catch (Exception e) {
             Log.d(ERROR_TAG, getErrorMessage(e));
@@ -1017,14 +1017,14 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         String selection = SemesterTable.COLUMN_ID + " = ?";
         String[] selectionArgs = {String.valueOf(id)};
-        try (var cursor = db.query(SemesterTable.TABLE_NAME, null, selection, selectionArgs,
+        try (Cursor c = db.query(SemesterTable.TABLE_NAME, null, selection, selectionArgs,
                 null, null, null)) {
-            if (cursor.moveToLast()) {
+            if (c.moveToLast()) {
                 return new Semester(
-                        cursor.getInt(cursor.getColumnIndex(SemesterTable.COLUMN_ID)),
-                        cursor.getString(cursor.getColumnIndex(SemesterTable.COLUMN_NAME)),
-                        LocalDate.parse(cursor.getString(cursor.getColumnIndex(SemesterTable.COLUMN_START_DATE))),
-                        LocalDate.parse(cursor.getString(cursor.getColumnIndex(SemesterTable.COLUMN_END_DATE)))
+                        c.getInt(c.getColumnIndex(SemesterTable.COLUMN_ID)),
+                        c.getString(c.getColumnIndex(SemesterTable.COLUMN_NAME)),
+                        LocalDate.parse(c.getString(c.getColumnIndex(SemesterTable.COLUMN_START_DATE))),
+                        LocalDate.parse(c.getString(c.getColumnIndex(SemesterTable.COLUMN_END_DATE)))
                 );
             }
         } catch (Exception e) {
@@ -1111,16 +1111,16 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 AND deadline = ?
                  """;
 
-        try (var cursor = db.rawQuery(
+        try (Cursor c = db.rawQuery(
                 SQL,
                 new String[]{
                         String.valueOf(getStudentID()),
                         deadlineDate.toString()}
         )) {
 
-            if (cursor.getCount() > 0) {
-                cursor.moveToFirst();
-                return cursor.getInt(0);
+            if (c.getCount() > 0) {
+                c.moveToFirst();
+                return c.getInt(0);
             }
         } catch (Exception e) {
 

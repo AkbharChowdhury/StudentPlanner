@@ -15,6 +15,7 @@ import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
 import com.studentplanner.studentplanner.models.ModuleTeacher;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.WordUtils;
 
@@ -34,13 +35,13 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.ValueRange;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public final class Helper {
     private static final String ellipses = "...";
@@ -92,8 +93,9 @@ public final class Helper {
 
     public static String convertFUllDateToYYMMDD(String dateStr) {
         try {
-            var formatter = new SimpleDateFormat("EEEE, MMM dd, yyyy", Locale.ENGLISH);
-            return new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(Objects.requireNonNull(formatter.parse(dateStr)));
+            return new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+                    .format(Objects.requireNonNull(new SimpleDateFormat("EEEE, MMM dd, yyyy", Locale.ENGLISH)
+                            .parse(dateStr)));
         } catch (ParseException e) {
             Log.d(ERROR_TAG, Objects.requireNonNull(e.getMessage()));
 
@@ -134,11 +136,10 @@ public final class Helper {
     }
 
     // link https://beginnersbook.com/2014/01/how-to-convert-12-hour-time-to-24-hour-date-in-java/
-    public static String convertFormattedTimeToDBFormat(String time) {
-        DateFormat pattern = new SimpleDateFormat("hh:mm aa", Locale.ENGLISH);
-        try {
-            return new SimpleDateFormat("HH:mm", Locale.ENGLISH).format(Objects.requireNonNull(pattern.parse(time)));
+    public static String convertFormattedTimeToDBFormat(String time)  {
 
+        try {
+            return new SimpleDateFormat("HH:mm", Locale.ENGLISH).format(Objects.requireNonNull(new SimpleDateFormat("hh:mm aa", Locale.ENGLISH).parse(time)));
         } catch (ParseException e) {
             Log.d(ERROR_TAG, Objects.requireNonNull(e.getMessage()));
         }
@@ -153,14 +154,11 @@ public final class Helper {
         };
     }
 
-    private static ArrayList<Integer> isWeek() {
-        ArrayList<Integer> daysWeek = new ArrayList<>();
-        for (int i = 0; i < 365; i++) {
-            if (i % 7 == 0) {
-                daysWeek.add(i);
-            }
-        }
-        return daysWeek;
+
+    private static int[] isWeek() {
+        return IntStream.range(0, 365)
+                .filter(i -> i % 7 == 0)
+                .toArray();
     }
 
     public static String calcDeadlineDate(LocalDate deadline, boolean isCompleted) {
@@ -174,8 +172,6 @@ public final class Helper {
             return "Due Today";
         }
 
-        ArrayList<Integer> isWeek = isWeek();
-
         StringBuilder sb = new StringBuilder("In ");
         if (months == 0 && days == 0 && !isCompleted) {
 
@@ -188,7 +184,7 @@ public final class Helper {
             return sb.append("1 month").toString();
         }
 
-        if (months == 0 && isWeek.contains(days)) {
+        if (months == 0 && ArrayUtils.contains(isWeek(), days)) {
 
             return sb.append(weeks == 1 ? "1 week" : weeks + " weeks").toString();
         }
@@ -225,10 +221,8 @@ public final class Helper {
     }
 
 
-    public static String showFormattedDBTime(String time, Context context) {
-        LocalTime t = LocalTime.parse(time);
-        String selectedTime = String.format(Locale.getDefault(), context.getString(R.string.time_format_database), t.getHour(), t.getMinute());
-        return Helper.formatTime(selectedTime);
+    public static String showFormattedDBTime(LocalTime t, Context context) {
+        return formatTime(String.format(Locale.getDefault(), context.getString(R.string.time_format_database), t.getHour(), t.getMinute()));
     }
 
 
@@ -267,12 +261,7 @@ public final class Helper {
     }
 
     public static boolean moduleIDExistsInModuleTeacher(List<ModuleTeacher> moduleTeacherList, int moduleID) {
-        for (ModuleTeacher moduleTeacher : moduleTeacherList) {
-            if (moduleTeacher.moduleID() == moduleID) {
-                return true;
-            }
-        }
-        return false;
+        return moduleTeacherList.stream().anyMatch(m-> m.moduleID() == moduleID);
     }
 
     public static String getReminderTitle() {
@@ -284,7 +273,7 @@ public final class Helper {
     }
 
 
-    public static String readStream(InputStream in) {
+    public static String readStream(final InputStream in) {
         StringBuilder sb = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
             String nextLine;
@@ -292,7 +281,7 @@ public final class Helper {
                 sb.append(nextLine);
             }
         } catch (IOException e) {
-            Log.d(ERROR_TAG, e.getMessage());
+            Log.d(ERROR_TAG, Objects.requireNonNull(e.getMessage()));
         }
         return sb.toString();
     }
@@ -315,8 +304,7 @@ public final class Helper {
 
     public static void characterCounter(TextInputLayout textField, Context context) {
         final int maxLength = textField.getCounterMaxLength();
-        int length = Helper.trimStr(textField).length();
-
+        int length = trimStr(textField).length();
         final int greenLength = maxLength / 4;
         final int warningLength = maxLength / 2;
 
@@ -337,11 +325,10 @@ public final class Helper {
     }
 
     public static void setEditTextMaxLength(final EditText editText, int length) {
-        InputFilter[] FilterArray = new InputFilter[1];
-        FilterArray[0] = new InputFilter.LengthFilter(length);
-        editText.setFilters(FilterArray);
+        InputFilter[] filterArray = new InputFilter[1];
+        filterArray[0] = new InputFilter.LengthFilter(length);
+        editText.setFilters(filterArray);
     }
-
 
 
     public static List<DayOfWeek> weekends() {

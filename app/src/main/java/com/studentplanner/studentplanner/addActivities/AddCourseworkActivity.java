@@ -104,7 +104,7 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
         initFields();
         setTimePicker();
         courseworkImage.setOnClickListener(v -> openFilesApp());
-        txtDeadlineTime.setText(Helper.showFormattedDBTime(LocalTime.now().plusHours(1).toString(), this));
+        txtDeadlineTime.setText(Helper.showFormattedDBTime(LocalTime.now().plusHours(1), this));
         Dropdown.getStringArray(txtPriority, this, R.array.priority_array);
         txtDeadline.setText(Helper.formatDate(CalendarUtils.getCurrentDate().toString()));
 

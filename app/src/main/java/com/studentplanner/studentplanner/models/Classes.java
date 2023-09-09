@@ -5,13 +5,15 @@ import android.content.ContentValues;
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.tables.ClassTable;
 
+import java.time.LocalTime;
+
 public final class Classes {
     private int classID;
     private int moduleID;
     private int semesterID;
     private int dow;
-    private String startTime;
-    private String endTime;
+    private LocalTime startTime;
+    private LocalTime endTime;
     private String room;
     private String classType;
 
@@ -61,7 +63,7 @@ public final class Classes {
         this.txtClassTypeError = txtClassTypeError;
     }
 
-    public Classes(int moduleID, int semesterID, int dow, String startTime, String endTime, String room, String classType) {
+    public Classes(int moduleID, int semesterID, int dow, LocalTime startTime, LocalTime endTime, String room, String classType) {
         this.moduleID = moduleID;
         this.semesterID = semesterID;
         this.dow = dow;
@@ -71,7 +73,7 @@ public final class Classes {
         this.classType = classType;
     }
 
-    public Classes(int classID, int moduleID, int semesterID, int dow, String startTime, String endTime, String room, String classType) {
+    public Classes(int classID, int moduleID, int semesterID, int dow, LocalTime startTime, LocalTime endTime, String room, String classType) {
         this.classID = classID;
         this.moduleID = moduleID;
         this.semesterID = semesterID;
@@ -98,11 +100,11 @@ public final class Classes {
         return dow;
     }
 
-    public String getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public String getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
@@ -119,8 +121,8 @@ public final class Classes {
         cv.put(ClassTable.COLUMN_MODULE_ID, classes.getModuleID());
         cv.put(ClassTable.COLUMN_SEMESTER_ID, classes.getSemesterID());
         cv.put(ClassTable.COLUMN_DOW, classes.getDow());
-        cv.put(ClassTable.COLUMN_START_TIME, classes.getStartTime());
-        cv.put(ClassTable.COLUMN_END_TIME, classes.getEndTime());
+        cv.put(ClassTable.COLUMN_START_TIME, classes.getStartTime().toString());
+        cv.put(ClassTable.COLUMN_END_TIME, classes.getEndTime().toString());
         cv.put(ClassTable.COLUMN_ROOM, classes.getRoom());
         cv.put(ClassTable.COLUMN_TYPE, classes.getClassType());
         return cv;

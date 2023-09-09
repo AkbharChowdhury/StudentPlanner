@@ -139,8 +139,8 @@ public class AddClassesActivity extends AppCompatActivity implements TimePickerD
                 selectedModuleID,
                 selectedSemesterID,
                 CalendarUtils.getDOWNumber(Helper.trimStr(txtDays)),
-                Helper.convertFormattedTimeToDBFormat(Helper.trimStr(txtStartTime)),
-                Helper.convertFormattedTimeToDBFormat(Helper.trimStr(txtEndTime)),
+                LocalTime.parse(Helper.convertFormattedTimeToDBFormat(Helper.trimStr(txtStartTime))),
+                LocalTime.parse(Helper.convertFormattedTimeToDBFormat(Helper.trimStr(txtEndTime))),
                 Helper.trimStr(txtRoom),
                 Helper.trimStr(txtClassType)
         );

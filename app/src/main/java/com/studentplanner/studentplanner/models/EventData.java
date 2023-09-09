@@ -66,8 +66,8 @@ public final class EventData {
             if (date.getDayOfWeek() == DayOfWeek.of(myClass.getDow())) {
                 Semester semester = db.getSelectedSemester(myClass.getSemesterID());
                 Event classEvent = new Event(date,
-                        LocalTime.parse(myClass.getStartTime()),
-                        LocalTime.parse(myClass.getEndTime()),
+                        myClass.getStartTime(),
+                        myClass.getEndTime(),
                         EventType.CLASSES,
                         semester.start(),
                         semester.end(),

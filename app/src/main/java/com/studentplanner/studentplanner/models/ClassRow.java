@@ -46,7 +46,7 @@ public final class ClassRow {
         lblClassTitle.setText(Objects.requireNonNull(db.getSelectedModule(moduleID)).getModuleName());
         final String room = classes.getRoom().isEmpty() ? context.getString(R.string.no_room_assigned) : classes.getRoom();
         lblRoom.setText(room);
-        lblStartTime.setText(Helper.formatTimeShort(classes.getStartTime()));
-        lblEndTime.setText(Helper.formatTimeShort(classes.getEndTime()));
+        lblStartTime.setText(Helper.formatTimeShort(classes.getStartTime().toString()));
+        lblEndTime.setText(Helper.formatTimeShort(classes.getEndTime().toString()));
     }
 }
