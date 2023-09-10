@@ -725,38 +725,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     @SuppressLint("Range")
-
-    private List<Coursework> getCourseworkList(final String SQL) {
-        List<Coursework> list = new ArrayList<>();
-        SQLiteDatabase db = getReadableDatabase();
-        try (Cursor c = db.rawQuery(SQL, getStudentIDArray())) {
-            if (!isCursorEmpty(c)) {
-                while (c.moveToNext()) {
-                    Coursework coursework = new Coursework(
-                            c.getInt(c.getColumnIndex(CourseworkTable.COLUMN_ID)),
-                            c.getInt(c.getColumnIndex(CourseworkTable.COLUMN_MODULE_ID)),
-                            c.getString(c.getColumnIndex(CourseworkTable.COLUMN_TITLE)),
-                            c.getString(c.getColumnIndex(CourseworkTable.COLUMN_DESCRIPTION)),
-                            c.getString(c.getColumnIndex(CourseworkTable.COLUMN_PRIORITY)),
-                            LocalDate.parse(c.getString(c.getColumnIndex(CourseworkTable.COLUMN_DEADLINE))),
-                            LocalTime.parse(c.getString(c.getColumnIndex(CourseworkTable.COLUMN_DEADLINE_TIME)))
-                    );
-                    coursework.setImage(c.getBlob(c.getColumnIndex(CourseworkTable.COLUMN_IMAGE)));
-                    coursework.setCompleted(Coursework.isCompleted(c.getString(c.getColumnIndex(CourseworkTable.COLUMN_COMPLETED))));
-                    list.add(coursework);
-
-                }
-
-            }
-        } catch (Exception e) {
-            Log.d(ERROR_TAG, getErrorMessage(e));
-        }
-        return list;
-
-
-    }
-
-    @SuppressLint("Range")
     public List<Coursework> getUpComingCourseworkByMonth() {
         return courseworkList("""        
                 SELECT c.*,
@@ -793,7 +761,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 """;
         try (Cursor c = db.rawQuery(SQL, getStudentIDArray())) {
             if (!isCursorEmpty(c)) {
-
                 while (c.moveToNext()) {
                     int moduleID = c.getInt(c.getColumnIndex(ModuleTeacherTable.COLUMN_MODULE_ID));
                     String teacherIDs = c.getString(c.getColumnIndex("teacher_id_list"));
@@ -908,7 +875,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
     @SuppressLint("Range")
     public List<Semester> getSemester() {
-        List<Semester> semesterList = new ArrayList<>();
+        List<Semester> list = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
         String selection = SemesterTable.COLUMN_STUDENT_ID + " = ?";
 
@@ -923,7 +890,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         )) {
             if (!isCursorEmpty(c)) {
                 while (c.moveToNext()) {
-                    semesterList.add(new Semester(
+                    list.add(new Semester(
                             c.getInt(c.getColumnIndex(SemesterTable.COLUMN_ID)),
                             c.getString(c.getColumnIndex(SemesterTable.COLUMN_NAME)),
                             LocalDate.parse(c.getString(c.getColumnIndex(SemesterTable.COLUMN_START_DATE))),
@@ -937,15 +904,15 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
             Log.d(ERROR_TAG, getErrorMessage(e));
 
         }
-        return semesterList;
+        return list;
     }
 
     @SuppressLint("Range")
     public Module getSelectedModule(int id) {
         Module module = null;
         SQLiteDatabase db = getReadableDatabase();
-        String selection = ModuleTable.COLUMN_ID + " = ?" + " AND " + ModuleTable.COLUMN_STUDENT_ID + "= ?";
-        String[] selectionArgs = {String.valueOf(id), String.valueOf(getStudentID())};
+        String selection = ModuleTable.COLUMN_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(id)};
         String[] columns = {ModuleTable.COLUMN_MODULE_C0DE, ModuleTable.COLUMN_MODULE_NAME};
         try (Cursor c = db.query(ModuleTable.TABLE_NAME, columns, selection, selectionArgs,
                 null, null, null)) {
