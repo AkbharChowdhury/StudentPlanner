@@ -1091,9 +1091,8 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 SQL,
                 new String[]{
                         String.valueOf(getStudentID()),
-                        deadlineDate.toString()}
-        )) {
-
+                        deadlineDate.toString()
+                })) {
             if (c.getCount() > 0) {
                 c.moveToFirst();
                 return c.getInt(0);
