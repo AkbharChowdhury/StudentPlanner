@@ -563,7 +563,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
     @SuppressLint("Range")
     public ArrayList<Integer> getModuleTeacherByModuleID(int moduleID) {
-        ArrayList<Integer> teacherIds = new ArrayList<>();
+        var teacherIds = new ArrayList<Integer>();
         SQLiteDatabase db = getReadableDatabase();
         String selection = ModuleTeacherTable.COLUMN_MODULE_ID + " = ?";
         String[] selectionArgs = {String.valueOf(moduleID)};
