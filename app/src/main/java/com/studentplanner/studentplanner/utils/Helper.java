@@ -23,7 +23,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
@@ -228,20 +227,16 @@ public final class Helper {
 
     public static void getDays(AutoCompleteTextView field, Context context) {
         final List<String> days = CalendarUtils.getDays();
-//        final ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.list_item, days);
         field.setAdapter(new ArrayAdapter<>(context, R.layout.list_item, days));
     }
 
     public static void getStringArray(Context context, AutoCompleteTextView field, int array) {
         final List<String> types = Arrays.asList(context.getResources().getStringArray(array));
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.list_item, types);
-        field.setAdapter(adapter);
+        field.setAdapter(new ArrayAdapter<>(context, R.layout.list_item, types));
     }
 
     public static String[] convertListStringToStringArray(List<String> list) {
-
         return list.toArray(new String[0]);
-
     }
 
     public static List<Integer> convertStringArrayToIntArrayList(List<String> numbers) {
@@ -251,7 +246,7 @@ public final class Helper {
     }
 
     public static String getTeachersForSelectedModule(Context context, int moduleID) {
-        DatabaseHelper db = DatabaseHelper.getInstance(context);
+        var db = DatabaseHelper.getInstance(context);
         String teachers = db.getTeachersForSelectedModuleID(moduleID).toString();
         return removeFirstAndLastChar(teachers);
     }
