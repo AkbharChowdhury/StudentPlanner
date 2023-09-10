@@ -1001,8 +1001,8 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     public Teacher getSelectedTeacher(int id) {
         Teacher teacher = null;
         SQLiteDatabase db = getReadableDatabase();
-        String selection = TeacherTable.COLUMN_ID + " = ?" + " AND " + TeacherTable.COLUMN_STUDENT_ID + "= ?";
-        String[] selectionArgs = {String.valueOf(id), String.valueOf(getStudentID())};
+        String selection = TeacherTable.COLUMN_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(id)};
         try (Cursor c = db.query(TeacherTable.TABLE_NAME, null, selection, selectionArgs,
                 null, null, null)) {
             if (c.moveToLast()) {

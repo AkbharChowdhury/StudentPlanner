@@ -62,10 +62,10 @@ public class EditModuleActivity extends AppCompatActivity {
 
         if (getIntent().hasExtra(SELECTED_ID)) {
             int id = getIntent().getIntExtra(SELECTED_ID, 0);
-            Module model = db.getSelectedModule(id);
-            txtModuleCode.getEditText().setText(model.getModuleCode());
-            txtModuleName.getEditText().setText(model.getModuleName());
-            excludedModuleCode = model.getModuleCode();
+            var module = db.getSelectedModule(id);
+            txtModuleCode.getEditText().setText(module.getModuleCode());
+            txtModuleName.getEditText().setText(module.getModuleName());
+            excludedModuleCode = module.getModuleCode();
 
         }
 

@@ -167,7 +167,7 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
 
             List<Integer> moduleIDList = db.getModules().stream().map(Module::getModuleID).toList();
 
-            Coursework coursework = db.getSelectedCoursework(id);
+            var coursework = db.getSelectedCoursework(id);
             LocalTime deadlineTime = coursework.getDeadlineTime();
 
             txtTitle.getEditText().setText(coursework.getTitle());

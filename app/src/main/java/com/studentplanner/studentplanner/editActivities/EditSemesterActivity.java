@@ -79,7 +79,7 @@ public class EditSemesterActivity extends AppCompatActivity implements DatePicke
         if (getIntent().hasExtra(SELECTED_ID)) {
 
             final int ID = getIntent().getIntExtra(SELECTED_ID, 0);
-            Semester semester = db.getSelectedSemester(ID);
+            var semester = db.getSelectedSemester(ID);
             txtName.getEditText().setText(semester.name());
             txtStartDate.setText(Helper.formatDate(semester.start().toString()));
             txtEndDate.setText(Helper.formatDate(semester.end().toString()));

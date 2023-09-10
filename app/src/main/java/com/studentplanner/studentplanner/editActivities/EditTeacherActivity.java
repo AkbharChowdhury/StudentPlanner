@@ -69,10 +69,10 @@ public class EditTeacherActivity extends AppCompatActivity {
 
         if (getIntent().hasExtra(SELECTED_ID)) {
             int id = getIntent().getIntExtra(SELECTED_ID, 0);
-            Teacher model = db.getSelectedTeacher(id);
-            txtFirstName.getEditText().setText(model.getFirstname());
-            txtLastName.getEditText().setText(model.getLastname());
-            final String email = model.getEmail();
+            var teacher = db.getSelectedTeacher(id);
+            txtFirstName.getEditText().setText(teacher.getFirstname());
+            txtLastName.getEditText().setText(teacher.getLastname());
+            final String email = teacher.getEmail();
             txtEmail.getEditText().setText(email);
             excludedEmail = email;
 

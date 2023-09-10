@@ -122,7 +122,7 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
         final String SELECTED_ID = ClassTable.COLUMN_ID;
         if (getIntent().hasExtra(SELECTED_ID)) {
             int id = getIntent().getIntExtra(SELECTED_ID, 0);
-            Classes myClass = db.getSelectedClass(id);
+            var myClass = db.getSelectedClass(id);
 
             txtRoom.getEditText().setText(myClass.getRoom());
             Helper.getDays(txtDays, this);
