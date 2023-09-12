@@ -7,24 +7,29 @@ import android.widget.Spinner;
 
 import com.studentplanner.studentplanner.R;
 
+import org.apache.commons.text.WordUtils;
+
+import java.time.DayOfWeek;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public final class Dropdown {
-    private Dropdown() {}
+    private Dropdown() {
+    }
 
     public static void getStringArray(AutoCompleteTextView field, Context c, int array) {
         field.setAdapter(new ArrayAdapter<>(c, R.layout.list_item, c.getResources().getStringArray(array)));
     }
 
 
-    public static int getSelectedStringArrayNumber(String priority, Context c, int array) {
-        return Arrays.asList(c.getResources().getStringArray(array)).indexOf(priority);
+    public static int getSelectedStringArrayNumber(String item, Context c, int array) {
+
+        return Arrays.asList(c.getResources().getStringArray(array)).indexOf(item);
     }
 
-
-    public static int setSelectedDay(String day) {
-        return CalendarUtils.getDays().indexOf(day);
+    public static int setSelectedDayIndex(DayOfWeek dayOfWeek) {
+        return CalendarUtils.getDays().indexOf(WordUtils.capitalize(dayOfWeek.toString().toLowerCase(Locale.ROOT)));
 
     }
 
@@ -34,9 +39,7 @@ public final class Dropdown {
     }
 
     public static void setDefaultSpinnerPosition(Spinner... spinners) {
-        for (Spinner spinner : spinners) {
-            spinner.setSelection(0, false);
-        }
+        Arrays.stream(spinners).toList().forEach(spinner -> spinner.setSelection(0, false));
     }
 
     public static String getSpinnerText(Spinner spinner, int position) {

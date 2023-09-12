@@ -93,7 +93,6 @@ public class CalendarFragment extends Fragment implements OnItemListener {
         clearEventStatus();
         showCalendarEventData();
         setCalendarDate(CURRENT_DATE);
-
         return binding.getRoot();
     }
 

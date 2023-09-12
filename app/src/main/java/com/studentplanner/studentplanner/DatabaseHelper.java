@@ -80,9 +80,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
 
     private void dropTables(SQLiteDatabase db, String... tableNames) {
-        for (String table : tableNames) {
-            db.execSQL("DROP TABLE IF EXISTS " + table);
-        }
+        Arrays.stream(tableNames).toList().forEach(table -> db.execSQL("DROP TABLE IF EXISTS " + table));
     }
 
     private void dropAllTables(SQLiteDatabase db) {

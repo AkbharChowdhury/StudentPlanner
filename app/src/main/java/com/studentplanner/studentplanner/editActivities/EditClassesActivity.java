@@ -136,12 +136,11 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
             txtModules.setText(txtModules.getAdapter().getItem(Dropdown.getDropDownID(myClass.getModuleID(), moduleIDList)).toString(), false);
 
             txtClassType.setText(txtClassType.getAdapter().getItem(Dropdown.getSelectedStringArrayNumber(myClass.getClassType(), this, R.array.type_array)).toString(), false);
-            String classDay = DayOfWeek.of(myClass.getDow()).toString();
+            DayOfWeek classDay = DayOfWeek.of(myClass.getDow());
 
             txtDays.setText(
                     txtDays.getAdapter()
-                            .getItem(Dropdown.setSelectedDay(classDay)).
-                            toString(),
+                            .getItem(Dropdown.setSelectedDayIndex(classDay)).toString(),
                     false);
 
             txtStartTime.setText(Helper.showFormattedDBTime(myClass.getStartTime(), this));
