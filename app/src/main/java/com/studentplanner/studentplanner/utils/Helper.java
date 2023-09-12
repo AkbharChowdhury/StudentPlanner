@@ -245,6 +245,7 @@ public final class Helper {
                 .collect(Collectors.toList());
     }
 
+
     public static String getTeachersForSelectedModule(Context context, int moduleID) {
         var db = DatabaseHelper.getInstance(context);
         String teachers = db.getTeachersForSelectedModuleID(moduleID).toString();
