@@ -35,10 +35,8 @@ public final class CourseworkRow {
     public void setDetails(Coursework coursework){
         String priorityLevel = coursework.getPriority();
         Module module = db.getSelectedModule(coursework.getModuleID());
-        String moduleDetails = module.getModuleDetails();
         title.setText(Helper.getSnippet(WordUtils.capitalizeFully(coursework.getTitle()), 20));
-
-        lblModule.setText(Helper.getSnippet(moduleDetails, 30));
+        lblModule.setText(Helper.getSnippet(module.getModuleDetails(), 30));
         priority.setText(priorityLevel);
         priority.setTextColor(Helper.getPriorityColour(priorityLevel, context));
         time.setText(Helper.formatTimeShort(coursework.getDeadlineTime().toString()));

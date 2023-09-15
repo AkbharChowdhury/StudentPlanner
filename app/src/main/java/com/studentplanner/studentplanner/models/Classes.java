@@ -2,6 +2,8 @@ package com.studentplanner.studentplanner.models;
 
 import android.content.ContentValues;
 
+import androidx.annotation.NonNull;
+
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.tables.ClassTable;
 
@@ -128,6 +130,7 @@ public final class Classes {
         return cv;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Classes{" +

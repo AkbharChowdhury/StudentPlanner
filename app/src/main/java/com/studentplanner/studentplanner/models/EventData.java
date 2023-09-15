@@ -6,7 +6,6 @@ import com.studentplanner.studentplanner.utils.CalendarUtils;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,14 +26,12 @@ public final class EventData {
         List<Coursework> courseworkList = db.getCoursework();
         if (!courseworkList.isEmpty()) {
             courseworkList.forEach(coursework -> {
-                Event courseworkEvent = new Event(
-                        coursework.getDeadline(),
-                        coursework.getDeadlineTime(),
-                        EventType.COURSEWORK);
-
-                courseworkEvent.setId(coursework.getCourseworkID());
-                courseworkEvent.setCoursework(coursework);
-                courseworkEventList.add(courseworkEvent);
+                courseworkEventList.add(
+                        new Event(
+                                coursework.getCourseworkID(),
+                                coursework.getDeadline(),
+                                EventType.COURSEWORK, coursework)
+                );
 
             });
 
@@ -64,19 +61,12 @@ public final class EventData {
         List<Event> classes = new ArrayList<>();
         CalendarUtils.getRecurringEvents(numOfDays, startDate).forEach(date -> {
             if (date.getDayOfWeek() == DayOfWeek.of(myClass.getDow())) {
-                Semester semester = db.getSelectedSemester(myClass.getSemesterID());
-                Event classEvent = new Event(date,
-                        myClass.getStartTime(),
-                        myClass.getEndTime(),
+                classes.add(new Event(
+                        myClass.getClassID(),
+                        date,
                         EventType.CLASSES,
-                        semester.start(),
-                        semester.end(),
-                        myClass.getDow()
+                        myClass)
                 );
-
-                classEvent.setId(myClass.getClassID());
-                classEvent.setClasses(myClass);
-                classes.add(classEvent);
             }
 
         });
