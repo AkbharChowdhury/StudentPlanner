@@ -1,7 +1,5 @@
 package com.studentplanner.studentplanner.viewholders;
 
-import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -10,13 +8,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.databinding.ModuleTeacherRowBinding;
-import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.ModuleTeacher;
 
-import org.apache.commons.text.WordUtils;
-
 import java.util.List;
-import java.util.Locale;
 
 public class ModuleTeacherViewHolder extends RecyclerView.ViewHolder {
     private final TextView moduleID;
@@ -40,15 +34,14 @@ public class ModuleTeacherViewHolder extends RecyclerView.ViewHolder {
 
     public void showDetails(List<ModuleTeacher> list, int position) {
         ModuleTeacher model = list.get(position);
-        Module module = db.getSelectedModule(model.moduleID());
         moduleID.setText(String.valueOf(model.moduleID()));
-        tvModule.setText(module.getModuleDetails());
+        tvModule.setText(db.getSelectedModule(model.moduleID()).getModuleDetails());
         tvTeachers.setText(getTeacherNames(list, position));
     }
 
 
     private String getTeacherNames(List<ModuleTeacher> list, int position) {
-        StringBuilder sb = new StringBuilder();
+        var sb = new StringBuilder();
         list.get(position)
                 .teacherIDList()
                 .forEach(id -> sb

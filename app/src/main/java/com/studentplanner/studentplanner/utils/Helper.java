@@ -171,7 +171,7 @@ public final class Helper {
             return "Due Today";
         }
 
-        StringBuilder sb = new StringBuilder("In ");
+        var sb = new StringBuilder("In ");
         if (months == 0 && days == 0 && !isCompleted) {
 
             return "Overdue";
@@ -270,8 +270,8 @@ public final class Helper {
 
 
     public static String readStream(final InputStream in) {
-        StringBuilder sb = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
+        var sb = new StringBuilder();
+        try (var reader = new BufferedReader(new InputStreamReader(in))) {
             String nextLine;
             while ((nextLine = reader.readLine()) != null) {
                 sb.append(nextLine);
