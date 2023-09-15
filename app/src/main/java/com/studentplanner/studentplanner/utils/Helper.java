@@ -86,7 +86,10 @@ public final class Helper {
 
     public static String formatDateShort(String date) {
 
-        return DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).format(LocalDate.parse(date));
+        return formatDateStyle(FormatStyle.MEDIUM).format(LocalDate.parse(date));
+    }
+    private static DateTimeFormatter formatDateStyle(FormatStyle style){
+        return DateTimeFormatter.ofLocalizedDate(style);
     }
 
 
@@ -119,7 +122,7 @@ public final class Helper {
     }
 
     public static String formatDate(String date) {
-        return DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).format(LocalDate.parse(date));
+        return formatDateStyle(FormatStyle.FULL).format(LocalDate.parse(date));
     }
 
     public static LocalDate formatDate(int year, int month, int day) {
@@ -226,8 +229,7 @@ public final class Helper {
 
 
     public static void getDays(AutoCompleteTextView field, Context context) {
-        final List<String> days = CalendarUtils.getDays();
-        field.setAdapter(new ArrayAdapter<>(context, R.layout.list_item, days));
+        field.setAdapter(new ArrayAdapter<>(context, R.layout.list_item, CalendarUtils.getDays()));
     }
 
     public static void getStringArray(Context context, AutoCompleteTextView field, int array) {
@@ -247,9 +249,7 @@ public final class Helper {
 
 
     public static String getTeachersForSelectedModule(Context context, int moduleID) {
-        var db = DatabaseHelper.getInstance(context);
-        String teachers = db.getTeachersForSelectedModuleID(moduleID).toString();
-        return removeFirstAndLastChar(teachers);
+        return removeFirstAndLastChar(DatabaseHelper.getInstance(context).getTeachersForSelectedModuleID(moduleID).toString());
     }
 
     private static String removeFirstAndLastChar(String s) {
