@@ -29,16 +29,15 @@ public final class FragmentHandler {
 
 
     private FragmentHandler() {
-
     }
 
-    public static int activeLink(Fragment selectedFragment) {
+    public static int activeLink(final Fragment selectedFragment) {
 
         return getSelectedFragmentID(getFragmentName(selectedFragment));
 
     }
 
-    private static int getSelectedFragmentID(String name) {
+    private static int getSelectedFragmentID(final String name) {
         return fragments.entrySet().stream()
                 .filter(i -> name.equals(getFragmentName(i.getValue())))
                 .map(Map.Entry::getKey)
@@ -46,11 +45,11 @@ public final class FragmentHandler {
                 .get(0);
     }
 
-    private static String getFragmentName(Fragment fragment) {
+    private static String getFragmentName(final Fragment fragment) {
         return fragment.getClass().getSimpleName();
     }
 
-    public static Fragment getSelectedFragment(MenuItem item) {
+    public static Fragment getSelectedFragment(final MenuItem item) {
         return fragments.get(item.getItemId());
     }
 
