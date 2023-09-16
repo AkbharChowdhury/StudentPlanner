@@ -1,6 +1,5 @@
 package com.studentplanner.studentplanner.utils;
 
-import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.fragment.app.Fragment;
@@ -15,7 +14,6 @@ import com.studentplanner.studentplanner.fragments.SemesterFragment;
 import com.studentplanner.studentplanner.fragments.TeacherFragment;
 
 import java.util.Map;
-import java.util.Objects;
 
 public final class FragmentHandler {
 
@@ -36,20 +34,20 @@ public final class FragmentHandler {
 
     public static int activeLink(Fragment selectedFragment) {
 
-       return getSelectedFragmentID(getFragmentName(selectedFragment));
+        return getSelectedFragmentID(getFragmentName(selectedFragment));
 
     }
-    private  static int getSelectedFragmentID(String name){
-        for (var i: fragments.entrySet()) {
-            if (name.equals(getFragmentName(i.getValue()))){
-                return i.getKey();
-            }
-        }
-        return 0;
 
+    private static int getSelectedFragmentID(String name) {
+        return fragments.entrySet().stream()
+                .filter(i -> name.equals(getFragmentName(i.getValue())))
+                .map(Map.Entry::getKey)
+                .toList()
+                .get(0);
     }
-    private static String getFragmentName(Fragment fragment){
-        return  fragment.getClass().getSimpleName();
+
+    private static String getFragmentName(Fragment fragment) {
+        return fragment.getClass().getSimpleName();
     }
 
     public static Fragment getSelectedFragment(MenuItem item) {
