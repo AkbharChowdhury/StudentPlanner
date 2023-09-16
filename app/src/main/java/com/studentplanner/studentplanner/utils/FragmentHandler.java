@@ -1,5 +1,6 @@
 package com.studentplanner.studentplanner.utils;
 
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.fragment.app.Fragment;
@@ -14,18 +15,9 @@ import com.studentplanner.studentplanner.fragments.SemesterFragment;
 import com.studentplanner.studentplanner.fragments.TeacherFragment;
 
 import java.util.Map;
+import java.util.Objects;
 
 public final class FragmentHandler {
-    private static final Map<String, Integer> linkId = Map.of(
-            "ReminderFragment", R.id.nav_reminder,
-            "SemesterFragment", R.id.nav_semester,
-            "TeacherFragment", R.id.nav_teachers,
-            "ModuleTeacherFragment", R.id.nav_module_teacher,
-            "CalendarFragment", R.id.nav_calendar,
-            "CourseworkFragment", R.id.nav_coursework,
-            "ModuleFragment", R.id.nav_module
-    );
-
 
     private static final Map<Integer, Fragment> fragments = Map.of(
             R.id.nav_reminder, new ReminderFragment(),
@@ -37,13 +29,27 @@ public final class FragmentHandler {
             R.id.nav_module, new ModuleFragment()
     );
 
+
     private FragmentHandler() {
 
     }
 
     public static int activeLink(Fragment selectedFragment) {
-        return linkId.get(selectedFragment.getClass().getSimpleName());
 
+       return getSelectedFragmentID(getFragmentName(selectedFragment));
+
+    }
+    private  static int getSelectedFragmentID(String name){
+        for (var i: fragments.entrySet()) {
+            if (name.equals(getFragmentName(i.getValue()))){
+                return i.getKey();
+            }
+        }
+        return 0;
+
+    }
+    private static String getFragmentName(Fragment fragment){
+        return  fragment.getClass().getSimpleName();
     }
 
     public static Fragment getSelectedFragment(MenuItem item) {
