@@ -64,10 +64,6 @@ public final class Helper {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 
-    public static String capitalise(String word) {
-        return word.substring(0, 1).toUpperCase() + word.substring(1);
-    }
-
     public static String trimStr(TextInputLayout textField) {
         return textField.getEditText().getText().toString().trim();
 
@@ -88,7 +84,8 @@ public final class Helper {
 
         return formatDateStyle(FormatStyle.MEDIUM).format(LocalDate.parse(date));
     }
-    private static DateTimeFormatter formatDateStyle(FormatStyle style){
+
+    private static DateTimeFormatter formatDateStyle(FormatStyle style) {
         return DateTimeFormatter.ofLocalizedDate(style);
     }
 
@@ -138,7 +135,7 @@ public final class Helper {
     }
 
     // link https://beginnersbook.com/2014/01/how-to-convert-12-hour-time-to-24-hour-date-in-java/
-    public static String convertFormattedTimeToDBFormat(String time)  {
+    public static String convertFormattedTimeToDBFormat(String time) {
 
         try {
             return new SimpleDateFormat("HH:mm", Locale.ENGLISH).format(Objects.requireNonNull(new SimpleDateFormat("hh:mm aa", Locale.ENGLISH).parse(time)));
@@ -257,7 +254,7 @@ public final class Helper {
     }
 
     public static boolean moduleIDExistsInModuleTeacher(List<ModuleTeacher> moduleTeacherList, int moduleID) {
-        return moduleTeacherList.stream().anyMatch(m-> m.moduleID() == moduleID);
+        return moduleTeacherList.stream().anyMatch(m -> m.moduleID() == moduleID);
     }
 
     public static String getReminderTitle() {

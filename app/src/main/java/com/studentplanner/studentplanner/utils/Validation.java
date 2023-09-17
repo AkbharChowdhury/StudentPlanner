@@ -171,7 +171,7 @@ public final class Validation {
 
     private boolean isValidName(TextInputLayout textField, String column) {
         String name = Helper.trimStr(textField);
-        String fieldName = Helper.capitalise(column);
+        String fieldName = WordUtils.capitalize(column);
 
         if (name.isEmpty()) {
             setError(textField, getRequiredFieldError(fieldName));
@@ -219,7 +219,7 @@ public final class Validation {
     private boolean isPassword8Chars(TextInputLayout textField) {
 
         String password = Helper.trimStr(textField);
-        String fieldName = Helper.capitalise(StudentTable.COLUMN_PASSWORD);
+        String fieldName = WordUtils.capitalize(StudentTable.COLUMN_PASSWORD);
         if (password.isEmpty()) return true;
         int PASSWORD_MIN_LENGTH = 8;
         if (!isMinLength(password, PASSWORD_MIN_LENGTH)) {
@@ -279,7 +279,7 @@ public final class Validation {
     private boolean isValidEmail(TextInputLayout textField) {
 
         String email = Helper.trimStr(textField);
-        String fieldName = Helper.capitalise(StudentTable.COLUMN_EMAIL);
+        String fieldName = WordUtils.capitalize(StudentTable.COLUMN_EMAIL);
 
         if (email.isEmpty()) {
             setError(textField, getRequiredFieldError(fieldName));
@@ -306,7 +306,7 @@ public final class Validation {
     private boolean isValidEmail(TextInputLayout textField, String excludedEmail) {
 
         String email = Helper.trimStr(textField);
-        String fieldName = Helper.capitalise(StudentTable.COLUMN_EMAIL);
+        String fieldName = WordUtils.capitalize(StudentTable.COLUMN_EMAIL);
 
         if (email.isEmpty()) {
             setError(textField, getRequiredFieldError(fieldName));
@@ -332,7 +332,7 @@ public final class Validation {
     private boolean isValidTeacherEmail(TextInputLayout textField) {
 
         String email = Helper.trimStr(textField);
-        String fieldName = Helper.capitalise(TeacherTable.COLUMN_EMAIL);
+        String fieldName = WordUtils.capitalize(TeacherTable.COLUMN_EMAIL);
 
         if (email.isEmpty()) {
             setError(textField, getRequiredFieldError(fieldName));
@@ -381,7 +381,7 @@ public final class Validation {
 
     private boolean isValidPassword(TextInputLayout textField) {
         String password = Helper.trimStr(textField);
-        String fieldName = Helper.capitalise(StudentTable.COLUMN_PASSWORD);
+        String fieldName = WordUtils.capitalize(StudentTable.COLUMN_PASSWORD);
 
         if (password.isEmpty()) {
             setError(textField, getRequiredFieldError(fieldName));
