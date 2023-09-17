@@ -73,6 +73,8 @@ public class LoginFragment extends Fragment {
         binding.btnRegisterLink.setOnClickListener(v -> Helper.goToActivity(activity, RegisterActivity.class));
         lblLoginError.setVisibility(View.INVISIBLE);
         binding.btnLogin.setOnClickListener(v -> handleLogin());
+
+
         return binding.getRoot();
 
     }
