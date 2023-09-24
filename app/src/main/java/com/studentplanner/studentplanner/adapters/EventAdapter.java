@@ -90,15 +90,14 @@ public class EventAdapter extends ArrayAdapter<Event> {
 
 
     private Intent getCourseworkIntent(final int id) {
-        Intent intent = new Intent(getContext(), EditCourseworkActivity.class);
-        intent.putExtra(CourseworkTable.COLUMN_ID, id);
-        return intent;
+        return new Intent(getContext(), EditCourseworkActivity.class)
+                .putExtra(CourseworkTable.COLUMN_ID, id);
+
     }
 
     private Intent getClassesIntent(final int id) {
-        Intent intent = new Intent(getContext(), EditClassesActivity.class);
-        intent.putExtra(ClassTable.COLUMN_ID, id);
-        return intent;
+        return new Intent(getContext(), EditClassesActivity.class)
+                .putExtra(ClassTable.COLUMN_ID, id);
     }
 
     private int getEventIcon(final EventType eventType) {

@@ -49,9 +49,8 @@ public class TeacherAdapter extends RecyclerView.Adapter<TeacherViewHolder> {
     }
 
     private Intent intent(int position) {
-        Intent intent = new Intent(context, EditTeacherActivity.class);
-        intent.putExtra(TeacherTable.COLUMN_ID, list.get(position).getUserID());
-        return intent;
+        return new Intent(context, EditTeacherActivity.class)
+                .putExtra(TeacherTable.COLUMN_ID, list.get(position).getUserID());
     }
 
 

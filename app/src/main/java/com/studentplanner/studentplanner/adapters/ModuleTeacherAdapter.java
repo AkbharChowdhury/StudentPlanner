@@ -50,9 +50,8 @@ public class ModuleTeacherAdapter extends RecyclerView.Adapter<ModuleTeacherView
     }
 
     private Intent intent(int position) {
-        Intent intent = new Intent(context, EditModuleTeacherActivity.class);
-        intent.putExtra(ModuleTable.COLUMN_ID, list.get(position).moduleID());
-        return intent;
+        return new Intent(context, EditModuleTeacherActivity.class)
+                .putExtra(ModuleTable.COLUMN_ID, list.get(position).moduleID());
     }
 
     @Override

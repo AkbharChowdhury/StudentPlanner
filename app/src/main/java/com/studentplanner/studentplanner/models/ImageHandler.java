@@ -49,6 +49,7 @@ public final class ImageHandler {
         intent.setType( "image/*");
         intent = Intent.createChooser(intent, WordUtils.capitalizeFully("Select Image"));
         imageActivityResultLauncher.launch(intent);
+
     }
 
 }

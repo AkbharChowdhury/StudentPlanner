@@ -52,9 +52,8 @@ public class SemesterAdapter extends RecyclerView.Adapter<SemesterViewHolder> {
     }
 
     private Intent intent(int position) {
-        Intent intent = new Intent(context, EditSemesterActivity.class);
-        intent.putExtra(SemesterTable.COLUMN_ID, list.get(position).semesterID());
-        return intent;
+        return new Intent(context, EditSemesterActivity.class)
+                .putExtra(SemesterTable.COLUMN_ID, list.get(position).semesterID());
     }
 
     @Override

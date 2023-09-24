@@ -14,6 +14,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public final class Coursework implements Searchable {
+
     private int courseworkID;
     private int moduleID;
     private String title;

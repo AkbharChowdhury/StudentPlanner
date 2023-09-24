@@ -52,10 +52,9 @@ public class CourseworkAdapter extends RecyclerView.Adapter<CourseworkViewHolder
         holder.getLayout().setOnClickListener(v -> startForResult.launch(intent(position)));
     }
 
-    private Intent intent(int position){
-        Intent intent = new Intent(context, EditCourseworkActivity.class);
-        intent.putExtra(CourseworkTable.COLUMN_ID, list.get(position).getCourseworkID());
-        return intent;
+    private Intent intent(int position) {
+        return new Intent(context, EditCourseworkActivity.class)
+                .putExtra(CourseworkTable.COLUMN_ID, list.get(position).getCourseworkID());
     }
 
     @Override
