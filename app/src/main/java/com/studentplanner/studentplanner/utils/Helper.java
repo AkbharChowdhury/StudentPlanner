@@ -139,9 +139,7 @@ public final class Helper {
     }
 
     public static String convertFullDateToYYMMDD(String dateStr) {
-        return LocalDate.parse(dateStr, getPattern("EEEE, dd MMMM yyyy"))
-                .format(getPattern("yyyy-MM-dd"));
-
+        return LocalDate.parse(dateStr, getPattern("EEEE, dd MMMM yyyy")).toString();
     }
 
     private static DateTimeFormatter getPattern(String pattern) {
