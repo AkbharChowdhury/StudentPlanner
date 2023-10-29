@@ -67,8 +67,8 @@ public class EditSemesterActivity extends AppCompatActivity implements DatePicke
         return new Semester(
                 getIntent().getIntExtra(SemesterTable.COLUMN_ID, 0),
                 Helper.trimStr(txtName),
-                LocalDate.parse(Helper.convertFUllDateToYYMMDD(txtStartDate.getEditableText().toString())),
-                LocalDate.parse(Helper.convertFUllDateToYYMMDD(txtEndDate.getEditableText().toString()))
+                LocalDate.parse(Helper.convertFullDateToYYMMDD(txtStartDate.getEditableText().toString())),
+                LocalDate.parse(Helper.convertFullDateToYYMMDD(txtEndDate.getEditableText().toString()))
         );
 
     }
@@ -165,8 +165,8 @@ public class EditSemesterActivity extends AppCompatActivity implements DatePicke
     }
 
     private void createDatePickerConstraint(DatePickerFragment datePickerStart) {
-        String endDate = Helper.convertFUllDateToYYMMDD(txtEndDate.getEditableText().toString());
-        String startDate = Helper.convertFUllDateToYYMMDD(txtStartDate.getEditableText().toString());
+        String endDate = Helper.convertFullDateToYYMMDD(txtEndDate.getEditableText().toString());
+        String startDate = Helper.convertFullDateToYYMMDD(txtStartDate.getEditableText().toString());
         datePickerStart.setDatePickerStartEnd(LocalDate.parse(startDate), LocalDate.parse(endDate));
     }
 

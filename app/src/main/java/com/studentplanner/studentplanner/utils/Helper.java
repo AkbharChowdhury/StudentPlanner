@@ -90,7 +90,7 @@ public final class Helper {
     }
 
 
-    public static String convertFUllDateToYYMMDD(String dateStr) {
+    public static String convertFullDateToYYMMDD(String dateStr) {
         try {
             return new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
                     .format(Objects.requireNonNull(new SimpleDateFormat("EEEE, MMM dd, yyyy", Locale.ENGLISH)

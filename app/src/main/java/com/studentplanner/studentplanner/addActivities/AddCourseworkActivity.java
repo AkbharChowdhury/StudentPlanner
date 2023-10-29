@@ -194,7 +194,7 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
                 Helper.trimStr(txtTitle),
                 Helper.trimStr(txtDescription),
                 Helper.trimStr(txtPriority),
-                LocalDate.parse(Helper.convertFUllDateToYYMMDD(Helper.trimStr(txtDeadline))),
+                LocalDate.parse(Helper.convertFullDateToYYMMDD(Helper.trimStr(txtDeadline))),
                 LocalTime.parse(Helper.convertFormattedTimeToDBFormat(txtDeadlineTime.getText().toString()))
         );
 
@@ -238,7 +238,7 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
         txtDeadlineTime.setOnTouchListener((view, motionEvent) -> {
             if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                 deadlineTimePicker = new BoundTimePickerDialog(this, this, deadlineCustomTimePicker.getSelectedHour(), deadlineCustomTimePicker.getSelectedMinute());
-                String deadlineDate = Helper.convertFUllDateToYYMMDD(Helper.trimStr(txtDeadline));
+                String deadlineDate = Helper.convertFullDateToYYMMDD(Helper.trimStr(txtDeadline));
                 LocalDate deadline = LocalDate.parse(deadlineDate);
                 LocalDate today = CalendarUtils.getCurrentDate();
                 LocalDate date = deadline.isEqual(today) ? today : deadline;

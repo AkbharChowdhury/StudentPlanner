@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -103,7 +102,7 @@ public final class CalendarUtils {
     }
 
     public static void setSelectedDate(DatePickerFragment datepicker, AutoCompleteTextView textField) {
-        datepicker.setCustomDate(LocalDate.parse(Helper.convertFUllDateToYYMMDD(textField.getEditableText().toString())));
+        datepicker.setCustomDate(LocalDate.parse(Helper.convertFullDateToYYMMDD(textField.getEditableText().toString())));
     }
 
 }

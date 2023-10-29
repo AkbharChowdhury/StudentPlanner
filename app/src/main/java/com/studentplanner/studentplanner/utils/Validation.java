@@ -106,7 +106,7 @@ public final class Validation {
 
     public boolean isValidDueTime(AutoCompleteTextView txtDeadline, TextInputLayout txtTimeError, AutoCompleteTextView txtDeadlineTime) {
 
-        LocalDate date = LocalDate.parse(Helper.convertFUllDateToYYMMDD(Helper.trimStr(txtDeadline)));
+        LocalDate date = LocalDate.parse(Helper.convertFullDateToYYMMDD(Helper.trimStr(txtDeadline)));
         LocalTime time = LocalTime.parse(Helper.convertFormattedTimeToDBFormat(txtDeadlineTime.getText().toString()));
 
         if (date.isEqual(LocalDate.now()) && time.isBefore(LocalTime.now())) {
@@ -149,7 +149,7 @@ public final class Validation {
 
 
     public boolean isPastDate(AutoCompleteTextView txtDate, TextInputLayout txtDateError) {
-        if (isPastDate(Helper.convertFUllDateToYYMMDD(Helper.trimStr(txtDate)))) {
+        if (isPastDate(Helper.convertFullDateToYYMMDD(Helper.trimStr(txtDate)))) {
             txtDateError.setError(context.getString(R.string.date_error));
             return true;
         }
