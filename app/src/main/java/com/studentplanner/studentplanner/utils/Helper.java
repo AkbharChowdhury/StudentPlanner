@@ -93,10 +93,9 @@ public final class Helper {
     public static String convertFullDateToYYMMDD(String dateStr) {
         try {
             return new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                    .format(Objects.requireNonNull(new SimpleDateFormat("EEEE, MMM dd, yyyy", Locale.ENGLISH)
+                    .format(Objects.requireNonNull(new SimpleDateFormat("EEEE, dd MMMM yyyy", Locale.ENGLISH)
                             .parse(dateStr)));
         } catch (ParseException e) {
-            Log.d(ERROR_TAG, Objects.requireNonNull(e.getMessage()));
 
         }
         return null;
