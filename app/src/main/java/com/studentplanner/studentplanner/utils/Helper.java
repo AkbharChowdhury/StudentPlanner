@@ -23,8 +23,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -90,18 +88,6 @@ public final class Helper {
     }
 
 
-    public static String convertFullDateToYYMMDD(String dateStr) {
-        try {
-            return new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                    .format(Objects.requireNonNull(new SimpleDateFormat("EEEE, dd MMMM yyyy", Locale.ENGLISH)
-                            .parse(dateStr)));
-        } catch (ParseException e) {
-
-        }
-        return null;
-
-    }
-
     public static long setFutureDate(long startDate, long noOfDaysBetween) {
         return startDate + (1000 * 60 * 60 * 24 * noOfDaysBetween);
     }
@@ -126,22 +112,15 @@ public final class Helper {
     }
 
     public static String formatTime(String time) {
-        return DateTimeFormatter.ofPattern("hh:mm a").format(LocalTime.parse(time));
+        return getPattern("hh:mm a").format(LocalTime.parse(time));
     }
 
     public static String formatTimeShort(String time) {
-        return DateTimeFormatter.ofPattern("hh:mm a").format(LocalTime.parse(time));
+        return getPattern("hh:mm a").format(LocalTime.parse(time));
     }
 
-    // link https://beginnersbook.com/2014/01/how-to-convert-12-hour-time-to-24-hour-date-in-java/
-    public static String convertFormattedTimeToDBFormat(String time) {
-
-        try {
-            return new SimpleDateFormat("HH:mm", Locale.ENGLISH).format(Objects.requireNonNull(new SimpleDateFormat("hh:mm aa", Locale.ENGLISH).parse(time)));
-        } catch (ParseException e) {
-            Log.d(ERROR_TAG, Objects.requireNonNull(e.getMessage()));
-        }
-        return null;
+    public static String convertFormattedTimeToDBFormat(String timeStr) {
+        return LocalTime.parse(timeStr, getPattern("hh:mm a")).format(getPattern("HH:mm"));
     }
 
     public static int getPriorityColour(String priority, Context c) {
@@ -157,6 +136,19 @@ public final class Helper {
         return IntStream.range(0, 365)
                 .filter(i -> i % 7 == 0)
                 .toArray();
+    }
+
+    public static String convertFullDateToYYMMDD(String dateStr) {
+        return LocalDate.parse(dateStr, getPattern("EEEE, dd MMMM yyyy"))
+                .format(getPattern("yyyy-MM-dd"));
+
+    }
+
+    private static DateTimeFormatter getPattern(String pattern) {
+
+        return DateTimeFormatter.ofPattern(pattern).withLocale(Locale.getDefault());
+
+
     }
 
     public static String calcDeadlineDate(LocalDate deadline, boolean isCompleted) {
