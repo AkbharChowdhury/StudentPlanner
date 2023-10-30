@@ -248,8 +248,7 @@ public class EditClassesActivity extends AppCompatActivity implements TimePicker
 
     @Override
     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-        String selectedTime = String.format(Locale.getDefault(), getString(R.string.time_format_database), selectedHour, selectedMinute);
-        String formattedTime = Helper.formatTime(selectedTime);
+        String formattedTime = Helper.formatTime(Helper.getSelectedTime(new CustomTimePicker(selectedHour, selectedMinute)));
         switch (type) {
             case START_TIME -> {
                 startCustomTimePicker.setSelectedHour(selectedHour);

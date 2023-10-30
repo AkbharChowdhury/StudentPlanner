@@ -216,8 +216,8 @@ public class EditCourseworkActivity extends AppCompatActivity implements DatePic
     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
         deadlineCustomTimePicker.setSelectedHour(selectedHour);
         deadlineCustomTimePicker.setSelectedMinute(selectedMinute);
-        String selectedTime = String.format(Locale.getDefault(), getString(R.string.time_format_database), selectedHour, selectedMinute);
-        txtDeadlineTime.setText(Helper.formatTime(selectedTime));
+//        String selectedTime = String.format(Locale.getDefault(), getString(R.string.time_format_database), selectedHour, selectedMinute);
+        txtDeadlineTime.setText(Helper.formatTime(Helper.getSelectedTime(deadlineCustomTimePicker)));
 
     }
 

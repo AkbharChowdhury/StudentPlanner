@@ -29,7 +29,6 @@ import com.studentplanner.studentplanner.utils.Validation;
 
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Locale;
 
 public class AddClassesActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
     private AutoCompleteTextView txtDays;
@@ -165,8 +164,7 @@ public class AddClassesActivity extends AppCompatActivity implements TimePickerD
 
     @Override
     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-        String selectedTime = String.format(Locale.getDefault(), getString(R.string.time_format_database), selectedHour, selectedMinute);
-        String formattedTime = Helper.formatTime(selectedTime);
+        String formattedTime = Helper.formatTime(Helper.getSelectedTime(new CustomTimePicker(selectedHour, selectedMinute)));
         switch (type) {
             case START_TIME -> {
                 startCustomTimePicker.setSelectedHour(selectedHour);

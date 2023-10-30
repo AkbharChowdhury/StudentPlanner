@@ -175,7 +175,6 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
     }
 
 
-
     private Coursework getCourseworkErrorFields() {
         TextInputLayout txtModuleError = binding.txtModuleError;
         TextInputLayout errorPriority = binding.txtPriorityError;
@@ -226,7 +225,7 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
                 DatePickerFragment datepicker = new DatePickerFragment();
                 datepicker.show(getSupportFragmentManager(), "datePicker");
                 datepicker.setMinDateToToday();
-                CalendarUtils.setSelectedDate(datepicker, txtDeadline);
+//                CalendarUtils.setSelectedDate(datepicker, txtDeadline);
             }
             return false;
         });
@@ -237,13 +236,21 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
     private void setTimePicker() {
         txtDeadlineTime.setOnTouchListener((view, motionEvent) -> {
             if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                deadlineTimePicker = new BoundTimePickerDialog(this, this, deadlineCustomTimePicker.getSelectedHour(), deadlineCustomTimePicker.getSelectedMinute());
-                String deadlineDate = Helper.convertFullDateToYYMMDD(Helper.trimStr(txtDeadline));
-                LocalDate deadline = LocalDate.parse(deadlineDate);
-                LocalDate today = CalendarUtils.getCurrentDate();
-                LocalDate date = deadline.isEqual(today) ? today : deadline;
-                deadlineSetup(deadlineTimePicker, date);
-                deadlineTimePicker.show();
+
+                try {
+                    deadlineTimePicker = new BoundTimePickerDialog(this, this, deadlineCustomTimePicker.getSelectedHour(), deadlineCustomTimePicker.getSelectedMinute());
+                    String deadlineDate = Helper.convertFullDateToYYMMDD(Helper.trimStr(txtDeadline));
+                    LocalDate deadline = LocalDate.parse(deadlineDate);
+                    LocalDate today = CalendarUtils.getCurrentDate();
+                    LocalDate date = deadline.isEqual(today) ? today : deadline;
+                    deadlineSetup(deadlineTimePicker, date);
+                    deadlineTimePicker.show();
+
+                } catch (Exception e) {
+                    Helper.longToastMessage(this, e.getMessage());
+
+                }
+
             }
 
             return false;
@@ -254,8 +261,7 @@ public class AddCourseworkActivity extends AppCompatActivity implements DatePick
     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
         deadlineCustomTimePicker.setSelectedHour(selectedHour);
         deadlineCustomTimePicker.setSelectedMinute(selectedMinute);
-        final String selectedTime = String.format(Locale.getDefault(), getString(R.string.time_format_database), selectedHour, selectedMinute);
-        txtDeadlineTime.setText(Helper.formatTime(selectedTime));
+        txtDeadlineTime.setText(Helper.formatTime(Helper.getSelectedTime(deadlineCustomTimePicker)));
 
     }
 

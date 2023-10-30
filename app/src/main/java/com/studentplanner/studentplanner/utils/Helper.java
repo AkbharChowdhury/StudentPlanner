@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputLayout;
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
+import com.studentplanner.studentplanner.models.CustomTimePicker;
 import com.studentplanner.studentplanner.models.ModuleTeacher;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -119,6 +120,10 @@ public final class Helper {
         return getPattern("hh:mm a").format(LocalTime.parse(time));
     }
 
+    public static String getSelectedTime(CustomTimePicker timePicker) {
+        return String.format(Locale.getDefault(), "%02d:%02d", timePicker.getSelectedHour(), timePicker.getSelectedMinute());
+    }
+
     public static String convertFormattedTimeToDBFormat(String timeStr) {
         return LocalTime.parse(timeStr, getPattern("hh:mm a")).format(getPattern("HH:mm"));
     }
@@ -139,7 +144,9 @@ public final class Helper {
     }
 
     public static String convertFullDateToYYMMDD(String dateStr) {
-        return LocalDate.parse(dateStr, getPattern("EEEE, dd MMMM yyyy")).toString();
+
+        return LocalDate.parse(dateStr, getPattern("EEEE, MMMM dd, yyyy")).toString();
+
     }
 
     private static DateTimeFormatter getPattern(String pattern) {
