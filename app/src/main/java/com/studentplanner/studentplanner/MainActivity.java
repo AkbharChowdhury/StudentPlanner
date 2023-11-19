@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         studentID = AccountPreferences.getStudentID(this);
         setupNavDrawer(savedInstanceState);
         showStudentDetails();
-        Helper.goToActivity(this, AddCourseworkActivity.class);
     }
 
 
@@ -84,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 openFragment(new LoginFragment());
                 return;
             }
-            var selectedFragment = new TeacherFragment();
+            var selectedFragment = new CourseworkFragment();
             openFragment(selectedFragment);
             navigationView.setCheckedItem(FragmentHandler.activeLink(selectedFragment));
         }

@@ -156,17 +156,8 @@ public class CourseworkFragment extends Fragment {
         txtCompletionStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                if (position == 0) {
-                    search.setDefaultStatus(true);
-                    List<Coursework> filteredList = search.filterResults();
-                    checkEmptyResults(filteredList);
-                    adapter.filterList(search.filterResults());
-                    return;
-                }
-                search.setDefaultStatus(false);
-                boolean isCompleted = getString(R.string.completed).equalsIgnoreCase(getSpinnerText(txtCompletionStatus, position));
-                search.setCompleted(isCompleted);
+                search.setDefaultStatus(position == 0);
+                search.setCompleted(getString(R.string.completed).equalsIgnoreCase(getSpinnerText(txtCompletionStatus, position)));
                 List<Coursework> filteredList = search.filterResults();
                 checkEmptyResults(filteredList);
                 adapter.filterList(filteredList);
@@ -185,7 +176,6 @@ public class CourseworkFragment extends Fragment {
         search = new SearchCoursework(context, list);
         buildRecyclerView();
     }
-
 
 
     private void initFragment() {
