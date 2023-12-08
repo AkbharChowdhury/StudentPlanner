@@ -144,16 +144,13 @@ public final class Helper {
     }
 
     public static String convertFullDateToYYMMDD(String dateStr) {
-
-        return LocalDate.parse(dateStr, getPattern("EEEE, MMMM dd, yyyy")).toString();
-
+//        http://www.java2s.com/ref/java/java-datetimeformatter-patterns.html
+        return LocalDate.parse(dateStr, getPattern("EEEE, MMMM d, yyyy")).toString();
     }
 
     private static DateTimeFormatter getPattern(String pattern) {
 
         return DateTimeFormatter.ofPattern(pattern).withLocale(Locale.getDefault());
-
-
     }
 
     public static String calcDeadlineDate(LocalDate deadline, boolean isCompleted) {

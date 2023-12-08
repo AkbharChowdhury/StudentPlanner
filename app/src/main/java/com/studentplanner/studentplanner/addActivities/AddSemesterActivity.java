@@ -63,10 +63,10 @@ public class AddSemesterActivity extends AppCompatActivity implements DatePicker
     }
 
     private Semester getSemesterDetails() {
-        String name = Helper.trimStr(txtName);
-        LocalDate start = LocalDate.parse(Helper.convertFullDateToYYMMDD(txtStartDate.getEditableText().toString()));
-        LocalDate end = LocalDate.parse(Helper.convertFullDateToYYMMDD(txtEndDate.getEditableText().toString()));
-        return new Semester(name, start, end);
+        return new Semester(
+                Helper.trimStr(txtName),
+                LocalDate.parse(Helper.convertFullDateToYYMMDD(Helper.trimStr(txtStartDate))),
+                LocalDate.parse(Helper.convertFullDateToYYMMDD(Helper.trimStr(txtEndDate))));
     }
 
     private void setUpDatePickers() {
