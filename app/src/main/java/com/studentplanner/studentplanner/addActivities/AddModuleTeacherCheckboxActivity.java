@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
+import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.ModuleTeacher;
 import com.studentplanner.studentplanner.models.Teacher;
 import com.studentplanner.studentplanner.models.User;
@@ -31,7 +32,7 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
 
         db = DatabaseHelper.getInstance(this);
         setActivityTitle();
-        String[] myTeachers = Helper.convertListStringToStringArray(getTeacherNames(db.getTeachers()));
+        String[] myTeachers = Helper.convertListStringToStringArray(ModuleTeacher.getTeacherNames(db.getTeachers()));
 
         listView = findViewById(R.id.listview);
         listView.setAdapter(new ArrayAdapter<>(
@@ -50,9 +51,7 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
         }
     }
 
-    private List<String> getTeacherNames(List<Teacher> teachers) {
-        return teachers.stream().map(User::getName).toList();
-    }
+
 
     private List<Integer> getSelectedTeacherIDList() {
 

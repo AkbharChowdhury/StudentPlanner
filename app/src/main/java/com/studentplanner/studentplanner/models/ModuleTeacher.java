@@ -10,5 +10,8 @@ public record ModuleTeacher(int moduleID, List<Integer> teacherIDList) {
                 .filter(p -> filteredModuleIdList.contains(p.moduleID()))
                 .collect(Collectors.toList());
     }
+    public static List<String> getTeacherNames(List<Teacher> teachers) {
+        return teachers.stream().map(User::getName).toList();
+    }
 
 }

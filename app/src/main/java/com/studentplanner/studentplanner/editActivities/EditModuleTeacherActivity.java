@@ -38,7 +38,7 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
         db = DatabaseHelper.getInstance(this);
         setActivityTitle();
 
-        List<String> teacherNames = getTeacherNames(db.getTeachers());
+        List<String> teacherNames = ModuleTeacher.getTeacherNames(db.getTeachers());
         String[] myTeachers = Helper.convertListStringToStringArray(teacherNames);
 
         listView = findViewById(R.id.listview);
@@ -75,9 +75,7 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
         }
     }
 
-    private List<String> getTeacherNames(List<Teacher> teachers) {
-        return teachers.stream().map(User::getName).toList();
-    }
+
 
     private List<Integer> getSelectedTeacherIDList() {
 
