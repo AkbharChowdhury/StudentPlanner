@@ -160,9 +160,8 @@ public final class Helper {
         int days = p.getDays();
         int months = p.getMonths();
 
-        if (days == 0) {
-            return "Due Today";
-        }
+        if (days == 0) return "Due Today";
+
 
         var sb = new StringBuilder("In ");
         if (months == 0 && days == 0 && !isCompleted) {

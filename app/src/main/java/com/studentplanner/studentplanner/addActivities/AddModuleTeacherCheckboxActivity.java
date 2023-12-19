@@ -53,14 +53,7 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
 
 
     private List<Integer> getSelectedTeacherIDList() {
-
-//        List<Integer> selectedTeacherIds = new ArrayList<>();
         List<Teacher> teacherList = db.getTeachers();
-//        for (int i = 0; i < listView.getCount(); i++) {
-//            if (listView.isItemChecked(i)) {
-//                selectedTeacherIds.add(teacherList.get(i).getUserID());
-//            }
-//        }
         int[] selectedTeacherIds = IntStream.range(0, listView.getCount())
                 .filter(i -> listView.isItemChecked(i))
                 .map(i -> teacherList.get(i).getUserID())
