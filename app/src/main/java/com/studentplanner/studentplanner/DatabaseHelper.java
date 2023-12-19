@@ -423,12 +423,9 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         Student student = new Student();
 
         try (Cursor c = db.query(StudentTable.TABLE_NAME, columns, selection, selectionArgs, null, null, null)) {
-            if (c.getCount() > 0) {
-                while (c.moveToNext()) {
-                    student.setFirstname(c.getString(c.getColumnIndex(StudentTable.COLUMN_FIRSTNAME)));
-                    student.setLastname(c.getString(c.getColumnIndex(StudentTable.COLUMN_LASTNAME)));
-                }
-
+            while (c.moveToNext()) {
+                student.setFirstname(c.getString(c.getColumnIndex(StudentTable.COLUMN_FIRSTNAME)));
+                student.setLastname(c.getString(c.getColumnIndex(StudentTable.COLUMN_LASTNAME)));
             }
         } catch (Exception e) {
             Log.d(ERROR_TAG, getErrorMessage(e));
@@ -543,14 +540,12 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         String selection = ModuleTable.COLUMN_STUDENT_ID + " = ?";
         try (Cursor c = db.query(ModuleTable.TABLE_NAME, null, selection, getStudentIDArray(), null, null, null)) {
-            if (!isCursorEmpty(c)) {
-                while (c.moveToNext()) {
-                    modules.add(new Module(
-                            c.getInt(c.getColumnIndex(ModuleTable.COLUMN_ID)),
-                            c.getString(c.getColumnIndex(ModuleTable.COLUMN_MODULE_C0DE)),
-                            c.getString(c.getColumnIndex(ModuleTable.COLUMN_MODULE_NAME))
-                    ));
-                }
+            while (c.moveToNext()) {
+                modules.add(new Module(
+                        c.getInt(c.getColumnIndex(ModuleTable.COLUMN_ID)),
+                        c.getString(c.getColumnIndex(ModuleTable.COLUMN_MODULE_C0DE)),
+                        c.getString(c.getColumnIndex(ModuleTable.COLUMN_MODULE_NAME))
+                ));
             }
         } catch (Exception e) {
             Log.d(ERROR_TAG, getErrorMessage(e));
@@ -566,10 +561,8 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         String selection = ModuleTeacherTable.COLUMN_MODULE_ID + " = ?";
         String[] selectionArgs = {String.valueOf(moduleID)};
         try (Cursor c = db.query(ModuleTeacherTable.TABLE_NAME, null, selection, selectionArgs, null, null, null)) {
-            if (!isCursorEmpty(c)) {
-                while (c.moveToNext()) {
-                    teacherIds.add(c.getInt(c.getColumnIndex(ModuleTeacherTable.COLUMN_TEACHER_ID)));
-                }
+            while (c.moveToNext()) {
+                teacherIds.add(c.getInt(c.getColumnIndex(ModuleTeacherTable.COLUMN_TEACHER_ID)));
             }
         } catch (Exception e) {
             Log.d(ERROR_TAG, getErrorMessage(e));
@@ -584,16 +577,14 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         String selection = TeacherTable.COLUMN_STUDENT_ID + " = ?";
         try (Cursor c = db.query(TeacherTable.TABLE_NAME, null, selection, getStudentIDArray(), null, null, null)) {
-            if (!isCursorEmpty(c)) {
-                while (c.moveToNext()) {
-                    teachers.add(new Teacher(
-                            c.getInt(c.getColumnIndex(TeacherTable.COLUMN_ID)),
-                            c.getString(c.getColumnIndex(TeacherTable.COLUMN_FIRSTNAME)),
-                            c.getString(c.getColumnIndex(TeacherTable.COLUMN_LASTNAME)),
-                            c.getString(c.getColumnIndex(TeacherTable.COLUMN_EMAIL))
+            while (c.moveToNext()) {
+                teachers.add(new Teacher(
+                        c.getInt(c.getColumnIndex(TeacherTable.COLUMN_ID)),
+                        c.getString(c.getColumnIndex(TeacherTable.COLUMN_FIRSTNAME)),
+                        c.getString(c.getColumnIndex(TeacherTable.COLUMN_LASTNAME)),
+                        c.getString(c.getColumnIndex(TeacherTable.COLUMN_EMAIL))
 
-                    ));
-                }
+                ));
             }
         } catch (Exception e) {
             Log.d(ERROR_TAG, getErrorMessage(e));
@@ -611,7 +602,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     public List<Classes> getClasses() {
         List<Classes> classesList = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        final String SQL = """
+        try (Cursor c = db.rawQuery("""
                 SELECT
                     c.*
                 FROM
@@ -620,25 +611,21 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                     m.module_id = c.module_id
                 WHERE
                     m.student_id = ?
-                """;
-        try (Cursor c = db.rawQuery(SQL, getStudentIDArray())) {
-            if (!isCursorEmpty(c)) {
-                while (c.moveToNext()) {
+                """, getStudentIDArray())) {
+            while (c.moveToNext()) {
+                classesList.add(new Classes(
 
-                    classesList.add(new Classes(
-
-                            c.getInt(c.getColumnIndex(ClassTable.COLUMN_ID)),
-                            c.getInt(c.getColumnIndex(ClassTable.COLUMN_MODULE_ID)),
-                            c.getInt(c.getColumnIndex(ClassTable.COLUMN_SEMESTER_ID)),
-                            c.getInt(c.getColumnIndex(ClassTable.COLUMN_DOW)),
-                            LocalTime.parse(c.getString(c.getColumnIndex(ClassTable.COLUMN_START_TIME))),
-                            LocalTime.parse(c.getString(c.getColumnIndex(ClassTable.COLUMN_END_TIME))),
-                            c.getString(c.getColumnIndex(ClassTable.COLUMN_ROOM)),
-                            c.getString(c.getColumnIndex(ClassTable.COLUMN_TYPE))
+                        c.getInt(c.getColumnIndex(ClassTable.COLUMN_ID)),
+                        c.getInt(c.getColumnIndex(ClassTable.COLUMN_MODULE_ID)),
+                        c.getInt(c.getColumnIndex(ClassTable.COLUMN_SEMESTER_ID)),
+                        c.getInt(c.getColumnIndex(ClassTable.COLUMN_DOW)),
+                        LocalTime.parse(c.getString(c.getColumnIndex(ClassTable.COLUMN_START_TIME))),
+                        LocalTime.parse(c.getString(c.getColumnIndex(ClassTable.COLUMN_END_TIME))),
+                        c.getString(c.getColumnIndex(ClassTable.COLUMN_ROOM)),
+                        c.getString(c.getColumnIndex(ClassTable.COLUMN_TYPE))
 
 
-                    ));
-                }
+                ));
             }
         } catch (Exception e) {
             Log.d(ERROR_TAG, getErrorMessage(e));
@@ -652,8 +639,8 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     public List<Module> getModuleClassesAdd() {
         List<Module> list = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        final String SQL = "SELECT * FROM modules WHERE module_id NOT IN (SELECT module_id FROM module_teacher) AND student_id = ?";
-        try (Cursor c = db.rawQuery(SQL, getStudentIDArray())) {
+        try (Cursor c = db.rawQuery("SELECT * FROM modules WHERE module_id NOT IN (SELECT module_id FROM module_teacher) AND student_id = ?",
+                getStudentIDArray())) {
             if (isCursorEmpty(c)) Log.d(ERROR_TAG, "cursor is empty");
             while (c.moveToNext()) {
                 list.add(new Module(
@@ -697,22 +684,19 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         List<Coursework> courseworkList = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
         try (Cursor c = db.rawQuery(SQL, getStudentIDArray())) {
-            if (!isCursorEmpty(c)) {
-                while (c.moveToNext()) {
-                    Coursework coursework = new Coursework(
-                            c.getInt(c.getColumnIndex(CourseworkTable.COLUMN_ID)),
-                            c.getInt(c.getColumnIndex(CourseworkTable.COLUMN_MODULE_ID)),
-                            c.getString(c.getColumnIndex(CourseworkTable.COLUMN_TITLE)),
-                            c.getString(c.getColumnIndex(CourseworkTable.COLUMN_DESCRIPTION)),
-                            c.getString(c.getColumnIndex(CourseworkTable.COLUMN_PRIORITY)),
-                            LocalDate.parse(c.getString(c.getColumnIndex(CourseworkTable.COLUMN_DEADLINE))),
-                            LocalTime.parse(c.getString(c.getColumnIndex(CourseworkTable.COLUMN_DEADLINE_TIME)))
-                    );
-                    coursework.setImage(c.getBlob(c.getColumnIndex(CourseworkTable.COLUMN_IMAGE)));
-                    coursework.setCompleted(Coursework.isCompleted(c.getString(c.getColumnIndex(CourseworkTable.COLUMN_COMPLETED))));
-                    courseworkList.add(coursework);
-
-                }
+            while (c.moveToNext()) {
+                Coursework coursework = new Coursework(
+                        c.getInt(c.getColumnIndex(CourseworkTable.COLUMN_ID)),
+                        c.getInt(c.getColumnIndex(CourseworkTable.COLUMN_MODULE_ID)),
+                        c.getString(c.getColumnIndex(CourseworkTable.COLUMN_TITLE)),
+                        c.getString(c.getColumnIndex(CourseworkTable.COLUMN_DESCRIPTION)),
+                        c.getString(c.getColumnIndex(CourseworkTable.COLUMN_PRIORITY)),
+                        LocalDate.parse(c.getString(c.getColumnIndex(CourseworkTable.COLUMN_DEADLINE))),
+                        LocalTime.parse(c.getString(c.getColumnIndex(CourseworkTable.COLUMN_DEADLINE_TIME)))
+                );
+                coursework.setImage(c.getBlob(c.getColumnIndex(CourseworkTable.COLUMN_IMAGE)));
+                coursework.setCompleted(Coursework.isCompleted(c.getString(c.getColumnIndex(CourseworkTable.COLUMN_COMPLETED))));
+                courseworkList.add(coursework);
 
             }
         } catch (Exception e) {
@@ -733,9 +717,9 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                     JOIN modules m
                         ON m.module_id = c.module_id
                 WHERE student_id = ?
-                      AND c.deadline
+                      AND deadline
                       BETWEEN DATE('now', 'start of month') AND DATE('now', 'start of month', '+1 month', '-1 day')
-                ORDER by c.deadline DESC
+                ORDER by deadline DESC
                 """);
     }
 
@@ -758,15 +742,12 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                     mt.module_id
                 """;
         try (Cursor c = db.rawQuery(SQL, getStudentIDArray())) {
-            if (!isCursorEmpty(c)) {
-                while (c.moveToNext()) {
-                    int moduleID = c.getInt(c.getColumnIndex(ModuleTeacherTable.COLUMN_MODULE_ID));
-                    String teacherIDs = c.getString(c.getColumnIndex("teacher_id_list"));
-                    List<String> teacherIDListStr = new ArrayList<>(Arrays.asList(teacherIDs.split(",")));
-                    List<Integer> TeacherIDList = Helper.convertStringArrayToIntArrayList(teacherIDListStr);
-                    list.add(new ModuleTeacher(moduleID, TeacherIDList));
-                }
-
+            while (c.moveToNext()) {
+                int moduleID = c.getInt(c.getColumnIndex(ModuleTeacherTable.COLUMN_MODULE_ID));
+                String teacherIDs = c.getString(c.getColumnIndex("teacher_id_list"));
+                List<String> teacherIDListStr = new ArrayList<>(Arrays.asList(teacherIDs.split(",")));
+                List<Integer> TeacherIDList = Helper.convertStringArrayToIntArrayList(teacherIDListStr);
+                list.add(new ModuleTeacher(moduleID, TeacherIDList));
             }
         } catch (Exception e) {
             Log.d(ERROR_TAG, getErrorMessage(e));
@@ -791,14 +772,10 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                                 
                 """;
         try (Cursor c = db.rawQuery(SQL, new String[]{String.valueOf(moduleID)})) {
-            if (!isCursorEmpty(c)) {
-
-                while (c.moveToNext()) {
-                    String firstname = c.getString(c.getColumnIndex(TeacherTable.COLUMN_FIRSTNAME));
-                    String lastname = c.getString(c.getColumnIndex(TeacherTable.COLUMN_LASTNAME));
-                    list.add(String.format("%s %s", firstname, lastname));
-
-                }
+            while (c.moveToNext()) {
+                String firstname = c.getString(c.getColumnIndex(TeacherTable.COLUMN_FIRSTNAME));
+                String lastname = c.getString(c.getColumnIndex(TeacherTable.COLUMN_LASTNAME));
+                list.add(String.format("%s %s", firstname, lastname));
 
             }
         } catch (Exception e) {
@@ -886,16 +863,13 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 null,
                 null
         )) {
-            if (!isCursorEmpty(c)) {
-                while (c.moveToNext()) {
-                    list.add(new Semester(
-                            c.getInt(c.getColumnIndex(SemesterTable.COLUMN_ID)),
-                            c.getString(c.getColumnIndex(SemesterTable.COLUMN_NAME)),
-                            LocalDate.parse(c.getString(c.getColumnIndex(SemesterTable.COLUMN_START_DATE))),
-                            LocalDate.parse(c.getString(c.getColumnIndex(SemesterTable.COLUMN_END_DATE)))
-                    ));
-                }
-
+            while (c.moveToNext()) {
+                list.add(new Semester(
+                        c.getInt(c.getColumnIndex(SemesterTable.COLUMN_ID)),
+                        c.getString(c.getColumnIndex(SemesterTable.COLUMN_NAME)),
+                        LocalDate.parse(c.getString(c.getColumnIndex(SemesterTable.COLUMN_START_DATE))),
+                        LocalDate.parse(c.getString(c.getColumnIndex(SemesterTable.COLUMN_END_DATE)))
+                ));
             }
 
         } catch (Exception e) {
@@ -935,7 +909,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         final String SQL = """
                 SELECT
                   DISTINCT mt.module_id,
-                  m.module_code || ' ' || m.module_name AS details
+                  m.module_code || ' ' || m.module_name details
                 FROM
                   module_teacher mt
                   JOIN modules m ON m.module_id = mt.module_id
@@ -1073,20 +1047,17 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     public int getCourseworkCountByDate(LocalDate deadlineDate) {
 
         SQLiteDatabase db = getReadableDatabase();
-        final String SQL = """
-                SELECT
-                  COUNT (deadline)
-                FROM
-                  coursework c
-                JOIN modules m ON m.module_id = c.module_id
-                                           
-                WHERE
-                  student_id = ?
-                AND deadline = ?
-                 """;
-
         try (Cursor c = db.rawQuery(
-                SQL,
+                """
+                        SELECT
+                          COUNT (deadline)
+                        FROM
+                          coursework c
+                        JOIN modules m ON m.module_id = c.module_id                                           
+                        WHERE
+                          student_id = ?
+                        AND deadline = ?
+                         """,
                 new String[]{
                         String.valueOf(getStudentID()),
                         deadlineDate.toString()
