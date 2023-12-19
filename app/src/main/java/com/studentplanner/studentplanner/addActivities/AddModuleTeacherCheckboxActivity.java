@@ -11,15 +11,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.studentplanner.studentplanner.DatabaseHelper;
 import com.studentplanner.studentplanner.R;
-import com.studentplanner.studentplanner.models.Module;
 import com.studentplanner.studentplanner.models.ModuleTeacher;
 import com.studentplanner.studentplanner.models.Teacher;
-import com.studentplanner.studentplanner.models.User;
 import com.studentplanner.studentplanner.tables.ModuleTable;
 import com.studentplanner.studentplanner.utils.Helper;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
     private DatabaseHelper db;
@@ -52,18 +52,21 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
     }
 
 
-
     private List<Integer> getSelectedTeacherIDList() {
 
-        List<Integer> selectedTeacherIds = new ArrayList<>();
+//        List<Integer> selectedTeacherIds = new ArrayList<>();
         List<Teacher> teacherList = db.getTeachers();
-        for (int i = 0; i < listView.getCount(); i++) {
-            if (listView.isItemChecked(i)) {
-                selectedTeacherIds.add(teacherList.get(i).getUserID());
-            }
-        }
+//        for (int i = 0; i < listView.getCount(); i++) {
+//            if (listView.isItemChecked(i)) {
+//                selectedTeacherIds.add(teacherList.get(i).getUserID());
+//            }
+//        }
+        int[] selectedTeacherIds = IntStream.range(0, listView.getCount())
+                .filter(i -> listView.isItemChecked(i))
+                .map(i -> teacherList.get(i).getUserID())
+                .toArray();
 
-        return selectedTeacherIds;
+        return Arrays.stream(selectedTeacherIds).boxed().toList();
     }
 
 

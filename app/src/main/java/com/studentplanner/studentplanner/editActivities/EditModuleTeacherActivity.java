@@ -60,6 +60,7 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
         List<Integer> editedTeacherIDs = db.getModuleTeacherByModuleID(moduleID);
         List<Integer> allTeacherIDs = getIdList(teachers);
         IntStream.range(0, teachers.size()).forEach(i -> listView.setItemChecked(i, editedTeacherIDs.contains(allTeacherIDs.get(i))));
+
     }
 
     private List<Integer> getIdList(List<Teacher> teachers) {
