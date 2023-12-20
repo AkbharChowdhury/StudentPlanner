@@ -20,7 +20,6 @@ import com.studentplanner.studentplanner.utils.Helper;
 
 import org.apache.commons.text.WordUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -58,13 +57,9 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
         List<Teacher> teachers = db.getTeachers();
         int moduleID = getIntent().getIntExtra(ModuleTable.COLUMN_ID, 0);
         List<Integer> editedTeacherIDs = db.getModuleTeacherByModuleID(moduleID);
-        List<Integer> allTeacherIDs = getIdList(teachers);
+        List<Integer> allTeacherIDs = teachers.stream().map(User::getUserID).toList();
         IntStream.range(0, teachers.size()).forEach(i -> listView.setItemChecked(i, editedTeacherIDs.contains(allTeacherIDs.get(i))));
 
-    }
-
-    private List<Integer> getIdList(List<Teacher> teachers) {
-        return teachers.stream().map(User::getUserID).toList();
     }
 
     private void setActivityTitle() {
@@ -78,19 +73,6 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
 
 
 
-//    private List<Integer> getSelectedTeacherIDList() {
-//
-//        List<Integer> selectedTeacherIds = new ArrayList<>();
-//        List<Teacher> teacherList = db.getTeachers();
-//        IntStream.range(0, listView.getCount()).forEach(i -> {
-//            if (listView.isItemChecked(i)) {
-//                selectedTeacherIds.add(teacherList.get(i).getUserID());
-//            }
-//        });
-//
-//
-//        return selectedTeacherIds;
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
