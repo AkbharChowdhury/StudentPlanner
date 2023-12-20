@@ -27,6 +27,8 @@ import java.util.stream.IntStream;
 public class EditModuleTeacherActivity extends AppCompatActivity {
     private DatabaseHelper db;
     private ListView listView;
+    private final String SELECTED_ID = ModuleTable.COLUMN_ID;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,15 +65,12 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
     }
 
     private void setActivityTitle() {
-        final String SELECTED_ID = ModuleTable.COLUMN_ID;
         if (getIntent().hasExtra(SELECTED_ID)) {
             int id = getIntent().getIntExtra(SELECTED_ID, 0);
             setTitle(WordUtils.capitalizeFully(db.getSelectedModule(id).getModuleName()));
 
         }
     }
-
-
 
 
     @Override
@@ -91,13 +90,12 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
     }
 
     private void confirmSelection() {
-        List<Integer> teacherIDs =  ModuleTeacher.getSelectedTeacherIDList(db.getTeachers(), listView);
+        List<Integer> teacherIDs = ModuleTeacher.getSelectedTeacherIDList(db.getTeachers(), listView);
         if (teacherIDs.isEmpty()) {
             showAlertDialog();
             return;
 
         }
-        final String SELECTED_ID = ModuleTable.COLUMN_ID;
         int moduleID = getIntent().getIntExtra(SELECTED_ID, 0);
 
         if (db.updateModuleTeacher(new ModuleTeacher(moduleID, teacherIDs))) {
