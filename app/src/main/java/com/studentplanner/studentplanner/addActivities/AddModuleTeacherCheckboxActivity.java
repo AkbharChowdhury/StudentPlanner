@@ -16,7 +16,6 @@ import com.studentplanner.studentplanner.models.Teacher;
 import com.studentplanner.studentplanner.tables.ModuleTable;
 import com.studentplanner.studentplanner.utils.Helper;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -24,6 +23,8 @@ import java.util.stream.IntStream;
 public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
     private DatabaseHelper db;
     private ListView listView;
+    private final String SELECTED_ID = ModuleTable.COLUMN_ID;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,6 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
     }
 
     private void setActivityTitle() {
-        final String SELECTED_ID = ModuleTable.COLUMN_ID;
         if (getIntent().hasExtra(SELECTED_ID)) {
             int id = getIntent().getIntExtra(SELECTED_ID, 0);
             setTitle(db.getSelectedModule(id).getModuleName());
@@ -52,15 +52,15 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
     }
 
 
-    private List<Integer> getSelectedTeacherIDList() {
-        List<Teacher> teacherList = db.getTeachers();
-        int[] selectedTeacherIds = IntStream.range(0, listView.getCount())
-                .filter(i -> listView.isItemChecked(i))
-                .map(i -> teacherList.get(i).getUserID())
-                .toArray();
-
-        return Arrays.stream(selectedTeacherIds).boxed().toList();
-    }
+//    private List<Integer> getSelectedTeacherIDList() {
+//        List<Teacher> teacherList = db.getTeachers();
+//        int[] selectedTeacherIds = IntStream.range(0, listView.getCount())
+//                .filter(i -> listView.isItemChecked(i))
+//                .map(i -> teacherList.get(i).getUserID())
+//                .toArray();
+//
+//        return Arrays.stream(selectedTeacherIds).boxed().toList();
+//    }
 
 
     @Override
@@ -76,13 +76,13 @@ public class AddModuleTeacherCheckboxActivity extends AppCompatActivity {
     }
 
     private void confirmSelection() {
-        List<Integer> teacherIDList = getSelectedTeacherIDList();
+
+        List<Integer> teacherIDList = ModuleTeacher.getSelectedTeacherIDList(db.getTeachers(), listView);
         if (teacherIDList.isEmpty()) {
             Helper.shortToastMessage(this, getString(R.string.select_teacher));
             return;
         }
 
-        final String SELECTED_ID = ModuleTable.COLUMN_ID;
         int moduleID = getIntent().getIntExtra(SELECTED_ID, 0);
         if (db.addModuleTeacher(new ModuleTeacher(moduleID, teacherIDList))) {
             Helper.longToastMessage(this, "Teacher Added for " + db.getSelectedModule(moduleID).getModuleDetails());

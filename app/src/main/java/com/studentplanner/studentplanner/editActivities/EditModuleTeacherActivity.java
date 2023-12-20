@@ -78,19 +78,19 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
 
 
 
-    private List<Integer> getSelectedTeacherIDList() {
-
-        List<Integer> selectedTeacherIds = new ArrayList<>();
-        List<Teacher> teacherList = db.getTeachers();
-        IntStream.range(0, listView.getCount()).forEach(i -> {
-            if (listView.isItemChecked(i)) {
-                selectedTeacherIds.add(teacherList.get(i).getUserID());
-            }
-        });
-
-
-        return selectedTeacherIds;
-    }
+//    private List<Integer> getSelectedTeacherIDList() {
+//
+//        List<Integer> selectedTeacherIds = new ArrayList<>();
+//        List<Teacher> teacherList = db.getTeachers();
+//        IntStream.range(0, listView.getCount()).forEach(i -> {
+//            if (listView.isItemChecked(i)) {
+//                selectedTeacherIds.add(teacherList.get(i).getUserID());
+//            }
+//        });
+//
+//
+//        return selectedTeacherIds;
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -109,7 +109,7 @@ public class EditModuleTeacherActivity extends AppCompatActivity {
     }
 
     private void confirmSelection() {
-        List<Integer> teacherIDs = getSelectedTeacherIDList();
+        List<Integer> teacherIDs =  ModuleTeacher.getSelectedTeacherIDList(db.getTeachers(), listView);
         if (teacherIDs.isEmpty()) {
             showAlertDialog();
             return;
