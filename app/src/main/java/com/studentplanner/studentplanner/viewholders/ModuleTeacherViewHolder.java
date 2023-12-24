@@ -11,6 +11,7 @@ import com.studentplanner.studentplanner.databinding.ModuleTeacherRowBinding;
 import com.studentplanner.studentplanner.models.ModuleTeacher;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ModuleTeacherViewHolder extends RecyclerView.ViewHolder {
     private final TextView moduleID;
@@ -41,16 +42,9 @@ public class ModuleTeacherViewHolder extends RecyclerView.ViewHolder {
 
 
     private String getTeacherNames(List<ModuleTeacher> list, int position) {
-        var sb = new StringBuilder();
-        list.get(position)
+        return list.get(position)
                 .teacherIDList()
-                .forEach(id -> sb
-                        .append(db.getSelectedTeacher(id).getName())
-                        .append(", "));
-        return formatList(sb.toString());
-    }
-
-    public static String formatList(String str) {
-        return str.substring(0, str.lastIndexOf(","));
+                .stream().map(id -> db.getSelectedTeacher(id).getName())
+                .collect(Collectors.joining(", "));
     }
 }
