@@ -261,10 +261,7 @@ public final class Helper {
     public static String readStream(final InputStream in) {
         var sb = new StringBuilder();
         try (var reader = new BufferedReader(new InputStreamReader(in))) {
-            String nextLine;
-            while ((nextLine = reader.readLine()) != null) {
-                sb.append(nextLine);
-            }
+            reader.lines().forEach(sb::append);
         } catch (IOException e) {
             Log.d(ERROR_TAG, Objects.requireNonNull(e.getMessage()));
         }
