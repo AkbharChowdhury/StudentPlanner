@@ -90,12 +90,12 @@ public class WeekViewActivity extends AppCompatActivity implements OnItemListene
 
 
     public void previousWeekAction(View view) {
-        CalendarUtils.setSelectedDate(CalendarUtils.getSelectedDate().minusWeeks(1));
+        CalendarUtils.setSelectedDate(CalendarUtils.getSelectedDate().minusWeeks(CalendarUtils.NUM_MONTHS));
         setWeekView();
     }
 
     public void nextWeekAction(View view) {
-        CalendarUtils.setSelectedDate(CalendarUtils.getSelectedDate().plusWeeks(1));
+        CalendarUtils.setSelectedDate(CalendarUtils.getSelectedDate().plusWeeks(CalendarUtils.NUM_MONTHS));
         setWeekView();
     }
 

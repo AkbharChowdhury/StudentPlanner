@@ -28,6 +28,7 @@ public final class CalendarUtils {
     }
 
     private static LocalDate selectedDate;
+    public static final int NUM_MONTHS = 1;
 
     public static LocalDate getSelectedDate() {
         return selectedDate;
@@ -91,8 +92,7 @@ public final class CalendarUtils {
 
     public static void setEventAdapter(ListView eventListView, Context context, ActivityResultLauncher<Intent> startForResult) {
         List<Event> dailyEvents = Event.eventsForDate(selectedDate);
-        EventAdapter eventAdapter = new EventAdapter(context, dailyEvents, startForResult);
-        eventListView.setAdapter(eventAdapter);
+        eventListView.setAdapter(new EventAdapter(context, dailyEvents, startForResult));
     }
 
     public static List<LocalDate> getRecurringEvents(long numOfDays, LocalDate startDate) {

@@ -121,12 +121,12 @@ public class CalendarFragment extends Fragment implements OnItemListener {
     }
 
     public void previousMonthAction() {
-        CalendarUtils.setSelectedDate(CalendarUtils.getSelectedDate().minusMonths(1));
+        CalendarUtils.setSelectedDate(CalendarUtils.getSelectedDate().minusMonths(CalendarUtils.NUM_MONTHS));
         setMonthView();
     }
 
     public void nextMonthAction() {
-        CalendarUtils.setSelectedDate(CalendarUtils.getSelectedDate().plusMonths(1));
+        CalendarUtils.setSelectedDate(CalendarUtils.getSelectedDate().plusMonths(CalendarUtils.NUM_MONTHS));
         setMonthView();
     }
 
