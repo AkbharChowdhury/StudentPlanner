@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 openFragment(new LoginFragment());
                 return;
             }
+            
             var selectedFragment = new com.studentplanner.studentplanner.fragments.SemesterFragment();
             openFragment(selectedFragment);
             navigationView.setCheckedItem(FragmentHandler.activeLink(selectedFragment));
